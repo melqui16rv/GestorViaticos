@@ -92,22 +92,29 @@ $cdps = $gestor->obtenerCDPsViaticos();
                         <th class="filament-table-heading">Seleccionar</th>
                         <th class="filament-table-heading">Número CDP</th>
                         <th class="filament-table-heading">Objeto</th>
+                        <th class="filament-table-heading">Dependencia</th>
+                        <th class="filament-table-heading">Rubro</th>
+                        <th class="filament-table-heading">Fuente</th>
+                        <!-- Puedes agregar más campos aquí según necesites -->
                     </tr>
                 </thead>
                 <tbody class="filament-table-body">
                     <?php foreach ($cdps as $cdp): ?>
                         <tr class="filament-table-row">
                             <td class="filament-table-cell">
-                            <button type="button"
-                                    class="filament-button filament-button-secondary"
-                                    onclick="seleccionarCDP('<?php echo htmlspecialchars($cdp['CODIGO_CDP']); ?>',
-                                                        '<?php echo htmlspecialchars($cdp['Numero_Documento']); ?>',
-                                                        this)">
-                                Seleccionar
-                            </button>
+                                <button type="button" class="filament-button filament-button-secondary"
+                                        onclick="seleccionarCDP('<?php echo htmlspecialchars($cdp['CODIGO_CDP']); ?>',
+                                                           '<?php echo htmlspecialchars($cdp['Numero_Documento']); ?>',
+                                                           this)">
+                                    Seleccionar
+                                </button>
                             </td>
                             <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Numero_Documento']); ?></td>
                             <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Objeto']); ?></td>
+                            <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Dependencia']); ?></td>
+                            <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Rubro']); ?></td>
+                            <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Fuente']); ?></td>
+                            <!-- Puedes agregar más campos aquí según necesites -->
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -125,6 +132,9 @@ $cdps = $gestor->obtenerCDPsViaticos();
                         <th class="filament-table-heading">Seleccionar</th>
                         <th class="filament-table-heading">Número CRP</th>
                         <th class="filament-table-heading">Descripción</th>
+                        <th class="filament-table-heading">Dependencia</th>
+                        <th class="filament-table-heading">Rubro</th>
+                        <th class="filament-table-heading">Fuente</th>
                     </tr>
                 </thead>
                 <tbody class="filament-table-body"></tbody>
@@ -158,7 +168,7 @@ function seleccionarCDP(codigoCDP, numeroDocumento, boton) {
             tbody.innerHTML = '';
 
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td class="filament-table-cell" colspan="3">No se encontraron CRPs para este CDP</td></tr>';
+                tbody.innerHTML = '<tr><td class="filament-table-cell" colspan="6">No se encontraron CRPs para este CDP</td></tr>';
                 return;
             }
 
@@ -173,6 +183,9 @@ function seleccionarCDP(codigoCDP, numeroDocumento, boton) {
                         </td>
                         <td class="filament-table-cell">${crp.Numero_Documento}</td>
                         <td class="filament-table-cell">${crp.Observaciones}</td>
+                        <td class="filament-table-cell">${crp.Dependencia}</td>
+                        <td class="filament-table-cell">${crp.Rubro}</td>
+                        <td class="filament-table-cell">${crp.Fuente}</td>
                     </tr>`;
                 tbody.innerHTML += row;
             });

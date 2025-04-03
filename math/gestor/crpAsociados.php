@@ -53,7 +53,7 @@ class gestor1 extends Conexion {
 
     public function obtenerCDPsViaticos() {
         try {
-            $sql = "SELECT DISTINCT c.CODIGO_CDP, c.Numero_Documento, c.Objeto 
+            $sql = "SELECT DISTINCT c.* 
                     FROM cdp c
                     INNER JOIN crp r ON c.CODIGO_CDP = r.CODIGO_CDP 
                     WHERE c.Objeto LIKE '%VIATICOS%'";
@@ -68,25 +68,17 @@ class gestor1 extends Conexion {
 
     public function obtenerCRPsPorCDP($codigoCDP) {
         try {
-            // Limpieza preventiva por si el código viene con espacios
             $codigoCDP = trim($codigoCDP);
-
-            $sql = "SELECT CODIGO_CRP, Numero_Documento, Observaciones 
-                    FROM crp 
-                    WHERE TRIM(CODIGO_CDP) = :codigo_cdp";
-
+            $sql = "SELECT * FROM crp WHERE TRIM(CODIGO_CDP) = :codigo_cdp";
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':codigo_cdp', $codigoCDP, PDO::PARAM_STR);
             $stmt->execute();
-
+            
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
             if (empty($resultados)) {
                 error_log("No se encontraron CRPs para el CDP: '$codigoCDP'");
             }
-
             return $resultados;
-
         } catch (PDOException $e) {
             error_log("Error al obtener CRPs por CDP ('$codigoCDP'): " . $e->getMessage());
             return [];
