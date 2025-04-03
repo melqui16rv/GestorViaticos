@@ -1,10 +1,17 @@
 <?php
+session_start();
+ob_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gestor/crpAsociados.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gestor/metodosGestor.php';
+
+requireRole(['2']);
+
 $gestor = new gestor1();
 $cdps = $gestor->obtenerCDPsViaticos();
 ?>
