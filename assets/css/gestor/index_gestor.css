@@ -14,17 +14,26 @@
 .contenedorGrafiaca{
     height: auto;
 }
-.contenedorStandar{
+.contenedorStandar {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
     height: 100%;
     width: 70%;
 }
 
-.filtrosContenedor{
+.filtrosContenedor {
+    background: #fff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .contenderDeTabla {
     width: 100%;
     max-height: 500px;
@@ -33,6 +42,13 @@
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.15);
     margin-top: 10px;
+}
+
+.contendor_tabla {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 #filtros {
@@ -56,8 +72,8 @@
 #filtroForm {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
     width: 100%;
-    display: flex;
     justify-content: center;
     align-items: center;
 }
@@ -65,6 +81,7 @@
 .filtro-grupo {
     display: flex;
     flex-direction: column;
+    gap: 5px;
     align-items: center;
     background: rgba(255, 255, 255, 0.05);
     padding: 1px;
@@ -72,17 +89,12 @@
     transition: transform 0.3s ease;
 }
 
-/* .filtro-grupo:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-} */
-
-#filtroForm label {
+.filtro-grupo label {
+    font-weight: 600;
+    color: #333;
     text-align: center;
     margin-bottom: 10px;
-    color: #233d4f;
     font-size: 0.6rem;
-    font-weight: 600;
     width: 100%;
     padding: 8px;
     background: rgba(0, 0, 0, 0.05);
@@ -91,12 +103,12 @@
 }
 
 .filtro-dinamico {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
     width: 100%;
-    padding: 12px;
-    border: 1px solid rgba(0, 0, 0, 0.18);
-    border-radius: 8px;
     text-align: center;
-    font-size: 10px;
 }
 
 .filtro-botones {
@@ -130,11 +142,9 @@
 }
 
 .tablaBusqueda {
-    width: max-content; /* Permite que la tabla tome el ancho necesario */
-    min-width: 100%; /* Asegura que al menos tome el ancho del contenedor */
+    width: 100%;
     border-collapse: collapse;
-    table-layout: fixed;
-    font-size: 0.75rem; /* Reducimos aún más el tamaño de fuente */
+    font-size: 14px;
 }
 
 @keyframes slideUp {
@@ -151,32 +161,28 @@
     background: rgba(141, 140, 140, 0.86);
 }
 
-.tablaBusqueda th, .tablaBusqueda td {
-    padding: 4px 8px; /* Reducimos el padding */
-    text-align: left;
-    color: black;
-    white-space: nowrap; /* Evita saltos de línea */
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    line-height: 1.2; /* Ajustamos el interlineado */
-    text-align: center; /* Centrado de contenido */
-    vertical-align: middle;
-}
-
 .tablaBusqueda th {
-    background: rgba(0, 0, 0, 0.2);
-    font-size: 0.8rem;
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
     font-weight: 600;
+    color: #333;
+    border-bottom: 2px solid #dee2e6;
+    font-size: 0.8rem;
     position: sticky;
     top: 0;
     z-index: 1;
-    white-space: normal; /* Permitimos que el texto se ajuste */
-    height: 40px; /* Altura fija para encabezados */
-    vertical-align: middle; /* Centramos verticalmente */
+    white-space: normal;
+    height: 40px;
+    vertical-align: middle;
 }
 
 .tablaBusqueda td {
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
     font-size: 10px;
-    height: 35px; /* Altura fija para celdas */
+    height: 35px;
+    text-align: center;
     vertical-align: middle;
 }
 
@@ -241,17 +247,30 @@
 /* Estilos para el contenido en múltiples líneas */
 .multi-line {
     display: block;
+    margin-bottom: 4px;
     line-height: 1.2;
 }
 
 /* Ajustar el botón dentro de la tabla */
 .tablaBusqueda .ingresarConsumo {
+    display: inline-block;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    text-align: center;
+    background: #007bff;
+    color: white;
+    border-radius: 50%;
+    text-decoration: none;
+    font-weight: bold;
     padding: 3px 10px;
     font-size: 0.7rem;
-    display: inline-block;
 }
 
-/* Estilo para texto que se corta */
+.tablaBusqueda .ingresarConsumo:hover {
+    background: #0056b3;
+}
+
 .texto-cortado {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -262,10 +281,21 @@
 }
 
 #filtros-activos {
-    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
     font-size: 0.6rem;
     padding-bottom: 2px;
     animation: fadeIn 1.5s ease-in-out;
+}
+
+.filtro-tag {
+    padding: 4px 8px;
+    background: #e9ecef;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #495057;
 }
 
 /* Animaciones específicas para botones al hacer clic */
@@ -365,10 +395,23 @@ input, select, button, table, div {
         margin-right: 12px;
     }
 }
+@media (max-width: 768px) {
+    #filtroForm {
+        grid-template-columns: 1fr;
+    }
+    
+    .tablaBusqueda {
+        font-size: 13px;
+    }
+    
+    .tablaBusqueda td, .tablaBusqueda th {
+        padding: 8px;
+    }
+}
 /* Contenedor para acciones destacadas */
 .filament-action-card {
-    margin-top: 1.5rem;
-    display: flex;
+    margin-top: 20px;
+    text-align: right;
     display: flex;
 }
 
@@ -388,4 +431,18 @@ input, select, button, table, div {
 
 .filament-button-action:hover {
     background-color: #059669; /* verde más oscuro */
+}
+
+.filament-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.filament-button:hover {
+    background: #218838;
 }
