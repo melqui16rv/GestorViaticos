@@ -23,12 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $saldoAsignado = $_POST['saldo_asignado'] ?? null;
     $codigoCDP = $_POST['codigo_cdp'] ?? null;
     $codigoCRP = $_POST['codigo_crp'] ?? null;
-
-    // Validaciones
-    if (!$nombre || !$documento || !$fechaInicio || !$fechaFin || !$saldoAsignado || !$codigoCDP || !$codigoCRP) {
-        die('Error: Faltan campos obligatorios.');
-    }
-
     $fechaPago = empty($fechaPago) ? null : $fechaPago;
 
     $gestor = new gestor1();
