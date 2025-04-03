@@ -157,11 +157,11 @@ if (empty($datosSaldos)) {
                             <?php endif; ?>
                         </tbody>
                     </table>
-                    <div class="filament-action-card">
-                        <a href="control/insert_saldo_asiganado.php" class="filament-button filament-button-action">
-                            + Nuevo Registro de Saldo
-                        </a>
-                    </div>
+                </div>
+                <div class="filament-action-card">
+                    <a href="control/insert_saldo_asiganado.php" class="filament-button filament-button-action">
+                        + Nuevo Registro de Saldo
+                    </a>
                 </div>
             </div>
         </div>
