@@ -120,6 +120,7 @@ if (empty($datosSaldos)) {
                     <table border="1" id="tablaSaldosAsignados" class="tablaBusqueda">
                         <thead>
                             <tr>
+                                <th style="display: none;">ID Saldo</th>
                                 <th>Persona Viaticada</th>
                                 <th>Fechas Ejecución Viatico</th>
                                 <th>Fecha Sugeriada de Pago</th>
@@ -131,7 +132,8 @@ if (empty($datosSaldos)) {
                         <tbody>
                             <?php if (!empty($datosSaldos)): ?>
                                 <?php foreach ($datosSaldos as $row): ?>
-                                    <tr>
+                                    <tr data-id-saldo="<?php echo htmlspecialchars($row['ID_SALDO']); ?>">
+                                        <td style="display: none;"><?php echo htmlspecialchars($row['ID_SALDO']); ?></td>
                                         <td>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['NOMBRE_PERSONA']); ?></span>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['DOCUMENTO_PERSONA']); ?></span>
