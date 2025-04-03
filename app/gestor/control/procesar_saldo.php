@@ -50,3 +50,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: insert_saldo_asiganado.php?estado=error");
         exit;
     }
+} // Cierre del if ($_SERVER['REQUEST_METHOD'] === 'POST')
+?>
