@@ -18,9 +18,7 @@
     height: 100%;
     width: 70%;
 }
-.contenedorStandar2{
-    width: 30%;
-}
+
 .filtrosContenedor{
     width: 100%;
     display: flex;
@@ -314,12 +312,11 @@
     box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
 }
 
-/* Efectos adicionales para un toque final impresionante */
-/* #filtros:hover {
+#filtros:hover {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);
     transition: all 0.5s ease;
-} */
+}
 
 .tablaBusqueda tr td:last-child button {
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 90%);
@@ -342,26 +339,17 @@ input, select, button, table, div {
         height: 100%;
         width: 65%;
     }
-    .contenedorStandar2{
-        width: 35%;
-    }
 }
 @media (max-width: 1380px) {
     .contenedorStandar{
         height: 100%;
         width: 65%;
     }
-    .contenedorStandar2{
-        width: 35%;
-    }
 }
 @media (max-width: 1300px) {
     .contenedorStandar{
         height: 100%;
         width: 60%;
-    }
-    .contenedorStandar2{
-        width: 40%;
     }
 }
 @media (max-width: 1270px) {
@@ -370,9 +358,6 @@ input, select, button, table, div {
     }
     .contenedorStandar{
         height: auto;
-        width: 100%;
-    }
-    .contenedorStandar2{
         width: 100%;
     }
     .contenedorPresupuestoTotal{
