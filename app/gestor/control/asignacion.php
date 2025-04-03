@@ -68,6 +68,10 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*'); //
                                 <td><?php echo htmlspecialchars($detalleSaldo['FECHA_REGISTRO']); ?></td>
                             </tr>
                             <tr>
+                                <th>Fecha Segerida de Pago</th>
+                                <td><?php echo htmlspecialchars($detalleSaldo['FECHA_PAGO']); ?></td>
+                            </tr>
+                            <tr>
                                 <th>Fecha Inicio</th>
                                 <td><?php echo htmlspecialchars($detalleSaldo['FECHA_INICIO']); ?></td>
                             </tr>

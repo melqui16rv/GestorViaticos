@@ -62,11 +62,11 @@ if (empty($datosSaldos)) {
                     <form id="filtroForm" method="GET" action="" onsubmit="return false;">
                         <div class="filtro-grupo">
                             <label for="documento">Documento</label>
-                            <input type="text" id="documento" name="documento" value="<?php echo htmlspecialchars($documento); ?>" placeholder="Ej: 123456789" class="filtro-dinamico">
+                            <input type="text" id="documento" name="documento" value="<?php echo htmlspecialchars($documento); ?>" placeholder="Ej: 1073672380" class="filtro-dinamico">
                         </div>
                         <div class="filtro-grupo">
                             <label for="nombre">Nombre</label>
-                            <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" placeholder="Ej: Juan Pérez" class="filtro-dinamico">
+                            <input type="text" id="nombre" name="nombre" value="<?php echo htmlspecialchars($nombre); ?>" placeholder="Ej: Juan Felipe Prado" class="filtro-dinamico">
                         </div>
                         <div class="filtro-grupo">
                             <label for="cdp">CDP</label>
@@ -120,28 +120,25 @@ if (empty($datosSaldos)) {
                     <table border="1" id="tablaSaldosAsignados" class="tablaBusqueda">
                         <thead>
                             <tr>
-                                <th>ID Saldo</th>
-                                <th>Nombre /<br>Documento</th>
-                                <th>Fechas:<br>Registro / Inicio / Fin</th>
-                                <th>Fecha<br>Pago</th>
+                                <th>Persona Viaticada</th>
+                                <th>Fechas Ejecución Viatico</th>
+                                <th>Fecha Sugeriada de Pago</th>
                                 <th>Saldo<br>Asignado</th>
                                 <th>CDP /<br>CRP</th>
-                                <th>Acciones</th>
+                                <th>Información Detallada</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (!empty($datosSaldos)): ?>
                                 <?php foreach ($datosSaldos as $row): ?>
-                                    <tr data-id-saldo="<?php echo htmlspecialchars($row['ID_SALDO']); ?>">
-                                        <td><?php echo htmlspecialchars($row['ID_SALDO']); ?></td>
+                                    <tr>
                                         <td>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['NOMBRE_PERSONA']); ?></span>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['DOCUMENTO_PERSONA']); ?></span>
                                         </td>
                                         <td>
-                                            <span class="multi-line"><?php echo htmlspecialchars($row['FECHA_REGISTRO']); ?></span>
-                                            <span class="multi-line"><?php echo htmlspecialchars($row['FECHA_INICIO']); ?></span>
-                                            <span class="multi-line"><?php echo htmlspecialchars($row['FECHA_FIN']); ?></span>
+                                            <span class="multi-line">Inicio: <?php echo htmlspecialchars($row['FECHA_INICIO']); ?></span>
+                                            <span class="multi-line">Fin: <?php echo htmlspecialchars($row['FECHA_FIN']); ?></span>
                                         </td>
                                         <td><?php echo htmlspecialchars($row['FECHA_PAGO']); ?></td>
                                         <td><?php echo htmlspecialchars(number_format($row['SALDO_ASIGNADO'], 2, ',', '.')); ?></td>
