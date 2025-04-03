@@ -173,6 +173,12 @@ function seleccionarCDP(codigoCDP, numeroDocumento, boton) {
             }
 
             data.forEach(crp => {
+                const saldoFormateado = new Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    minimumFractionDigits: 2
+                }).format(crp.Saldo_por_Utilizar);
+
                 const row = `
                     <tr class="filament-table-row">
                         <td class="filament-table-cell">
@@ -183,7 +189,7 @@ function seleccionarCDP(codigoCDP, numeroDocumento, boton) {
                         </td>
                         <td class="filament-table-cell">${crp.Numero_Documento}</td>
                         <td class="filament-table-cell">${crp.Observaciones}</td>
-                        <td class="filament-table-cell">${crp.Saldo_por_Utilizar}</td>
+                        <td class="filament-table-cell">${saldoFormateado}</td>
                         <td class="filament-table-cell">${crp.Compromisos}</td>
                         <td class="filament-table-cell">${crp.Obligaciones}</td>
                     </tr>`;
