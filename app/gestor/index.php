@@ -161,7 +161,7 @@ if (empty($datosSaldos)) {
             </div>
             <div class="filament-action-card">
                 <a href="control/insert_saldo_asiganado.php" class="filament-button filament-button-action">
-                    + Nuevo Registro de Saldo
+                    Agregar Asiganación
                 </a>
             </div>
         </div>
