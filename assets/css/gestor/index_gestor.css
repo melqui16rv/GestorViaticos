@@ -219,7 +219,7 @@
 .tablaBusqueda th:nth-child(8), /* Saldo por Comprometer */
 .tablaBusqueda td:nth-child(8) {
     min-width: 80px;
-    text-align: right;
+    text-align: center;
     white-space: nowrap;
 }
 
