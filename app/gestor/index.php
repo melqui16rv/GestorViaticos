@@ -122,11 +122,11 @@ if (empty($datosSaldos)) {
                             <tr>
                                 <th style="display: none;">ID Saldo</th>
                                 <th>Persona Viaticada</th>
-                                <th>Fechas Ejecución Viatico</th>
-                                <th>Fecha Sugeriada de Pago</th>
+                                <th>Fechas Ejecución<br>Viatico</th>
+                                <th>Fecha Sugeriada<br>de Pago</th>
                                 <th>Saldo<br>Asignado</th>
                                 <th>CDP /<br>CRP</th>
-                                <th>Información Detallada</th>
+                                <th>Información<br>Detallada</th>
                             </tr>
                         </thead>
                         <tbody>
