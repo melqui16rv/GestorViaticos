@@ -53,9 +53,10 @@ class gestor1 extends Conexion {
 
     public function obtenerCDPsViaticos() {
         try {
-            $sql = "SELECT CODIGO_CDP, Numero_Documento, Objeto 
-                    FROM cdp 
-                    WHERE Objeto LIKE '%VIATICOS%'";
+            $sql = "SELECT DISTINCT c.CODIGO_CDP, c.Numero_Documento, c.Objeto 
+                    FROM cdp c
+                    INNER JOIN crp r ON c.CODIGO_CDP = r.CODIGO_CDP 
+                    WHERE c.Objeto LIKE '%VIATICOS%'";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
