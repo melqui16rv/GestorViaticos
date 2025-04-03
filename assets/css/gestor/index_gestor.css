@@ -337,19 +337,7 @@ input, select, button, table, div {
 @media (max-width: 1439px) {
     .contenedorStandar{
         height: 100%;
-        width: 65%;
-    }
-}
-@media (max-width: 1380px) {
-    .contenedorStandar{
-        height: 100%;
-        width: 65%;
-    }
-}
-@media (max-width: 1300px) {
-    .contenedorStandar{
-        height: 100%;
-        width: 60%;
+        width: 100%;
     }
 }
 @media (max-width: 1270px) {
