@@ -44,20 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     if ($resultado) {
-        // Mostrar modal nativo y redirigir a index.php
-        echo '<script>
-            alert("¡Registro exitoso! La asignación del viático se ha guardado correctamente.");
-            window.location.href = BASE_URL . "app/gestor/index.php";
-        </script>';
+        header("Location: insert_saldo_asiganado.php?estado=exito");
         exit;
     } else {
-        // Mostrar error simple (puedes reemplazar esto por un modal si lo deseas)
-        echo '<script>
-            alert("Error al registrar la asignación de viático. Intente nuevamente.");
-            window.history.back();
-        </script>';
+        header("Location: insert_saldo_asiganado.php?estado=error");
         exit;
     }
-} else {
-    die('Acceso no autorizado.');
-}

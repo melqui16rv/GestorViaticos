@@ -192,6 +192,15 @@ function seleccionarCRP(codigoCRP, boton) {
     boton.closest('.filament-table-row').classList.add('active');
 }
 </script>
-
+<?php if (isset($_GET['estado'])): ?>
+<script>
+    <?php if ($_GET['estado'] === 'exito'): ?>
+        alert("¡Registro exitoso! La asignación del viático se ha guardado correctamente.");
+        window.location.href = "index.php";
+    <?php elseif ($_GET['estado'] === 'error'): ?>
+        alert("Error al registrar la asignación del viático. Intente nuevamente.");
+    <?php endif; ?>
+</script>
+<?php endif; ?>
 </body>
 </html>
