@@ -1,0 +1,197 @@
+/* Variables */
+:root {
+    --login-primary-blue: rgba(27, 60, 91, 0.8); /* Azul transparente */
+    --login-transparent-light: rgba(27, 60, 91, 0.1); /* Azul muy tenue */
+    --login-white: #ffffff; /* Blanco sólido */
+}
+
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    font-family: 'Arial', sans-serif;
+    min-height: 100vh;
+}
+
+
+/* Capa de fondo semitransparente */
+.login-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(27, 60, 91, 0.85); /* Azul oscuro transparente */
+    z-index: 1;
+}
+
+/* Contenedor principal */
+.login-contenedor {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* Contenedor del formulario - con un leve blur y muy poca opacidad */
+.login-formulario-contenedor {
+    background: rgba(27, 60, 91, 0.15); /* Azul oscuro con muy poca opacidad */
+    border-radius: 15px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 400px;
+    backdrop-filter: blur(0.5px); /* Blur muy ligero */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Estilos del formulario */
+.login-formulario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+}
+
+/* Logo más pequeño */
+.login-logof {
+    width: 120px; /* Tamaño reducido */
+    height: auto;
+    margin-bottom: 1rem;
+    filter: brightness(0) invert(1);
+}
+
+/* Contenedor del formulario */
+.login-form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+/* Estilos de los inputs */
+.login-form label {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--login-transparent-light);
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Inputs con texto blanco */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    background: transparent;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    color: var(--login-white); /* Texto blanco */
+}
+
+/* Placeholder en blanco tenue */
+.login-form input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Íconos dentro del input */
+.login-form i {
+    color: var(--login-white);
+    font-size: 1.2rem;
+}
+
+/* Botón para mostrar contraseña */
+#login-togglePassword {
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+}
+
+/* Estilos del botón */
+.login-boton {
+    background-color: var(--login-primary-blue);
+    color: var(--login-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+/* Hover del botón */
+.login-boton:hover {
+    background-color: rgba(27, 60, 91, 0.9);
+    transform: translateY(-2px);
+}
+
+/* Mensajes de error */
+.login-form p {
+    background-color: rgba(255, 0, 0, 0.2);
+    border-left: 4px solid rgba(255, 0, 0, 0.5);
+    padding: 1rem;
+    border-radius: 4px;
+    color: var(--login-white);
+}
+
+/* Footer */
+.login-footer {
+    background-color: var(--login-primary-blue);
+    color: var(--login-white);
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .login-contenedor {
+        padding: 1rem;
+    }
+    
+    .login-formulario-contenedor {
+        padding: 1.5rem;
+    }
+}
+
+/* Animación de entrada */
+@keyframes login-fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-formulario {
+    animation: login-fadeIn 0.5s ease-out;
+}
+
+/* Efectos al enfocar inputs */
+.login-form input:focus {
+    outline: none;
+}
+
+.login-form label:focus-within {
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.5);
+}

@@ -1,0 +1,418 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+.contenedor{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin-left: 12px;
+    margin-right: 12px;
+}
+.contenido {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+}
+.contenedorGrafiaca{
+    height: auto;
+}
+.contenedorStandar{
+    height: 100%;
+    width: 70%;
+}
+.contenedorStandar2{
+    width: 30%;
+}
+.filtrosContenedor{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.contenderDeTabla {
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+    position: relative;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    margin-top: 10px;
+}
+
+#filtros {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: auto;
+    max-width: 1200px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 1s ease-in-out;
+    height: auto;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+#filtroForm {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* .filtro-grupo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+} */
+
+#filtroForm label {
+    text-align: center;
+    margin-bottom: 10px;
+    color: #233d4f;
+    font-size: 0.6rem;
+    font-weight: 600;
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: solid 1px rgba(0, 0, 0, 0.44);
+}
+
+.filtro-dinamico {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    border-radius: 8px;
+    text-align: center;
+    font-size: 10px;
+}
+
+.filtro-botones {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.filtro-dinamico:focus {
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+#limpiarFiltros, #cargarMas, .ingresarConsumo {
+    padding: 15px 10px;
+    border-radius: 30px;
+    border: none;
+    background: #233d4f;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#limpiarFiltros:hover, #cargarMas:hover, .ingresarConsumo:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 65, 108, 0.5);
+}
+
+.tablaBusqueda {
+    width: max-content; /* Permite que la tabla tome el ancho necesario */
+    min-width: 100%; /* Asegura que al menos tome el ancho del contenedor */
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 0.75rem; /* Reducimos aún más el tamaño de fuente */
+}
+
+@keyframes slideUp {
+    0% { opacity: 0; transform: translateY(50px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.tablaBusqueda thead {
+    position: sticky;
+    color: aliceblue;
+    top: 0;
+    z-index: 10;
+    color: white;
+    background: rgba(141, 140, 140, 0.86);
+}
+
+.tablaBusqueda th, .tablaBusqueda td {
+    padding: 4px 8px; /* Reducimos el padding */
+    text-align: left;
+    color: black;
+    white-space: nowrap; /* Evita saltos de línea */
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    line-height: 1.2; /* Ajustamos el interlineado */
+    text-align: center; /* Centrado de contenido */
+    vertical-align: middle;
+}
+
+.tablaBusqueda th {
+    background: rgba(0, 0, 0, 0.2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    white-space: normal; /* Permitimos que el texto se ajuste */
+    height: 40px; /* Altura fija para encabezados */
+    vertical-align: middle; /* Centramos verticalmente */
+}
+
+.tablaBusqueda td {
+    font-size: 10px;
+    height: 35px; /* Altura fija para celdas */
+    vertical-align: middle;
+}
+
+/* Ajustes específicos para cada columna */
+.tablaBusqueda th:nth-child(1), /* Número de Documento */
+.tablaBusqueda td:nth-child(1) {
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+.tablaBusqueda th:nth-child(2), /* Fecha de Registro */
+.tablaBusqueda td:nth-child(2),
+.tablaBusqueda th:nth-child(3), /* Fecha de Creación */
+.tablaBusqueda td:nth-child(3) {
+    min-width: 120px;
+    white-space: nowrap;
+}
+
+.tablaBusqueda th:nth-child(4), /* Estado */
+.tablaBusqueda td:nth-child(4) {
+    min-width: 200px;
+    white-space: normal; /* Permitimos múltiples líneas */
+}
+
+.tablaBusqueda th:nth-child(5), /* Dependencia */
+.tablaBusqueda td:nth-child(5) {
+    min-width: 120px;
+    white-space: normal; /* Permitimos múltiples líneas */
+    max-width: 150px; /* Limitamos el ancho máximo */
+}
+
+.tablaBusqueda th:nth-child(6), /* Fuente */
+.tablaBusqueda td:nth-child(6) {
+    min-width: 120px;
+    white-space: normal;
+}
+
+.tablaBusqueda th:nth-child(7), /* Valor Actual */
+.tablaBusqueda td:nth-child(7),
+.tablaBusqueda th:nth-child(8), /* Saldo por Comprometer */
+.tablaBusqueda td:nth-child(8) {
+    min-width: 80px;
+    text-align: right;
+    white-space: nowrap;
+}
+
+.tablaBusqueda th:nth-child(9), /* Acciones */
+.tablaBusqueda td:nth-child(9) {
+    min-width: 80px;
+    text-align: center;
+}
+
+/* Columnas con ancho específico */
+.tablaBusqueda th:nth-child(1), .tablaBusqueda td:nth-child(1) { width: 12%; } /* CDP */
+.tablaBusqueda th:nth-child(2), .tablaBusqueda td:nth-child(2) { width: 15%; } /* Fecha Registro */
+.tablaBusqueda th:nth-child(3), .tablaBusqueda td:nth-child(3) { width: 15%; } /* Fecha Creación */
+.tablaBusqueda th:nth-child(4), .tablaBusqueda td:nth-child(4) { width: 20%; } /* Estado/Dependencia/Fuente */
+.tablaBusqueda th:nth-child(5), .tablaBusqueda td:nth-child(5) { width: 15%; } /* Valor */
+.tablaBusqueda th:nth-child(6), .tablaBusqueda td:nth-child(6) { width: 13%; } /* Saldo */
+.tablaBusqueda th:nth-child(7), .tablaBusqueda td:nth-child(7) { width: 10%; } /* Acciones */
+
+/* Estilos para el contenido en múltiples líneas */
+.multi-line {
+    display: block;
+    line-height: 1.2;
+}
+
+/* Ajustar el botón dentro de la tabla */
+.tablaBusqueda .ingresarConsumo {
+    padding: 3px 10px;
+    font-size: 0.7rem;
+    display: inline-block;
+}
+
+/* Estilo para texto que se corta */
+.texto-cortado {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Máximo 2 líneas */
+    line-clamp: 2; /* Máximo 2 líneas */
+    -webkit-box-orient: vertical;
+}
+
+#filtros-activos {
+    margin-top: 20px;
+    font-size: 0.6rem;
+    padding-bottom: 2px;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Animaciones específicas para botones al hacer clic */
+@keyframes buttonClick {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+#limpiarFiltros:active, #cargarMas:active, .ingresarConsumo:active {
+    animation: buttonClick 0.2s;
+}
+
+/* Efecto de brillo en inputs */
+.filtro-dinamico:focus {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Estilo dinámico para el área de filtros activos */
+#filtros-activos::before {
+
+    font-weight: 600;
+    display: block;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    animation: fadeIn 2s ease-in-out;
+}
+
+/* Scroll personalizado */
+::-webkit-scrollbar {
+    width: 1px;
+    height: 1px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(15deg,rgb(192, 255, 65), #ff4b2b);
+    border-radius: 10px;
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Efectos adicionales para un toque final impresionante */
+/* #filtros:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    transform: translateY(-5px);
+    transition: all 0.5s ease;
+} */
+
+.tablaBusqueda tr td:last-child button {
+    background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 90%);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.tablaBusqueda tr td:last-child button:hover {
+    background: linear-gradient(rgb(252, 15, 59),135deg,rgb(241, 26, 73));
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(30, 144, 255, 0.5);
+}
+
+/* Transiciones sutiles en todos los elementos */
+input, select, button, table, div {
+    transition: all 0.3s ease;
+}
+/* Estilos responsivos */
+@media (max-width: 1439px) {
+    .contenedorStandar{
+        height: 100%;
+        width: 65%;
+    }
+    .contenedorStandar2{
+        width: 35%;
+    }
+}
+@media (max-width: 1380px) {
+    .contenedorStandar{
+        height: 100%;
+        width: 65%;
+    }
+    .contenedorStandar2{
+        width: 35%;
+    }
+}
+@media (max-width: 1300px) {
+    .contenedorStandar{
+        height: 100%;
+        width: 60%;
+    }
+    .contenedorStandar2{
+        width: 40%;
+    }
+}
+@media (max-width: 1270px) {
+    .contenido {
+        flex-direction: column;
+    }
+    .contenedorStandar{
+        height: auto;
+        width: 100%;
+    }
+    .contenedorStandar2{
+        width: 100%;
+    }
+    .contenedorPresupuestoTotal{
+        display: block;
+        flex-direction: column;
+        width: 100%;
+        height: auto;
+        place-content: center;
+        place-items: center;
+        margin-top: 12px;
+    }
+    .resultados-container{
+        display: flex;
+    }
+    .resultados-container > * {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}
+/* Contenedor para acciones destacadas */
+.filament-action-card {
+    margin-top: 1.5rem;
+    display: flex;
+    display: flex;
+}
+
+/* Botón de acción principal (ir al formulario) */
+.filament-button-action {
+    background-color: #10b981; /* verde tailwind-emerald-500 */
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.875rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease-in-out;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid transparent;
+}
+
+.filament-button-action:hover {
+    background-color: #059669; /* verde más oscuro */
+}

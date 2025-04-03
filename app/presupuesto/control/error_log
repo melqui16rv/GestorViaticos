@@ -1,0 +1,6200 @@
+[02-Apr-2025 18:54:28 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 8725
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 65000000.00
+            [Saldo_por_Comprometer] => 65000000.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 8825
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:28:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 58000000.00
+            [Saldo_por_Comprometer] => 58000000.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 61333333.00
+            [Saldo_por_Comprometer] => 61333333.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 9025
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:55:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 9125
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 9225
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:02:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 10000000.00
+            [Saldo_por_Comprometer] => 10000000.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 9325
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:05:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 2983649087.00
+            [Saldo_por_Comprometer] => 2983649087.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 9425
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:09:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 331516565.20
+            [Saldo_por_Comprometer] => 331516565.20
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 8225
+            [Fecha_de_Registro] => 2025-03-21
+            [Fecha_de_Creacion] => 2025-03-21 10:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 23301019.00
+            [Saldo_por_Comprometer] => 23301019.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:29 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 7625
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:41:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 25837331.00
+            [Saldo_por_Comprometer] => 25837331.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 100000000.00
+            [Saldo_por_Comprometer] => 100000000.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 7825
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:59:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 125000000.00
+            [Saldo_por_Comprometer] => 125000000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 7925
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:02:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 113886250.00
+            [Saldo_por_Comprometer] => 113886250.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 8025
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:06:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 8125
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:49:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 7525
+            [Fecha_de_Registro] => 2025-03-06
+            [Fecha_de_Creacion] => 2025-03-06 18:55:00
+            [Estado] => Generado
+            [Dependencia] => 923243
+            [Fuente] => Nación
+            [Valor_Actual] => 38558830.00
+            [Saldo_por_Comprometer] => 38558830.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 65204000.00
+            [Saldo_por_Comprometer] => 65204000.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 112424659.00
+            [Saldo_por_Comprometer] => 112424659.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:29 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923214
+            [Fuente] => Nación
+            [Valor_Actual] => 7000000.00
+            [Saldo_por_Comprometer] => 7000000.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 116305291.00
+            [Saldo_por_Comprometer] => 116305291.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 106294000.00
+            [Saldo_por_Comprometer] => 106294000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 376238966.00
+            [Saldo_por_Comprometer] => 376238966.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 42676949.00
+            [Saldo_por_Comprometer] => 42676949.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 31702061.00
+            [Saldo_por_Comprometer] => 31702061.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 96800000.00
+            [Saldo_por_Comprometer] => 96800000.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 29425719.00
+            [Saldo_por_Comprometer] => 29425719.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:31 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 8692251.00
+            [Saldo_por_Comprometer] => 8692251.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 55000000.00
+            [Saldo_por_Comprometer] => 55000000.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 22000000.00
+            [Saldo_por_Comprometer] => 22000000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 35000000.00
+            [Saldo_por_Comprometer] => 35000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 7025
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 10:58:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923269
+            [Fuente] => Propios
+            [Valor_Actual] => 264600000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 7125
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923270
+            [Fuente] => Propios
+            [Valor_Actual] => 294000000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:31 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 329120000.00
+            [Saldo_por_Comprometer] => 2568276.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 121000000.00
+            [Saldo_por_Comprometer] => 484000.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 19360000.00
+            [Saldo_por_Comprometer] => 19360000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 20148000.00
+            [Saldo_por_Comprometer] => 17739509.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 13810000.00
+            [Saldo_por_Comprometer] => 11701831.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 3000000.00
+            [Saldo_por_Comprometer] => 3000000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 3525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:28:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 29480000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Nación
+            [Valor_Actual] => 423005721.00
+            [Saldo_por_Comprometer] => 22993711.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 31345822.00
+            [Saldo_por_Comprometer] => 220578.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 3725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:53:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:32 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 3825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 7847025402.00
+            [Saldo_por_Comprometer] => 503090945.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 3925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:09:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 255274500.00
+            [Saldo_por_Comprometer] => 255274500.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 4025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:15:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 4125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:25:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 16900000.00
+            [Saldo_por_Comprometer] => 16677942.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 4225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:38:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 185551954.00
+            [Saldo_por_Comprometer] => 44193650.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 4325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:46:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 4425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:51:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 50787088.00
+            [Saldo_por_Comprometer] => 46772213.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 4525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:10:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 23894352.00
+            [Saldo_por_Comprometer] => 2.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 4625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:18:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 15000000.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 4725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:24:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:32 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 4825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:31:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 14760322.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 4925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:36:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 14950000.00
+            [Saldo_por_Comprometer] => 12723270.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 5025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:45:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 124390000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 5125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 46500000.00
+            [Saldo_por_Comprometer] => 46500000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 5225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:04:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 5325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:09:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 5425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:53:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 150550077.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 5525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 12:01:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 5625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:26:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 5725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:49:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:33 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 5825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:23:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 5925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:38:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 6025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:53:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 6125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 6225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:04:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 6325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:11:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 6425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:17:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 13870000.00
+            [Saldo_por_Comprometer] => 13870000.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 6525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:24:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 6625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:31:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 6725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:40:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:33 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 6825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:52:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 500000.00
+            [Saldo_por_Comprometer] => 500000.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:10:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:14:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 280000000.00
+            [Saldo_por_Comprometer] => 247059047.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:27:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:31:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Nación
+            [Valor_Actual] => 172800.00
+            [Saldo_por_Comprometer] => 172800.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:39:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 15026000.00
+            [Saldo_por_Comprometer] => 14456416.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:46:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 601016000.00
+            [Saldo_por_Comprometer] => 111799679.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:56:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 56049047.00
+            [Saldo_por_Comprometer] => 49274676.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 1025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:08:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 93433900.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:34 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 1125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:34:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 89656032.00
+            [Saldo_por_Comprometer] => 89656032.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 1225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:07:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 250000000.00
+            [Saldo_por_Comprometer] => 225827034.70
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 1325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:19:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 25857700.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 1425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:39:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 1525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:43:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 17748456.00
+            [Saldo_por_Comprometer] => 17748456.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 1625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:48:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 21424000.00
+            [Saldo_por_Comprometer] => 16643855.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 1725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:52:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 1825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:56:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 4613885.00
+            [Saldo_por_Comprometer] => 4613885.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 1925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:01:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 985067590.00
+            [Saldo_por_Comprometer] => 86872.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 2025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:05:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:34 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 2125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 5069351435.00
+            [Saldo_por_Comprometer] => 386895919.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 2225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 2325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:49:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 1029684265.00
+            [Saldo_por_Comprometer] => 997228465.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 2425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:54:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 2525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:01:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 2625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 2725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:19:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 2825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:24:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 155254590.00
+            [Saldo_por_Comprometer] => 65104174.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 2925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:09:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 3025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:12:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:34 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 3125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:17:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 3225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:20:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 193145600.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 1277032372.00
+            [Saldo_por_Comprometer] => 227270653.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:36 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 9525
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 2698382958.00
+            [Saldo_por_Comprometer] => 2698382958.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 9525
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 4437123280.00
+            [Saldo_por_Comprometer] => 4437123280.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 9625
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:11:00
+            [Estado] => Generado
+            [Dependencia] => 923220
+            [Fuente] => Nación
+            [Valor_Actual] => 35000000.00
+            [Saldo_por_Comprometer] => 35000000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 9725
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:15:00
+            [Estado] => Generado
+            [Dependencia] => 923269
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 9825
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:18:00
+            [Estado] => Generado
+            [Dependencia] => 923270
+            [Fuente] => Propios
+            [Valor_Actual] => 72000000.00
+            [Saldo_por_Comprometer] => 72000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 8325
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:28:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 117192000.00
+            [Saldo_por_Comprometer] => 117192000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 8425
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:32:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 28171024.00
+            [Saldo_por_Comprometer] => 28171024.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 8525
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:36:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 57663250.00
+            [Saldo_por_Comprometer] => 57663250.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 8625
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:41:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 94440460.00
+            [Saldo_por_Comprometer] => 94440460.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 8725
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:57:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 16000000.00
+            [Saldo_por_Comprometer] => 16000000.00
+            [Reintegros] => 0.00
+        )
+
+    [10] => Array
+        (
+            [Numero_Documento] => 8725
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 65000000.00
+            [Saldo_por_Comprometer] => 65000000.00
+            [Reintegros] => 0.00
+        )
+
+    [11] => Array
+        (
+            [Numero_Documento] => 8825
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:28:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 58000000.00
+            [Saldo_por_Comprometer] => 58000000.00
+            [Reintegros] => 0.00
+        )
+
+    [12] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 61333333.00
+            [Saldo_por_Comprometer] => 61333333.00
+            [Reintegros] => 0.00
+        )
+
+    [13] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [14] => Array
+        (
+            [Numero_Documento] => 9025
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:55:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [15] => Array
+        (
+            [Numero_Documento] => 9125
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [16] => Array
+        (
+            [Numero_Documento] => 9225
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:02:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 10000000.00
+            [Saldo_por_Comprometer] => 10000000.00
+            [Reintegros] => 0.00
+        )
+
+    [17] => Array
+        (
+            [Numero_Documento] => 9325
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:05:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 2983649087.00
+            [Saldo_por_Comprometer] => 2983649087.00
+            [Reintegros] => 0.00
+        )
+
+    [18] => Array
+        (
+            [Numero_Documento] => 9425
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:09:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 331516565.20
+            [Saldo_por_Comprometer] => 331516565.20
+            [Reintegros] => 0.00
+        )
+
+    [19] => Array
+        (
+            [Numero_Documento] => 8225
+            [Fecha_de_Registro] => 2025-03-21
+            [Fecha_de_Creacion] => 2025-03-21 10:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 23301019.00
+            [Saldo_por_Comprometer] => 23301019.00
+            [Reintegros] => 0.00
+        )
+
+    [20] => Array
+        (
+            [Numero_Documento] => 7625
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:41:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 25837331.00
+            [Saldo_por_Comprometer] => 25837331.00
+            [Reintegros] => 0.00
+        )
+
+    [21] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 100000000.00
+            [Saldo_por_Comprometer] => 100000000.00
+            [Reintegros] => 0.00
+        )
+
+    [22] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [23] => Array
+        (
+            [Numero_Documento] => 7825
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:59:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 125000000.00
+            [Saldo_por_Comprometer] => 125000000.00
+            [Reintegros] => 0.00
+        )
+
+    [24] => Array
+        (
+            [Numero_Documento] => 7925
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:02:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 113886250.00
+            [Saldo_por_Comprometer] => 113886250.00
+            [Reintegros] => 0.00
+        )
+
+    [25] => Array
+        (
+            [Numero_Documento] => 8025
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:06:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [26] => Array
+        (
+            [Numero_Documento] => 8125
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:49:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [27] => Array
+        (
+            [Numero_Documento] => 7525
+            [Fecha_de_Registro] => 2025-03-06
+            [Fecha_de_Creacion] => 2025-03-06 18:55:00
+            [Estado] => Generado
+            [Dependencia] => 923243
+            [Fuente] => Nación
+            [Valor_Actual] => 38558830.00
+            [Saldo_por_Comprometer] => 38558830.00
+            [Reintegros] => 0.00
+        )
+
+    [28] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 65204000.00
+            [Saldo_por_Comprometer] => 65204000.00
+            [Reintegros] => 0.00
+        )
+
+    [29] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 112424659.00
+            [Saldo_por_Comprometer] => 112424659.00
+            [Reintegros] => 0.00
+        )
+
+    [30] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923214
+            [Fuente] => Nación
+            [Valor_Actual] => 7000000.00
+            [Saldo_por_Comprometer] => 7000000.00
+            [Reintegros] => 0.00
+        )
+
+    [31] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 116305291.00
+            [Saldo_por_Comprometer] => 116305291.00
+            [Reintegros] => 0.00
+        )
+
+    [32] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [33] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 106294000.00
+            [Saldo_por_Comprometer] => 106294000.00
+            [Reintegros] => 0.00
+        )
+
+    [34] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [35] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 376238966.00
+            [Saldo_por_Comprometer] => 376238966.00
+            [Reintegros] => 0.00
+        )
+
+    [36] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 42676949.00
+            [Saldo_por_Comprometer] => 42676949.00
+            [Reintegros] => 0.00
+        )
+
+    [37] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 31702061.00
+            [Saldo_por_Comprometer] => 31702061.00
+            [Reintegros] => 0.00
+        )
+
+    [38] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 96800000.00
+            [Saldo_por_Comprometer] => 96800000.00
+            [Reintegros] => 0.00
+        )
+
+    [39] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 29425719.00
+            [Saldo_por_Comprometer] => 29425719.00
+            [Reintegros] => 0.00
+        )
+
+    [40] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 8692251.00
+            [Saldo_por_Comprometer] => 8692251.00
+            [Reintegros] => 0.00
+        )
+
+    [41] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 55000000.00
+            [Saldo_por_Comprometer] => 55000000.00
+            [Reintegros] => 0.00
+        )
+
+    [42] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [43] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 22000000.00
+            [Saldo_por_Comprometer] => 22000000.00
+            [Reintegros] => 0.00
+        )
+
+    [44] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 35000000.00
+            [Saldo_por_Comprometer] => 35000000.00
+            [Reintegros] => 0.00
+        )
+
+    [45] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [46] => Array
+        (
+            [Numero_Documento] => 7025
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 10:58:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923269
+            [Fuente] => Propios
+            [Valor_Actual] => 264600000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [47] => Array
+        (
+            [Numero_Documento] => 7125
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923270
+            [Fuente] => Propios
+            [Valor_Actual] => 294000000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [48] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [49] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [50] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 329120000.00
+            [Saldo_por_Comprometer] => 2568276.00
+            [Reintegros] => 0.00
+        )
+
+    [51] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 121000000.00
+            [Saldo_por_Comprometer] => 484000.00
+            [Reintegros] => 0.00
+        )
+
+    [52] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 19360000.00
+            [Saldo_por_Comprometer] => 19360000.00
+            [Reintegros] => 0.00
+        )
+
+    [53] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 20148000.00
+            [Saldo_por_Comprometer] => 17739509.00
+            [Reintegros] => 0.00
+        )
+
+    [54] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 13810000.00
+            [Saldo_por_Comprometer] => 11701831.00
+            [Reintegros] => 0.00
+        )
+
+    [55] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 3000000.00
+            [Saldo_por_Comprometer] => 3000000.00
+            [Reintegros] => 0.00
+        )
+
+    [56] => Array
+        (
+            [Numero_Documento] => 3525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:28:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 29480000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [57] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Nación
+            [Valor_Actual] => 423005721.00
+            [Saldo_por_Comprometer] => 22993711.00
+            [Reintegros] => 0.00
+        )
+
+    [58] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 31345822.00
+            [Saldo_por_Comprometer] => 220578.00
+            [Reintegros] => 0.00
+        )
+
+    [59] => Array
+        (
+            [Numero_Documento] => 3725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:53:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [60] => Array
+        (
+            [Numero_Documento] => 3825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 7847025402.00
+            [Saldo_por_Comprometer] => 503090945.00
+            [Reintegros] => 0.00
+        )
+
+    [61] => Array
+        (
+            [Numero_Documento] => 3925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:09:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 255274500.00
+            [Saldo_por_Comprometer] => 255274500.00
+            [Reintegros] => 0.00
+        )
+
+    [62] => Array
+        (
+            [Numero_Documento] => 4025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:15:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [63] => Array
+        (
+            [Numero_Documento] => 4125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:25:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 16900000.00
+            [Saldo_por_Comprometer] => 16677942.00
+            [Reintegros] => 0.00
+        )
+
+    [64] => Array
+        (
+            [Numero_Documento] => 4225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:38:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 185551954.00
+            [Saldo_por_Comprometer] => 44193650.00
+            [Reintegros] => 0.00
+        )
+
+    [65] => Array
+        (
+            [Numero_Documento] => 4325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:46:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [66] => Array
+        (
+            [Numero_Documento] => 4425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:51:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 50787088.00
+            [Saldo_por_Comprometer] => 46772213.00
+            [Reintegros] => 0.00
+        )
+
+    [67] => Array
+        (
+            [Numero_Documento] => 4525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:10:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 23894352.00
+            [Saldo_por_Comprometer] => 2.00
+            [Reintegros] => 0.00
+        )
+
+    [68] => Array
+        (
+            [Numero_Documento] => 4625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:18:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 15000000.00
+            [Reintegros] => 0.00
+        )
+
+    [69] => Array
+        (
+            [Numero_Documento] => 4725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:24:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [70] => Array
+        (
+            [Numero_Documento] => 4825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:31:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 14760322.00
+            [Reintegros] => 0.00
+        )
+
+    [71] => Array
+        (
+            [Numero_Documento] => 4925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:36:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 14950000.00
+            [Saldo_por_Comprometer] => 12723270.00
+            [Reintegros] => 0.00
+        )
+
+    [72] => Array
+        (
+            [Numero_Documento] => 5025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:45:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 124390000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [73] => Array
+        (
+            [Numero_Documento] => 5125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 46500000.00
+            [Saldo_por_Comprometer] => 46500000.00
+            [Reintegros] => 0.00
+        )
+
+    [74] => Array
+        (
+            [Numero_Documento] => 5225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:04:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [75] => Array
+        (
+            [Numero_Documento] => 5325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:09:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [76] => Array
+        (
+            [Numero_Documento] => 5425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:53:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 150550077.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [77] => Array
+        (
+            [Numero_Documento] => 5525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 12:01:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [78] => Array
+        (
+            [Numero_Documento] => 5625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:26:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [79] => Array
+        (
+            [Numero_Documento] => 5725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:49:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [80] => Array
+        (
+            [Numero_Documento] => 5825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:23:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [81] => Array
+        (
+            [Numero_Documento] => 5925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:38:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [82] => Array
+        (
+            [Numero_Documento] => 6025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:53:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [83] => Array
+        (
+            [Numero_Documento] => 6125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [84] => Array
+        (
+            [Numero_Documento] => 6225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:04:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [85] => Array
+        (
+            [Numero_Documento] => 6325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:11:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [86] => Array
+        (
+            [Numero_Documento] => 6425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:17:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 13870000.00
+            [Saldo_por_Comprometer] => 13870000.00
+            [Reintegros] => 0.00
+        )
+
+    [87] => Array
+        (
+            [Numero_Documento] => 6525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:24:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [88] => Array
+        (
+            [Numero_Documento] => 6625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:31:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [89] => Array
+        (
+            [Numero_Documento] => 6725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:40:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [90] => Array
+        (
+            [Numero_Documento] => 6825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:52:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 500000.00
+            [Saldo_por_Comprometer] => 500000.00
+            [Reintegros] => 0.00
+        )
+
+    [91] => Array
+        (
+            [Numero_Documento] => 225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:10:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [92] => Array
+        (
+            [Numero_Documento] => 325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:14:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 280000000.00
+            [Saldo_por_Comprometer] => 247059047.00
+            [Reintegros] => 0.00
+        )
+
+    [93] => Array
+        (
+            [Numero_Documento] => 425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:27:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [94] => Array
+        (
+            [Numero_Documento] => 525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:31:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Nación
+            [Valor_Actual] => 172800.00
+            [Saldo_por_Comprometer] => 172800.00
+            [Reintegros] => 0.00
+        )
+
+    [95] => Array
+        (
+            [Numero_Documento] => 625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:39:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 15026000.00
+            [Saldo_por_Comprometer] => 14456416.00
+            [Reintegros] => 0.00
+        )
+
+    [96] => Array
+        (
+            [Numero_Documento] => 725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:46:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [97] => Array
+        (
+            [Numero_Documento] => 825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 601016000.00
+            [Saldo_por_Comprometer] => 111799679.00
+            [Reintegros] => 0.00
+        )
+
+    [98] => Array
+        (
+            [Numero_Documento] => 925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:56:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 56049047.00
+            [Saldo_por_Comprometer] => 49274676.00
+            [Reintegros] => 0.00
+        )
+
+    [99] => Array
+        (
+            [Numero_Documento] => 1025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:08:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 93433900.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [100] => Array
+        (
+            [Numero_Documento] => 1125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:34:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 89656032.00
+            [Saldo_por_Comprometer] => 89656032.00
+            [Reintegros] => 0.00
+        )
+
+    [101] => Array
+        (
+            [Numero_Documento] => 1225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:07:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 250000000.00
+            [Saldo_por_Comprometer] => 225827034.70
+            [Reintegros] => 0.00
+        )
+
+    [102] => Array
+        (
+            [Numero_Documento] => 1325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:19:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 25857700.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [103] => Array
+        (
+            [Numero_Documento] => 1425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:39:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [104] => Array
+        (
+            [Numero_Documento] => 1525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:43:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 17748456.00
+            [Saldo_por_Comprometer] => 17748456.00
+            [Reintegros] => 0.00
+        )
+
+    [105] => Array
+        (
+            [Numero_Documento] => 1625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:48:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 21424000.00
+            [Saldo_por_Comprometer] => 16643855.00
+            [Reintegros] => 0.00
+        )
+
+    [106] => Array
+        (
+            [Numero_Documento] => 1725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:52:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [107] => Array
+        (
+            [Numero_Documento] => 1825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:56:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 4613885.00
+            [Saldo_por_Comprometer] => 4613885.00
+            [Reintegros] => 0.00
+        )
+
+    [108] => Array
+        (
+            [Numero_Documento] => 1925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:01:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 985067590.00
+            [Saldo_por_Comprometer] => 86872.00
+            [Reintegros] => 0.00
+        )
+
+    [109] => Array
+        (
+            [Numero_Documento] => 2025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:05:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [110] => Array
+        (
+            [Numero_Documento] => 2125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 5069351435.00
+            [Saldo_por_Comprometer] => 386895919.00
+            [Reintegros] => 0.00
+        )
+
+    [111] => Array
+        (
+            [Numero_Documento] => 2225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [112] => Array
+        (
+            [Numero_Documento] => 2325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:49:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 1029684265.00
+            [Saldo_por_Comprometer] => 997228465.00
+            [Reintegros] => 0.00
+        )
+
+    [113] => Array
+        (
+            [Numero_Documento] => 2425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:54:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [114] => Array
+        (
+            [Numero_Documento] => 2525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:01:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [115] => Array
+        (
+            [Numero_Documento] => 2625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [116] => Array
+        (
+            [Numero_Documento] => 2725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:19:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [117] => Array
+        (
+            [Numero_Documento] => 2825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:24:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 155254590.00
+            [Saldo_por_Comprometer] => 65104174.00
+            [Reintegros] => 0.00
+        )
+
+    [118] => Array
+        (
+            [Numero_Documento] => 2925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:09:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [119] => Array
+        (
+            [Numero_Documento] => 3025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:12:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [120] => Array
+        (
+            [Numero_Documento] => 3125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:17:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [121] => Array
+        (
+            [Numero_Documento] => 3225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:20:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 193145600.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [122] => Array
+        (
+            [Numero_Documento] => 125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 1277032372.00
+            [Saldo_por_Comprometer] => 227270653.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:37 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 9525
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 2698382958.00
+            [Saldo_por_Comprometer] => 2698382958.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 9525
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 4437123280.00
+            [Saldo_por_Comprometer] => 4437123280.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 9625
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:11:00
+            [Estado] => Generado
+            [Dependencia] => 923220
+            [Fuente] => Nación
+            [Valor_Actual] => 35000000.00
+            [Saldo_por_Comprometer] => 35000000.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 9725
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:15:00
+            [Estado] => Generado
+            [Dependencia] => 923269
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 9825
+            [Fecha_de_Registro] => 2025-03-27
+            [Fecha_de_Creacion] => 2025-03-27 16:18:00
+            [Estado] => Generado
+            [Dependencia] => 923270
+            [Fuente] => Propios
+            [Valor_Actual] => 72000000.00
+            [Saldo_por_Comprometer] => 72000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 8325
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:28:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 117192000.00
+            [Saldo_por_Comprometer] => 117192000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 8425
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:32:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 28171024.00
+            [Saldo_por_Comprometer] => 28171024.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 8525
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:36:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 57663250.00
+            [Saldo_por_Comprometer] => 57663250.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 8625
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:41:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 94440460.00
+            [Saldo_por_Comprometer] => 94440460.00
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 8725
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:57:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 16000000.00
+            [Saldo_por_Comprometer] => 16000000.00
+            [Reintegros] => 0.00
+        )
+
+    [10] => Array
+        (
+            [Numero_Documento] => 8725
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 65000000.00
+            [Saldo_por_Comprometer] => 65000000.00
+            [Reintegros] => 0.00
+        )
+
+    [11] => Array
+        (
+            [Numero_Documento] => 8825
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:28:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 58000000.00
+            [Saldo_por_Comprometer] => 58000000.00
+            [Reintegros] => 0.00
+        )
+
+    [12] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 61333333.00
+            [Saldo_por_Comprometer] => 61333333.00
+            [Reintegros] => 0.00
+        )
+
+    [13] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [14] => Array
+        (
+            [Numero_Documento] => 9025
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:55:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [15] => Array
+        (
+            [Numero_Documento] => 9125
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [16] => Array
+        (
+            [Numero_Documento] => 9225
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:02:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 10000000.00
+            [Saldo_por_Comprometer] => 10000000.00
+            [Reintegros] => 0.00
+        )
+
+    [17] => Array
+        (
+            [Numero_Documento] => 9325
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:05:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 2983649087.00
+            [Saldo_por_Comprometer] => 2983649087.00
+            [Reintegros] => 0.00
+        )
+
+    [18] => Array
+        (
+            [Numero_Documento] => 9425
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:09:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 331516565.20
+            [Saldo_por_Comprometer] => 331516565.20
+            [Reintegros] => 0.00
+        )
+
+    [19] => Array
+        (
+            [Numero_Documento] => 8225
+            [Fecha_de_Registro] => 2025-03-21
+            [Fecha_de_Creacion] => 2025-03-21 10:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 23301019.00
+            [Saldo_por_Comprometer] => 23301019.00
+            [Reintegros] => 0.00
+        )
+
+    [20] => Array
+        (
+            [Numero_Documento] => 7625
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:41:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 25837331.00
+            [Saldo_por_Comprometer] => 25837331.00
+            [Reintegros] => 0.00
+        )
+
+    [21] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 100000000.00
+            [Saldo_por_Comprometer] => 100000000.00
+            [Reintegros] => 0.00
+        )
+
+    [22] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [23] => Array
+        (
+            [Numero_Documento] => 7825
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:59:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 125000000.00
+            [Saldo_por_Comprometer] => 125000000.00
+            [Reintegros] => 0.00
+        )
+
+    [24] => Array
+        (
+            [Numero_Documento] => 7925
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:02:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 113886250.00
+            [Saldo_por_Comprometer] => 113886250.00
+            [Reintegros] => 0.00
+        )
+
+    [25] => Array
+        (
+            [Numero_Documento] => 8025
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:06:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [26] => Array
+        (
+            [Numero_Documento] => 8125
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:49:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [27] => Array
+        (
+            [Numero_Documento] => 7525
+            [Fecha_de_Registro] => 2025-03-06
+            [Fecha_de_Creacion] => 2025-03-06 18:55:00
+            [Estado] => Generado
+            [Dependencia] => 923243
+            [Fuente] => Nación
+            [Valor_Actual] => 38558830.00
+            [Saldo_por_Comprometer] => 38558830.00
+            [Reintegros] => 0.00
+        )
+
+    [28] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 65204000.00
+            [Saldo_por_Comprometer] => 65204000.00
+            [Reintegros] => 0.00
+        )
+
+    [29] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 112424659.00
+            [Saldo_por_Comprometer] => 112424659.00
+            [Reintegros] => 0.00
+        )
+
+    [30] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923214
+            [Fuente] => Nación
+            [Valor_Actual] => 7000000.00
+            [Saldo_por_Comprometer] => 7000000.00
+            [Reintegros] => 0.00
+        )
+
+    [31] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 116305291.00
+            [Saldo_por_Comprometer] => 116305291.00
+            [Reintegros] => 0.00
+        )
+
+    [32] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [33] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 106294000.00
+            [Saldo_por_Comprometer] => 106294000.00
+            [Reintegros] => 0.00
+        )
+
+    [34] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [35] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 376238966.00
+            [Saldo_por_Comprometer] => 376238966.00
+            [Reintegros] => 0.00
+        )
+
+    [36] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 42676949.00
+            [Saldo_por_Comprometer] => 42676949.00
+            [Reintegros] => 0.00
+        )
+
+    [37] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 31702061.00
+            [Saldo_por_Comprometer] => 31702061.00
+            [Reintegros] => 0.00
+        )
+
+    [38] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 96800000.00
+            [Saldo_por_Comprometer] => 96800000.00
+            [Reintegros] => 0.00
+        )
+
+    [39] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 29425719.00
+            [Saldo_por_Comprometer] => 29425719.00
+            [Reintegros] => 0.00
+        )
+
+    [40] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 8692251.00
+            [Saldo_por_Comprometer] => 8692251.00
+            [Reintegros] => 0.00
+        )
+
+    [41] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 55000000.00
+            [Saldo_por_Comprometer] => 55000000.00
+            [Reintegros] => 0.00
+        )
+
+    [42] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [43] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 22000000.00
+            [Saldo_por_Comprometer] => 22000000.00
+            [Reintegros] => 0.00
+        )
+
+    [44] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 35000000.00
+            [Saldo_por_Comprometer] => 35000000.00
+            [Reintegros] => 0.00
+        )
+
+    [45] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [46] => Array
+        (
+            [Numero_Documento] => 7025
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 10:58:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923269
+            [Fuente] => Propios
+            [Valor_Actual] => 264600000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [47] => Array
+        (
+            [Numero_Documento] => 7125
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923270
+            [Fuente] => Propios
+            [Valor_Actual] => 294000000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [48] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [49] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [50] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 329120000.00
+            [Saldo_por_Comprometer] => 2568276.00
+            [Reintegros] => 0.00
+        )
+
+    [51] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 121000000.00
+            [Saldo_por_Comprometer] => 484000.00
+            [Reintegros] => 0.00
+        )
+
+    [52] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 19360000.00
+            [Saldo_por_Comprometer] => 19360000.00
+            [Reintegros] => 0.00
+        )
+
+    [53] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 20148000.00
+            [Saldo_por_Comprometer] => 17739509.00
+            [Reintegros] => 0.00
+        )
+
+    [54] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 13810000.00
+            [Saldo_por_Comprometer] => 11701831.00
+            [Reintegros] => 0.00
+        )
+
+    [55] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 3000000.00
+            [Saldo_por_Comprometer] => 3000000.00
+            [Reintegros] => 0.00
+        )
+
+    [56] => Array
+        (
+            [Numero_Documento] => 3525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:28:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 29480000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [57] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Nación
+            [Valor_Actual] => 423005721.00
+            [Saldo_por_Comprometer] => 22993711.00
+            [Reintegros] => 0.00
+        )
+
+    [58] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 31345822.00
+            [Saldo_por_Comprometer] => 220578.00
+            [Reintegros] => 0.00
+        )
+
+    [59] => Array
+        (
+            [Numero_Documento] => 3725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:53:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [60] => Array
+        (
+            [Numero_Documento] => 3825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 7847025402.00
+            [Saldo_por_Comprometer] => 503090945.00
+            [Reintegros] => 0.00
+        )
+
+    [61] => Array
+        (
+            [Numero_Documento] => 3925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:09:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 255274500.00
+            [Saldo_por_Comprometer] => 255274500.00
+            [Reintegros] => 0.00
+        )
+
+    [62] => Array
+        (
+            [Numero_Documento] => 4025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:15:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [63] => Array
+        (
+            [Numero_Documento] => 4125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:25:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 16900000.00
+            [Saldo_por_Comprometer] => 16677942.00
+            [Reintegros] => 0.00
+        )
+
+    [64] => Array
+        (
+            [Numero_Documento] => 4225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:38:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 185551954.00
+            [Saldo_por_Comprometer] => 44193650.00
+            [Reintegros] => 0.00
+        )
+
+    [65] => Array
+        (
+            [Numero_Documento] => 4325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:46:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [66] => Array
+        (
+            [Numero_Documento] => 4425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:51:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 50787088.00
+            [Saldo_por_Comprometer] => 46772213.00
+            [Reintegros] => 0.00
+        )
+
+    [67] => Array
+        (
+            [Numero_Documento] => 4525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:10:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 23894352.00
+            [Saldo_por_Comprometer] => 2.00
+            [Reintegros] => 0.00
+        )
+
+    [68] => Array
+        (
+            [Numero_Documento] => 4625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:18:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 15000000.00
+            [Reintegros] => 0.00
+        )
+
+    [69] => Array
+        (
+            [Numero_Documento] => 4725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:24:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [70] => Array
+        (
+            [Numero_Documento] => 4825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:31:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 14760322.00
+            [Reintegros] => 0.00
+        )
+
+    [71] => Array
+        (
+            [Numero_Documento] => 4925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:36:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 14950000.00
+            [Saldo_por_Comprometer] => 12723270.00
+            [Reintegros] => 0.00
+        )
+
+    [72] => Array
+        (
+            [Numero_Documento] => 5025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:45:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 124390000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [73] => Array
+        (
+            [Numero_Documento] => 5125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 46500000.00
+            [Saldo_por_Comprometer] => 46500000.00
+            [Reintegros] => 0.00
+        )
+
+    [74] => Array
+        (
+            [Numero_Documento] => 5225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:04:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [75] => Array
+        (
+            [Numero_Documento] => 5325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:09:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [76] => Array
+        (
+            [Numero_Documento] => 5425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:53:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 150550077.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [77] => Array
+        (
+            [Numero_Documento] => 5525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 12:01:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [78] => Array
+        (
+            [Numero_Documento] => 5625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:26:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [79] => Array
+        (
+            [Numero_Documento] => 5725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:49:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [80] => Array
+        (
+            [Numero_Documento] => 5825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:23:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [81] => Array
+        (
+            [Numero_Documento] => 5925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:38:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [82] => Array
+        (
+            [Numero_Documento] => 6025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:53:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [83] => Array
+        (
+            [Numero_Documento] => 6125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [84] => Array
+        (
+            [Numero_Documento] => 6225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:04:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [85] => Array
+        (
+            [Numero_Documento] => 6325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:11:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [86] => Array
+        (
+            [Numero_Documento] => 6425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:17:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 13870000.00
+            [Saldo_por_Comprometer] => 13870000.00
+            [Reintegros] => 0.00
+        )
+
+    [87] => Array
+        (
+            [Numero_Documento] => 6525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:24:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [88] => Array
+        (
+            [Numero_Documento] => 6625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:31:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [89] => Array
+        (
+            [Numero_Documento] => 6725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:40:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [90] => Array
+        (
+            [Numero_Documento] => 6825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:52:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 500000.00
+            [Saldo_por_Comprometer] => 500000.00
+            [Reintegros] => 0.00
+        )
+
+    [91] => Array
+        (
+            [Numero_Documento] => 225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:10:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [92] => Array
+        (
+            [Numero_Documento] => 325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:14:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 280000000.00
+            [Saldo_por_Comprometer] => 247059047.00
+            [Reintegros] => 0.00
+        )
+
+    [93] => Array
+        (
+            [Numero_Documento] => 425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:27:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [94] => Array
+        (
+            [Numero_Documento] => 525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:31:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Nación
+            [Valor_Actual] => 172800.00
+            [Saldo_por_Comprometer] => 172800.00
+            [Reintegros] => 0.00
+        )
+
+    [95] => Array
+        (
+            [Numero_Documento] => 625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:39:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 15026000.00
+            [Saldo_por_Comprometer] => 14456416.00
+            [Reintegros] => 0.00
+        )
+
+    [96] => Array
+        (
+            [Numero_Documento] => 725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:46:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [97] => Array
+        (
+            [Numero_Documento] => 825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 601016000.00
+            [Saldo_por_Comprometer] => 111799679.00
+            [Reintegros] => 0.00
+        )
+
+    [98] => Array
+        (
+            [Numero_Documento] => 925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:56:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 56049047.00
+            [Saldo_por_Comprometer] => 49274676.00
+            [Reintegros] => 0.00
+        )
+
+    [99] => Array
+        (
+            [Numero_Documento] => 1025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:08:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 93433900.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [100] => Array
+        (
+            [Numero_Documento] => 1125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:34:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 89656032.00
+            [Saldo_por_Comprometer] => 89656032.00
+            [Reintegros] => 0.00
+        )
+
+    [101] => Array
+        (
+            [Numero_Documento] => 1225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:07:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 250000000.00
+            [Saldo_por_Comprometer] => 225827034.70
+            [Reintegros] => 0.00
+        )
+
+    [102] => Array
+        (
+            [Numero_Documento] => 1325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:19:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 25857700.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [103] => Array
+        (
+            [Numero_Documento] => 1425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:39:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [104] => Array
+        (
+            [Numero_Documento] => 1525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:43:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 17748456.00
+            [Saldo_por_Comprometer] => 17748456.00
+            [Reintegros] => 0.00
+        )
+
+    [105] => Array
+        (
+            [Numero_Documento] => 1625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:48:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 21424000.00
+            [Saldo_por_Comprometer] => 16643855.00
+            [Reintegros] => 0.00
+        )
+
+    [106] => Array
+        (
+            [Numero_Documento] => 1725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:52:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [107] => Array
+        (
+            [Numero_Documento] => 1825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:56:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 4613885.00
+            [Saldo_por_Comprometer] => 4613885.00
+            [Reintegros] => 0.00
+        )
+
+    [108] => Array
+        (
+            [Numero_Documento] => 1925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:01:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 985067590.00
+            [Saldo_por_Comprometer] => 86872.00
+            [Reintegros] => 0.00
+        )
+
+    [109] => Array
+        (
+            [Numero_Documento] => 2025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:05:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [110] => Array
+        (
+            [Numero_Documento] => 2125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 5069351435.00
+            [Saldo_por_Comprometer] => 386895919.00
+            [Reintegros] => 0.00
+        )
+
+    [111] => Array
+        (
+            [Numero_Documento] => 2225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [112] => Array
+        (
+            [Numero_Documento] => 2325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:49:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 1029684265.00
+            [Saldo_por_Comprometer] => 997228465.00
+            [Reintegros] => 0.00
+        )
+
+    [113] => Array
+        (
+            [Numero_Documento] => 2425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:54:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [114] => Array
+        (
+            [Numero_Documento] => 2525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:01:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [115] => Array
+        (
+            [Numero_Documento] => 2625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [116] => Array
+        (
+            [Numero_Documento] => 2725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:19:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [117] => Array
+        (
+            [Numero_Documento] => 2825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:24:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 155254590.00
+            [Saldo_por_Comprometer] => 65104174.00
+            [Reintegros] => 0.00
+        )
+
+    [118] => Array
+        (
+            [Numero_Documento] => 2925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:09:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [119] => Array
+        (
+            [Numero_Documento] => 3025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:12:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [120] => Array
+        (
+            [Numero_Documento] => 3125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:17:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [121] => Array
+        (
+            [Numero_Documento] => 3225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:20:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 193145600.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [122] => Array
+        (
+            [Numero_Documento] => 125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 1277032372.00
+            [Saldo_por_Comprometer] => 227270653.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:37 America/Bogota] Array
+(
+    [0] => Array
+        (
+            [Numero_Documento] => 8725
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 11:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 65000000.00
+            [Saldo_por_Comprometer] => 65000000.00
+            [Reintegros] => 0.00
+        )
+
+    [1] => Array
+        (
+            [Numero_Documento] => 8825
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:28:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 58000000.00
+            [Saldo_por_Comprometer] => 58000000.00
+            [Reintegros] => 0.00
+        )
+
+    [2] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 61333333.00
+            [Saldo_por_Comprometer] => 61333333.00
+            [Reintegros] => 0.00
+        )
+
+    [3] => Array
+        (
+            [Numero_Documento] => 8925
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:36:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [4] => Array
+        (
+            [Numero_Documento] => 9025
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:55:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [5] => Array
+        (
+            [Numero_Documento] => 9125
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 12:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [6] => Array
+        (
+            [Numero_Documento] => 9225
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:02:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 10000000.00
+            [Saldo_por_Comprometer] => 10000000.00
+            [Reintegros] => 0.00
+        )
+
+    [7] => Array
+        (
+            [Numero_Documento] => 9325
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:05:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 2983649087.00
+            [Saldo_por_Comprometer] => 2983649087.00
+            [Reintegros] => 0.00
+        )
+
+    [8] => Array
+        (
+            [Numero_Documento] => 9425
+            [Fecha_de_Registro] => 2025-03-26
+            [Fecha_de_Creacion] => 2025-03-26 13:09:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 331516565.20
+            [Saldo_por_Comprometer] => 331516565.20
+            [Reintegros] => 0.00
+        )
+
+    [9] => Array
+        (
+            [Numero_Documento] => 8225
+            [Fecha_de_Registro] => 2025-03-21
+            [Fecha_de_Creacion] => 2025-03-21 10:59:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 23301019.00
+            [Saldo_por_Comprometer] => 23301019.00
+            [Reintegros] => 0.00
+        )
+
+    [10] => Array
+        (
+            [Numero_Documento] => 7625
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:41:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 25837331.00
+            [Saldo_por_Comprometer] => 25837331.00
+            [Reintegros] => 0.00
+        )
+
+    [11] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 100000000.00
+            [Saldo_por_Comprometer] => 100000000.00
+            [Reintegros] => 0.00
+        )
+
+    [12] => Array
+        (
+            [Numero_Documento] => 7725
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:50:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 20000000.00
+            [Saldo_por_Comprometer] => 20000000.00
+            [Reintegros] => 0.00
+        )
+
+    [13] => Array
+        (
+            [Numero_Documento] => 7825
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 16:59:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 125000000.00
+            [Saldo_por_Comprometer] => 125000000.00
+            [Reintegros] => 0.00
+        )
+
+    [14] => Array
+        (
+            [Numero_Documento] => 7925
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:02:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 113886250.00
+            [Saldo_por_Comprometer] => 113886250.00
+            [Reintegros] => 0.00
+        )
+
+    [15] => Array
+        (
+            [Numero_Documento] => 8025
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:06:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 130000000.00
+            [Saldo_por_Comprometer] => 130000000.00
+            [Reintegros] => 0.00
+        )
+
+    [16] => Array
+        (
+            [Numero_Documento] => 8125
+            [Fecha_de_Registro] => 2025-03-18
+            [Fecha_de_Creacion] => 2025-03-18 17:49:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [17] => Array
+        (
+            [Numero_Documento] => 7525
+            [Fecha_de_Registro] => 2025-03-06
+            [Fecha_de_Creacion] => 2025-03-06 18:55:00
+            [Estado] => Generado
+            [Dependencia] => 923243
+            [Fuente] => Nación
+            [Valor_Actual] => 38558830.00
+            [Saldo_por_Comprometer] => 38558830.00
+            [Reintegros] => 0.00
+        )
+
+    [18] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 65204000.00
+            [Saldo_por_Comprometer] => 65204000.00
+            [Reintegros] => 0.00
+        )
+
+    [19] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 112424659.00
+            [Saldo_por_Comprometer] => 112424659.00
+            [Reintegros] => 0.00
+        )
+
+    [20] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923214
+            [Fuente] => Nación
+            [Valor_Actual] => 7000000.00
+            [Saldo_por_Comprometer] => 7000000.00
+            [Reintegros] => 0.00
+        )
+
+    [21] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 116305291.00
+            [Saldo_por_Comprometer] => 116305291.00
+            [Reintegros] => 0.00
+        )
+
+    [22] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [23] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 106294000.00
+            [Saldo_por_Comprometer] => 106294000.00
+            [Reintegros] => 0.00
+        )
+
+    [24] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [25] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 376238966.00
+            [Saldo_por_Comprometer] => 376238966.00
+            [Reintegros] => 0.00
+        )
+
+    [26] => Array
+        (
+            [Numero_Documento] => 7225
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 16:21:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 42676949.00
+            [Saldo_por_Comprometer] => 42676949.00
+            [Reintegros] => 0.00
+        )
+
+    [27] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 31702061.00
+            [Saldo_por_Comprometer] => 31702061.00
+            [Reintegros] => 0.00
+        )
+
+    [28] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 96800000.00
+            [Saldo_por_Comprometer] => 96800000.00
+            [Reintegros] => 0.00
+        )
+
+    [29] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 29425719.00
+            [Saldo_por_Comprometer] => 29425719.00
+            [Reintegros] => 0.00
+        )
+
+    [30] => Array
+        (
+            [Numero_Documento] => 7325
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:28:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 8692251.00
+            [Saldo_por_Comprometer] => 8692251.00
+            [Reintegros] => 0.00
+        )
+
+    [31] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 55000000.00
+            [Saldo_por_Comprometer] => 55000000.00
+            [Reintegros] => 0.00
+        )
+
+    [32] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [33] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 22000000.00
+            [Saldo_por_Comprometer] => 22000000.00
+            [Reintegros] => 0.00
+        )
+
+    [34] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 35000000.00
+            [Saldo_por_Comprometer] => 35000000.00
+            [Reintegros] => 0.00
+        )
+
+    [35] => Array
+        (
+            [Numero_Documento] => 7425
+            [Fecha_de_Registro] => 2025-02-28
+            [Fecha_de_Creacion] => 2025-02-28 17:37:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 30000000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [36] => Array
+        (
+            [Numero_Documento] => 7025
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 10:58:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923269
+            [Fuente] => Propios
+            [Valor_Actual] => 264600000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [37] => Array
+        (
+            [Numero_Documento] => 7125
+            [Fecha_de_Registro] => 2025-02-07
+            [Fecha_de_Creacion] => 2025-02-07 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923270
+            [Fuente] => Propios
+            [Valor_Actual] => 294000000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [38] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [39] => Array
+        (
+            [Numero_Documento] => 6925
+            [Fecha_de_Registro] => 2025-01-24
+            [Fecha_de_Creacion] => 2025-01-24 15:13:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [40] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 329120000.00
+            [Saldo_por_Comprometer] => 2568276.00
+            [Reintegros] => 0.00
+        )
+
+    [41] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 121000000.00
+            [Saldo_por_Comprometer] => 484000.00
+            [Reintegros] => 0.00
+        )
+
+    [42] => Array
+        (
+            [Numero_Documento] => 3325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 07:52:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 19360000.00
+            [Saldo_por_Comprometer] => 19360000.00
+            [Reintegros] => 0.00
+        )
+
+    [43] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 20148000.00
+            [Saldo_por_Comprometer] => 17739509.00
+            [Reintegros] => 0.00
+        )
+
+    [44] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923284
+            [Fuente] => Nación
+            [Valor_Actual] => 13810000.00
+            [Saldo_por_Comprometer] => 11701831.00
+            [Reintegros] => 0.00
+        )
+
+    [45] => Array
+        (
+            [Numero_Documento] => 3425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923286
+            [Fuente] => Nación
+            [Valor_Actual] => 3000000.00
+            [Saldo_por_Comprometer] => 3000000.00
+            [Reintegros] => 0.00
+        )
+
+    [46] => Array
+        (
+            [Numero_Documento] => 3525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:28:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923228
+            [Fuente] => Nación
+            [Valor_Actual] => 29480000.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [47] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Nación
+            [Valor_Actual] => 423005721.00
+            [Saldo_por_Comprometer] => 22993711.00
+            [Reintegros] => 0.00
+        )
+
+    [48] => Array
+        (
+            [Numero_Documento] => 3625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:44:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 31345822.00
+            [Saldo_por_Comprometer] => 220578.00
+            [Reintegros] => 0.00
+        )
+
+    [49] => Array
+        (
+            [Numero_Documento] => 3725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 08:53:00
+            [Estado] => Generado
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [50] => Array
+        (
+            [Numero_Documento] => 3825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:03:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 7847025402.00
+            [Saldo_por_Comprometer] => 503090945.00
+            [Reintegros] => 0.00
+        )
+
+    [51] => Array
+        (
+            [Numero_Documento] => 3925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:09:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 255274500.00
+            [Saldo_por_Comprometer] => 255274500.00
+            [Reintegros] => 0.00
+        )
+
+    [52] => Array
+        (
+            [Numero_Documento] => 4025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:15:00
+            [Estado] => Generado
+            [Dependencia] => 923244
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [53] => Array
+        (
+            [Numero_Documento] => 4125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:25:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923245
+            [Fuente] => Nación
+            [Valor_Actual] => 16900000.00
+            [Saldo_por_Comprometer] => 16677942.00
+            [Reintegros] => 0.00
+        )
+
+    [54] => Array
+        (
+            [Numero_Documento] => 4225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:38:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 185551954.00
+            [Saldo_por_Comprometer] => 44193650.00
+            [Reintegros] => 0.00
+        )
+
+    [55] => Array
+        (
+            [Numero_Documento] => 4325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:46:00
+            [Estado] => Generado
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [56] => Array
+        (
+            [Numero_Documento] => 4425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 09:51:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923285
+            [Fuente] => Nación
+            [Valor_Actual] => 50787088.00
+            [Saldo_por_Comprometer] => 46772213.00
+            [Reintegros] => 0.00
+        )
+
+    [57] => Array
+        (
+            [Numero_Documento] => 4525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:10:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 23894352.00
+            [Saldo_por_Comprometer] => 2.00
+            [Reintegros] => 0.00
+        )
+
+    [58] => Array
+        (
+            [Numero_Documento] => 4625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:18:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 15000000.00
+            [Reintegros] => 0.00
+        )
+
+    [59] => Array
+        (
+            [Numero_Documento] => 4725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:24:00
+            [Estado] => Generado
+            [Dependencia] => 923290
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [60] => Array
+        (
+            [Numero_Documento] => 4825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:31:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 15000000.00
+            [Saldo_por_Comprometer] => 14760322.00
+            [Reintegros] => 0.00
+        )
+
+    [61] => Array
+        (
+            [Numero_Documento] => 4925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:36:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 14950000.00
+            [Saldo_por_Comprometer] => 12723270.00
+            [Reintegros] => 0.00
+        )
+
+    [62] => Array
+        (
+            [Numero_Documento] => 5025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:45:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923290
+            [Fuente] => Nación
+            [Valor_Actual] => 124390000.00
+            [Saldo_por_Comprometer] => 30000000.00
+            [Reintegros] => 0.00
+        )
+
+    [63] => Array
+        (
+            [Numero_Documento] => 5125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 10:57:00
+            [Estado] => Generado
+            [Dependencia] => 923242
+            [Fuente] => Propios
+            [Valor_Actual] => 46500000.00
+            [Saldo_por_Comprometer] => 46500000.00
+            [Reintegros] => 0.00
+        )
+
+    [64] => Array
+        (
+            [Numero_Documento] => 5225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:04:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 2000000.00
+            [Saldo_por_Comprometer] => 2000000.00
+            [Reintegros] => 0.00
+        )
+
+    [65] => Array
+        (
+            [Numero_Documento] => 5325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:09:00
+            [Estado] => Generado
+            [Dependencia] => 923234
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [66] => Array
+        (
+            [Numero_Documento] => 5425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 11:53:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 150550077.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [67] => Array
+        (
+            [Numero_Documento] => 5525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 12:01:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [68] => Array
+        (
+            [Numero_Documento] => 5625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:26:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [69] => Array
+        (
+            [Numero_Documento] => 5725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 13:49:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [70] => Array
+        (
+            [Numero_Documento] => 5825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:23:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [71] => Array
+        (
+            [Numero_Documento] => 5925
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:38:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [72] => Array
+        (
+            [Numero_Documento] => 6025
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:53:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [73] => Array
+        (
+            [Numero_Documento] => 6125
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [74] => Array
+        (
+            [Numero_Documento] => 6225
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:04:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [75] => Array
+        (
+            [Numero_Documento] => 6325
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:11:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [76] => Array
+        (
+            [Numero_Documento] => 6425
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:17:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 13870000.00
+            [Saldo_por_Comprometer] => 13870000.00
+            [Reintegros] => 0.00
+        )
+
+    [77] => Array
+        (
+            [Numero_Documento] => 6525
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:24:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [78] => Array
+        (
+            [Numero_Documento] => 6625
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:31:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [79] => Array
+        (
+            [Numero_Documento] => 6725
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:40:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [80] => Array
+        (
+            [Numero_Documento] => 6825
+            [Fecha_de_Registro] => 2025-01-11
+            [Fecha_de_Creacion] => 2025-01-11 15:52:00
+            [Estado] => Generado
+            [Dependencia] => 923224
+            [Fuente] => Propios
+            [Valor_Actual] => 500000.00
+            [Saldo_por_Comprometer] => 500000.00
+            [Reintegros] => 0.00
+        )
+
+    [81] => Array
+        (
+            [Numero_Documento] => 225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:10:00
+            [Estado] => Generado
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [82] => Array
+        (
+            [Numero_Documento] => 325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:14:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 280000000.00
+            [Saldo_por_Comprometer] => 247059047.00
+            [Reintegros] => 0.00
+        )
+
+    [83] => Array
+        (
+            [Numero_Documento] => 425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:27:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [84] => Array
+        (
+            [Numero_Documento] => 525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:31:00
+            [Estado] => Generado
+            [Dependencia] => 923209
+            [Fuente] => Nación
+            [Valor_Actual] => 172800.00
+            [Saldo_por_Comprometer] => 172800.00
+            [Reintegros] => 0.00
+        )
+
+    [85] => Array
+        (
+            [Numero_Documento] => 625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:39:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 15026000.00
+            [Saldo_por_Comprometer] => 14456416.00
+            [Reintegros] => 0.00
+        )
+
+    [86] => Array
+        (
+            [Numero_Documento] => 725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:46:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [87] => Array
+        (
+            [Numero_Documento] => 825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 601016000.00
+            [Saldo_por_Comprometer] => 111799679.00
+            [Reintegros] => 0.00
+        )
+
+    [88] => Array
+        (
+            [Numero_Documento] => 925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:56:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 56049047.00
+            [Saldo_por_Comprometer] => 49274676.00
+            [Reintegros] => 0.00
+        )
+
+    [89] => Array
+        (
+            [Numero_Documento] => 1025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:08:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 93433900.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [90] => Array
+        (
+            [Numero_Documento] => 1125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 12:34:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 89656032.00
+            [Saldo_por_Comprometer] => 89656032.00
+            [Reintegros] => 0.00
+        )
+
+    [91] => Array
+        (
+            [Numero_Documento] => 1225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:07:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 250000000.00
+            [Saldo_por_Comprometer] => 225827034.70
+            [Reintegros] => 0.00
+        )
+
+    [92] => Array
+        (
+            [Numero_Documento] => 1325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:19:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 25857700.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [93] => Array
+        (
+            [Numero_Documento] => 1425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:39:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [94] => Array
+        (
+            [Numero_Documento] => 1525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:43:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 17748456.00
+            [Saldo_por_Comprometer] => 17748456.00
+            [Reintegros] => 0.00
+        )
+
+    [95] => Array
+        (
+            [Numero_Documento] => 1625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:48:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 21424000.00
+            [Saldo_por_Comprometer] => 16643855.00
+            [Reintegros] => 0.00
+        )
+
+    [96] => Array
+        (
+            [Numero_Documento] => 1725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:52:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [97] => Array
+        (
+            [Numero_Documento] => 1825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 13:56:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Propios
+            [Valor_Actual] => 4613885.00
+            [Saldo_por_Comprometer] => 4613885.00
+            [Reintegros] => 0.00
+        )
+
+    [98] => Array
+        (
+            [Numero_Documento] => 1925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:01:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 985067590.00
+            [Saldo_por_Comprometer] => 86872.00
+            [Reintegros] => 0.00
+        )
+
+    [99] => Array
+        (
+            [Numero_Documento] => 2025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:05:00
+            [Estado] => Generado
+            [Dependencia] => 923210
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [100] => Array
+        (
+            [Numero_Documento] => 2125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:54:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 5069351435.00
+            [Saldo_por_Comprometer] => 386895919.00
+            [Reintegros] => 0.00
+        )
+
+    [101] => Array
+        (
+            [Numero_Documento] => 2225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 14:58:00
+            [Estado] => Generado
+            [Dependencia] => 923211
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [102] => Array
+        (
+            [Numero_Documento] => 2325
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:49:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 1029684265.00
+            [Saldo_por_Comprometer] => 997228465.00
+            [Reintegros] => 0.00
+        )
+
+    [103] => Array
+        (
+            [Numero_Documento] => 2425
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 15:54:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [104] => Array
+        (
+            [Numero_Documento] => 2525
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:01:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [105] => Array
+        (
+            [Numero_Documento] => 2625
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:07:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [106] => Array
+        (
+            [Numero_Documento] => 2725
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:19:00
+            [Estado] => Generado
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [107] => Array
+        (
+            [Numero_Documento] => 2825
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 16:24:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923218
+            [Fuente] => Propios
+            [Valor_Actual] => 155254590.00
+            [Saldo_por_Comprometer] => 65104174.00
+            [Reintegros] => 0.00
+        )
+
+    [108] => Array
+        (
+            [Numero_Documento] => 2925
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:09:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [109] => Array
+        (
+            [Numero_Documento] => 3025
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:12:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [110] => Array
+        (
+            [Numero_Documento] => 3125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:17:00
+            [Estado] => Generado
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 0.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [111] => Array
+        (
+            [Numero_Documento] => 3225
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 17:20:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923227
+            [Fuente] => Nación
+            [Valor_Actual] => 193145600.00
+            [Saldo_por_Comprometer] => 0.00
+            [Reintegros] => 0.00
+        )
+
+    [112] => Array
+        (
+            [Numero_Documento] => 125
+            [Fecha_de_Registro] => 2025-01-10
+            [Fecha_de_Creacion] => 2025-01-10 11:06:00
+            [Estado] => Con Compromiso
+            [Dependencia] => 923238
+            [Fuente] => Nación
+            [Valor_Actual] => 1277032372.00
+            [Saldo_por_Comprometer] => 227270653.00
+            [Reintegros] => 0.00
+        )
+
+)
+
+[02-Apr-2025 18:54:38 America/Bogota] Array
+(
+)
+
