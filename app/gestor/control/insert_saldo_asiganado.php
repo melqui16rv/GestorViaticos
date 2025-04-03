@@ -132,9 +132,9 @@ $cdps = $gestor->obtenerCDPsViaticos();
                         <th class="filament-table-heading">Seleccionar</th>
                         <th class="filament-table-heading">Número CRP</th>
                         <th class="filament-table-heading">Descripción</th>
-                        <th class="filament-table-heading">Dependencia</th>
-                        <th class="filament-table-heading">Rubro</th>
-                        <th class="filament-table-heading">Fuente</th>
+                        <th class="filament-table-heading">Saldo Disponible</th>
+                        <th class="filament-table-heading">Compromiso</th>
+                        <th class="filament-table-heading">Obligación</th>
                     </tr>
                 </thead>
                 <tbody class="filament-table-body"></tbody>
@@ -183,9 +183,9 @@ function seleccionarCDP(codigoCDP, numeroDocumento, boton) {
                         </td>
                         <td class="filament-table-cell">${crp.Numero_Documento}</td>
                         <td class="filament-table-cell">${crp.Observaciones}</td>
-                        <td class="filament-table-cell">${crp.Dependencia}</td>
-                        <td class="filament-table-cell">${crp.Rubro}</td>
-                        <td class="filament-table-cell">${crp.Fuente}</td>
+                        <td class="filament-table-cell">${crp.Saldo_por_Utilizar}</td>
+                        <td class="filament-table-cell">${crp.Compromisos}</td>
+                        <td class="filament-table-cell">${crp.Obligaciones}</td>
                     </tr>`;
                 tbody.innerHTML += row;
             });
