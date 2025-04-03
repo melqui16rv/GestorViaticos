@@ -18,3 +18,13 @@
     background-color: #e5e7eb;
     border-color: #9ca3af;
 }
+.filament-button-secondary {
+    background-color: #fff;
+    color: #374151;
+    border: 1px solid #d1d5db;
+}
+
+.filament-button-secondary:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
