@@ -5,6 +5,7 @@
     display: flex;
     justify-content: flex-start;
     margin-bottom: 1rem;
+    padding: 1.5rem;
 }
 .filament-return-button {
     font-size: 0.875rem;

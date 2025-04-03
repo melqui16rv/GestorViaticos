@@ -31,7 +31,9 @@ body {
 /* Layout */
 .contenedor.filament-page {
     min-height: 100vh;
-    padding: 1.5rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1.5rem;
     background-color: var(--color-background);
 }
 
