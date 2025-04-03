@@ -224,14 +224,6 @@ body.filament-body {
         font-size: 1rem;
     }
 }
-/* Botón de volver */
-.filament-return-button-container {
-    width: 100%;
-    max-width: 1080px;
-    display: flex;
-    justify-content: flex-start;
-    margin-bottom: 1rem;
-}
 
 .filament-return-button {
     font-size: 0.875rem;

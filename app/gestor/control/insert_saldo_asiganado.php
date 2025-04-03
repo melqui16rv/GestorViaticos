@@ -23,6 +23,7 @@ $cdps = $gestor->obtenerCDPsViaticos();
     <meta charset="UTF-8">
     <title>Asignación de viático</title>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/gestor/insert.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/botonRetrocedar.css">
 </head>
 <body class="filament-body">
     <div class="filament-return-button-container">

@@ -1,0 +1,8 @@
+/* Botón de volver */
+.filament-return-button-container {
+    width: 100%;
+    max-width: 1080px;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
