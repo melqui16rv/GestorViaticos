@@ -196,7 +196,7 @@ function seleccionarCRP(codigoCRP, boton) {
 <script>
     <?php if ($_GET['estado'] === 'exito'): ?>
         alert("¡Registro exitoso! La asignación del viático se ha guardado correctamente.");
-        window.location.href = BASE_URL . "../index.php";
+        window.location.href = "../index.php";
     <?php elseif ($_GET['estado'] === 'error'): ?>
         alert("Error al registrar la asignación del viático. Intente nuevamente.");
     <?php endif; ?>
