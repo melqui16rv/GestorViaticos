@@ -69,14 +69,18 @@ class gestor1 extends Conexion {
     public function obtenerCRPsPorCDP($codigoCDP) {
         try {
             $codigoCDP = trim($codigoCDP);
-            $sql = "SELECT * FROM crp WHERE TRIM(CODIGO_CDP) = :codigo_cdp";
+            $sql = "SELECT * FROM crp 
+                    WHERE TRIM(CODIGO_CDP) = :codigo_cdp 
+                    AND Saldo_por_Utilizar IS NOT NULL 
+                    AND Saldo_por_Utilizar > 0";
+            
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':codigo_cdp', $codigoCDP, PDO::PARAM_STR);
             $stmt->execute();
             
             $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if (empty($resultados)) {
-                error_log("No se encontraron CRPs para el CDP: '$codigoCDP'");
+                error_log("No se encontraron CRPs con saldo disponible para el CDP: '$codigoCDP'");
             }
             return $resultados;
         } catch (PDOException $e) {
