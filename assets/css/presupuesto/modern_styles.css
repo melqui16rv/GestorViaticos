@@ -58,6 +58,7 @@
     box-shadow: var(--shadow);
     margin: 24px 0;
     padding: 24px;
+    width: 100%;
   }
   
   /* Encabezado de página */
@@ -136,7 +137,6 @@
   
   .table-responsive {
     overflow-x: auto;
-    max-height: calc(100vh - 300px);
     overflow-y: auto;
     scrollbar-width: thin;
   }
