@@ -33,39 +33,39 @@ class planeacion1 extends Conexion {
     }
 
     public function obtenerTotalCRPs($cdp) {
-        $query = "SELECT 
+        // Primero obtener los datos del CDP
+        $queryCDP = "SELECT 
+            Valor_Actual as valor_cdp_aprobado,
+            Saldo_por_Comprometer as saldo_cdp
+        FROM cdp 
+        WHERE Numero_Documento = :cdp
+        LIMIT 1";
+
+        $stmtCDP = $this->conexion->prepare($queryCDP);
+        $stmtCDP->bindParam(':cdp', $cdp, PDO::PARAM_STR);
+        $stmtCDP->execute();
+        $resultCDP = $stmtCDP->fetch(PDO::FETCH_ASSOC);
+
+        // Luego obtener los totales de CRP
+        $queryCRP = "SELECT 
             COUNT(*) as total,
-            (SELECT Valor_Actual FROM cdp WHERE Numero_Documento = :cdp) as valor_cdp_aprobado,
-            (SELECT Saldo_por_Comprometer FROM cdp WHERE Numero_Documento = :cdp) as saldo_cdp,
             SUM(COALESCE(Valor_Actual, 0)) as total_valor_crp,
             SUM(COALESCE(Saldo_por_Utilizar, 0)) as saldo_crp
         FROM crp 
         WHERE CDP = :cdp";
 
-        $stmt = $this->conexion->prepare($query);
-        $stmt->bindParam(':cdp', $cdp, PDO::PARAM_STR);
-        $stmt->execute();
+        $stmtCRP = $this->conexion->prepare($queryCRP);
+        $stmtCRP->bindParam(':cdp', $cdp, PDO::PARAM_STR);
+        $stmtCRP->execute();
+        $resultCRP = $stmtCRP->fetch(PDO::FETCH_ASSOC);
 
-        $result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Si no hay resultados, establecer valores predeterminados
-        if (!$result) {
-            return [
-                'total' => 0,
-                'valor_cdp_aprobado' => 0,
-                'saldo_cdp' => 0,
-                'total_valor_crp' => 0,
-                'saldo_crp' => 0
-            ];
-        }
-
-        // Asegurarse de que los valores numéricos sean 0 si son NULL
+        // Combinar resultados y asegurar valores por defecto
         return [
-            'total' => (int)$result['total'],
-            'valor_cdp_aprobado' => (float)$result['valor_cdp_aprobado'] ?: 0,
-            'saldo_cdp' => (float)$result['saldo_cdp'] ?: 0,
-            'total_valor_crp' => (float)$result['total_valor_crp'] ?: 0,
-            'saldo_crp' => (float)$result['saldo_crp'] ?: 0
+            'total' => (int)($resultCRP['total'] ?? 0),
+            'valor_cdp_aprobado' => (float)($resultCDP['valor_cdp_aprobado'] ?? 0),
+            'saldo_cdp' => (float)($resultCDP['saldo_cdp'] ?? 0),
+            'total_valor_crp' => (float)($resultCRP['total_valor_crp'] ?? 0),
+            'saldo_crp' => (float)($resultCRP['saldo_crp'] ?? 0)
         ];
     }
 }
