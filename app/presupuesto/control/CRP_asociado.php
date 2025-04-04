@@ -60,80 +60,88 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                 <h1 class="page-title">CRP Asociados al CDP: <span class="text-primary"><?php echo htmlspecialchars($cod_CDP); ?></span></h1>
             </div>
             
-            <!-- Resumen de totales -->
-            <div class="card resumen-totales">
-                <div class="card-content">
-                    <div class="stat-item">
-                        <div class="stat-label">Total CRPs</div>
-                        <div class="stat-value"><?php echo $totalesCRP['total']; ?></div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Valor Total Aprobado</div>
-                        <div class="stat-value">$<?php echo number_format($totalesCRP['valor_cdp_aprobado'], 2); ?></div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Valor Total del CRP</div>
-                        <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Saldo sin utilizar del CDP</div>
-                        <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_cdp'], 2); ?></div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-label">Saldo sin utilizar del CRP</div>
-                        <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></div>
+            <div class="flex-container">
+                <!-- Columna de la tabla (60%) -->
+                <div class="table-column">
+                    <div class="contenderDeTabla data-table-container">
+                        <div class="contendor_tabla">
+                            <div class="table-responsive">
+                                <table border="1" id="tablaCDP" class="modern-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Código CRP</th>
+                                            <th>Código CDP</th>
+                                            <th>N° Documento</th>
+                                            <th>Fecha Registro</th>
+                                            <th>Estado</th>
+                                            <th>Beneficiario</th>
+                                            <th>Valor Inicial</th>
+                                            <th>Valor Actual</th>
+                                            <th>Saldo por Utilizar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php if ($crpsAsociados && count($crpsAsociados) > 0): ?>
+                                            <?php foreach ($crpsAsociados as $crp): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($crp['CODIGO_CRP']); ?></td>
+                                                    <td><?php echo htmlspecialchars($crp['CODIGO_CDP']); ?></td>
+                                                    <td><?php echo htmlspecialchars($crp['Numero_Documento']); ?></td>
+                                                    <td><?php echo htmlspecialchars($crp['Fecha_de_Registro']); ?></td>
+                                                    <td>
+                                                        <span class="badge badge-<?php echo strtolower(str_replace(' ', '-', $crp['Estado'])); ?>">
+                                                            <?php echo htmlspecialchars($crp['Estado']); ?>
+                                                        </span>
+                                                    </td>
+                                                    <td><?php echo htmlspecialchars($crp['Nombre_Razon_Social']); ?></td>
+                                                    <td class="text-right">$<?php echo number_format($crp['Valor_Inicial'] ?? 0, 2); ?></td>
+                                                    <td class="text-right">$<?php echo number_format($crp['Valor_Actual'] ?? 0, 2); ?></td>
+                                                    <td class="text-right">$<?php echo number_format($crp['Saldo_por_Utilizar'] ?? 0, 2); ?></td>
+                                                </tr>
+                                            <?php endforeach; ?>
+                                        <?php else: ?>
+                                            <tr>
+                                                <td colspan="9" class="no-data">
+                                                    <div class="empty-state">
+                                                        <i class="fas fa-info-circle empty-icon"></i>
+                                                        <p>No hay CRPs asociados a este CDP</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="contenderDeTabla data-table-container">
-                <div class="contendor_tabla">
-                    <div class="table-responsive">
-                        <table border="1" id="tablaCDP" class="modern-table">
-                            <thead>
-                                <tr>
-                                    <th>Código CRP</th>
-                                    <th>Código CDP</th>
-                                    <th>N° Documento</th>
-                                    <th>Fecha Registro</th>
-                                    <th>Estado</th>
-                                    <th>Beneficiario</th>
-                                    <th>Valor Inicial</th>
-                                    <th>Valor Actual</th>
-                                    <th>Saldo por Utilizar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php if ($crpsAsociados && count($crpsAsociados) > 0): ?>
-                                    <?php foreach ($crpsAsociados as $crp): ?>
-                                        <tr>
-                                            <td><?php echo htmlspecialchars($crp['CODIGO_CRP']); ?></td>
-                                            <td><?php echo htmlspecialchars($crp['CODIGO_CDP']); ?></td>
-                                            <td><?php echo htmlspecialchars($crp['Numero_Documento']); ?></td>
-                                            <td><?php echo htmlspecialchars($crp['Fecha_de_Registro']); ?></td>
-                                            <td>
-                                                <span class="badge badge-<?php echo strtolower(str_replace(' ', '-', $crp['Estado'])); ?>">
-                                                    <?php echo htmlspecialchars($crp['Estado']); ?>
-                                                </span>
-                                            </td>
-                                            <td><?php echo htmlspecialchars($crp['Nombre_Razon_Social']); ?></td>
-                                            <td class="text-right">$<?php echo number_format($crp['Valor_Inicial'] ?? 0, 2); ?></td>
-                                            <td class="text-right">$<?php echo number_format($crp['Valor_Actual'] ?? 0, 2); ?></td>
-                                            <td class="text-right">$<?php echo number_format($crp['Saldo_por_Utilizar'] ?? 0, 2); ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                <?php else: ?>
-                                    <tr>
-                                        <td colspan="9" class="no-data">
-                                            <div class="empty-state">
-                                                <i class="fas fa-info-circle empty-icon"></i>
-                                                <p>No hay CRPs asociados a este CDP</p>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                <?php endif; ?>
-                            </tbody>
-                        </table>
+                <!-- Columna de información (40%) -->
+                <div class="info-column">
+                    <!-- Resumen de totales -->
+                    <div class="card resumen-totales">
+                        <div class="card-content">
+                            <div class="stat-item">
+                                <div class="stat-label">Total CRPs</div>
+                                <div class="stat-value"><?php echo $totalesCRP['total']; ?></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Valor Total Aprobado</div>
+                                <div class="stat-value">$<?php echo number_format($totalesCRP['valor_cdp_aprobado'], 2); ?></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Valor Total del CRP</div>
+                                <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Saldo sin utilizar del CDP</div>
+                                <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_cdp'], 2); ?></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Saldo sin utilizar del CRP</div>
+                                <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
