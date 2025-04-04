@@ -85,7 +85,7 @@ class Presupuesto_viaticos_consumidos extends Conexion {
                                 FROM cdp 
                                 WHERE UPPER(Objeto) LIKE '%VIATICOS%'
                                    OR UPPER(Objeto) LIKE '%VIATI%'";
-
+                                   
             $stmt = $this->conexion->prepare($queryValorActual);
             $stmt->execute();
             $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -183,34 +183,34 @@ $datosConsumidos = $presupuestoConsumidos->obtenerDatosPresupuestoViaticosConsum
   <div class="contenedorPresupuestoTotal">
     <div class="graficaContenedor">
       <canvas id="presupuestoViaticosChart"></canvas>
-      <?php
-        // Obtenemos los datos para la primera gráfica (CDP)
-        $presupuesto = new Presupuesto_viaticos_2();
-        $datos = $presupuesto->obtenerDatosPresupuestoViaticos();
-      ?>
-      <div class="resultados-container">
-        <div class="resultado-item valor-total">
-          <div class="resultado-titulo">Valor Total Viáticos</div>
-          <div class="resultado-valor">
-            $<?php echo $datos['valor_actual']; ?>
-            <span class="resultado-porcentaje">100%</span>
-          </div>
+    </div>
+    <?php
+      // Obtenemos los datos para la primera gráfica (CDP)
+      $presupuesto = new Presupuesto_viaticos_2();
+      $datos = $presupuesto->obtenerDatosPresupuestoViaticos();
+    ?>
+    <div class="resultados-container">
+      <div class="resultado-item valor-total">
+        <div class="resultado-titulo">Valor Total Viáticos</div>
+        <div class="resultado-valor">
+          $<?php echo $datos['valor_actual']; ?>
+          <span class="resultado-porcentaje">100%</span>
         </div>
-          
-        <div class="resultado-item saldo-disponible">
-          <div class="resultado-titulo">Saldo Disponible Viáticos (CDP)</div>
-          <div class="resultado-valor">
-            $<?php echo $datos['saldo_disponible']; ?>
-            <span class="resultado-porcentaje"><?php echo $datos['porcentaje_disponible']; ?>%</span>
-          </div>
+      </div>
+        
+      <div class="resultado-item saldo-disponible">
+        <div class="resultado-titulo">Saldo Disponible Viáticos (CDP)</div>
+        <div class="resultado-valor">
+          $<?php echo $datos['saldo_disponible']; ?>
+          <span class="resultado-porcentaje"><?php echo $datos['porcentaje_disponible']; ?>%</span>
         </div>
-          
-        <div class="resultado-item consumo-cdp">
-          <div class="resultado-titulo">Consumo CDP Viáticos</div>
-          <div class="resultado-valor">
-            $<?php echo $datos['consumo_cdp']; ?>
-            <span class="resultado-porcentaje"><?php echo $datos['porcentaje_consumido']; ?>%</span>
-          </div>
+      </div>
+        
+      <div class="resultado-item consumo-cdp">
+        <div class="resultado-titulo">Consumo CDP Viáticos</div>
+        <div class="resultado-valor">
+          $<?php echo $datos['consumo_cdp']; ?>
+          <span class="resultado-porcentaje"><?php echo $datos['porcentaje_consumido']; ?>%</span>
         </div>
       </div>
     </div>
@@ -220,30 +220,30 @@ $datosConsumidos = $presupuestoConsumidos->obtenerDatosPresupuestoViaticosConsum
   <div class="contenedorPresupuestoTotal">
     <div class="graficaContenedor">
       <canvas id="presupuestoViaticosConsumidosChart"></canvas>
-      <div class="resultados-container">
-        <!-- Valor total = monto comprometido (CDP) => 95,787,170.00 en tu caso -->
-        <div class="resultado-item valor-total">
-          <div class="resultado-titulo">Valor Total Comprometido</div>
-          <div class="resultado-valor">
-            $<?php echo $datosConsumidos['valor_actual']; ?>
-            <span class="resultado-porcentaje">100%</span>
-          </div>
+    </div>
+    <div class="resultados-container">
+      <!-- Valor total = monto comprometido (CDP) => 95,787,170.00 en tu caso -->
+      <div class="resultado-item valor-total">
+        <div class="resultado-titulo">Valor Total Comprometido</div>
+        <div class="resultado-valor">
+          $<?php echo $datosConsumidos['valor_actual']; ?>
+          <span class="resultado-porcentaje">100%</span>
         </div>
-        
-        <div class="resultado-item saldo-disponible">
-          <div class="resultado-titulo">Saldo Disponible (Comprometido - OP)</div>
-          <div class="resultado-valor">
-            $<?php echo $datosConsumidos['saldo_disponible']; ?>
-            <span class="resultado-porcentaje"><?php echo $datosConsumidos['porcentaje_disponible']; ?>%</span>
-          </div>
+      </div>
+      
+      <div class="resultado-item saldo-disponible">
+        <div class="resultado-titulo">Saldo Disponible (Comprometido - OP)</div>
+        <div class="resultado-valor">
+          $<?php echo $datosConsumidos['saldo_disponible']; ?>
+          <span class="resultado-porcentaje"><?php echo $datosConsumidos['porcentaje_disponible']; ?>%</span>
         </div>
-        
-        <div class="resultado-item consumo-cdp">
-          <div class="resultado-titulo">Consumo OP Viáticos</div>
-          <div class="resultado-valor">
-            $<?php echo $datosConsumidos['consumo_op']; ?>
-            <span class="resultado-porcentaje"><?php echo $datosConsumidos['porcentaje_consumido']; ?>%</span>
-          </div>
+      </div>
+      
+      <div class="resultado-item consumo-cdp">
+        <div class="resultado-titulo">Consumo OP Viáticos</div>
+        <div class="resultado-valor">
+          $<?php echo $datosConsumidos['consumo_op']; ?>
+          <span class="resultado-porcentaje"><?php echo $datosConsumidos['porcentaje_consumido']; ?>%</span>
         </div>
       </div>
     </div>
