@@ -131,7 +131,7 @@
   .data-table-container {
     position: relative;
     margin-bottom: 24px;
-    overflow: hidden;
+    overflow: scroll;
     border-radius: 8px;
     box-shadow: var(--shadow);
   }
