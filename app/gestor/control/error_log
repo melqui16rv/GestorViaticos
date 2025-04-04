@@ -1,5 +1,0 @@
-[02-Apr-2025 17:07:34 America/Bogota] PHP Warning:  require_once(/home/appscide/public_html/math/gestor/crpAsociados.php): Failed to open stream: No such file or directory in /home/appscide/public_html/viaticosApp/app/gestor/control/insert_saldo_asiganado.php on line 2
-[02-Apr-2025 17:07:34 America/Bogota] PHP Fatal error:  Uncaught Error: Failed opening required '/home/appscide/public_html/math/gestor/crpAsociados.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home/appscide/public_html/viaticosApp/app/gestor/control/insert_saldo_asiganado.php:2
-Stack trace:
-#0 {main}
-  thrown in /home/appscide/public_html/viaticosApp/app/gestor/control/insert_saldo_asiganado.php on line 2

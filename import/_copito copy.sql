@@ -153,7 +153,7 @@ COMMIT;
 
 -- Datos para la tabla `usuario`
 INSERT INTO `usuario` (`numero_documento`, `tipo_doc`, `nombre_completo`, `contraseña`, `email`, `telefono`, `id_rol`) VALUES
-('1007695451', 'Cédula de ciudadanía', 'Julian Camilo Piñeros Zubieta', 'a706dd0e51e05aef936f18a09eea26d247bf57388a8b065265bd775d99474282', 'jcpinerosz@sena.edu.co', '3015325123', '3'),
-('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '92b908219a61e23981d568b0a3208f57dee6166f49d1c58d7953f1468c810050', 'juliancamilo290700@gmail.com', '3015325123', '1'),
+('1007695451', 'Cédula de ciudadanía', 'Julian Camilo Piñeros Zubieta', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'jcpinerosz@sena.edu.co', '3015325123', '3'),
+('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'juliancamilo290700@gmail.com', '3015325123', '1'),
 ('1073672380', 'Cédula de ciudadanía', 'Melqui Alexander Romero', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'melquiveru@gmail.com', '3026074008', '1'),
-('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '0f21fd791cea14dc5af4d236541a0be4961ab82132821b3399b84b210f4a7c8e', 'medinab@sena.edu.co', '123445', '2');
+('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'medinab@sena.edu.co', '123445', '2');
