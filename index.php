@@ -56,7 +56,8 @@ if (isset($_SESSION['id_rol'])) {
                             <button onclick="redirigirSegunRol()" class="btn-entrar">
                                 Entrar
                             </button>
-                    
+                        <?php else: ?>
+                            <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="preload-link"><button class="login-button">Iniciar sesión</button></a>
                         <?php endif; ?>
                     </div>
                 </div>
