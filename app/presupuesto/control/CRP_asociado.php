@@ -119,7 +119,7 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                     <div class="card resumen-totales">
                         <div class="card-content">
                             <div class="stat-item">
-                                <div class="stat-label">Valor Total Aprobado CDP</div>
+                                <div class="stat-label">Valor Aprobado CDP</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['valor_cdp_aprobado'], 2); ?></div>
                             </div>
                             <div class="stat-item">
@@ -127,21 +127,21 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_cdp'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Saldo utilizado del CDP</div>
+                                <div class="stat-label">Valor Comprometido de CDP</div>
                                 <div class="stat-value">
                                     $<?php echo number_format($totalesCRP['valor_cdp_aprobado'] - $totalesCRP['saldo_cdp'], 2); ?>
                                 </div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Valor Total de (<?php echo $totalesCRP['total']; ?>) RPs</div>
+                                <div class="stat-label">Valor Comprometido en RP de (<?php echo $totalesCRP['total']; ?>) Registros</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Saldo Total disponible de los RPs</div>
+                                <div class="stat-label">Saldo Total Disponible de los RP</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Saldo utilizado de los RPs</div>
+                                <div class="stat-label">Saldo Total Facturado</div>
                                 <div class="stat-value">
                                     $<?php echo number_format($totalesCRP['total_valor_crp'] - $totalesCRP['saldo_crp'], 2); ?>
                                 </div>

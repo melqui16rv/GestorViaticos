@@ -733,7 +733,7 @@ a:focus, button:focus {
                             ?>
                             
                             <a href="<?php echo BASE_URL; ?>app/presupuesto/index.php" 
-                            class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/index.php') ? 'activeURL' : ''; ?>">CRP </a>
+                            class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/index.php') ? 'activeURL' : ''; ?>">RPs </a>
                             
                         </li>
                         <li>
