@@ -69,9 +69,7 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                                 <table border="1" id="tablaCDP" class="modern-table">
                                     <thead>
                                         <tr>
-                                            <th>Código CRP</th>
-                                            <th>Código CDP</th>
-                                            <th>N° Documento</th>
+                                            <th>Código RP</th>
                                             <th>Fecha Registro</th>
                                             <th>Estado</th>
                                             <th>Beneficiario</th>
@@ -84,8 +82,6 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                                         <?php if ($crpsAsociados && count($crpsAsociados) > 0): ?>
                                             <?php foreach ($crpsAsociados as $crp): ?>
                                                 <tr>
-                                                    <td><?php echo htmlspecialchars($crp['CODIGO_CRP']); ?></td>
-                                                    <td><?php echo htmlspecialchars($crp['CODIGO_CDP']); ?></td>
                                                     <td><?php echo htmlspecialchars($crp['Numero_Documento']); ?></td>
                                                     <td><?php echo htmlspecialchars($crp['Fecha_de_Registro']); ?></td>
                                                     <td>

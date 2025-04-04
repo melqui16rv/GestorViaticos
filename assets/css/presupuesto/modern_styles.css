@@ -234,7 +234,7 @@
   /* Layout flexible */
   .flex-container {
     display: flex;
-    gap: 24px;
+    gap: 10px;
     margin-bottom: 24px;
   }
 
@@ -555,6 +555,7 @@
     border-spacing: 0;
     margin: 0;
     background-color: white;
+    border: none;
   }
 
   .modern-table thead {
