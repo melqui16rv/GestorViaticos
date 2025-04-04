@@ -46,7 +46,7 @@
   }
   
   .app-container {
-    max-width: 1600px; /* Aumentado de 1280px a 1600px */
+    max-width: 1900px; /* Aumentado de 1280px a 1600px */
     margin: 0 auto;
     padding: 0 16px;
     width: 100%;
@@ -107,6 +107,7 @@
     border-radius: 8px;
     margin-bottom: 24px;
     overflow: hidden;
+    max-width: 530px;
   }
   
   .resumen-totales .card-content {
