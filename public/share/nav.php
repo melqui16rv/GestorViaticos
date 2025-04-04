@@ -733,7 +733,7 @@ a:focus, button:focus {
                             ?>
                             
                             <a href="<?php echo BASE_URL; ?>app/presupuesto/index.php" 
-                            class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/index.php') ? 'activeURL' : ''; ?>">RPs </a>
+                            class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/index.php') ? 'activeURL' : ''; ?>">Registros RP</a>
                             
                         </li>
                         <li>
@@ -742,7 +742,7 @@ a:focus, button:focus {
                             ?>
                             
                             <a href="<?php echo BASE_URL; ?>app/presupuesto/historialOP.php" 
-                            class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/historialOP.php') ? 'activeURL' : ''; ?>">Historial Viaticos</a>
+                            class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/historialOP.php') ? 'activeURL' : ''; ?>">Registros RP (Viáticos)</a>
                         </li>
                     <?php elseif (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '1'): ?>
                         <li>

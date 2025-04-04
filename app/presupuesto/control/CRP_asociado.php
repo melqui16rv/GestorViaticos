@@ -58,7 +58,7 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
         <div class="contenedorStandar app-content">
             <div class="page-header">
                 <h1 class="page-title">RPs Asociados al CDP: <span class="text-primary"><?php echo htmlspecialchars($cod_CDP); ?></span></h1>
-                <h1 class="page-title">Total RPs: <span class="text-primary"><?php echo $totalesCRP['total']; ?></span></h1>
+                <h1 class="page-title">Conteo de RP <span class="text-muted">(numero de RP asociados al CDP Seleccionado)</span>: <span class="text-primary"><?php echo $totalesCRP['total']; ?></span></h1>
             </div>
             
             <div class="flex-container">
