@@ -145,7 +145,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                                     <th>Beneficiario</th>
                                     <th>Valores</th>
                                     <th>Información<br>Bancaria</th>
-                                    <th>CDP/CRP</th>
+                                    <th>Códigos Asociados</th>
                                 </tr>
                             </thead>
                             <tbody>

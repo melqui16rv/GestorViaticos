@@ -125,7 +125,7 @@ if (empty($datosSaldos)) {
                                 <th>Fechas Ejecución<br>Viatico</th>
                                 <th>Fecha Sugeriada<br>de Pago</th>
                                 <th>Saldo<br>Asignado</th>
-                                <th>Codigos Asociados</th>
+                                <th>Códigos Asociados</th>
                                 <th>Información<br>Detallada</th>
                             </tr>
                         </thead>

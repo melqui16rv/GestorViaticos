@@ -97,7 +97,7 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                                     <th>Estado/<br>Dependencia/<br>Fuente</th>
                                     <th>Valor<br>Actual</th>
                                     <th>Saldo<br>Comprometer</th>
-                                    <th>Acciones</th>
+                                    <th>Descripción<br>Detallada</th>
                                 </tr>
                             </thead>
                             <tbody>
