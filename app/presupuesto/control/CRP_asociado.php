@@ -57,7 +57,8 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
     <div class="contenedor app-container">
         <div class="contenedorStandar app-content">
             <div class="page-header">
-                <h1 class="page-title">CRP Asociados al CDP: <span class="text-primary"><?php echo htmlspecialchars($cod_CDP); ?></span></h1>
+                <h1 class="page-title">RPs Asociados al CDP: <span class="text-primary"><?php echo htmlspecialchars($cod_CDP); ?></span></h1>
+                <h1 class="page-title">Total RPs: <span class="text-primary"><?php echo $totalesCRP['total']; ?></span></h1>
             </div>
             
             <div class="flex-container">
@@ -118,25 +119,34 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                     <div class="card resumen-totales">
                         <div class="card-content">
                             <div class="stat-item">
-                                <div class="stat-label">Total CRPs</div>
-                                <div class="stat-value"><?php echo $totalesCRP['total']; ?></div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Valor Total Aprobado</div>
+                                <div class="stat-label">Valor Total Aprobado CDP</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['valor_cdp_aprobado'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Valor Total del CRP</div>
-                                <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">Saldo sin utilizar del CDP</div>
+                                <div class="stat-label">Saldo disponible del CDP</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_cdp'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Saldo sin utilizar del CRP</div>
+                                <div class="stat-label">Saldo utilizado del CDP</div>
+                                <div class="stat-value">
+                                    $<?php echo number_format($totalesCRP['valor_cdp_aprobado'] - $totalesCRP['saldo_cdp'], 2); ?>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Valor Total de (<?php echo $totalesCRP['total']; ?>) RPs</div>
+                                <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Saldo Total disponible de los RPs</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></div>
                             </div>
+                            <div class="stat-item">
+                                <div class="stat-label">Saldo utilizado de los RPs</div>
+                                <div class="stat-value">
+                                    $<?php echo number_format($totalesCRP['total_valor_crp'] - $totalesCRP['saldo_crp'], 2); ?>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
