@@ -39,7 +39,6 @@ $crpsAsociados = $gestorCRP->obtenerCRPsAsociados($cod_CDP);
 $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
 
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -50,62 +49,99 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/index_gestor.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/modern_styles.css">
 </head>
-<body>
+<body class="app-layout">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
     
-    <div class="contenedor">
-        <div class="contenedorStandar">
-            <h1>CRP Asociados al CDP: <?php echo htmlspecialchars($cod_CDP); ?></h1>
+    <div class="contenedor app-container">
+        <div class="contenedorStandar app-content">
+            <div class="page-header">
+                <h1 class="page-title">CRP Asociados al CDP: <span class="text-primary"><?php echo htmlspecialchars($cod_CDP); ?></span></h1>
+            </div>
             
             <!-- Resumen de totales -->
-            <div class="resumen-totales">
-                <p>Total CRPs: <?php echo $totalesCRP['total']; ?></p>
-                <p>Valor Total Aprobado: $<?php echo number_format($totalesCRP['valor_cdp_aprobado'], 2); ?></p>
-                <p>Valor Total del CRP: $<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></p>
-                <p>Valor Saldo sin utilizar del valor Total del CDP: $<?php echo number_format($totalesCRP['saldo_cdp'], 2); ?></p>
-                <p>Valor Saldo sin utilizar del valor Total del CRP: $<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></p>
+            <div class="card resumen-totales">
+                <div class="card-content">
+                    <div class="stat-item">
+                        <div class="stat-label">Total CRPs</div>
+                        <div class="stat-value"><?php echo $totalesCRP['total']; ?></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Valor Total Aprobado</div>
+                        <div class="stat-value">$<?php echo number_format($totalesCRP['valor_cdp_aprobado'], 2); ?></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Valor Total del CRP</div>
+                        <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Saldo sin utilizar del CDP</div>
+                        <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_cdp'], 2); ?></div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Saldo sin utilizar del CRP</div>
+                        <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="contenderDeTabla">
+            <div class="contenderDeTabla data-table-container">
                 <div class="contendor_tabla">
-                    <table border="1" id="tablaCDP">
-                        <thead>
-                            <tr>
-                                <th>Código CRP</th>
-                                <th>Código CDP</th>
-                                <th>N° Documento</th>
-                                <th>Fecha Registro</th>
-                                <th>Estado</th>
-                                <th>Beneficiario</th>
-                                <th>Valor Inicial</th>
-                                <th>Valor Actual</th>
-                                <th>Saldo por Utilizar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php if ($crpsAsociados && count($crpsAsociados) > 0): ?>
-                                <?php foreach ($crpsAsociados as $crp): ?>
-                                    <tr>
-                                        <td><?php echo htmlspecialchars($crp['CODIGO_CRP']); ?></td>
-                                        <td><?php echo htmlspecialchars($crp['CODIGO_CDP']); ?></td>
-                                        <td><?php echo htmlspecialchars($crp['Numero_Documento']); ?></td>
-                                        <td><?php echo htmlspecialchars($crp['Fecha_de_Registro']); ?></td>
-                                        <td><?php echo htmlspecialchars($crp['Estado']); ?></td>
-                                        <td><?php echo htmlspecialchars($crp['Nombre_Razon_Social']); ?></td>
-                                        <td>$<?php echo number_format($crp['Valor_Inicial'] ?? 0, 2); ?></td>
-                                        <td>$<?php echo number_format($crp['Valor_Actual'] ?? 0, 2); ?></td>
-                                        <td>$<?php echo number_format($crp['Saldo_por_Utilizar'] ?? 0, 2); ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            <?php else: ?>
+                    <div class="table-responsive">
+                        <table border="1" id="tablaCDP" class="modern-table">
+                            <thead>
                                 <tr>
-                                    <td colspan="9" class="no-data">No hay CRPs asociados a este CDP</td>
+                                    <th>Código CRP</th>
+                                    <th>Código CDP</th>
+                                    <th>N° Documento</th>
+                                    <th>Fecha Registro</th>
+                                    <th>Estado</th>
+                                    <th>Beneficiario</th>
+                                    <th>Valor Inicial</th>
+                                    <th>Valor Actual</th>
+                                    <th>Saldo por Utilizar</th>
                                 </tr>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php if ($crpsAsociados && count($crpsAsociados) > 0): ?>
+                                    <?php foreach ($crpsAsociados as $crp): ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($crp['CODIGO_CRP']); ?></td>
+                                            <td><?php echo htmlspecialchars($crp['CODIGO_CDP']); ?></td>
+                                            <td><?php echo htmlspecialchars($crp['Numero_Documento']); ?></td>
+                                            <td><?php echo htmlspecialchars($crp['Fecha_de_Registro']); ?></td>
+                                            <td>
+                                                <span class="badge badge-<?php echo strtolower(str_replace(' ', '-', $crp['Estado'])); ?>">
+                                                    <?php echo htmlspecialchars($crp['Estado']); ?>
+                                                </span>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($crp['Nombre_Razon_Social']); ?></td>
+                                            <td class="text-right">$<?php echo number_format($crp['Valor_Inicial'] ?? 0, 2); ?></td>
+                                            <td class="text-right">$<?php echo number_format($crp['Valor_Actual'] ?? 0, 2); ?></td>
+                                            <td class="text-right">$<?php echo number_format($crp['Saldo_por_Utilizar'] ?? 0, 2); ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="9" class="no-data">
+                                            <div class="empty-state">
+                                                <i class="fas fa-info-circle empty-icon"></i>
+                                                <p>No hay CRPs asociados a este CDP</p>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="actions-container">
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
             </div>
         </div>
     </div>
@@ -160,12 +196,12 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                         updateTableWithData(response);
                         offset += limit;
                     } else {
-                        alert("No hay más registros para mostrar.");
+                        showNotification("No hay más registros para mostrar", "info");
                         $("#cargarMas").hide();
                     }
                 },
                 error: function(){
-                    alert("Error al cargar más registros.");
+                    showNotification("Error al cargar más registros", "error");
                 }
             });
         });
@@ -202,9 +238,11 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
 
                     // Mostrar el botón de cargar más si estaba oculto
                     $("#cargarMas").show();
+                    
+                    showNotification("Filtros limpiados correctamente", "success");
                 },
                 error: function(){
-                    alert("Error al recargar los registros.");
+                    showNotification("Error al recargar los registros", "error");
                 }
             });
             actualizarFiltrosActivos();
@@ -236,23 +274,23 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
             const reintegrosVal = $("#reintegros").val();
             const registrosVal = $("#registrosPorPagina").val();
 
-            let filtrosHTML = '<strong>Filtros activos:</strong> ';
+            let filtrosHTML = '<div class="active-filters-title"><i class="fas fa-filter"></i> <strong>Filtros activos:</strong></div>';
             let hayFiltros = false;
 
             if (numeroDoc) {
-                filtrosHTML += `<span class="filtro-tag">Documento: ${numeroDoc}</span>`;
+                filtrosHTML += `<span class="filtro-tag"><span class="tag-label">Documento:</span> ${numeroDoc}</span>`;
                 hayFiltros = true;
             }
             if (fuenteVal !== 'Todos') {
-                filtrosHTML += `<span class="filtro-tag">Fuente: ${fuenteVal}</span>`;
+                filtrosHTML += `<span class="filtro-tag"><span class="tag-label">Fuente:</span> ${fuenteVal}</span>`;
                 hayFiltros = true;
             }
             if (reintegrosVal !== 'Todos') {
-                filtrosHTML += `<span class="filtro-tag">Reintegros: ${reintegrosVal}</span>`;
+                filtrosHTML += `<span class="filtro-tag"><span class="tag-label">Reintegros:</span> ${reintegrosVal}</span>`;
                 hayFiltros = true;
             }
             if (registrosVal !== '10') {
-                filtrosHTML += `<span class="filtro-tag">Cantidad de Registros: ${registrosVal}</span>`;
+                filtrosHTML += `<span class="filtro-tag"><span class="tag-label">Registros:</span> ${registrosVal}</span>`;
                 hayFiltros = true;
             }
 
@@ -263,6 +301,9 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
             const numeroDocumento = $("#numeroDocumento").val();
             const fuente = $("#fuente").val();
             const reintegros = $("#reintegros").val();
+
+            // Mostrar indicador de carga
+            showLoadingIndicator();
 
             // Resetear offset para nueva búsqueda
             offset = 10;
@@ -280,6 +321,9 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                 },
                 dataType: 'json',
                 success: function(response) {
+                    // Ocultar indicador de carga
+                    hideLoadingIndicator();
+                    
                     // Limpiar la tabla actual
                     $("#tablaCDP tbody").empty();
 
@@ -292,13 +336,22 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                         if (numeroDocumento || fuente !== 'Todos' || reintegros !== 'Todos') {
                             mensajeNoResultados += " con los filtros seleccionados";
                         }
-                        let tr = `<tr><td colspan='9' style='text-align: center;'>${mensajeNoResultados}</td></tr>`;
+                        let tr = `
+                            <tr>
+                                <td colspan='9' class="no-data">
+                                    <div class="empty-state">
+                                        <i class="fas fa-search empty-icon"></i>
+                                        <p>${mensajeNoResultados}</p>
+                                    </div>
+                                </td>
+                            </tr>`;
                         $("#tablaCDP tbody").append(tr);
                         $("#cargarMas").hide();
                     }
                 },
                 error: function(){
-                    alert("Error al realizar la búsqueda.");
+                    hideLoadingIndicator();
+                    showNotification("Error al realizar la búsqueda", "error");
                 }
             });
         }
@@ -306,21 +359,23 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
         // Función para crear una nueva fila (modificada para incluir los data attributes)
         function createTableRow(row) {
             return `
-                <tr data-documento="${row.Numero_Documento}">
+                <tr data-documento="${row.Numero_Documento}" class="data-row">
                     <td>${row.Numero_Documento}</td>
                     <td>${row.Fecha_de_Registro}</td>
                     <td>${row.Fecha_de_Creacion}</td>
                     <td>
-                        <span class="multi-line">${row.Estado}</span>
-                        <span class="multi-line">${row.Dependencia}</span>
-                        <span class="multi-line">${row.Fuente}</span>
+                        <span class="badge badge-${getStatusClass(row.Estado)}">${row.Estado}</span>
+                        <div class="details-row">
+                            <div class="detail-item"><i class="fas fa-building"></i> ${row.Dependencia}</div>
+                            <div class="detail-item"><i class="fas fa-money-bill-wave"></i> ${row.Fuente}</div>
+                        </div>
                     </td>
-                    <td>${row.Valor_Actual}</td>
-                    <td>${row.Saldo_por_Comprometer}</td>
-                    <td style="text-align: center;">                       
+                    <td class="text-right">${row.Valor_Actual}</td>
+                    <td class="text-right">${row.Saldo_por_Comprometer}</td>
+                    <td class="text-center">                       
                         <a href="control/CRP_asociado.php?cod_CDP=${row.Numero_Documento}" 
-                           class="ingresarConsumo">
-                            +
+                           class="ingresarConsumo btn-action btn-add">
+                            <i class="fas fa-plus-circle"></i>
                         </a>
                     </td>
                 </tr>`;
@@ -333,40 +388,93 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
             });
         }
 
-        // Estilos CSS inline para los filtros activos
-        $("<style>")
-            .prop("type", "text/css")
-            .html(`
-                #filtros-activos { margin-top: 10px; }
-                .filtro-tag {
-                    background: #e9ecef;
-                    padding: 3px 8px;
-                    border-radius: 4px;
-                    margin: 0 5px;
-                    display: inline-block;
-                }
-            `)
-            .appendTo("head");
+        // Función para determinar la clase de estado
+        function getStatusClass(estado) {
+            switch (estado.toLowerCase()) {
+                case 'activo':
+                case 'aprobado':
+                    return 'success';
+                case 'pendiente':
+                    return 'warning';
+                case 'cancelado':
+                case 'rechazado':
+                    return 'danger';
+                default:
+                    return 'info';
+            }
+        }
+
+        // Funciones para notificaciones
+        function showNotification(message, type) {
+            const notificationContainer = $('.notification-container');
+            
+            if (notificationContainer.length === 0) {
+                $('body').append('<div class="notification-container"></div>');
+            }
+            
+            const notification = $(`
+                <div class="notification notification-${type}">
+                    <div class="notification-icon">
+                        <i class="fas fa-${getNotificationIcon(type)}"></i>
+                    </div>
+                    <div class="notification-content">${message}</div>
+                    <button class="notification-close"><i class="fas fa-times"></i></button>
+                </div>
+            `);
+            
+            $('.notification-container').append(notification);
+            
+            setTimeout(() => {
+                notification.addClass('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.removeClass('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+            
+            notification.find('.notification-close').on('click', function() {
+                notification.removeClass('show');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            });
+        }
+        
+        function getNotificationIcon(type) {
+            switch(type) {
+                case 'success': return 'check-circle';
+                case 'error': return 'exclamation-circle';
+                case 'warning': return 'exclamation-triangle';
+                case 'info': 
+                default: return 'info-circle';
+            }
+        }
+        
+        // Funciones para indicadores de carga
+        function showLoadingIndicator() {
+            const loadingHTML = `
+                <div class="loading-overlay">
+                    <div class="spinner">
+                        <div class="double-bounce1"></div>
+                        <div class="double-bounce2"></div>
+                    </div>
+                </div>
+            `;
+            
+            if ($('.loading-overlay').length === 0) {
+                $('.data-table-container').append(loadingHTML);
+            }
+        }
+        
+        function hideLoadingIndicator() {
+            $('.loading-overlay').fadeOut(300, function() {
+                $(this).remove();
+            });
+        }
     });
     </script>
-    <style>
-    .resumen-totales {
-        background: #f8f9fa;
-        padding: 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        display: flex;
-        justify-content: space-around;
-    }
-    .resumen-totales p {
-        margin: 0;
-        font-weight: bold;
-    }
-    .no-data {
-        text-align: center;
-        padding: 20px;
-        color: #666;
-    }
-    </style>
 </body>
 </html>
