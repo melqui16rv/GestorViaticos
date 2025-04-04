@@ -46,7 +46,7 @@
   }
   
   .app-container {
-    max-width: 1280px;
+    max-width: 1600px; /* Aumentado de 1280px a 1600px */
     margin: 0 auto;
     padding: 0 16px;
     width: 100%;
@@ -106,47 +106,23 @@
     border-radius: 8px;
     margin-bottom: 24px;
     overflow: hidden;
-    position: sticky;
-    top: 24px;
   }
   
   .resumen-totales .card-content {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    gap: 16px;
+    flex-direction: column; /* Cambiado a column para mantener el diseño original */
+    gap: 12px;
   }
   
   .stat-item {
-    display: flex;
-    flex-direction: column;
     flex: 1;
-    min-width: 160px;
+    min-width: 100%; /* Cambiado para ocupar todo el ancho */
     padding: 16px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: var(--shadow);
-    margin-bottom: 12px;
-    border-left: 4px solid var(--primary);
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+    box-shadow: var(--shadow-sm);
     transition: var(--transition);
-  }
-  
-  .stat-item:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-  }
-  
-  .stat-label {
-    font-size: 0.875rem;
-    color: var(--text-secondary);
-    margin-bottom: 4px;
-  }
-  
-  .stat-value {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-top: 4px;
+    border-left: 4px solid var(--primary);
   }
   
   /* Tabla */
@@ -238,13 +214,13 @@
   }
 
   .table-column {
-    flex: 0 0 60%;
-    max-width: 60%;
+    flex: 0 0 70%; /* Aumentado de 60% a 70% */
+    max-width: 70%;
   }
 
   .info-column {
-    flex: 0 0 40%;
-    max-width: 40%;
+    flex: 0 0 30%; /* Reducido de 40% a 30% */
+    max-width: 30%;
   }
 
   /* Ajustes responsivos */
