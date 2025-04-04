@@ -47,7 +47,6 @@ if (isset($_SESSION['id_rol'])) {
     </div>
 
         <div class="contenedor">
-           
 
                 <div class="main-content">
                     <h1>Bienvenido a la plataforma de Gestion Viaticos</h1>
@@ -57,9 +56,6 @@ if (isset($_SESSION['id_rol'])) {
                             <button onclick="redirigirSegunRol()" class="btn-entrar">
                                 Entrar
                             </button>
-                        <?php else: ?>
-                            <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="preload-link"><button class="login-button">Iniciar sesión</button></a>
-                        <?php endif; ?>
                     </div>
                 </div>
             </div>
