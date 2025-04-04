@@ -133,15 +133,15 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
                                 </div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Valor Comprometido en RP de (<?php echo $totalesCRP['total']; ?>) Registros</div>
+                                <div class="stat-label">Valor Comprometido en (<?php echo $totalesCRP['total']; ?>) RP</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['total_valor_crp'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Saldo Total Disponible de los RP</div>
+                                <div class="stat-label">Saldo Total Disponible RP</div>
                                 <div class="stat-value">$<?php echo number_format($totalesCRP['saldo_crp'], 2); ?></div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">Saldo Total Facturado</div>
+                                <div class="stat-label">Saldo Total Utilizado</div>
                                 <div class="stat-value">
                                     $<?php echo number_format($totalesCRP['total_valor_crp'] - $totalesCRP['saldo_crp'], 2); ?>
                                 </div>
