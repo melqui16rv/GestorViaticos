@@ -6,75 +6,67 @@ class planeacion1 extends Conexion {
     private $conexion;
 
     public function __construct() {
-        $this->conexion = new Conexion();
-        $this->conexion = $this->conexion->obtenerConexion();
-    }
-    public function obtenerCRPsAsociados($codigoCDP) {
-        try {
-            $query = "SELECT CODIGO_CRP, CDP as CODIGO_CDP, Numero_Documento, 
-                            Fecha_de_Registro, Estado, 
-                            COALESCE(Valor_Inicial, 0) as Valor_Inicial, 
-                            COALESCE(Valor_Actual, 0) as Valor_Actual, 
-                            COALESCE(Saldo_por_Utilizar, 0) as Saldo_por_Utilizar, 
-                            Nombre_Razon_Social
-                     FROM crp 
-                     WHERE CDP = :codigoCDP";
-            
-            $stmt = $this->conexion->prepare($query);
-            $stmt->bindParam(':codigoCDP', $codigoCDP, PDO::PARAM_STR);
-            $stmt->execute();
-            
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerCRPsAsociados: " . $e->getMessage());
-            return false;
-        }
+        parent::__construct();
+        $this->conexion = $this->obtenerConexion();
     }
 
-    public function obtenerTotalCRPs($codigoCDP) {
-        try {
-            // Primero obtenemos los datos del CDP
-            $queryCDP = "SELECT Valor_Actual, Saldo_por_Comprometer 
-                        FROM cdp 
-                        WHERE Numero_Documento = :codigoCDP";
-            
-            $stmtCDP = $this->conexion->prepare($queryCDP);
-            $stmtCDP->bindParam(':codigoCDP', $codigoCDP, PDO::PARAM_STR);
-            $stmtCDP->execute();
-            $datosCDP = $stmtCDP->fetch(PDO::FETCH_ASSOC);
+    public function obtenerCRPsAsociados($cdp) {
+        $query = "SELECT 
+            CODIGO_CRP, 
+            CDP AS CODIGO_CDP, 
+            Numero_Documento, 
+            Fecha_de_Registro, 
+            Estado, 
+            COALESCE(Valor_Inicial, 0) AS Valor_Inicial, 
+            COALESCE(Valor_Actual, 0) AS Valor_Actual, 
+            COALESCE(Saldo_por_Utilizar, 0) AS Saldo_por_Utilizar, 
+            Nombre_Razon_Social
+        FROM crp 
+        WHERE CDP = :cdp
+        ORDER BY Fecha_de_Registro DESC";
 
-            // Luego obtenemos los totales de CRP
-            $queryCRP = "SELECT 
-                        COUNT(*) as total,
-                        COALESCE(SUM(Valor_Inicial), 0) as total_valor_crp,
-                        COALESCE(SUM(Saldo_por_Utilizar), 0) as saldo_crp
-                     FROM crp 
-                     WHERE CDP = :codigoCDP";
-            
-            $stmtCRP = $this->conexion->prepare($queryCRP);
-            $stmtCRP->bindParam(':codigoCDP', $codigoCDP, PDO::PARAM_STR);
-            $stmtCRP->execute();
-            $datosCRP = $stmtCRP->fetch(PDO::FETCH_ASSOC);
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':cdp', $cdp, PDO::PARAM_STR);
+        $stmt->execute();
 
-            // Combinamos los resultados
-            return [
-                'total' => $datosCRP['total'],
-                'valor_cdp_aprobado' => $datosCDP['Valor_Actual'] ?? 0,
-                'total_valor_crp' => $datosCRP['total_valor_crp'],
-                'saldo_cdp' => $datosCDP['Saldo_por_Comprometer'] ?? 0,
-                'saldo_crp' => $datosCRP['saldo_crp']
-            ];
-            
-        } catch (PDOException $e) {
-            error_log("Error en obtenerTotalCRPs: " . $e->getMessage());
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerTotalCRPs($cdp) {
+        $query = "SELECT 
+            COUNT(*) as total,
+            (SELECT Valor_Actual FROM cdp WHERE Numero_Documento = :cdp) as valor_cdp_aprobado,
+            (SELECT Saldo_por_Comprometer FROM cdp WHERE Numero_Documento = :cdp) as saldo_cdp,
+            SUM(COALESCE(Valor_Actual, 0)) as total_valor_crp,
+            SUM(COALESCE(Saldo_por_Utilizar, 0)) as saldo_crp
+        FROM crp 
+        WHERE CDP = :cdp";
+
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bindParam(':cdp', $cdp, PDO::PARAM_STR);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Si no hay resultados, establecer valores predeterminados
+        if (!$result) {
             return [
                 'total' => 0,
                 'valor_cdp_aprobado' => 0,
-                'total_valor_crp' => 0,
                 'saldo_cdp' => 0,
+                'total_valor_crp' => 0,
                 'saldo_crp' => 0
             ];
         }
+
+        // Asegurarse de que los valores numéricos sean 0 si son NULL
+        return [
+            'total' => (int)$result['total'],
+            'valor_cdp_aprobado' => (float)$result['valor_cdp_aprobado'] ?: 0,
+            'saldo_cdp' => (float)$result['saldo_cdp'] ?: 0,
+            'total_valor_crp' => (float)$result['total_valor_crp'] ?: 0,
+            'saldo_crp' => (float)$result['saldo_crp'] ?: 0
+        ];
     }
 }
 ?>
