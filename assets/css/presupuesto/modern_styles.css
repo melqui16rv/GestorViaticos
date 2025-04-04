@@ -131,18 +131,67 @@
   .data-table-container {
     position: relative;
     margin-bottom: 24px;
-    overflow: scroll;
     border-radius: 8px;
     box-shadow: var(--shadow);
+    height: calc(100vh - 400px); /* Altura fija para el contenedor */
+    min-height: 400px; /* Altura mínima */
   }
   
   .table-responsive {
-    overflow-x: auto;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    position: relative; /* Necesario para el encabezado fijo */
+    height: 100%;
+    overflow: auto;
+    position: relative;
+    border-radius: 8px;
   }
   
+  .modern-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: white;
+    margin-bottom: 0;
+  }
+  
+  .modern-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: #f8fafc;
+  }
+  
+  .modern-table th {
+    position: sticky;
+    top: 0;
+    background-color: #f8fafc;
+    z-index: 20;
+    padding: 12px 16px;
+    border-bottom: 2px solid var(--border-color);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    white-space: nowrap;
+  }
+  
+  /* Añadir sombra inferior a los encabezados */
+  .modern-table th::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+  }
+  
+  .modern-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: white; /* Asegura que las celdas tengan fondo */
+  }
+  
+  /* Ajustar scrollbar */
   .table-responsive::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -160,39 +209,6 @@
   
   .table-responsive::-webkit-scrollbar-thumb:hover {
     background: var(--primary-dark);
-  }
-  
-  .modern-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    background-color: white;
-    margin-bottom: 0;
-  }
-  
-  .modern-table thead {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background-color: #f8fafc;
-  }
-  
-  .modern-table th {
-    position: sticky;
-    top: 0;
-    background-color: #f8fafc;
-    z-index: 10;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    font-weight: 600;
-    color: var(--text-secondary);
-    font-size: 0.875rem;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    white-space: nowrap;
-  }
-  
-  .modern-table td {
-    vertical-align: middle;
   }
   
   .modern-table tr:last-child td {
