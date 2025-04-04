@@ -56,6 +56,8 @@ if (isset($_SESSION['id_rol'])) {
                             <button onclick="redirigirSegunRol()" class="btn-entrar">
                                 Entrar
                             </button>
+                    
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
