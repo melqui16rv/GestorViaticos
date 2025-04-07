@@ -126,26 +126,4 @@ class gestor1 extends Conexion {
             return [];
         }
     }
-
-    public function buscarCRPsGlobal($searchTerm) {
-        try {
-            $sql = "SELECT DISTINCT r.* 
-                    FROM crp r
-                    INNER JOIN cdp c ON r.CODIGO_CDP = c.CODIGO_CDP
-                    WHERE c.Objeto LIKE '%VIATICOS%'
-                    AND (r.Numero_Documento LIKE :search 
-                         OR r.Observaciones LIKE :search)
-                    AND r.Saldo_por_Utilizar > 0";
-            
-            $stmt = $this->conexion->prepare($sql);
-            $searchPattern = "%{$searchTerm}%";
-            $stmt->bindParam(':search', $searchPattern, PDO::PARAM_STR);
-            $stmt->execute();
-            
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en búsqueda global de CRPs: " . $e->getMessage());
-            return [];
-        }
-    }
 }
