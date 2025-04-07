@@ -99,6 +99,47 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                                     </tr>
                                 </tbody>
                             </table>
+                            
+                            <!-- ===============
+                            SECCIÓN NUEVA: MUESTRA DE IMÁGENES
+                            ================ -->
+                            <?php
+                            // 1) Obtener todas las imágenes del saldo:
+                            $imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo);
+                            ?>
+
+                            <?php if (!empty($imagenes)): ?>
+                            <div class="filament-section">
+                                <div class="filament-section-header">
+                                    <h2 class="filament-section-title">Imágenes Asociadas</h2>
+                                </div>
+                                <div class="filament-table-container">
+                                    <?php foreach ($imagenes as $imagen): ?>
+                                        <div style="margin-bottom: 1em;">
+                                            <p><strong>Nombre original:</strong> 
+                                                <?php echo htmlspecialchars($imagen['NOMBRE_ORIGINAL'] ?? 'Nombre no disponible'); ?>
+                                            </p>
+                                            <?php 
+                                            // Concatenar BASE_URL con RUTA_IMAGEN
+                                            $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
+                                            ?>
+                                            <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                alt="Imagen asociada" 
+                                                style="max-width: 300px; display: block; border: 1px solid #ccc; padding: 5px;">
+                                            <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                            <?php else: ?>
+                            <div class="filament-section">
+                                <div class="filament-section-header">
+                                    <h2 class="filament-section-title">Imágenes Asociadas</h2>
+                                </div>
+                                <p>No hay imágenes asociadas a este saldo.</p>
+                            </div>
+                            <?php endif; ?>
+                            <!-- FIN DE SECCIÓN DE IMÁGENES -->
                         </div>
                     </div>
     
@@ -149,48 +190,6 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                             </table>
                         </div>
                     </div>
-
-                    <!-- ===============
-                    SECCIÓN NUEVA: MUESTRA DE IMÁGENES
-                    ================ -->
-                    <?php
-                    // 1) Obtener todas las imágenes del saldo:
-                    $imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo);
-                    ?>
-
-                    <?php if (!empty($imagenes)): ?>
-                    <div class="filament-section">
-                        <div class="filament-section-header">
-                            <h2 class="filament-section-title">Imágenes Asociadas</h2>
-                        </div>
-                        <div class="filament-table-container">
-                            <?php foreach ($imagenes as $imagen): ?>
-                                <div style="margin-bottom: 1em;">
-                                    <p><strong>Nombre original:</strong> 
-                                        <?php echo htmlspecialchars($imagen['NOMBRE_ORIGINAL'] ?? 'Nombre no disponible'); ?>
-                                    </p>
-                                    <?php 
-                                    // Concatenar BASE_URL con RUTA_IMAGEN
-                                    $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
-                                    ?>
-                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                         alt="Imagen asociada" 
-                                         style="max-width: 300px; display: block; border: 1px solid #ccc; padding: 5px;">
-                                    <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
-                    </div>
-                    <?php else: ?>
-                    <div class="filament-section">
-                        <div class="filament-section-header">
-                            <h2 class="filament-section-title">Imágenes Asociadas</h2>
-                        </div>
-                        <p>No hay imágenes asociadas a este saldo.</p>
-                    </div>
-                    <?php endif; ?>
-                    <!-- FIN DE SECCIÓN DE IMÁGENES -->
-
                 </div>
             </div>
         </div>
