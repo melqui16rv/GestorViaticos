@@ -196,7 +196,12 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
     <!-- Tabla de CRP -->
     <div class="filament-card">
-        <h3 class="filament-card-title">Seleccionar RP asociado al CDP seleccionado</h3>
+        <div class="header-container">
+            <h3 class="filament-card-title">Seleccionar RP asociado al CDP seleccionado</h3>
+            <div class="search-container">
+                <input type="text" id="searchCRP" placeholder="Buscar RP..." class="search-input">
+            </div>
+        </div>
         <div class="filament-table-container">
             <table class="filament-table" id="tablaCRPSeleccion">
                 <thead class="filament-table-header">
@@ -303,6 +308,29 @@ $cdps = $gestor->obtenerCDPsViaticos();
             minimumFractionDigits: 2
         }).format(value / 100);
     });
+
+    $(document).ready(function() {
+        // Buscador CDP existente
+        $('#searchCDP').on('keyup', function() {
+            const searchText = $(this).val().toLowerCase();
+            $('#tablaCDPSeleccion tbody tr').each(function() {
+                const cdpNumero = $(this).find('td:eq(1)').text().toLowerCase();
+                $(this).toggle(cdpNumero.includes(searchText));
+            });
+        });
+
+        // Nuevo buscador CRP
+        $('#searchCRP').on('keyup', function() {
+            const searchText = $(this).val().toLowerCase();
+            $('#tablaCRPSeleccion tbody tr').each(function() {
+                if (!$(this).find('td').length) return; // Ignorar filas vacías
+                const crpNumero = $(this).find('td:eq(1)').text().toLowerCase();
+                const crpDescripcion = $(this).find('td:eq(2)').text().toLowerCase();
+                const matches = crpNumero.includes(searchText) || crpDescripcion.includes(searchText);
+                $(this).toggle(matches);
+            });
+        });
+    });
     </script>
 
     <!-- Drag & Drop y validaciones de la imagen -->
@@ -388,19 +416,6 @@ $cdps = $gestor->obtenerCDPsViaticos();
             validarImagen(file);
         }
     }
-    </script>
-
-    <!-- Buscador en tiempo real para la tabla CDP -->
-    <script>
-    $(document).ready(function() {
-        $('#searchCDP').on('keyup', function() {
-            const searchText = $(this).val().toLowerCase();
-            $('#tablaCDPSeleccion tbody tr').each(function() {
-                const cdpNumero = $(this).find('td:eq(1)').text().toLowerCase();
-                $(this).toggle(cdpNumero.includes(searchText));
-            });
-        });
-    });
     </script>
 
     <!-- Mensajes de éxito / error al procesar_saldo.php -->
