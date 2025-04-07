@@ -505,8 +505,7 @@
   /* Acciones */
   .actions-container {
     display: flex;
-    justify-content: flex-end;
-    margin-top: 24px;
+    justify-content: flex-start;
     gap: 12px;
   }
   

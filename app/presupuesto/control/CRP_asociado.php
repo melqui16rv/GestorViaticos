@@ -53,13 +53,13 @@ $totalesCRP = $gestorCRP->obtenerTotalCRPs($cod_CDP);
 </head>
 <body class="app-layout">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
-    <div class="actions-container">
-        <a href="javascript:history.back()" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Volver
-        </a>
-    </div>
     
     <div class="contenedor app-container">
+        <div class="actions-container">
+            <a href="javascript:history.back()" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
         <div class="contenedorStandar app-content">
             <div class="page-header">
                 <h1 class="page-title">RPs Asociados al CDP: <span class="text-primary"><?php echo htmlspecialchars($cod_CDP); ?></span></h1>
