@@ -125,9 +125,11 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                                             // Concatenar BASE_URL con RUTA_IMAGEN
                                             $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
                                             ?>
-                                            <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                alt="Imagen asociada" 
-                                                style="max-width: 300px; display: block; border: 1px solid #ccc; padding: 5px;">
+                                            <a href="<?php echo htmlspecialchars($rutaImagen); ?>" target="_blank">
+                                                <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                    alt="Imagen asociada" 
+                                                    class="imagen-ampliable">
+                                            </a>
                                             <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
                                         </div>
                                     <?php endforeach; ?>

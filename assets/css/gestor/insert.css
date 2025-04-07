@@ -199,3 +199,17 @@ body.filament-body {
         font-size: 1rem;
     }
 }
+
+/* === Imagen ampliable === */
+.imagen-ampliable {
+    max-width: 300px;
+    display: block;
+    border: 1px solid #ccc;
+    padding: 5px;
+    transition: transform 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.imagen-ampliable:hover {
+    transform: scale(1.05);
+}
