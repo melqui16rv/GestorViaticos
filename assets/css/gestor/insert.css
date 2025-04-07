@@ -213,3 +213,10 @@ body.filament-body {
 .imagen-ampliable:hover {
     transform: scale(1.05);
 }
+
+.modal-body img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 5px;
+}

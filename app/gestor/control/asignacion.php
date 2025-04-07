@@ -38,6 +38,8 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/gestor/insert.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/botonRetrocedar.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/gestor/asignacion.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
@@ -114,23 +116,35 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                                     <h2 class="filament-section-title">Imagen de Visto Bueno</h2>
                                 </div>
                                 <div class="filament-table-container">
-                                    <?php foreach ($imagenes as $imagen): ?>
+                                    <?php foreach ($imagenes as $index => $imagen): ?>
                                         <div style="margin-bottom: 1em;">
-
-                                            <!--<p><strong>Nombre original:</strong> 
-                                                <?php #echo htmlspecialchars($imagen['NOMBRE_ORIGINAL'] ?? 'Nombre no disponible'); ?>
-                                            </p>-->
-
                                             <?php 
                                             // Concatenar BASE_URL con RUTA_IMAGEN
                                             $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
                                             ?>
-                                            <a href="<?php echo htmlspecialchars($rutaImagen); ?>" target="_blank">
-                                                <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                    alt="Imagen asociada" 
-                                                    class="imagen-ampliable">
-                                            </a>
+                                            <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                alt="Imagen asociada" 
+                                                class="imagen-ampliable" 
+                                                data-bs-toggle="modal" 
+                                                data-bs-target="#modalImagen<?php echo $index; ?>">
                                             <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
+
+                                            <!-- Modal -->
+                                            <div class="modal fade" id="modalImagen<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="modalLabel<?php echo $index; ?>">Imagen Ampliada</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                        </div>
+                                                        <div class="modal-body text-center">
+                                                            <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                                alt="Imagen asociada ampliada" 
+                                                                style="max-width: 100%; border: 1px solid #ccc; padding: 5px;">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     <?php endforeach; ?>
                                 </div>
