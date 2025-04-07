@@ -94,7 +94,8 @@ class gestor1 extends Conexion {
             $sql = "SELECT DISTINCT c.* 
                     FROM cdp c
                     INNER JOIN crp r ON c.CODIGO_CDP = r.CODIGO_CDP 
-                    WHERE c.Objeto LIKE '%VIATICOS%'";
+                    WHERE c.Objeto LIKE '%VIATICOS%'
+                    AND c.Estado = 'Con Compromiso'";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
