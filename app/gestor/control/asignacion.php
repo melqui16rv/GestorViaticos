@@ -167,12 +167,16 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                             <?php foreach ($imagenes as $imagen): ?>
                                 <div style="margin-bottom: 1em;">
                                     <p><strong>Nombre original:</strong> 
-                                        <?php echo htmlspecialchars($imagen['NOMBRE_ORIGINAL']); ?>
+                                        <?php echo htmlspecialchars($imagen['NOMBRE_ORIGINAL'] ?? 'Nombre no disponible'); ?>
                                     </p>
-                                    <img src="<?php echo htmlspecialchars($imagen[BASE_URL . 'RUTA_IMAGEN']); ?>" 
+                                    <?php 
+                                    // Concatenar BASE_URL con RUTA_IMAGEN
+                                    $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
+                                    ?>
+                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
                                          alt="Imagen asociada" 
                                          style="max-width: 300px; display: block; border: 1px solid #ccc; padding: 5px;">
-                                    <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA']); ?></small>
+                                    <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
                                 </div>
                             <?php endforeach; ?>
                         </div>
