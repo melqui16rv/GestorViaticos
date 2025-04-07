@@ -43,10 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
+    // Usar la conexión de la clase gestor1
+    $gestor = new gestor1();
+    $conexion = $gestor->obtenerConexion();
+
     // Guardar datos en la base de datos
     $query = "INSERT INTO saldos_asignados (NOMBRE_PERSONA, DOCUMENTO_PERSONA, FECHA_INICIO, FECHA_FIN, FECHA_PAGO, SALDO_ASIGNADO, CODIGO_CRP, CODIGO_CDP, IMAGEN_RUTA)
               VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $stmt = $db->prepare($query);
+    $stmt = $conexion->prepare($query);
     $stmt->bind_param('sssssssss', $nombre, $documento, $fechaInicio, $fechaFin, $fechaPago, $saldoAsignado, $codigoCRP, $codigoCDP, $imagenRuta);
     $stmt->execute();
 
