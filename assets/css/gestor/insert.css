@@ -202,9 +202,8 @@ body.filament-body {
 
 /* === Imagen ampliable === */
 .imagen-ampliable {
-    max-width: 300px;
+    max-width: 200px;
     display: block;
-    border: 1px solid #ccc;
     padding: 5px;
     transition: transform 0.2s ease-in-out;
     cursor: pointer;
