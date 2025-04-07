@@ -34,7 +34,7 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
     <div class="filament-card">
         <h2 class="filament-card-title">Registrar asignación de viático</h2>
-        <form action="procesar_saldo.php" method="POST" class="filament-form">
+        <form action="procesar_saldo.php" method="POST" enctype="multipart/form-data" class="filament-form">
             <div class="filament-form-group">
                 <label for="codigo_cdp_visible" class="filament-form-label">Código CDP</label>
                 <input type="text" id="codigo_cdp_visible" name="codigo_cdp_visible" readonly class="filament-form-input">
@@ -75,6 +75,11 @@ $cdps = $gestor->obtenerCDPsViaticos();
             <div class="filament-form-group">
                 <label for="saldo_asignado" class="filament-form-label">Saldo Asignado (Monto total ha asignar):</label>
                 <input type="number" step="0.01" id="saldo_asignado" name="saldo_asignado" required class="filament-form-input">
+            </div>
+
+            <div class="filament-form-group">
+                <label for="imagen" class="filament-form-label">Subir Imagen (opcional):</label>
+                <input type="file" id="imagen" name="imagen" accept="image/*" class="filament-form-input">
             </div>
 
             <div class="filament-form-actions">

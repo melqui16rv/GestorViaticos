@@ -25,24 +25,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codigoCRP = $_POST['codigo_crp'] ?? null;
     $fechaPago = empty($fechaPago) ? null : $fechaPago;
 
-    $gestor = new gestor1();
-    $resultado = $gestor->insertarSaldoAsignado(
-        $nombre,
-        $documento,
-        $fechaInicio,
-        $fechaFin,
-        $fechaPago,
-        $saldoAsignado,
-        $codigoCDP,
-        $codigoCRP
-    );
+    // Manejo de la imagen
+    $imagenRuta = null;
+    if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
+        $directorioDestino = $_SERVER['DOCUMENT_ROOT'] . '/uploads/saldos/';
+        if (!is_dir($directorioDestino)) {
+            mkdir($directorioDestino, 0755, true);
+        }
 
-    if ($resultado) {
-        header("Location: insert_saldo_asiganado.php?estado=exito");
-        exit;
-    } else {
-        header("Location: insert_saldo_asiganado.php?estado=error");
-        exit;
+        $nombreArchivo = uniqid('saldo_') . '.' . pathinfo($_FILES['imagen']['name'], PATHINFO_EXTENSION);
+        $rutaCompleta = $directorioDestino . $nombreArchivo;
+
+        if (move_uploaded_file($_FILES['imagen']['tmp_name'], $rutaCompleta)) {
+            $imagenRuta = '/uploads/saldos/' . $nombreArchivo;
+        } else {
+            die('Error al guardar la imagen.');
+        }
     }
-} // Cierre del if ($_SERVER['REQUEST_METHOD'] === 'POST')
+
+    // Guardar datos en la base de datos
+    $query = "INSERT INTO saldos_asignados (NOMBRE_PERSONA, DOCUMENTO_PERSONA, FECHA_INICIO, FECHA_FIN, FECHA_PAGO, SALDO_ASIGNADO, CODIGO_CRP, CODIGO_CDP, IMAGEN_RUTA)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param('sssssssss', $nombre, $documento, $fechaInicio, $fechaFin, $fechaPago, $saldoAsignado, $codigoCRP, $codigoCDP, $imagenRuta);
+    $stmt->execute();
+
+    if ($stmt->affected_rows > 0) {
+        header('Location: insert_saldo_asiganado.php?estado=exito');
+    } else {
+        header('Location: insert_saldo_asiganado.php?estado=error');
+    }
+}
 ?>
