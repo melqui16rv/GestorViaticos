@@ -82,8 +82,10 @@ $cdps = $gestor->obtenerCDPsViaticos();
             <!-- NUEVO: Campo para subir la imagen (opcional) -->
             <div class="filament-form-group file-upload-container" id="fileUploadContainer">
                 <label for="mi_imagen" class="filament-form-label">Visto Bueno Subdirector (opcional):</label>
-                <input type="file" id="mi_imagen" name="mi_imagen" accept="image/*" class="filament-form-input file-upload-input">
-                <p class="file-upload-hint">Arrastra y suelta una imagen aquí o haz clic en "Examinar".</p>
+                <div class="file-upload-area" onclick="document.getElementById('mi_imagen').click()">
+                    <p class="file-upload-hint">Arrastra y suelta una imagen aquí o haz clic en "Examinar".</p>
+                </div>
+                <input type="file" id="mi_imagen" name="mi_imagen" accept="image/*" class="file-upload-input">
             </div>
 
             <div class="filament-form-actions">
@@ -239,18 +241,19 @@ inputVisible.addEventListener('input', (e) => {
 
 const fileUploadContainer = document.getElementById('fileUploadContainer');
 const fileInput = document.getElementById('mi_imagen');
+const fileUploadArea = document.querySelector('.file-upload-area');
 
 // Evitar el comportamiento predeterminado al arrastrar y soltar
-fileUploadContainer.addEventListener('dragover', (e) => {
+fileUploadArea.addEventListener('dragover', (e) => {
     e.preventDefault();
     fileUploadContainer.classList.add('dragover');
 });
 
-fileUploadContainer.addEventListener('dragleave', () => {
+fileUploadArea.addEventListener('dragleave', () => {
     fileUploadContainer.classList.remove('dragover');
 });
 
-fileUploadContainer.addEventListener('drop', (e) => {
+fileUploadArea.addEventListener('drop', (e) => {
     e.preventDefault();
     fileUploadContainer.classList.remove('dragover');
     if (e.dataTransfer.files.length > 0) {
