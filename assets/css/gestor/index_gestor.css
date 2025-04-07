@@ -379,6 +379,20 @@ input, select, button, table, div {
         display: none;
     }
 }
+/* Ocultar filtros "Documento" y "Mes" en pantallas muy pequeñas */
+@media (max-width: 576px) {
+    #documento, #mes {
+        display: none;
+    }
+
+    label[for="documento"], label[for="mes"] {
+        display: none;
+    }
+
+    .filtro-grupo:nth-child(1), .filtro-grupo:nth-child(5) {
+        display: none;
+    }
+}
 /* Contenedor para acciones destacadas */
 .filament-action-card {
     margin-top: 1.5rem;
