@@ -81,10 +81,28 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
             <!-- NUEVO: Campo para subir la imagen (opcional) -->
             <div class="filament-form-group">
-                <!-- Bloque HTML -->
-                <div class="visto-bueno-contenedor">
-                    <label for="mi_imagen" class="filament-form-label">Visto Bueno Subdirector (opcional):</label>
-                    <input type="file" id="mi_imagen" name="mi_imagen" accept="image/*" class="filament-form-input visto-bueno-file-input">
+                <div class="visto-bueno-container">
+                    <label for="mi_imagen" class="visto-bueno-label">Visto Bueno Subdirector (opcional):</label>
+
+                    <!-- Este input es el verdadero; está oculto, pero sigue siendo funcional -->
+                    <input 
+                        type="file" 
+                        id="mi_imagen" 
+                        name="mi_imagen" 
+                        accept="image/*" 
+                        class="visto-bueno-file-input" 
+                        onchange="validarImagen(event)"
+                    >
+
+                    <!-- Este label con for="mi_imagen" actúa como botón de examinar -->
+                    <label for="mi_imagen" class="visto-bueno-button">
+                        Examinar
+                    </label>
+
+                    <!-- Texto donde se muestra la retroalimentación al usuario -->
+                    <span id="visto-bueno-feedback" class="visto-bueno-feedback">
+                        No se ha seleccionado ninguna imagen
+                    </span>
                 </div>
             </div>
 
@@ -250,5 +268,41 @@ inputVisible.addEventListener('input', (e) => {
     <?php endif; ?>
 </script>
 <?php endif; ?>
+<script>
+function validarImagen(event) {
+    const input = event.target;  // El <input type="file">
+    const file = input.files[0]; // Solo tomamos el primer archivo (si se permitiesen varios, habría más)
+    const feedback = document.getElementById('visto-bueno-feedback');
+
+    if (!file) {
+        // Si el usuario canceló o no seleccionó nada
+        feedback.textContent = "No se ha seleccionado ninguna imagen";
+        return;
+    }
+
+    // Validación por extensión
+    const allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'bmp'];
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+
+    // Validación por MIME (para mayor seguridad)
+    if (!file.type.startsWith("image/")) {
+        alert("Por favor selecciona un archivo de imagen válido (JPG, PNG, GIF, BMP).");
+        input.value = ''; // Resetear el input
+        feedback.textContent = "No se ha seleccionado ninguna imagen";
+        return;
+    }
+
+    // Validación por extensión (complementa la de MIME)
+    if (!allowedExtensions.includes(fileExtension)) {
+        alert("Solo se permiten archivos .jpg, .jpeg, .png, .gif, .bmp");
+        input.value = ''; 
+        feedback.textContent = "No se ha seleccionado ninguna imagen";
+        return;
+    }
+
+    // Si todo sale bien, mostramos el nombre del archivo
+    feedback.textContent = "Imagen seleccionada: " + file.name;
+}
+</script>
 </body>
 </html>

@@ -219,41 +219,55 @@ body.filament-body {
     border: 1px solid #ccc;
     padding: 5px;
 }
-/* Contenedor principal del bloque */
-.visto-bueno-contenedor {
-    background-color: #f9f9f9;
-    padding: 1rem;
-    margin-bottom: 1rem;
+/* Contenedor principal */
+.visto-bueno-container {
+    background-color: #fafafa;
     border: 1px solid #ddd;
     border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: relative; /* Por si quieres posicionar elementos con absolute */
+    max-width: 400px;   /* Ajusta según tu diseño */
   }
   
-  /* Estilos para el label */
-  .visto-bueno-contenedor .filament-form-label {
+  /* Label principal (el texto "Visto Bueno Subdirector...") */
+  .visto-bueno-label {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: #333; 
   }
   
-  /* Estilos para el input file */
-  .visto-bueno-contenedor .visto-bueno-file-input {
-    display: block;
-    border: 2px dashed #bbb;
-    border-radius: 4px;
-    padding: 10px;
-    width: 100%;
+  /* El input file original se esconde */
+  .visto-bueno-file-input {
+    position: absolute;
+    opacity: 0;         /* Oculto visualmente */
+    pointer-events: none; /* No puede recibir clicks, el label .visto-bueno-button lo hace */
+    width: 0;
+    height: 0;
+  }
+  
+  /* El "botón" que simula el file input */
+  .visto-bueno-button {
+    display: inline-block;
+    background-color: #3b82f6; /* Un azul suave (puedes cambiarlo) */
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 5px;
     cursor: pointer;
-    transition: border-color 0.2s ease;
+    margin-right: 1rem;
+    transition: background-color 0.2s ease, transform 0.2s ease;
   }
   
-  /* Al poner el mouse encima, cambiamos el color del borde */
-  .visto-bueno-contenedor .visto-bueno-file-input:hover {
-    border-color: #999;
+  /* Efecto hover */
+  .visto-bueno-button:hover {
+    background-color: #2563eb; /* Un tono más oscuro de azul */
+    transform: translateY(-2px);
   }
   
-  /* Estado "focus" (cuando se hace clic y se enfoca el input) */
-  .visto-bueno-contenedor .visto-bueno-file-input:focus {
-    outline: none;
-    border-color: #666;
+  /* Feedback de la imagen seleccionada */
+  .visto-bueno-feedback {
+    display: inline-block;
+    color: #666;
+    font-style: italic;
   }
