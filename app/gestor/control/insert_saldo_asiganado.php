@@ -75,7 +75,8 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
             <div class="filament-form-group">
                 <label for="saldo_asignado" class="filament-form-label">Saldo Asignado (Monto total a asignar):</label>
-                <input type="number" step="0.01" id="saldo_asignado" name="saldo_asignado" required class="filament-form-input">
+                <input type="text" id="saldo_asignado_visible" class="filament-form-input" placeholder="$0,00">
+                <input type="hidden" id="saldo_asignado" name="saldo_asignado" required>
             </div>
 
             <!-- NUEVO: Campo para subir la imagen (opcional) -->
@@ -216,6 +217,24 @@ function seleccionarCRP(codigoCRP, boton) {
     });
     boton.closest('.filament-table-row').classList.add('active');
 }
+
+const inputVisible = document.getElementById('saldo_asignado_visible');
+const inputHidden = document.getElementById('saldo_asignado');
+
+inputVisible.addEventListener('input', (e) => {
+    // Obtener el valor sin formatear
+    let value = e.target.value.replace(/[^0-9]/g, '');
+
+    // Actualizar el valor del input oculto (sin formato)
+    inputHidden.value = parseFloat(value) / 100;
+
+    // Formatear el valor como moneda
+    e.target.value = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 2
+    }).format(value / 100);
+});
 </script>
 
 <?php if (isset($_GET['estado'])): ?>
