@@ -95,12 +95,20 @@ class gestor1 extends Conexion {
                     FROM cdp c
                     INNER JOIN crp r ON c.CODIGO_CDP = r.CODIGO_CDP 
                     WHERE c.Objeto LIKE '%VIATICOS%'
+                    AND r.Estado = 'Con Compromiso'
                     AND r.Saldo_por_Utilizar > 0
-                    AND r.Estado = 'ACTIVO'
-                    ORDER BY c.Numero_Documento DESC";
+                    ORDER BY c.Fecha_de_Registro DESC";
+                    
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
-            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            $cdps = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            if (empty($cdps)) {
+                error_log("No se encontraron CDPs con CRPs asociados y saldo disponible");
+            }
+            
+            return $cdps;
         } catch (PDOException $e) {
             error_log("Error al obtener CDPs con VIATICOS: " . $e->getMessage());
             return [];
