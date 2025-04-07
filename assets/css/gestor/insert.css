@@ -219,55 +219,95 @@ body.filament-body {
     border: 1px solid #ccc;
     padding: 5px;
 }
-/* Contenedor principal */
-.visto-bueno-container {
+/***********************************************************
+ * CONTENEDOR PRINCIPAL
+ **********************************************************/
+ .drag-drop-container {
+    max-width: 450px;
     background-color: #fafafa;
     border: 1px solid #ddd;
     border-radius: 6px;
-    padding: 1rem;
+    padding: 1.5rem;
     margin-bottom: 1rem;
-    position: relative; /* Por si quieres posicionar elementos con absolute */
-    max-width: 400px;   /* Ajusta según tu diseño */
+    position: relative;
   }
   
-  /* Label principal (el texto "Visto Bueno Subdirector...") */
-  .visto-bueno-label {
+  /***********************************************************
+   * LABEL PRINCIPAL: "Visto Bueno Subdirector"
+   **********************************************************/
+  .drag-drop-label {
     display: block;
     font-weight: 600;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.75rem;
     color: #333; 
   }
   
-  /* El input file original se esconde */
-  .visto-bueno-file-input {
+  /***********************************************************
+   * INPUT FILE (OCULTO)
+   **********************************************************/
+  .drag-drop-file-input {
     position: absolute;
-    opacity: 0;         /* Oculto visualmente */
-    pointer-events: none; /* No puede recibir clicks, el label .visto-bueno-button lo hace */
     width: 0;
     height: 0;
+    opacity: 0;
+    pointer-events: none;
   }
   
-  /* El "botón" que simula el file input */
-  .visto-bueno-button {
+  /***********************************************************
+   * BOTÓN DE EXAMINAR (simula <input type="file">)
+   **********************************************************/
+  .drag-drop-button {
     display: inline-block;
-    background-color: #3b82f6; /* Un azul suave (puedes cambiarlo) */
+    background-color: #3b82f6;
     color: #fff;
-    padding: 8px 16px;
+    padding: 0.65rem 1.2rem;
     border-radius: 5px;
+    font-size: 0.9rem;
     cursor: pointer;
     margin-right: 1rem;
     transition: background-color 0.2s ease, transform 0.2s ease;
+    text-align: center;
   }
   
-  /* Efecto hover */
-  .visto-bueno-button:hover {
-    background-color: #2563eb; /* Un tono más oscuro de azul */
+  .drag-drop-button:hover {
+    background-color: #2563eb;
     transform: translateY(-2px);
   }
   
-  /* Feedback de la imagen seleccionada */
-  .visto-bueno-feedback {
-    display: inline-block;
+  /***********************************************************
+   * ZONA DE ARRASTRAR Y SOLTAR
+   **********************************************************/
+  .drag-drop-area {
+    border: 2px dashed #bbb;
+    border-radius: 6px;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    transition: border-color 0.3s ease;
+    cursor: pointer;
+    color: #777;
+  }
+  
+  /* Efecto al "sobrevolar" con un archivo */
+  .drag-drop-area-hover {
+    border-color: #3b82f6;
+    background-color: #f0f9ff; /* Un ligero tono azul */
+  }
+  
+  /***********************************************************
+   * TEXTO de la zona drag & drop
+   **********************************************************/
+  #drag-drop-text {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  
+  /***********************************************************
+   * FEEDBACK DE LA IMAGEN SELECCIONADA
+   **********************************************************/
+  .drag-drop-feedback {
+    display: block;
+    margin-top: 1rem;
     color: #666;
     font-style: italic;
   }
