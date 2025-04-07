@@ -365,6 +365,20 @@ input, select, button, table, div {
         margin-right: 12px;
     }
 }
+/* Ocultar filtros "Fecha Inicio" y "Fecha Fin" en pantallas pequeñas */
+@media (max-width: 768px) {
+    #fechaInicio, #fechaFin {
+        display: none;
+    }
+
+    label[for="fechaInicio"], label[for="fechaFin"] {
+        display: none;
+    }
+
+    .filtro-grupo:nth-child(6), .filtro-grupo:nth-child(7) {
+        display: none;
+    }
+}
 /* Contenedor para acciones destacadas */
 .filament-action-card {
     margin-top: 1.5rem;
