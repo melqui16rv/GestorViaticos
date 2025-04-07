@@ -27,6 +27,9 @@ if (!$detalleSaldo) {
 
 $detalleCDP = $miClaseG->obtenerDetalleCDP($detalleSaldo['CODIGO_CDP'], '*');
 $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
+
+// Inicializar la variable $imagenes
+$imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo) ?? [];
 ?>
 <html>
 <head>
@@ -102,88 +105,42 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                                     <tr>
                                         <th>Imagen Visto Bueno</th>
                                         <td>
-                                            <?php foreach ($imagenes as $index => $imagen): ?>
-                                                <div style="margin-bottom: 1em;">
-                                                    <?php 
-                                                    // Concatenar BASE_URL con RUTA_IMAGEN
-                                                    $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
-                                                    ?>
-                                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                        alt="Imagen asociada" 
-                                                        class="imagen-ampliable" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#modalImagen<?php echo $index; ?>">
-                                                    <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
-        
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="modalImagen<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content" style="width: 60%;">
-                                                                <div class="modal-body text-center">
-                                                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                                        alt="Imagen asociada ampliada" 
-                                                                        style="max-width: 100%; border: 1px solid #ccc; padding: 5px;">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </td>
+                                            <?php if (!empty($imagenes)): ?>
+                                                <?php foreach ($imagenes as $index => $imagen): ?>
+                                                    <div style="margin-bottom: 1em;">
+                                                        <?php 
+                                                        $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
+                                                        ?>
+                                                        <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                            alt="Imagen asociada" 
+                                                            class="imagen-ampliable" 
+                                                            data-bs-toggle="modal" 
+                                                            data-bs-target="#modalImagen<?php echo $index; ?>">
+                                                        <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
 
-                                    </tr>
-                                    <!-- ===============
-                                    SECCIÓN NUEVA: MUESTRA DE IMÁGENES
-                                    ================ -->
-                                    <?php
-                                    // 1) Obtener todas las imágenes del saldo:
-                                    $imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo);
-                                    ?>
-        
-                                    <?php if (!empty($imagenes)): ?>
-                                    <div class="filament-section">
-                                        <div class="filament-section-header">
-                                            <h2 class="filament-section-title">Imagen Visto Bueno</h2>
-                                        </div>
-                                        <div class="filament-table-container">
-                                            <?php foreach ($imagenes as $index => $imagen): ?>
-                                                <div style="margin-bottom: 1em;">
-                                                    <?php 
-                                                    // Concatenar BASE_URL con RUTA_IMAGEN
-                                                    $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
-                                                    ?>
-                                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                        alt="Imagen asociada" 
-                                                        class="imagen-ampliable" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#modalImagen<?php echo $index; ?>">
-                                                    <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
-        
-                                                    <!-- Modal -->
-                                                    <div class="modal fade" id="modalImagen<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content" style="width: 60%;">
-                                                                <div class="modal-body text-center">
-                                                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                                        alt="Imagen asociada ampliada" 
-                                                                        style="max-width: 100%; border: 1px solid #ccc; padding: 5px;">
+                                                        <!-- Modal -->
+                                                        <div class="modal fade" id="modalImagen<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
+                                                            <div class="modal-dialog modal-dialog-centered">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h5 class="modal-title" id="modalLabel<?php echo $index; ?>">Imagen Ampliada</h5>
+                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                                    </div>
+                                                                    <div class="modal-body text-center">
+                                                                        <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                                            alt="Imagen asociada ampliada" 
+                                                                            style="max-width: 100%; border: 1px solid #ccc; padding: 5px;">
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    </div>
-                                    <?php else: ?>
-                                    <div class="filament-section">
-                                        <div class="filament-section-header">
-                                            <h2 class="filament-section-title">Imágenes Asociadas</h2>
-                                        </div>
-                                        <p>No hay imágenes asociadas a este saldo.</p>
-                                    </div>
-                                    <?php endif; ?>
-                                    <!-- FIN DE SECCIÓN DE IMÁGENES -->
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <p>No hay imágenes asociadas a este saldo.</p>
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                             
