@@ -20,7 +20,6 @@ if (empty($codigoCDP)) {
     echo json_encode([]);
     exit;
 }
-
 // Consultamos CRPs asociados al CDP
 $crps = $gestor->obtenerCRPsPorCDP($codigoCDP);
 
