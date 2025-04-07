@@ -108,22 +108,36 @@ class gestor1 extends Conexion {
     public function obtenerCRPsPorCDP($codigoCDP) {
         try {
             $codigoCDP = trim($codigoCDP);
-            $sql = "SELECT * FROM crp 
-                    WHERE TRIM(CODIGO_CDP) = :codigo_cdp 
-                    AND Saldo_por_Utilizar IS NOT NULL 
-                    AND Saldo_por_Utilizar > 0";
+            
+            // Consulta modificada para ver todos los CRPs relacionados
+            $sql = "SELECT r.* FROM crp r 
+                    WHERE TRIM(r.CODIGO_CDP) = :codigo_cdp";
             
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':codigo_cdp', $codigoCDP, \PDO::PARAM_STR);
             $stmt->execute();
             
             $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            
+            // Log para depuración
+            error_log("CDP consultado: '$codigoCDP'");
+            error_log("Número de CRPs encontrados: " . count($resultados));
+            
             if (empty($resultados)) {
-                error_log("No se encontraron CRPs con saldo disponible para el CDP: '$codigoCDP'");
+                error_log("No se encontraron CRPs para el CDP: '$codigoCDP'");
+                // Verificar directamente en la base de datos
+                $sqlVerificacion = "SELECT COUNT(*) as total FROM crp WHERE TRIM(CODIGO_CDP) = :codigo_cdp";
+                $stmtVerificacion = $this->conexion->prepare($sqlVerificacion);
+                $stmtVerificacion->bindParam(':codigo_cdp', $codigoCDP, \PDO::PARAM_STR);
+                $stmtVerificacion->execute();
+                $totalReal = $stmtVerificacion->fetch(\PDO::FETCH_ASSOC)['total'];
+                error_log("Total de CRPs en base de datos para este CDP: $totalReal");
             }
+            
             return $resultados;
+            
         } catch (PDOException $e) {
-            error_log("Error al obtener CRPs por CDP ('$codigoCDP'): " . $e->getMessage());
+            error_log("Error en obtenerCRPsPorCDP para CDP '$codigoCDP': " . $e->getMessage());
             return [];
         }
     }
