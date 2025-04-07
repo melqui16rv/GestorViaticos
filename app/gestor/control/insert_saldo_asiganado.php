@@ -196,7 +196,12 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
     <!-- Tabla de CRP -->
     <div class="filament-card">
-        <h3 class="filament-card-title">Seleccionar RP asociado al CDP seleccionado</h3>
+        <div class="header-container">
+            <h3 class="filament-card-title">Seleccionar RP asociado al CDP seleccionado</h3>
+            <div class="search-container">
+                <input type="text" id="searchCRP" placeholder="Buscar CRP..." class="search-input">
+            </div>
+        </div>
         <div class="filament-table-container">
             <table class="filament-table" id="tablaCRPSeleccion">
                 <thead class="filament-table-header">
@@ -217,6 +222,7 @@ $cdps = $gestor->obtenerCDPsViaticos();
     <!-- Scripts de selección de CDP y CRP -->
     <script>
     function seleccionarCDP(codigoCDP, numeroDocumento, boton) {
+        cdpSeleccionado = true;
         // Marcar la fila seleccionada visualmente
         document.querySelectorAll('#tablaCDPSeleccion .filament-table-row').forEach(row => {
             row.classList.remove('active');
@@ -302,6 +308,63 @@ $cdps = $gestor->obtenerCDPsViaticos();
             currency: 'COP',
             minimumFractionDigits: 2
         }).format(value / 100);
+    });
+
+    // Funcionalidad del buscador CRP
+    $(document).ready(function() {
+        let cdpSeleccionado = false;
+        
+        $('#searchCRP').on('keyup', function() {
+            const searchText = $(this).val().toLowerCase();
+            
+            if (cdpSeleccionado) {
+                // Búsqueda en resultados actuales
+                $('#tablaCRPSeleccion tbody tr').each(function() {
+                    const crpNumero = $(this).find('td:eq(1)').text().toLowerCase();
+                    $(this).toggle(crpNumero.includes(searchText));
+                });
+            } else {
+                // Búsqueda global en todos los CRPs disponibles
+                $.ajax({
+                    url: '<?php echo BASE_URL; ?>/math/gestor/buscarCRPs.php',
+                    method: 'GET',
+                    data: { search: searchText },
+                    success: function(response) {
+                        const tbody = $('#tablaCRPSeleccion tbody');
+                        tbody.empty();
+                        
+                        if (response.length === 0) {
+                            tbody.html('<tr><td colspan="6" class="text-center">No se encontraron CRPs</td></tr>');
+                            return;
+                        }
+                        
+                        response.forEach(crp => {
+                            const saldoFormateado = new Intl.NumberFormat('es-CO', {
+                                style: 'currency',
+                                currency: 'COP',
+                                minimumFractionDigits: 2
+                            }).format(crp.Saldo_por_Utilizar);
+
+                            const row = `
+                                <tr class="filament-table-row">
+                                    <td class="filament-table-cell">
+                                        <button type="button" class="filament-button filament-button-secondary"
+                                                onclick="seleccionarCRP('${crp.CODIGO_CRP}', this)">
+                                            Seleccionar
+                                        </button>
+                                    </td>
+                                    <td class="filament-table-cell">${crp.Numero_Documento}</td>
+                                    <td class="filament-table-cell">${crp.Observaciones}</td>
+                                    <td class="filament-table-cell">${saldoFormateado}</td>
+                                    <td class="filament-table-cell">${crp.Compromisos}</td>
+                                    <td class="filament-table-cell">${crp.Obligaciones}</td>
+                                </tr>`;
+                            tbody.append(row);
+                        });
+                    }
+                });
+            }
+        });
     });
     </script>
 
