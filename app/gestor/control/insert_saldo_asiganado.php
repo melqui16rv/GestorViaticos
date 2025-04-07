@@ -81,8 +81,11 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
             <!-- NUEVO: Campo para subir la imagen (opcional) -->
             <div class="filament-form-group">
-                <label for="mi_imagen" class="filament-form-label">Visto Bueno Subdirector (opcional):</label>
-                <input type="file" id="mi_imagen" name="mi_imagen" accept="image/*" class="filament-form-input">
+                <!-- Bloque HTML -->
+                <div class="visto-bueno-contenedor">
+                    <label for="mi_imagen" class="filament-form-label">Visto Bueno Subdirector (opcional):</label>
+                    <input type="file" id="mi_imagen" name="mi_imagen" accept="image/*" class="filament-form-input visto-bueno-file-input">
+                </div>
             </div>
 
             <div class="filament-form-actions">

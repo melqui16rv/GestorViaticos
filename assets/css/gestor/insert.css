@@ -219,3 +219,41 @@ body.filament-body {
     border: 1px solid #ccc;
     padding: 5px;
 }
+/* Contenedor principal del bloque */
+.visto-bueno-contenedor {
+    background-color: #f9f9f9;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+  
+  /* Estilos para el label */
+  .visto-bueno-contenedor .filament-form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #333; 
+  }
+  
+  /* Estilos para el input file */
+  .visto-bueno-contenedor .visto-bueno-file-input {
+    display: block;
+    border: 2px dashed #bbb;
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+  }
+  
+  /* Al poner el mouse encima, cambiamos el color del borde */
+  .visto-bueno-contenedor .visto-bueno-file-input:hover {
+    border-color: #999;
+  }
+  
+  /* Estado "focus" (cuando se hace clic y se enfoca el input) */
+  .visto-bueno-contenedor .visto-bueno-file-input:focus {
+    outline: none;
+    border-color: #666;
+  }
