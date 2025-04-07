@@ -72,7 +72,7 @@
   }
   
   .page-title {
-    font-size: 1.5rem;
+    font-size: 1.0rem;
     font-weight: 600;
     color: var(--text-primary);
   }
@@ -241,6 +241,8 @@
   
   .modern-table tbody tr {
     transition: background-color 0.2s ease;
+    font-size: 0.7rem;
+
   }
   
   .modern-table tbody td {
@@ -333,7 +335,6 @@
     padding: 4px 8px;
     border-radius: 4px;
     font-size: 0.75rem;
-    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.025em;
   }
@@ -597,7 +598,7 @@
     border-radius: 8px;
     box-shadow: var(--shadow);
     background-color: white;
-    height: 600px;
+    height: 100%;
   }
 
   .contendor_tabla {
@@ -636,7 +637,7 @@
     border-bottom: 2px solid var(--border-color);
     font-weight: 600;
     color: var(--text-secondary);
-    font-size: 0.875rem;
+    font-size: 0.675rem;
     text-transform: uppercase;
     letter-spacing: 0.025em;
     white-space: nowrap;
