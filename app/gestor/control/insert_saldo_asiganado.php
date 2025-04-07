@@ -27,7 +27,7 @@ $cdps = $gestor->obtenerCDPsViaticos();
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/botonRetrocedar.css">
     <!-- NUEVO: vincula tu archivo CSS externo para Drag & Drop (ej: drag-drop.css) -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/gestor/drag-drop.css">
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body class="filament-body">
     <div class="filament-return-button-container">
@@ -145,8 +145,8 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
     <!-- Tabla de CDP -->
     <div class="filament-card">
-        <h3 class="filament-card-title">Seleccionar CDP (VIATICOS)</h3>
-        <div class="table-header">
+        <div class="header-container">
+            <h3 class="filament-card-title">Seleccionar CDP (VIATICOS)</h3>
             <div class="search-container">
                 <input type="text" id="searchCDP" placeholder="Buscar CDP..." class="search-input">
             </div>
@@ -393,16 +393,11 @@ $cdps = $gestor->obtenerCDPsViaticos();
     <!-- Buscador en tiempo real para la tabla CDP -->
     <script>
     $(document).ready(function() {
-        $('#searchCDP').on('input', function() {
-            const searchTerm = $(this).val().toLowerCase();
-            
+        $('#searchCDP').on('keyup', function() {
+            const searchText = $(this).val().toLowerCase();
             $('#tablaCDPSeleccion tbody tr').each(function() {
-                const cdpNumber = $(this).find('td:nth-child(2)').text().toLowerCase();
-                if (cdpNumber.includes(searchTerm)) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
+                const cdpNumero = $(this).find('td:eq(1)').text().toLowerCase();
+                $(this).toggle(cdpNumero.includes(searchText));
             });
         });
     });

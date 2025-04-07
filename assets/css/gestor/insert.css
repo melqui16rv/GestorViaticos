@@ -312,10 +312,11 @@ body.filament-body {
     font-style: italic;
   }
 
-/* Estilos para el buscador de CDP */
-.table-header {
+/* Estilos para el encabezado y buscador */
+.header-container {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 1rem;
 }
 
@@ -331,10 +332,12 @@ body.filament-body {
     font-size: 0.875rem;
     border: 1px solid #d1d5db;
     border-radius: 0.375rem;
+    background-color: #fff;
     background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="gray"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>');
     background-repeat: no-repeat;
     background-position: 0.5rem center;
     background-size: 1rem;
+    transition: all 0.2s ease;
 }
 
 .search-input:focus {
