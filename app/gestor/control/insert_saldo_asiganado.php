@@ -146,6 +146,11 @@ $cdps = $gestor->obtenerCDPsViaticos();
     <!-- Tabla de CDP -->
     <div class="filament-card">
         <h3 class="filament-card-title">Seleccionar CDP (VIATICOS)</h3>
+        <div class="table-header">
+            <div class="search-container">
+                <input type="text" id="searchCDP" placeholder="Buscar CDP..." class="search-input">
+            </div>
+        </div>
         <div class="filament-table-container">
             <table class="filament-table" id="tablaCDPSeleccion">
                 <thead class="filament-table-header">
@@ -383,6 +388,24 @@ $cdps = $gestor->obtenerCDPsViaticos();
             validarImagen(file);
         }
     }
+    </script>
+
+    <!-- Buscador en tiempo real para la tabla CDP -->
+    <script>
+    $(document).ready(function() {
+        $('#searchCDP').on('input', function() {
+            const searchTerm = $(this).val().toLowerCase();
+            
+            $('#tablaCDPSeleccion tbody tr').each(function() {
+                const cdpNumber = $(this).find('td:nth-child(2)').text().toLowerCase();
+                if (cdpNumber.includes(searchTerm)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
     </script>
 
     <!-- Mensajes de éxito / error al procesar_saldo.php -->
