@@ -142,7 +142,7 @@ if (empty($datosSaldos)) {
                                             <span class="multi-line">Inicio: <?php echo htmlspecialchars($row['FECHA_INICIO']); ?></span>
                                             <span class="multi-line">Fin: <?php echo htmlspecialchars($row['FECHA_FIN']); ?></span>
                                         </td>
-                                        <td><?php echo htmlspecialchars($row['FECHA_PAGO']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['FECHA_PAGO'] ?? 'Sin registro'); ?></td>
                                         <td><?php echo htmlspecialchars(number_format($row['SALDO_ASIGNADO'], 2, ',', '.')); ?></td>
                                         <td>
                                             <span class="multi-line">CDP: <?php echo htmlspecialchars($row['Numero_Documento_CDP']); ?></span>
