@@ -80,7 +80,7 @@ $imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo) ?? [];
                                     </tr>
                                     <tr>
                                         <th>Fecha Segerida de Pago</th>
-                                        <td><?php echo htmlspecialchars($detalleSaldo['FECHA_PAGO']); ?></td>
+                                        <td><?php echo htmlspecialchars($detalleSaldo['FECHA_PAGO'] ?? 'Sin registro'); ?></td>
                                     </tr>
                                     <tr>
                                         <th>Fecha Inicio</th>
