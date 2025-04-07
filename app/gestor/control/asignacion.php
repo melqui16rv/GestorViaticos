@@ -24,9 +24,6 @@ $detalleSaldo = $miClaseG->obtenerDetalleSaldo($idSaldo);
 if (!$detalleSaldo) {
     die("No se encontró información para el ID proporcionado.");
 }
-// 1) Obtener todas las imágenes del saldo:
-$imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo);
-
 
 $detalleCDP = $miClaseG->obtenerDetalleCDP($detalleSaldo['CODIGO_CDP'], '*');
 $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
@@ -105,14 +102,35 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                                     <tr>
                                         <th>Imagen Visto Bueno</th>
                                         <td>
-                                            <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
-                                                    alt="Imagen asociada" 
-                                                    class="imagen-ampliable" 
-                                                    data-bs-toggle="modal" 
-                                                    data-bs-target="#modalImagen<?php echo $index; ?>">
-                                                <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?>
-                                            </small>
+                                            <?php foreach ($imagenes as $index => $imagen): ?>
+                                                <div style="margin-bottom: 1em;">
+                                                    <?php 
+                                                    // Concatenar BASE_URL con RUTA_IMAGEN
+                                                    $rutaImagen = BASE_URL . ($imagen['RUTA_IMAGEN'] ?? '');
+                                                    ?>
+                                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                        alt="Imagen asociada" 
+                                                        class="imagen-ampliable" 
+                                                        data-bs-toggle="modal" 
+                                                        data-bs-target="#modalImagen<?php echo $index; ?>">
+                                                    <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA'] ?? 'Fecha no disponible'); ?></small>
+        
+                                                    <!-- Modal -->
+                                                    <div class="modal fade" id="modalImagen<?php echo $index; ?>" tabindex="-1" aria-labelledby="modalLabel<?php echo $index; ?>" aria-hidden="true">
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content" style="width: 60%;">
+                                                                <div class="modal-body text-center">
+                                                                    <img src="<?php echo htmlspecialchars($rutaImagen); ?>" 
+                                                                        alt="Imagen asociada ampliada" 
+                                                                        style="max-width: 100%; border: 1px solid #ccc; padding: 5px;">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
                                         </td>
+
                                     </tr>
                                     <!-- ===============
                                     SECCIÓN NUEVA: MUESTRA DE IMÁGENES
