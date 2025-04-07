@@ -598,7 +598,7 @@
     border-radius: 8px;
     box-shadow: var(--shadow);
     background-color: white;
-    height: 100%;
+    height: auto;
   }
 
   .contendor_tabla {
