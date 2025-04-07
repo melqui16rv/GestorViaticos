@@ -322,11 +322,11 @@ body.filament-body {
 
 .search-container {
     position: relative;
-    width: 200px;
+    width: auto;
 }
 
 .search-input {
-    width: 100%;
+    width: auto;
     padding: 0.5rem;
     padding-left: 2rem;
     font-size: 0.875rem;
