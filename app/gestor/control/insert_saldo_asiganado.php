@@ -34,7 +34,8 @@ $cdps = $gestor->obtenerCDPsViaticos();
 
     <div class="filament-card">
         <h2 class="filament-card-title">Registrar asignación de viático</h2>
-        <form action="procesar_saldo.php" method="POST" class="filament-form">
+        <!-- IMPORTANTE: Agregamos enctype="multipart/form-data" para permitir subir archivos -->
+        <form action="procesar_saldo.php" method="POST" enctype="multipart/form-data" class="filament-form">
             <div class="filament-form-group">
                 <label for="codigo_cdp_visible" class="filament-form-label">Código CDP</label>
                 <input type="text" id="codigo_cdp_visible" name="codigo_cdp_visible" readonly class="filament-form-input">
@@ -63,7 +64,7 @@ $cdps = $gestor->obtenerCDPsViaticos();
             </div>
 
             <div class="filament-form-group">
-                <label for="fecha_fin" class="filament-form-label">Fecha Fin (Inicio del evento a viaticar):</label>
+                <label for="fecha_fin" class="filament-form-label">Fecha Fin (Fin del evento a viaticar):</label>
                 <input type="date" id="fecha_fin" name="fecha_fin" required class="filament-form-input">
             </div>
 
@@ -73,8 +74,14 @@ $cdps = $gestor->obtenerCDPsViaticos();
             </div>
 
             <div class="filament-form-group">
-                <label for="saldo_asignado" class="filament-form-label">Saldo Asignado (Monto total ha asignar):</label>
+                <label for="saldo_asignado" class="filament-form-label">Saldo Asignado (Monto total a asignar):</label>
                 <input type="number" step="0.01" id="saldo_asignado" name="saldo_asignado" required class="filament-form-input">
+            </div>
+
+            <!-- NUEVO: Campo para subir la imagen (opcional) -->
+            <div class="filament-form-group">
+                <label for="mi_imagen" class="filament-form-label">Adjuntar imagen (opcional):</label>
+                <input type="file" id="mi_imagen" name="mi_imagen" accept="image/*" class="filament-form-input">
             </div>
 
             <div class="filament-form-actions">
@@ -95,7 +102,6 @@ $cdps = $gestor->obtenerCDPsViaticos();
                         <th class="filament-table-heading">Dependencia</th>
                         <th class="filament-table-heading">Rubro</th>
                         <th class="filament-table-heading">Fuente</th>
-                        <!-- Puedes agregar más campos aquí según necesites -->
                     </tr>
                 </thead>
                 <tbody class="filament-table-body">
@@ -114,7 +120,6 @@ $cdps = $gestor->obtenerCDPsViaticos();
                             <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Dependencia']); ?></td>
                             <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Rubro']); ?></td>
                             <td class="filament-table-cell"><?php echo htmlspecialchars($cdp['Fuente']); ?></td>
-                            <!-- Puedes agregar más campos aquí según necesites -->
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -212,6 +217,7 @@ function seleccionarCRP(codigoCRP, boton) {
     boton.closest('.filament-table-row').classList.add('active');
 }
 </script>
+
 <?php if (isset($_GET['estado'])): ?>
 <script>
     <?php if ($_GET['estado'] === 'exito'): ?>

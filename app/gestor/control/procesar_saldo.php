@@ -25,8 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $codigoCRP = $_POST['codigo_crp'] ?? null;
     $fechaPago = empty($fechaPago) ? null : $fechaPago;
 
+    // Instancia de la clase gestor1
     $gestor = new gestor1();
-    $resultado = $gestor->insertarSaldoAsignado(
+
+    // 1) Insertar el saldo asignado (devuelve el ID recién creado si todo sale bien)
+    $nuevoSaldoId = $gestor->insertarSaldoAsignado(
         $nombre,
         $documento,
         $fechaInicio,
@@ -37,12 +40,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $codigoCRP
     );
 
-    if ($resultado) {
-        header("Location: insert_saldo_asiganado.php?estado=exito");
-        exit;
-    } else {
+    if (!$nuevoSaldoId) {
+        // Si no se insertó, redirigir con error
         header("Location: insert_saldo_asiganado.php?estado=error");
         exit;
     }
-} // Cierre del if ($_SERVER['REQUEST_METHOD'] === 'POST')
+
+    // 2) Verificar si se subió una imagen
+    if (isset($_FILES['mi_imagen']) && $_FILES['mi_imagen']['error'] === UPLOAD_ERR_OK) {
+        // Nombre temporal y nombre real
+        $nombreTemporal = $_FILES['mi_imagen']['tmp_name'];
+        $nombreOriginal = $_FILES['mi_imagen']['name'];
+
+        // Crear ruta destino única (para evitar colisiones de archivos con el mismo nombre)
+        // Nota: 'uploads/' debe ser una carpeta con permisos de escritura
+        $rutaDestino = $_SERVER['DOCUMENT_ROOT'] . '/uploads/' . uniqid() . '_' . $nombreOriginal;
+
+        // Mover el archivo desde la carpeta temporal a nuestro destino
+        if (move_uploaded_file($nombreTemporal, $rutaDestino)) {
+            // Generar la ruta que se guardará en la BD (ej. relativa al DocumentRoot)
+            // Podrías guardarla como '/uploads/nombregenerado.jpg'
+            $rutaParaBD = '/uploads/' . basename($rutaDestino);
+
+            // 3) Insertar el registro de la imagen en la tabla imagenes_saldos_asignados
+            $gestor->insertarImagenSaldoAsignado($nuevoSaldoId, $nombreOriginal, $rutaParaBD);
+        }
+        // Si falla el move_uploaded_file, podrías manejar el error si lo deseas
+    }
+
+    // Redirigir con éxito
+    header("Location: insert_saldo_asiganado.php?estado=exito");
+    exit;
+}
 ?>
