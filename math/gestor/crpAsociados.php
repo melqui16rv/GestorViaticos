@@ -6,15 +6,8 @@ class gestor1 extends Conexion {
     private $conexion;
 
     public function __construct() {
-        parent::__construct(); // Asegúrate de llamar al constructor de la clase padre
-        $this->conexion = $this->obtenerConexion(); // Usar el método heredado para obtener la conexión
-        if ($this->conexion === null) {
-            error_log('Error: No se pudo establecer la conexión a la base de datos en gestor1.');
-        }
-    }
-
-    public function obtenerConexion() {
-        return $this->conexion;
+        $this->conexion = new Conexion();
+        $this->conexion = $this->conexion->obtenerConexion();
     }
 
     public function insertarSaldoAsignado($nombre, $documento, $fechaInicio, $fechaFin, $fechaPago, $saldoAsignado, $codigoCDP, $codigoCRP) {
