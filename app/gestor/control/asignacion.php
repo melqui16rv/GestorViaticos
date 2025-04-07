@@ -169,7 +169,7 @@ $detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
                                     <p><strong>Nombre original:</strong> 
                                         <?php echo htmlspecialchars($imagen['NOMBRE_ORIGINAL']); ?>
                                     </p>
-                                    <img src="<?php echo htmlspecialchars($imagen['RUTA_IMAGEN']); ?>" 
+                                    <img src="<?php echo htmlspecialchars($imagen[BASE_URL . 'RUTA_IMAGEN']); ?>" 
                                          alt="Imagen asociada" 
                                          style="max-width: 300px; display: block; border: 1px solid #ccc; padding: 5px;">
                                     <small>Subida el <?php echo htmlspecialchars($imagen['FECHA_SUBIDA']); ?></small>
