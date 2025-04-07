@@ -9,6 +9,7 @@ class gestor extends Conexion {
         parent::__construct(); // Llamar al constructor padre
         $this->conexion = $this->obtenerConexion(); // Usar el método heredado
     }
+
     public function obtenerSaldosAsignados($documento = '', $nombre = '', $cdp = '', $crp = '', $limit = 10, $offset = 0) {
         $sql = "SELECT sa.*, 
                        cdp.Numero_Documento AS Numero_Documento_CDP, 
@@ -177,6 +178,26 @@ class gestor extends Conexion {
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error en obtenerMesesDisponibles: " . $e->getMessage());
+            return [];
+        }
+    }
+
+    // ================================
+    //      MÉTODO PARA IMÁGENES
+    // ================================
+    public function obtenerImagenesDeSaldo($idSaldo) {
+        $sql = "SELECT ID_IMAGEN, ID_SALDO, NOMBRE_ORIGINAL, RUTA_IMAGEN, FECHA_SUBIDA
+                FROM imagenes_saldos_asignados
+                WHERE ID_SALDO = :id_saldo";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindValue(':id_saldo', $idSaldo, PDO::PARAM_INT);
+
+        try {
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en obtenerImagenesDeSaldo: " . $e->getMessage());
             return [];
         }
     }
