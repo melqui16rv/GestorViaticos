@@ -299,7 +299,7 @@ $datosConsumidos = $presupuestoConsumidos->obtenerDatosPresupuestoViaticosConsum
                   '$ <?php echo $datos['consumo_cdp']; ?>',
                   '$ <?php echo $datos['saldo_disponible']; ?>'
                 ];
-                return `${value}%\n${labels[ctx.dataIndex]}`;
+                return `${value}%`;
               },
               textAlign: 'center'
             },
@@ -376,7 +376,7 @@ $datosConsumidos = $presupuestoConsumidos->obtenerDatosPresupuestoViaticosConsum
                   '$ <?php echo $datosConsumidos['consumo_op']; ?>',
                   '$ <?php echo $datosConsumidos['saldo_disponible']; ?>'
                 ];
-                return `${value}%\n${labels[ctx.dataIndex]}`;
+                return `${value}%`;
               },
               textAlign: 'center'
             },
