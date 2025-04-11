@@ -48,6 +48,8 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     animation: fadeIn 1s ease-in-out;
     height: auto;
+    padding: 20px 30px;
+    margin: 10px 0;
 }
 
 @keyframes fadeIn {
@@ -56,12 +58,11 @@
 }
 
 #filtroForm {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
 .filtro-grupo {
@@ -72,6 +73,7 @@
     padding: 1px;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    margin: 0 5px;
 }
 
 /* .filtro-grupo:hover {
@@ -102,10 +104,11 @@
 }
 
 .filtro-botones {
-    grid-column: 1 / -1;
     display: flex;
     justify-content: center;
-    padding: 20px 0;
+    gap: 10px;
+    margin-top: 15px;
+    width: 100%;
 }
 
 .filtro-dinamico:focus {
@@ -268,6 +271,9 @@
     font-size: 0.6rem;
     padding-bottom: 2px;
     animation: fadeIn 1.5s ease-in-out;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
 }
 
 /* Animaciones específicas para botones al hacer clic */
@@ -315,11 +321,11 @@
 }
 
 /* Efectos adicionales para un toque final impresionante */
-/* #filtros:hover {
+#filtros:hover {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     transform: translateY(-5px);
     transition: all 0.5s ease;
-} */
+}
 
 .tablaBusqueda tr td:last-child button {
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 90%);
@@ -415,4 +421,98 @@ input, select, button, table, div {
 
 .filament-button-action:hover {
     background-color: #059669; /* verde más oscuro */
+}
+
+/* Añadir estilos responsivos específicos para los filtros */
+@media (max-width: 768px) {
+    #fechaInicio, #fechaFin {
+        display: none;
+    }
+
+    label[for="fechaInicio"], label[for="fechaFin"] {
+        display: none;
+    }
+
+    .filtro-grupo:nth-child(6), .filtro-grupo:nth-child(7) {
+        display: none;
+    }
+}
+
+/* Ocultar filtros específicos en pantallas muy pequeñas */
+@media (max-width: 576px) {
+    #documento, #mes {
+        display: none;
+    }
+
+    label[for="documento"], label[for="mes"] {
+        display: none;
+    }
+
+    .filtro-grupo:nth-child(1), .filtro-grupo:nth-child(5) {
+        display: none;
+    }
+}
+
+/* Estilos específicos para historialOP.php */
+.tablaBusqueda.tabla-op th:nth-child(1), 
+.tablaBusqueda.tabla-op td:nth-child(1) { 
+    width: 10%; /* N° OP */ 
+}
+
+.tablaBusqueda.tabla-op th:nth-child(2), 
+.tablaBusqueda.tabla-op td:nth-child(2) { 
+    width: 15%; /* Fechas */ 
+}
+
+.tablaBusqueda.tabla-op th:nth-child(3), 
+.tablaBusqueda.tabla-op td:nth-child(3) { 
+    width: 10%; /* Estado */ 
+}
+
+.tablaBusqueda.tabla-op th:nth-child(4), 
+.tablaBusqueda.tabla-op td:nth-child(4) { 
+    width: 20%; /* Beneficiario */
+    white-space: normal;
+}
+
+.tablaBusqueda.tabla-op th:nth-child(5), 
+.tablaBusqueda.tabla-op td:nth-child(5) { 
+    width: 15%; /* Valores */
+}
+
+.tablaBusqueda.tabla-op th:nth-child(6), 
+.tablaBusqueda.tabla-op td:nth-child(6) { 
+    width: 15%; /* Información Bancaria */
+}
+
+.tablaBusqueda.tabla-op th:nth-child(7), 
+.tablaBusqueda.tabla-op td:nth-child(7) { 
+    width: 15%; /* Códigos Asociados */
+}
+
+/* Media queries específicos para historialOP.php */
+@media (max-width: 768px) {
+    /* Mantener los filtros de fechas ocultos */
+    #fechaInicio, #fechaFin,
+    label[for="fechaInicio"], label[for="fechaFin"] {
+        display: none;
+    }
+
+    /* Ocultar columnas menos importantes en móvil */
+    .tablaBusqueda.tabla-op th:nth-child(6),
+    .tablaBusqueda.tabla-op td:nth-child(6),
+    .tablaBusqueda.tabla-op th:nth-child(7),
+    .tablaBusqueda.tabla-op td:nth-child(7) {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    /* Ajustes específicos para pantallas muy pequeñas */
+    .tablaBusqueda.tabla-op th:nth-child(2),
+    .tablaBusqueda.tabla-op td:nth-child(2),
+    .tablaBusqueda.tabla-op th:nth-child(5),
+    .tablaBusqueda.tabla-op td:nth-child(5) {
+        display: none;
+    }
 }
