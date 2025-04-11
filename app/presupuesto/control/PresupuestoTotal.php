@@ -147,14 +147,7 @@ class PresupuestoTotal extends Conexion {
                 weight: 'bold',
                 size: 14
               },
-              formatter: (value, ctx) => {
-                const labels = [
-                  '$ <?php echo $datos['consumo_cdp']; ?>',
-                  '$ <?php echo $datos['saldo_disponible']; ?>'
-                ];
-                return `${value}%\n${labels[ctx.dataIndex]}`;
-              },
-              textAlign: 'center'
+              
             },
             legend: {
               position: 'top',
