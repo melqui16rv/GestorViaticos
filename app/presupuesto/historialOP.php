@@ -58,7 +58,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
     <div class="contenedor" style="min-height: 100vh; display: flex; flex-direction: column;">
         <div class="contenido" style="flex: 1;">
             <div class="contenedorStandar">
-                <div class="filtrosContenedor"></div>
+                <div class="filtrosContenedor">
                     <!-- Sección de Filtros -->
                     <div id="filtros">
                         <form id="filtroForm" method="GET" action="historialOP.php" onsubmit="return false;">
@@ -133,6 +133,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                         </form>
                         <div id="filtros-activos"></div>
                     </div>
+                </div>
                 </div>
                 <div class="contenderDeTabla">
                     <div class="contendor_tabla">
