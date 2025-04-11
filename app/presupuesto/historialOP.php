@@ -134,10 +134,9 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                         <div id="filtros-activos"></div>
                     </div>
                 </div>
-                </div>
                 <div class="contenderDeTabla">
                     <div class="contendor_tabla">
-                        <table border="1" id="tablaOP" class="tablaBusqueda tabla-op">
+                        <table border="1" id="tablaOP" class="tablaBusqueda">
                             <thead>
                                 <tr>
                                     <th>N° OP</th>
