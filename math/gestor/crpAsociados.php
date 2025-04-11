@@ -92,10 +92,10 @@ class gestor1 extends Conexion {
     public function obtenerCDPsViaticos() {
         try {
             $sql = "SELECT DISTINCT c.* 
-                    FROM cdp c
-                    INNER JOIN crp r ON c.CODIGO_CDP = r.CODIGO_CDP 
+                    FROM crp r
+                    INNER JOIN cdp c ON r.CODIGO_CDP = c.CODIGO_CDP 
                     WHERE c.Objeto LIKE '%VIATICOS%'
-                    AND c.Estado = 'Con Compromiso'";
+                    AND r.Saldo_por_Utilizar > 0";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             return $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -109,32 +109,15 @@ class gestor1 extends Conexion {
         try {
             $codigoCDP = trim($codigoCDP);
             
-            // Consulta modificada para ver todos los CRPs relacionados
             $sql = "SELECT r.* FROM crp r 
-                    WHERE TRIM(r.CODIGO_CDP) = :codigo_cdp";
+                    WHERE TRIM(r.CODIGO_CDP) = :codigo_cdp 
+                    AND r.Saldo_por_Utilizar > 0";
             
             $stmt = $this->conexion->prepare($sql);
             $stmt->bindParam(':codigo_cdp', $codigoCDP, \PDO::PARAM_STR);
             $stmt->execute();
             
-            $resultados = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-            
-            // Log para depuración
-            error_log("CDP consultado: '$codigoCDP'");
-            error_log("Número de CRPs encontrados: " . count($resultados));
-            
-            if (empty($resultados)) {
-                error_log("No se encontraron CRPs para el CDP: '$codigoCDP'");
-                // Verificar directamente en la base de datos
-                $sqlVerificacion = "SELECT COUNT(*) as total FROM crp WHERE TRIM(CODIGO_CDP) = :codigo_cdp";
-                $stmtVerificacion = $this->conexion->prepare($sqlVerificacion);
-                $stmtVerificacion->bindParam(':codigo_cdp', $codigoCDP, \PDO::PARAM_STR);
-                $stmtVerificacion->execute();
-                $totalReal = $stmtVerificacion->fetch(\PDO::FETCH_ASSOC)['total'];
-                error_log("Total de CRPs en base de datos para este CDP: $totalReal");
-            }
-            
-            return $resultados;
+            return $stmt->fetchAll(\PDO::FETCH_ASSOC);
             
         } catch (PDOException $e) {
             error_log("Error en obtenerCRPsPorCDP para CDP '$codigoCDP': " . $e->getMessage());
