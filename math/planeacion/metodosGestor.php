@@ -163,10 +163,11 @@ class planeacion extends Conexion {
             $params[':fechaFin'] = $filtros['fechaFin'];
         }
 
-        // Modificar el manejo del límite
-        if ($limit === 999999) {
-            $countQuery = "SELECT COUNT(*) FROM op WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'" . 
-                         substr($baseQuery, strpos($baseQuery, "WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'") + 46);
+        // Nuevo manejo del límite "todos"
+        if ($limit === 999999 || $limit === PHP_INT_MAX) {
+            $countQuery = str_replace("SELECT op.Numero_Documento,", "SELECT COUNT(*) as total,", $baseQuery);
+            $countQuery = preg_replace("/ORDER BY.*$/", "", $countQuery);
+            
             $stmtCount = $this->conexion->prepare($countQuery);
             foreach ($params as $param => $value) {
                 if ($param !== ':limit' && $param !== ':offset') {
@@ -175,8 +176,12 @@ class planeacion extends Conexion {
                 }
             }
             $stmtCount->execute();
-            $totalRegistros = $stmtCount->fetchColumn();
-            $limit = $totalRegistros > 0 ? $totalRegistros : 10; // Si no hay registros, usar 10 como límite
+            $totalRegistros = $stmtCount->fetch(PDO::FETCH_ASSOC)['total'];
+            
+            if ($totalRegistros > 0) {
+                $limit = $totalRegistros;
+                $offset = 0;
+            }
         }
 
         $baseQuery .= " ORDER BY op.Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";

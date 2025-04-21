@@ -223,13 +223,12 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 limit: registrosPorPagina
             };
 
-            // Guardar filtros en cookies con encodeURIComponent
-            setCookie('filtro_op_numeroDocumento', encodeURIComponent(filtros.numeroDocumento));
-            setCookie('filtro_op_estado', encodeURIComponent(filtros.estado));
-            setCookie('filtro_op_beneficiario', encodeURIComponent(filtros.beneficiario));
-            setCookie('filtro_op_mes', encodeURIComponent(filtros.mes));
-            setCookie('filtro_op_fechaInicio', encodeURIComponent(filtros.fechaInicio));
-            setCookie('filtro_op_fechaFin', encodeURIComponent(filtros.fechaFin));
+            // Guardar todos los filtros en cookies
+            Object.keys(filtros).forEach(key => {
+                if (key !== 'action' && key !== 'offset' && key !== 'limit') {
+                    setCookie('filtro_op_' + key, filtros[key]);
+                }
+            });
             setCookie('filtro_op_registrosPorPagina', registrosPorPagina);
 
             $.ajax({
@@ -239,12 +238,13 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 dataType: 'json',
                 success: function(response) {
                     $("#tablaOP tbody").empty();
+                    console.log('Response:', response); // Para debug
+                    
                     if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
                         $("#cargarMas").toggle(registrosPorPagina !== 'todos');
                     } else {
-                        let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
-                        $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
+                        $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>No se encontraron resultados</td></tr>`);
                         $("#cargarMas").hide();
                     }
                 },

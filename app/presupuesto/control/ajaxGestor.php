@@ -21,16 +21,23 @@ try {
             'fechaFin' => $_GET['fechaFin'] ?? ''
         ];
         
-        // Modificar el manejo del límite para la opción "todos"
-        $limit = isset($_GET['limit']) ? (
-            $_GET['limit'] === 'todos' ? PHP_INT_MAX : intval($_GET['limit'])
-        ) : 10;
+        // Modificar el manejo del límite
+        $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
+        if ($limit === 'todos') {
+            $limit = PHP_INT_MAX;
+        } else {
+            $limit = (int)$limit;
+        }
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
         
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
         
-        // Asegurar que siempre devolvemos un array
-        echo json_encode($resultado ?: []);
+        // Asegurar que la respuesta sea consistente
+        if (empty($resultado)) {
+            echo json_encode([]);
+        } else {
+            echo json_encode($resultado);
+        }
     } elseif ($action === 'cargarMasCDP') {
         $numeroDocumento = $_GET['numeroDocumento'] ?? '';
         $fuente = $_GET['fuente'] ?? 'Todos';
