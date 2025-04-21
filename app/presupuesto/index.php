@@ -33,6 +33,7 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/index_presupuesto.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
@@ -118,8 +119,8 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                                         <td><?php echo htmlspecialchars('$ ' . number_format((float)$row['Saldo_por_Comprometer'], 2, '.', ',')); ?></td>
                                         <td style="text-align: center;">
                                             <a href="control/CRP_asociado.php?cod_CDP=<?php echo htmlspecialchars($row['Numero_Documento']); ?>" 
-                                               class="ingresarConsumo">
-                                                +
+                                            class="btn-detalle" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
                                             </a>
                                         </td>
                                     </tr>
