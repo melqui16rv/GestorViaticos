@@ -197,7 +197,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
     $(document).ready(function(){
         // --- Variables de paginación ---
         let limit = <?php echo json_encode($limit); ?>;
-        let offset = limit;
+        let offset = 0;
 
         // --- Función para establecer cookies ---
         function setCookie(name, value, days = 30) {
@@ -207,7 +207,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
                 expires = "; expires=" + date.toUTCString();
             }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            document.cookie = name + "=" + encodeURIComponent(value || "") + expires + "; path=/";
         }
 
         // --- Guardar filtros en cookies cada vez que cambian ---
@@ -232,50 +232,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             setCookie('filtroOP_registrosPorPagina', '', -1);
         }
 
-        // --- Al cambiar cualquier filtro, guardar en cookies y buscar ---
-        let typingTimer;
-        const doneTypingInterval = 500;
-
-        $(".filtro-dinamico").on('change keyup', function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(function() {
-                guardarFiltrosEnCookies();
-                buscarDinamico();
-                actualizarFiltrosActivos();
-            }, doneTypingInterval);
-        });
-
-        // --- Al cambiar registros por página ---
-        $("#registrosPorPagina").on('change', function() {
-            const valorSeleccionado = $(this).val();
-            limit = valorSeleccionado === 'todos' ? 999999 : parseInt(valorSeleccionado);
-            offset = limit;
-            guardarFiltrosEnCookies();
-            if(valorSeleccionado === 'todos') {
-                $("#cargarMas").hide();
-            } else {
-                $("#cargarMas").show();
-            }
-            buscarDinamico();
-        });
-
-        // --- Limpiar filtros y cookies ---
-        $("#limpiarFiltros").on("click", function(){
-            limpiarCookiesFiltros();
-            $("#numeroDocumento").val('');
-            $("#beneficiario").val('');
-            $("#estado").val('Todos');
-            $("#mes").val('');
-            $("#fechaInicio").val('');
-            $("#fechaFin").val('');
-            $("#registrosPorPagina").val('10');
-            limit = 10;
-            offset = 10;
-            buscarDinamico();
-            actualizarFiltrosActivos();
-        });
-
-        // --- Al cargar la página, leer cookies y setear valores iniciales ---
+        // --- Leer cookies ---
         function leerCookie(nombre) {
             let nameEQ = nombre + "=";
             let ca = document.cookie.split(';');
@@ -287,6 +244,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             return null;
         }
 
+        // --- Setear filtros desde cookies al cargar la página ---
         function setFiltrosDesdeCookies() {
             let filtros = [
                 {id: 'numeroDocumento', cookie: 'filtroOP_numeroDocumento'},
@@ -307,236 +265,22 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             let valReg = leerCookie('filtroOP_registrosPorPagina');
             if(valReg) {
                 limit = valReg === 'todos' ? 999999 : parseInt(valReg);
-                offset = limit;
+                offset = 0;
                 if(valReg === 'todos') $("#cargarMas").hide();
                 else $("#cargarMas").show();
+            } else {
+                limit = 10;
+                offset = 0;
             }
         }
 
-        setFiltrosDesdeCookies();
-        actualizarFiltrosActivos();
-
-        // --- Si hay algún filtro en cookies, hacer búsqueda inicial ---
-        let hayFiltrosCookies = false;
-        ['filtroOP_numeroDocumento','filtroOP_estado','filtroOP_beneficiario','filtroOP_mes','filtroOP_fechaInicio','filtroOP_fechaFin','filtroOP_registrosPorPagina'].forEach(function(c){
-            if(leerCookie(c)) hayFiltrosCookies = true;
-        });
-        if(hayFiltrosCookies) {
-            buscarDinamico();
-        }
-
-        let offset = 10;
-
-        function buscarDinamico() {
-            const filtros = {
-                action: 'buscarOP',
-                numeroDocumento: $("#numeroDocumento").val(),
-                estado: $("#estado").val(),
-                beneficiario: $("#beneficiario").val(),
-                mes: $("#mes").val(),
-                fechaInicio: $("#fechaInicio").val(),
-                fechaFin: $("#fechaFin").val(),
-                offset: 0,
-                limit: limit
-            };
-
-            $.ajax({
-                url: './control/ajaxGestor.php',
-                method: 'GET',
-                data: filtros,
-                dataType: 'json',
-                success: function(response) {
-                    $("#tablaOP tbody").empty();
-                    if(Array.isArray(response) && response.length > 0) {
-                        updateTableWithData(response);
-                        $("#cargarMas").show();
-                    } else {
-                        let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
-                        $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
-                        $("#cargarMas").hide();
-                    }
-                },
-                error: function(xhr, status, error){
-                    console.error("Error:", error);
-                    alert("Error al realizar la búsqueda.");
-                }
-            });
-        }
-
-        // Actualizar el cargarMas
-        $("#cargarMas").on("click", function(){
-            const filtros = {
-                action: 'cargarMas',
-                numeroDocumento: $("#numeroDocumento").val(),
-                estado: $("#estado").val(),
-                beneficiario: $("#beneficiario").val(),
-                mes: $("#mes").val(),
-                fechaInicio: $("#fechaInicio").val(),
-                fechaFin: $("#fechaFin").val(),
-                offset: offset,
-                limit: limit
-            };
-
-            $.ajax({
-                url: './control/ajaxGestor.php',
-                method: 'GET',
-                data: filtros,
-                dataType: 'json',
-                success: function(response) {
-                    if(Array.isArray(response) && response.length > 0) {
-                        updateTableWithData(response);
-                        offset += limit;
-                    } else {
-                        $("#cargarMas").hide();
-                        alert("No hay más registros para mostrar.");
-                    }
-                },
-                error: function(xhr, status, error){
-                    console.error("Error:", error);
-                    alert("Error al cargar más registros.");
-                }
-            });
-        });
-
-        // Actualizar el manejo de filtros dinámicos
-        $(".filtro-dinamico").on('change keyup', function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(buscarDinamico, doneTypingInterval);
-            actualizarFiltrosActivos();
-        });
-
-        // Actualizar limpiarFiltros
-        $("#limpiarFiltros").on("click", function(){
-            $("#numeroDocumento").val('');
-            $("#beneficiario").val('');
-            $("#estado").val('Todos');
-            $("#mes").val('');
-            $("#fechaInicio").val('');
-            $("#fechaFin").val('');
-            $("#registrosPorPagina").val('10');
-            limit = 10;
-            offset = 0;
-            buscarDinamico();
-        });
-
-        // Variables para mantener la paginación y filtros
-        // Evento para cambio en registros por página
-        $("#registrosPorPagina").on('change', function() {
-            const valorSeleccionado = $(this).val();
-
-            // Actualizar el límite según la selección
-            limit = valorSeleccionado === 'todos' ? 999999 : parseInt(valorSeleccionado);
-
-            // Resetear offset y recargar datos
-            offset = valorSeleccionado === 'todos' ? 0 : parseInt(valorSeleccionado);
-
-            // Ocultar o mostrar botón "Cargar más" según selección
-            if(valorSeleccionado === 'todos') {
-                $("#cargarMas").hide();
-            }
-
-            buscarDinamico();
-        });
-
-        // Manejo del botón "Cargar más"
-        $("#cargarMas").on("click", function(){
-            const filtros = {
-                action: 'buscarOP',
-                numeroDocumento: $("#numeroDocumento").val(),
-                estado: $("#estado").val(),
-                beneficiario: $("#beneficiario").val(),
-                mes: $("#mes").val(),
-                fechaInicio: $("#fechaInicio").val(),
-                fechaFin: $("#fechaFin").val(),
-                offset: offset,
-                limit: limit
-            };
-
-            $.ajax({
-                url: './control/ajaxGestor.php',
-                method: 'GET',
-                data: filtros,
-                dataType: 'json',
-                success: function(response) {
-                    if(response.status === 'success' && response.data.length > 0) {
-                        updateTableWithData(response.data);
-                        offset += limit;
-                    } else {
-                        $("#cargarMas").hide();
-                        alert("No hay más registros para mostrar.");
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error(error);
-                    alert("Error al cargar más registros.");
-                }
-            });
-        });
-
-        // Manejo del botón "Limpiar Filtros"
-        $("#limpiarFiltros").on("click", function(){
-            // Resetear los valores de los filtros
-            $("#numeroDocumento").val('');
-            $("#estado").val('Todos');
-            $("#registrosPorPagina").val('10');
-            limit = 10;
-            offset = 10;
-
-            // Recargar la tabla con valores iniciales
-            $.ajax({
-                url: './control/ajaxGestor.php',
-                method: 'GET',
-                data: {
-                    action: 'cargarMas',
-                    numeroDocumento: '',
-                    estado: 'Todos',
-                    offset: 0,
-                    limit: 10
-                },
-                dataType: 'json',
-                success: function(response) {
-                    // Limpiar la tabla actual
-                    $("#tablaOP tbody").empty();
-
-                    // Cargar los nuevos datos
-                    updateTableWithData(response);
-
-                    // Mostrar el botón de cargar más si estaba oculto
-                    $("#cargarMas").show();
-                },
-                error: function(){
-                    alert("Error al recargar los registros.");
-                }
-            });
-            actualizarFiltrosActivos();
-        });
-
-        // Agregar búsqueda dinámica
-        let typingTimer;
-        const doneTypingInterval = 500; // Tiempo de espera después de escribir (500ms)
-
-        $("#numeroDocumento").on('keyup', function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(buscarDinamico, doneTypingInterval);
-        });
-
-        $("#numeroDocumento").on('keydown', function() {
-            clearTimeout(typingTimer);
-        });
-
-        // Manejar cambios en todos los filtros
-        $(".filtro-dinamico").on('change keyup', function() {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(buscarDinamico, doneTypingInterval);
-            actualizarFiltrosActivos();
-        });
-
+        // --- Actualizar filtros activos ---
         function actualizarFiltrosActivos() {
             const filtros = {
                 'N° OP': $("#numeroDocumento").val(),
                 'Beneficiario': $("#beneficiario").val(),
                 'Estado': $("#estado").val() !== 'Todos' ? $("#estado").val() : '',
-                'Mes': $("#mes option:selected").text() !== 'Todos los meses' ? $("#mes option:selected").text() : '',
+                'Mes': $("#mes option:selected").text() !== 'Todos los meses' && $("#mes").val() !== '' ? $("#mes option:selected").text() : '',
                 'Fecha Inicio': $("#fechaInicio").val(),
                 'Fecha Fin': $("#fechaFin").val(),
                 'N° Registros': $("#registrosPorPagina").val() !== '10' ? $("#registrosPorPagina").val() : ''
@@ -555,21 +299,21 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             $("#filtros-activos").html(hayFiltros ? filtrosHTML : '');
         }
 
-        function buscarDinamico() {
+        // --- Buscar y actualizar tabla ---
+        function buscarDinamico(resetOffset = true) {
+            guardarFiltrosEnCookies();
+            if(resetOffset) offset = 0;
             const filtros = {
-                action: 'buscarOP', // Cambiar el action para diferenciar de otros endpoints
+                action: 'buscarOP',
                 numeroDocumento: $("#numeroDocumento").val(),
                 estado: $("#estado").val(),
                 beneficiario: $("#beneficiario").val(),
                 mes: $("#mes").val(),
                 fechaInicio: $("#fechaInicio").val(),
                 fechaFin: $("#fechaFin").val(),
-                offset: 0,
+                offset: offset,
                 limit: limit
             };
-
-            // Resetear offset para nueva búsqueda
-            offset = 10;
 
             $.ajax({
                 url: './control/ajaxGestor.php',
@@ -577,31 +321,108 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 data: filtros,
                 dataType: 'json',
                 success: function(response) {
-                    // Limpiar la tabla actual
                     $("#tablaOP tbody").empty();
-
-                    if(response.length > 0) {
-                        // Cargar los nuevos datos
+                    if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
-                        $("#cargarMas").show();
+                        if(limit === 999999) {
+                            $("#cargarMas").hide();
+                        } else {
+                            $("#cargarMas").show();
+                        }
                     } else {
                         let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
                         $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
                         $("#cargarMas").hide();
                     }
                 },
-                error: function(){
+                error: function(xhr, status, error){
+                    console.error("Error:", error);
                     alert("Error al realizar la búsqueda.");
                 }
             });
+            actualizarFiltrosActivos();
         }
 
-        // Función para formatear números con signo de pesos
+        // --- Cargar más registros ---
+        $("#cargarMas").on("click", function(e){
+            e.preventDefault();
+            offset += limit;
+            const filtros = {
+                action: 'buscarOP',
+                numeroDocumento: $("#numeroDocumento").val(),
+                estado: $("#estado").val(),
+                beneficiario: $("#beneficiario").val(),
+                mes: $("#mes").val(),
+                fechaInicio: $("#fechaInicio").val(),
+                fechaFin: $("#fechaFin").val(),
+                offset: offset,
+                limit: limit
+            };
+
+            $.ajax({
+                url: './control/ajaxGestor.php',
+                method: 'GET',
+                data: filtros,
+                dataType: 'json',
+                success: function(response) {
+                    if(Array.isArray(response) && response.length > 0) {
+                        updateTableWithData(response);
+                    } else {
+                        $("#cargarMas").hide();
+                        alert("No hay más registros para mostrar.");
+                    }
+                },
+                error: function(xhr, status, error){
+                    console.error("Error:", error);
+                    alert("Error al cargar más registros.");
+                }
+            });
+        });
+
+        // --- Limpiar filtros y cookies ---
+        $("#limpiarFiltros").on("click", function(){
+            limpiarCookiesFiltros();
+            $("#numeroDocumento").val('');
+            $("#beneficiario").val('');
+            $("#estado").val('Todos');
+            $("#mes").val('');
+            $("#fechaInicio").val('');
+            $("#fechaFin").val('');
+            $("#registrosPorPagina").val('10');
+            limit = 10;
+            offset = 0;
+            buscarDinamico();
+        });
+
+        // --- Evento para cambio en registros por página ---
+        $("#registrosPorPagina").on('change', function() {
+            let valorSeleccionado = $(this).val();
+            limit = valorSeleccionado === 'todos' ? 999999 : parseInt(valorSeleccionado);
+            offset = 0;
+            if(valorSeleccionado === 'todos') {
+                $("#cargarMas").hide();
+            } else {
+                $("#cargarMas").show();
+            }
+            buscarDinamico();
+        });
+
+        // --- Evento para cualquier filtro dinámico ---
+        $(".filtro-dinamico").on('change keyup', function() {
+            buscarDinamico();
+        });
+
+        // --- Inicialización al cargar la página ---
+        setFiltrosDesdeCookies();
+        actualizarFiltrosActivos();
+        buscarDinamico();
+
+        // --- Función para formatear números con signo de pesos ---
         function formatCurrency(value) {
             return '$' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
-        // Modificar la función createTableRow para incluir el formato de moneda
+        // --- Crear fila de tabla ---
         function createTableRow(row) {
             return `
                 <tr data-documento="${row.Numero_Documento}">
@@ -626,14 +447,14 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 </tr>`;
         }
 
-        // Asegurarse de que los datos cargados dinámicamente también estén formateados
+        // --- Agregar filas a la tabla ---
         function updateTableWithData(response) {
             response.forEach(function(row) {
                 $("#tablaOP tbody").append(createTableRow(row));
             });
         }
 
-        // Estilos CSS inline para los filtros activos
+        // --- Estilos CSS inline para los filtros activos ---
         $("<style>")
             .prop("type", "text/css")
             .html(`
