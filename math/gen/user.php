@@ -352,5 +352,26 @@ class user extends Conexion{
         
         return $totales;
     }
+
+    /**
+     * Obtiene las últimas actualizaciones de la tabla registros_actualizaciones
+     */
+    public function obtenerUltimasActualizaciones() {
+        $sql = "SELECT 
+                ra.tipo_tabla,
+                ra.nombre_archivo,
+                ra.fecha_actualizacion,
+                ra.registros_actualizados,
+                ra.registros_nuevos,
+                u.nombre_completo as usuario
+              FROM registros_actualizaciones ra
+              JOIN usuario u ON ra.usuario_id = u.numero_documento
+              ORDER BY ra.fecha_actualizacion DESC
+              LIMIT 10";
+              
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
 }

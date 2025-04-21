@@ -8,6 +8,7 @@ $miClase = new user();
 $estadisticas = $miClase->obtenerEstadisticasActualizaciones();
 $estadisticasUsuarios = $miClase->obtenerEstadisticasPorUsuario();
 $totalesRegistros = $miClase->obtenerTotalRegistros();
+$actualizaciones = $miClase->obtenerUltimasActualizaciones(); // Cambiado para usar el método de la clase
 
 // Procesar fechas del filtro
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : date('Y-m-d');
@@ -29,7 +30,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
     ];
 }
 
-$actualizaciones = obtenerUltimasActualizaciones($conn);
 ?>
 
 <!DOCTYPE html>
