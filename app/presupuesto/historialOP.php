@@ -143,7 +143,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                                     <th>Fechas</th>
                                     <th>Estado</th>
                                     <th>Beneficiario</th>
-                                    <th>Valores</th>
+                                    <th>Valor Neto</th>
                                     <th>Información<br>Bancaria</th>
                                     <th>Códigos Asociados</th>
                                 </tr>
@@ -159,8 +159,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                                         <td><?php echo htmlspecialchars($row['Estado']); ?></td>
                                         <td><?php echo htmlspecialchars($row['Nombre_Razon_Social']); ?></td>
                                         <td>
-                                            <span class="multi-line">Bruto: $<?php echo number_format($row['Valor_Bruto'], 2); ?></span>
-                                            <span class="multi-line">Neto: $<?php echo number_format($row['Valor_Neto'], 2); ?></span>
+                                            <span class="multi-line"><?php echo '$ ' . number_format($row['Valor_Neto'], 2, '.', ','); ?></span>
                                         </td>
                                         <td>
                                             <span class="multi-line">Estado: <?php echo htmlspecialchars($row['Estado_Cuenta']); ?></span>
@@ -462,7 +461,12 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
             });
         }
 
-        // Función para crear una nueva fila (modificada para incluir los data attributes)
+        // Función para formatear números con signo de pesos
+        function formatCurrency(value) {
+            return '$' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // Modificar la función createTableRow para incluir el formato de moneda
         function createTableRow(row) {
             return `
                 <tr data-documento="${row.Numero_Documento}">
@@ -474,8 +478,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                     <td>${row.Estado}</td>
                     <td>${row.Nombre_Razon_Social}</td>
                     <td>
-                        <span class="multi-line">Bruto: $${parseFloat(row.Valor_Bruto).toLocaleString('es-CO', {minimumFractionDigits: 2})}</span>
-                        <span class="multi-line">Neto: $${parseFloat(row.Valor_Neto).toLocaleString('es-CO', {minimumFractionDigits: 2})}</span>
+                        <span class="multi-line">${formatCurrency(row.Valor_Neto)}</span>
                     </td>
                     <td>
                         <span class="multi-line">Estado: ${row.Estado_Cuenta}</span>
@@ -488,7 +491,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                 </tr>`;
         }
 
-        // Modificar las funciones que agregan filas para usar createTableRow
+        // Asegurarse de que los datos cargados dinámicamente también estén formateados
         function updateTableWithData(response) {
             response.forEach(function(row) {
                 $("#tablaOP tbody").append(createTableRow(row));
