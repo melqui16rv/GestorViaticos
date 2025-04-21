@@ -350,10 +350,11 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                     </td>
                     <td>${formatCurrency(row.Valor_Actual)}</td>
                     <td>${formatCurrency(row.Saldo_por_Comprometer)}</td>
-                    <td style="text-align: center;">                       
+
+                    <td style="text-align: center;">
                         <a href="control/CRP_asociado.php?cod_CDP=${row.Numero_Documento}" 
-                           class="ingresarConsumo">
-                            +
+                        class="btn-detalle" title="Ver detalles">
+                            <i class="fas fa-eye"></i>
                         </a>
                     </td>
                 </tr>`;

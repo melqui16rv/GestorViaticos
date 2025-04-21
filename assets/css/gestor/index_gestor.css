@@ -418,3 +418,21 @@ input, select, button, table, div {
 .filament-button-action:hover {
     background-color: #059669; /* verde más oscuro */
 }
+
+.btn-detalle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #3498db;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-detalle:hover {
+    background-color: #2980b9;
+    transform: scale(1.1);
+}

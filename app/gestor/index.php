@@ -50,6 +50,7 @@ if (empty($datosSaldos)) {
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/gestor/index_gestor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
@@ -149,7 +150,10 @@ if (empty($datosSaldos)) {
                                             <span class="multi-line">CRP: <?php echo htmlspecialchars($row['Numero_Documento_CRP']); ?></span>
                                         </td>
                                         <td style="text-align: center;">
-                                            <a href="control/asignacion.php?id_saldo=<?php echo urlencode($row['ID_SALDO']); ?>" class="ingresarConsumo">+</a>
+                                            <a href="control/asignacion.php?id_saldo=<?php echo urlencode($row['ID_SALDO']); ?>" 
+                                            class="btn-detalle" title="Ver detalles">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
