@@ -109,6 +109,7 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, $li
                                     <th>Descripción<br>Detallada</th>
                                 </tr>
                             </thead>
+                            
                             <tbody>
                                 <?php foreach ($initialData as $row): ?>
                                     <tr data-documento="<?php echo htmlspecialchars($row['Numero_Documento']); ?>">
