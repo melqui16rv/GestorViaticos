@@ -13,13 +13,19 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/planeacion/metodosGestor.php';
 requireRole(['3']);
 $miClaseG = new planeacion();
 
-// Validación y sanitización de filtros
-$numeroDocumento = isset($_GET['numeroDocumento']) ? htmlspecialchars(trim($_GET['numeroDocumento'])) : '';
-$estado = isset($_GET['estado']) ? htmlspecialchars(trim($_GET['estado'])) : 'Todos';
-$beneficiario = isset($_GET['beneficiario']) ? htmlspecialchars(trim($_GET['beneficiario'])) : '';
-$mes = isset($_GET['mes']) ? filter_var($_GET['mes'], FILTER_VALIDATE_INT) : '';
-$fechaInicio = isset($_GET['fechaInicio']) ? htmlspecialchars(trim($_GET['fechaInicio'])) : '';
-$fechaFin = isset($_GET['fechaFin']) ? htmlspecialchars(trim($_GET['fechaFin'])) : '';
+// Leer filtros desde cookies si existen, si no, usar GET, si no, valores por defecto
+function getFiltroCookie($nombre, $default = '') {
+    return isset($_COOKIE[$nombre]) ? $_COOKIE[$nombre] : $default;
+}
+
+$numeroDocumento = isset($_GET['numeroDocumento']) ? htmlspecialchars(trim($_GET['numeroDocumento'])) : getFiltroCookie('filtroOP_numeroDocumento', '');
+$estado = isset($_GET['estado']) ? htmlspecialchars(trim($_GET['estado'])) : getFiltroCookie('filtroOP_estado', 'Todos');
+$beneficiario = isset($_GET['beneficiario']) ? htmlspecialchars(trim($_GET['beneficiario'])) : getFiltroCookie('filtroOP_beneficiario', '');
+$mes = isset($_GET['mes']) ? filter_var($_GET['mes'], FILTER_VALIDATE_INT) : getFiltroCookie('filtroOP_mes', '');
+$fechaInicio = isset($_GET['fechaInicio']) ? htmlspecialchars(trim($_GET['fechaInicio'])) : getFiltroCookie('filtroOP_fechaInicio', '');
+$fechaFin = isset($_GET['fechaFin']) ? htmlspecialchars(trim($_GET['fechaFin'])) : getFiltroCookie('filtroOP_fechaFin', '');
+$registrosPorPagina = getFiltroCookie('filtroOP_registrosPorPagina', '10');
+$limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
 
 // Validar formato de fechas
 if (!empty($fechaInicio)) {
@@ -39,8 +45,8 @@ $filtrosIniciales = [
     'fechaFin' => $fechaFin
 ];
 
-// Se obtienen los primeros 10 registros
-$initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
+// Se obtienen los primeros registros según los filtros de cookies o GET
+$initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 ?>
 <html>
 <head>
@@ -189,8 +195,137 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
 
     <script>
     $(document).ready(function(){
+        // --- Variables de paginación ---
+        let limit = <?php echo json_encode($limit); ?>;
+        let offset = limit;
+
+        // --- Función para establecer cookies ---
+        function setCookie(name, value, days = 30) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // --- Guardar filtros en cookies cada vez que cambian ---
+        function guardarFiltrosEnCookies() {
+            setCookie('filtroOP_numeroDocumento', $("#numeroDocumento").val());
+            setCookie('filtroOP_estado', $("#estado").val());
+            setCookie('filtroOP_beneficiario', $("#beneficiario").val());
+            setCookie('filtroOP_mes', $("#mes").val());
+            setCookie('filtroOP_fechaInicio', $("#fechaInicio").val());
+            setCookie('filtroOP_fechaFin', $("#fechaFin").val());
+            setCookie('filtroOP_registrosPorPagina', $("#registrosPorPagina").val());
+        }
+
+        // --- Limpiar cookies de filtros ---
+        function limpiarCookiesFiltros() {
+            setCookie('filtroOP_numeroDocumento', '', -1);
+            setCookie('filtroOP_estado', '', -1);
+            setCookie('filtroOP_beneficiario', '', -1);
+            setCookie('filtroOP_mes', '', -1);
+            setCookie('filtroOP_fechaInicio', '', -1);
+            setCookie('filtroOP_fechaFin', '', -1);
+            setCookie('filtroOP_registrosPorPagina', '', -1);
+        }
+
+        // --- Al cambiar cualquier filtro, guardar en cookies y buscar ---
+        let typingTimer;
+        const doneTypingInterval = 500;
+
+        $(".filtro-dinamico").on('change keyup', function() {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(function() {
+                guardarFiltrosEnCookies();
+                buscarDinamico();
+                actualizarFiltrosActivos();
+            }, doneTypingInterval);
+        });
+
+        // --- Al cambiar registros por página ---
+        $("#registrosPorPagina").on('change', function() {
+            const valorSeleccionado = $(this).val();
+            limit = valorSeleccionado === 'todos' ? 999999 : parseInt(valorSeleccionado);
+            offset = limit;
+            guardarFiltrosEnCookies();
+            if(valorSeleccionado === 'todos') {
+                $("#cargarMas").hide();
+            } else {
+                $("#cargarMas").show();
+            }
+            buscarDinamico();
+        });
+
+        // --- Limpiar filtros y cookies ---
+        $("#limpiarFiltros").on("click", function(){
+            limpiarCookiesFiltros();
+            $("#numeroDocumento").val('');
+            $("#beneficiario").val('');
+            $("#estado").val('Todos');
+            $("#mes").val('');
+            $("#fechaInicio").val('');
+            $("#fechaFin").val('');
+            $("#registrosPorPagina").val('10');
+            limit = 10;
+            offset = 10;
+            buscarDinamico();
+            actualizarFiltrosActivos();
+        });
+
+        // --- Al cargar la página, leer cookies y setear valores iniciales ---
+        function leerCookie(nombre) {
+            let nameEQ = nombre + "=";
+            let ca = document.cookie.split(';');
+            for(let i=0;i < ca.length;i++) {
+                let c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length,c.length));
+            }
+            return null;
+        }
+
+        function setFiltrosDesdeCookies() {
+            let filtros = [
+                {id: 'numeroDocumento', cookie: 'filtroOP_numeroDocumento'},
+                {id: 'estado', cookie: 'filtroOP_estado'},
+                {id: 'beneficiario', cookie: 'filtroOP_beneficiario'},
+                {id: 'mes', cookie: 'filtroOP_mes'},
+                {id: 'fechaInicio', cookie: 'filtroOP_fechaInicio'},
+                {id: 'fechaFin', cookie: 'filtroOP_fechaFin'},
+                {id: 'registrosPorPagina', cookie: 'filtroOP_registrosPorPagina'}
+            ];
+            filtros.forEach(function(f) {
+                let val = leerCookie(f.cookie);
+                if(val !== null && typeof val !== 'undefined' && val !== '') {
+                    $("#" + f.id).val(val);
+                }
+            });
+            // Ajustar limit y offset según cookie de registrosPorPagina
+            let valReg = leerCookie('filtroOP_registrosPorPagina');
+            if(valReg) {
+                limit = valReg === 'todos' ? 999999 : parseInt(valReg);
+                offset = limit;
+                if(valReg === 'todos') $("#cargarMas").hide();
+                else $("#cargarMas").show();
+            }
+        }
+
+        setFiltrosDesdeCookies();
+        actualizarFiltrosActivos();
+
+        // --- Si hay algún filtro en cookies, hacer búsqueda inicial ---
+        let hayFiltrosCookies = false;
+        ['filtroOP_numeroDocumento','filtroOP_estado','filtroOP_beneficiario','filtroOP_mes','filtroOP_fechaInicio','filtroOP_fechaFin','filtroOP_registrosPorPagina'].forEach(function(c){
+            if(leerCookie(c)) hayFiltrosCookies = true;
+        });
+        if(hayFiltrosCookies) {
+            buscarDinamico();
+        }
+
         let offset = 10;
-        let limit = 10;
 
         function buscarDinamico() {
             const filtros = {
