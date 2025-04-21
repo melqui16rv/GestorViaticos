@@ -13,37 +13,13 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/planeacion/metodosGestor.php';
 requireRole(['3']);
 $miClaseG = new planeacion();
 
-// Obtener valores desde cookies o GET
-$numeroDocumento = isset($_GET['numeroDocumento']) ? $_GET['numeroDocumento'] : 
-                  (isset($_COOKIE['filtro_op_numeroDocumento']) ? $_COOKIE['filtro_op_numeroDocumento'] : '');
-$estado = isset($_GET['estado']) ? $_GET['estado'] : 
-         (isset($_COOKIE['filtro_op_estado']) ? $_COOKIE['filtro_op_estado'] : 'Todos');
-$beneficiario = isset($_GET['beneficiario']) ? $_GET['beneficiario'] : 
-               (isset($_COOKIE['filtro_op_beneficiario']) ? $_COOKIE['filtro_op_beneficiario'] : '');
-$mes = isset($_GET['mes']) ? $_GET['mes'] : 
-      (isset($_COOKIE['filtro_op_mes']) ? $_COOKIE['filtro_op_mes'] : '');
-$fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : 
-              (isset($_COOKIE['filtro_op_fechaInicio']) ? $_COOKIE['filtro_op_fechaInicio'] : '');
-$fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : 
-           (isset($_COOKIE['filtro_op_fechaFin']) ? $_COOKIE['filtro_op_fechaFin'] : '');
-$registrosPorPagina = isset($_COOKIE['filtro_op_registrosPorPagina']) ? $_COOKIE['filtro_op_registrosPorPagina'] : '10';
-
-// Asegurar que las cookies se establezcan incluso en la carga inicial
-if (!empty($numeroDocumento)) setcookie('filtro_op_numeroDocumento', $numeroDocumento, time() + (86400 * 30), '/');
-if (!empty($estado)) setcookie('filtro_op_estado', $estado, time() + (86400 * 30), '/');
-if (!empty($beneficiario)) setcookie('filtro_op_beneficiario', $beneficiario, time() + (86400 * 30), '/');
-if (!empty($mes)) setcookie('filtro_op_mes', $mes, time() + (86400 * 30), '/');
-if (!empty($fechaInicio)) setcookie('filtro_op_fechaInicio', $fechaInicio, time() + (86400 * 30), '/');
-if (!empty($fechaFin)) setcookie('filtro_op_fechaFin', $fechaFin, time() + (86400 * 30), '/');
-setcookie('filtro_op_registrosPorPagina', $registrosPorPagina, time() + (86400 * 30), '/');
-
 // Validación y sanitización de filtros
-$numeroDocumento = htmlspecialchars(trim($numeroDocumento));
-$estado = htmlspecialchars(trim($estado));
-$beneficiario = htmlspecialchars(trim($beneficiario));
-$mes = filter_var($mes, FILTER_VALIDATE_INT);
-$fechaInicio = htmlspecialchars(trim($fechaInicio));
-$fechaFin = htmlspecialchars(trim($fechaFin));
+$numeroDocumento = isset($_GET['numeroDocumento']) ? htmlspecialchars(trim($_GET['numeroDocumento'])) : '';
+$estado = isset($_GET['estado']) ? htmlspecialchars(trim($_GET['estado'])) : 'Todos';
+$beneficiario = isset($_GET['beneficiario']) ? htmlspecialchars(trim($_GET['beneficiario'])) : '';
+$mes = isset($_GET['mes']) ? filter_var($_GET['mes'], FILTER_VALIDATE_INT) : '';
+$fechaInicio = isset($_GET['fechaInicio']) ? htmlspecialchars(trim($_GET['fechaInicio'])) : '';
+$fechaFin = isset($_GET['fechaFin']) ? htmlspecialchars(trim($_GET['fechaFin'])) : '';
 
 // Validar formato de fechas
 if (!empty($fechaInicio)) {
@@ -63,30 +39,8 @@ $filtrosIniciales = [
     'fechaFin' => $fechaFin
 ];
 
-// Determinar el límite inicial basado en registrosPorPagina
-$limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
-$initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
-
-// Agregar manejo de Ajax en el mismo archivo
-if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] === 'cargarMas')) {
-    header('Content-Type: application/json');
-    
-    $filtros = [
-        'numeroDocumento' => $_GET['numeroDocumento'] ?? '',
-        'estado' => $_GET['estado'] ?? 'Todos',
-        'beneficiario' => $_GET['beneficiario'] ?? '',
-        'mes' => $_GET['mes'] ?? '',
-        'fechaInicio' => $_GET['fechaInicio'] ?? '',
-        'fechaFin' => $_GET['fechaFin'] ?? ''
-    ];
-    
-    $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
-    $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
-    
-    $resultado = $miClaseG->obtenerOP($filtros, $limit, $offset);
-    echo json_encode($resultado);
-    exit;
-}
+// Se obtienen los primeros 10 registros
+$initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
 ?>
 <html>
 <head>
@@ -238,23 +192,6 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
         let offset = 10;
         let limit = 10;
 
-        function setCookie(name, value, days = 30) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            const expires = "; expires=" + date.toUTCString();
-            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Strict";
-        }
-
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) {
-                const cookieValue = parts.pop().split(';').shift();
-                return cookieValue === 'undefined' ? '' : cookieValue;
-            }
-            return '';
-        }
-
         function buscarDinamico() {
             const filtros = {
                 action: 'buscarOP',
@@ -268,20 +205,8 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
                 limit: limit
             };
 
-            // Guardar en cookies antes de la búsqueda
-            Object.entries(filtros).forEach(([key, value]) => {
-                if (key !== 'action' && key !== 'offset' && key !== 'limit') {
-                    if (value) {
-                        setCookie(`filtro_op_${key}`, value);
-                    } else {
-                        setCookie(`filtro_op_${key}`, '');
-                    }
-                }
-            });
-            setCookie('filtro_op_registrosPorPagina', $("#registrosPorPagina").val());
-
             $.ajax({
-                url: window.location.href, // Usar la misma página
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -291,11 +216,12 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
                         updateTableWithData(response);
                         $("#cargarMas").show();
                     } else {
-                        $("#tablaOP tbody").append('<tr><td colspan="7" style="text-align: center;">No se encontraron resultados</td></tr>');
+                        let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
+                        $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
                         $("#cargarMas").hide();
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function(xhr, status, error){
                     console.error("Error:", error);
                     alert("Error al realizar la búsqueda.");
                 }
@@ -317,7 +243,7 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
             };
 
             $.ajax({
-                url: window.location.href, // Usar la misma página
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -346,24 +272,13 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
 
         // Actualizar limpiarFiltros
         $("#limpiarFiltros").on("click", function(){
-            // Limpiar cookies
-            setCookie('filtro_op_numeroDocumento', '');
-            setCookie('filtro_op_estado', 'Todos');
-            setCookie('filtro_op_beneficiario', '');
-            setCookie('filtro_op_mes', '');
-            setCookie('filtro_op_fechaInicio', '');
-            setCookie('filtro_op_fechaFin', '');
-            setCookie('filtro_op_registrosPorPagina', '10');
-
-            // Resetear campos
             $("#numeroDocumento").val('');
-            $("#estado").val('Todos');
             $("#beneficiario").val('');
+            $("#estado").val('Todos');
             $("#mes").val('');
             $("#fechaInicio").val('');
             $("#fechaFin").val('');
             $("#registrosPorPagina").val('10');
-            
             limit = 10;
             offset = 0;
             buscarDinamico();
@@ -403,7 +318,7 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
             };
 
             $.ajax({
-                url: window.location.href, // Usar la misma página
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -434,7 +349,7 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
 
             // Recargar la tabla con valores iniciales
             $.ajax({
-                url: window.location.href, // Usar la misma página
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: {
                     action: 'cargarMas',
@@ -522,7 +437,7 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
             offset = 10;
 
             $.ajax({
-                url: window.location.href, // Usar la misma página
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -597,40 +512,6 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
                 }
             `)
             .appendTo("head");
-
-        // Inicialización al cargar la página
-        $(document).ready(function(){
-            const hayCookies = document.cookie.split(';').some(c => c.trim().startsWith('filtro_op_'));
-            
-            if(hayCookies) {
-                // Solo realizar búsqueda si hay cookies de filtros
-                const cookieVals = {
-                    numeroDocumento: getCookie('filtro_op_numeroDocumento'),
-                    estado: getCookie('filtro_op_estado'),
-                    beneficiario: getCookie('filtro_op_beneficiario'),
-                    mes: getCookie('filtro_op_mes'),
-                    fechaInicio: getCookie('filtro_op_fechaInicio'),
-                    fechaFin: getCookie('filtro_op_fechaFin')
-                };
-
-                Object.entries(cookieVals).forEach(([key, value]) => {
-                    if(value) {
-                        $(`#${key}`).val(value);
-                    }
-                });
-
-                buscarDinamico();
-                actualizarFiltrosActivos();
-            }
-        });
-
-        // Función helper para obtener valores de cookies
-        function getCookie(name) {
-            const value = `; ${document.cookie}`;
-            const parts = value.split(`; ${name}=`);
-            if (parts.length === 2) return parts.pop().split(';').shift();
-            return '';
-        }
     });
     </script>
 </body>

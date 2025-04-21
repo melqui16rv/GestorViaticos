@@ -13,16 +13,13 @@ try {
     
     if ($action === 'buscarOP' || $action === 'cargarMas') {
         $filtros = [
-            'numeroDocumento' => isset($_GET['numeroDocumento']) ? trim($_GET['numeroDocumento']) : '',
-            'estado' => isset($_GET['estado']) ? trim($_GET['estado']) : 'Todos',
-            'beneficiario' => isset($_GET['beneficiario']) ? trim($_GET['beneficiario']) : '',
-            'mes' => isset($_GET['mes']) ? trim($_GET['mes']) : '',
-            'fechaInicio' => isset($_GET['fechaInicio']) ? trim($_GET['fechaInicio']) : '',
-            'fechaFin' => isset($_GET['fechaFin']) ? trim($_GET['fechaFin']) : ''
+            'numeroDocumento' => $_GET['numeroDocumento'] ?? '',
+            'estado' => $_GET['estado'] ?? 'Todos',
+            'beneficiario' => $_GET['beneficiario'] ?? '',
+            'mes' => $_GET['mes'] ?? '',
+            'fechaInicio' => $_GET['fechaInicio'] ?? '',
+            'fechaFin' => $_GET['fechaFin'] ?? ''
         ];
-        
-        // Validar y sanitizar los filtros
-        $filtros = array_map('htmlspecialchars', $filtros);
         
         $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
