@@ -156,7 +156,7 @@
 .tablaBusqueda th, .tablaBusqueda td {
     padding: 4px 8px; /* Reducimos el padding */
     text-align: left;
-    color: black;
+    color: white;
     white-space: nowrap; /* Evita saltos de línea */
     border: 1px solid rgba(0, 0, 0, 0.1);
     line-height: 1.2; /* Ajustamos el interlineado */
