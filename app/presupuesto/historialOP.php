@@ -223,13 +223,13 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 limit: registrosPorPagina
             };
 
-            // Guardar filtros en cookies
-            setCookie('filtro_op_numeroDocumento', filtros.numeroDocumento);
-            setCookie('filtro_op_estado', filtros.estado);
-            setCookie('filtro_op_beneficiario', filtros.beneficiario);
-            setCookie('filtro_op_mes', filtros.mes);
-            setCookie('filtro_op_fechaInicio', filtros.fechaInicio);
-            setCookie('filtro_op_fechaFin', filtros.fechaFin);
+            // Guardar filtros en cookies con encodeURIComponent
+            setCookie('filtro_op_numeroDocumento', encodeURIComponent(filtros.numeroDocumento));
+            setCookie('filtro_op_estado', encodeURIComponent(filtros.estado));
+            setCookie('filtro_op_beneficiario', encodeURIComponent(filtros.beneficiario));
+            setCookie('filtro_op_mes', encodeURIComponent(filtros.mes));
+            setCookie('filtro_op_fechaInicio', encodeURIComponent(filtros.fechaInicio));
+            setCookie('filtro_op_fechaFin', encodeURIComponent(filtros.fechaFin));
             setCookie('filtro_op_registrosPorPagina', registrosPorPagina);
 
             $.ajax({
@@ -241,11 +241,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                     $("#tablaOP tbody").empty();
                     if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
-                        if(registrosPorPagina === 'todos') {
-                            $("#cargarMas").hide();
-                        } else {
-                            $("#cargarMas").show();
-                        }
+                        $("#cargarMas").toggle(registrosPorPagina !== 'todos');
                     } else {
                         let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
                         $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
@@ -565,7 +561,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 
             if(cookieRegistros) {
                 const valorRegistros = cookieRegistros.split('=')[1];
-                $("#registrosPorPagina").val(valorRegistros);
+                $("#registrosPorPagina").val(decodeURIComponent(valorRegistros));
                 
                 if(valorRegistros === 'todos') {
                     limit = 999999;
@@ -594,6 +590,16 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 expires = "; expires=" + date.toUTCString();
             }
             document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Modificar la función getCookie
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) {
+                return decodeURIComponent(parts.pop().split(';').shift());
+            }
+            return null;
         }
     });
     </script>

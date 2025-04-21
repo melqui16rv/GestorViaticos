@@ -21,24 +21,31 @@ try {
             'fechaFin' => $_GET['fechaFin'] ?? ''
         ];
         
-        $limit = isset($_GET['limit']) ? ($_GET['limit'] === 'todos' ? 999999 : intval($_GET['limit'])) : 10;
+        // Modificar el manejo del límite para la opción "todos"
+        $limit = isset($_GET['limit']) ? (
+            $_GET['limit'] === 'todos' ? PHP_INT_MAX : intval($_GET['limit'])
+        ) : 10;
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
         
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
-        if (empty($resultado)) {
-            echo json_encode([]);
-        } else {
-            echo json_encode($resultado);
-        }
+        
+        // Asegurar que siempre devolvemos un array
+        echo json_encode($resultado ?: []);
     } elseif ($action === 'cargarMasCDP') {
         $numeroDocumento = $_GET['numeroDocumento'] ?? '';
         $fuente = $_GET['fuente'] ?? 'Todos';
         $reintegros = $_GET['reintegros'] ?? 'Todos';
-        $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
+        
+        // Modificar el manejo del límite para la opción "todos"
+        $limit = isset($_GET['limit']) ? (
+            $_GET['limit'] === 'todos' ? PHP_INT_MAX : intval($_GET['limit'])
+        ) : 10;
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
 
         $resultado = $gestor->obtenerCDP($numeroDocumento, $fuente, $reintegros, $limit, $offset);
-        echo json_encode($resultado); // Enviar solo los datos sin estructura adicional
+        
+        // Asegurar que siempre devolvemos un array
+        echo json_encode($resultado ?: []);
     } else {
         throw new Exception("Acción no válida");
     }
