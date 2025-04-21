@@ -24,9 +24,10 @@ $fuente = isset($_GET['fuente']) ? $_GET['fuente'] :
 $reintegros = isset($_GET['reintegros']) ? $_GET['reintegros'] : 
               (isset($_COOKIE['filtro_reintegros']) ? $_COOKIE['filtro_reintegros'] : 'Todos');
 $registrosPorPagina = isset($_COOKIE['filtro_registrosPorPagina']) ? $_COOKIE['filtro_registrosPorPagina'] : '10';
+$limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
 
-// Se obtienen los primeros 10 registros
-$initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10, 0);
+// Se obtienen los primeros registros
+$initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, $limit, 0);
 ?>
 <html>
 <head>
@@ -147,8 +148,8 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
     <script>
     $(document).ready(function(){
         // Eliminar todo el código relacionado con el evento click y el modal
-        let offset = 10;
-        let limit = 10;
+        let offset = <?php echo ($registrosPorPagina === 'todos' ? 0 : 10); ?>;
+        let limit = <?php echo ($registrosPorPagina === 'todos' ? 999999 : 10); ?>;
 
         // Variables para mantener la paginación y filtros
         // Evento para cambio en registros por página
@@ -403,7 +404,18 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
             const cookieRegistros = document.cookie.split('; ').find(row => row.startsWith('filtro_registrosPorPagina='));
 
             if(cookieRegistros) {
-                $("#registrosPorPagina").val(cookieRegistros.split('=')[1]);
+                const valorRegistros = cookieRegistros.split('=')[1];
+                $("#registrosPorPagina").val(valorRegistros);
+                
+                // Actualizar límite y offset según el valor de registros
+                if(valorRegistros === 'todos') {
+                    limit = 999999;
+                    offset = 0;
+                    $("#cargarMas").hide();
+                } else {
+                    limit = parseInt(valorRegistros);
+                    offset = parseInt(valorRegistros);
+                }
             }
             
             // Si hay filtros guardados, realizar búsqueda inicial

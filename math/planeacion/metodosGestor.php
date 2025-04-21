@@ -11,33 +11,89 @@ class planeacion extends Conexion {
     }
 
     public function obtenerCDP($numeroDocumento = '', $fuente = '', $reintegros = '', $limit = 10, $offset = 0) {
-        $query = "SELECT 
-                  Numero_Documento, 
-                  Fecha_de_Registro, 
-                  IFNULL(Fecha_de_Creacion, '') AS Fecha_de_Creacion, 
-                  IFNULL(Estado, '') AS Estado, 
-                  IFNULL(Dependencia, '') AS Dependencia, 
-                  IFNULL(Fuente, '') AS Fuente, 
-                  IFNULL(Valor_Actual, 0) AS Valor_Actual, 
-                  IFNULL(Saldo_por_Comprometer, 0) AS Saldo_por_Comprometer, 
-                  IFNULL(Reintegros, 0) AS Reintegros
-                  FROM cdp
-                  WHERE 1";
+        // Construir la consulta base
+        $baseQuery = "SELECT 
+                      Numero_Documento, 
+                      Fecha_de_Registro, 
+                      IFNULL(Fecha_de_Creacion, '') AS Fecha_de_Creacion, 
+                      IFNULL(Estado, '') AS Estado, 
+                      IFNULL(Dependencia, '') AS Dependencia, 
+                      IFNULL(Fuente, '') AS Fuente, 
+                      IFNULL(Valor_Actual, 0) AS Valor_Actual, 
+                      IFNULL(Saldo_por_Comprometer, 0) AS Saldo_por_Comprometer, 
+                      IFNULL(Reintegros, 0) AS Reintegros
+                      FROM cdp
+                      WHERE 1";
+        
         $params = [];
 
-        // Filtro por Número de Documento (búsqueda parcial)
+        // Aplicar filtros
+        if (!empty($numeroDocumento)) {
+            $baseQuery .= " AND Numero_Documento LIKE :numeroDocumento";
+            $params[':numeroDocumento'] = "%" . $numeroDocumento . "%";
+        }
+
+        if (!empty($fuente) && $fuente != "Todos") {
+            $baseQuery .= " AND Fuente = :fuente";
+            $params[':fuente'] = $fuente;
+        }
+
+        if (!empty($reintegros) && $reintegros != "Todos") {
+            if ($reintegros == "Con reintegro") {
+                $baseQuery .= " AND Reintegros <> 0";
+            } elseif ($reintegros == "Sin reintegro") {
+                $baseQuery .= " AND (Reintegros = 0 OR Reintegros IS NULL)";
+            }
+        }
+
+        // Ordenar por fecha de registro
+        $baseQuery .= " ORDER BY Fecha_de_Registro DESC";
+
+        // Si limit es 'todos', obtener el total de registros
+        if ($limit === 999999) {
+            $countQuery = "SELECT COUNT(*) FROM cdp WHERE 1" . substr($baseQuery, strpos($baseQuery, "WHERE 1") + 7);
+            $stmtCount = $this->conexion->prepare($countQuery);
+            foreach ($params as $param => $value) {
+                $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+                $stmtCount->bindValue($param, $value, $type);
+            }
+            $stmtCount->execute();
+            $totalRegistros = $stmtCount->fetchColumn();
+            $limit = $totalRegistros; // Establecer límite al total de registros
+        }
+
+        // Agregar LIMIT y OFFSET a la consulta principal
+        $baseQuery .= " LIMIT :limit OFFSET :offset";
+        $params[':limit'] = (int)$limit;
+        $params[':offset'] = (int)$offset;
+
+        $stmt = $this->conexion->prepare($baseQuery);
+        
+        // Vincular parámetros
+        foreach ($params as $param => $value) {
+            $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue($param, $value, $type);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Método adicional para obtener el total de registros
+    public function obtenerTotalCDP($numeroDocumento = '', $fuente = '', $reintegros = '') {
+        $query = "SELECT COUNT(*) FROM cdp WHERE 1";
+        $params = [];
+
         if (!empty($numeroDocumento)) {
             $query .= " AND Numero_Documento LIKE :numeroDocumento";
             $params[':numeroDocumento'] = "%" . $numeroDocumento . "%";
         }
 
-        // Filtro por Fuente (si no se selecciona "Todos")
         if (!empty($fuente) && $fuente != "Todos") {
             $query .= " AND Fuente = :fuente";
             $params[':fuente'] = $fuente;
         }
 
-        // Filtro por Reintegros
         if (!empty($reintegros) && $reintegros != "Todos") {
             if ($reintegros == "Con reintegro") {
                 $query .= " AND Reintegros <> 0";
@@ -46,30 +102,16 @@ class planeacion extends Conexion {
             }
         }
 
-        // Ordenar por Fecha_de_Registro de forma descendente y aplicar paginación
-        $query .= " ORDER BY Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";
-        $params[':limit'] = (int)$limit;
-        $params[':offset'] = (int)$offset;
-
         $stmt = $this->conexion->prepare($query);
-        if ($stmt === false) {
-            throw new Exception("Error en la preparación de la consulta");
-        }
-
-        // Vincular parámetros
         foreach ($params as $param => $value) {
             $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
             $stmt->bindValue($param, $value, $type);
         }
-
+        
         $stmt->execute();
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Agregar registro de depuración
-        error_log(print_r($result, true));
-
-        return $result;
+        return $stmt->fetchColumn();
     }
+
     public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
         $query = "SELECT 
                   op.Numero_Documento,
