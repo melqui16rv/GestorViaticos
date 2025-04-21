@@ -195,8 +195,17 @@ function depurar_datos_op($archivo) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
-        session_start();
-        $usuario_id = $_SESSION['usuario_id'];
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if (!isset($_SESSION['numero_documento'])) {
+            throw new Exception('Usuario no autenticado');
+        }
+
+        $usuario_id = $_SESSION['numero_documento'];
+        $conexion = new Conexion();
+        $conn = $conexion->obtenerConexion();
 
         if (!isset($_FILES['dataop'])) {
             throw new Exception('No se recibió el archivo dataop');
@@ -228,7 +237,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
         
         $nombre_archivo = $_FILES['dataop']['name'];
-        $stmt->bind_param("ssii", $nombre_archivo, $resultado['updated'], $resultado['inserted'], $usuario_id);
+        $stmt->bindParam(1, $nombre_archivo, PDO::PARAM_STR);
+        $stmt->bindParam(2, $resultado['updated'], PDO::PARAM_INT);
+        $stmt->bindParam(3, $resultado['inserted'], PDO::PARAM_INT);
+        $stmt->bindParam(4, $usuario_id, PDO::PARAM_STR);
         $stmt->execute();
 
         header('Content-Type: application/json');
