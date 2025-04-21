@@ -152,7 +152,7 @@ class PresupuestoTotal extends Conexion {
                   '$ <?php echo $datos['consumo_cdp']; ?>',
                   '$ <?php echo $datos['saldo_disponible']; ?>'
                 ];
-                return `${value}%\n${labels[ctx.dataIndex]}`;
+                return `${value}%`;
               },
               textAlign: 'center'
             },
