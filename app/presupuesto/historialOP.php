@@ -28,6 +28,15 @@ $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] :
            (isset($_COOKIE['filtro_op_fechaFin']) ? $_COOKIE['filtro_op_fechaFin'] : '');
 $registrosPorPagina = isset($_COOKIE['filtro_op_registrosPorPagina']) ? $_COOKIE['filtro_op_registrosPorPagina'] : '10';
 
+// Asegurar que las cookies se establezcan incluso en la carga inicial
+if (!empty($numeroDocumento)) setcookie('filtro_op_numeroDocumento', $numeroDocumento, time() + (86400 * 30), '/');
+if (!empty($estado)) setcookie('filtro_op_estado', $estado, time() + (86400 * 30), '/');
+if (!empty($beneficiario)) setcookie('filtro_op_beneficiario', $beneficiario, time() + (86400 * 30), '/');
+if (!empty($mes)) setcookie('filtro_op_mes', $mes, time() + (86400 * 30), '/');
+if (!empty($fechaInicio)) setcookie('filtro_op_fechaInicio', $fechaInicio, time() + (86400 * 30), '/');
+if (!empty($fechaFin)) setcookie('filtro_op_fechaFin', $fechaFin, time() + (86400 * 30), '/');
+setcookie('filtro_op_registrosPorPagina', $registrosPorPagina, time() + (86400 * 30), '/');
+
 // Validación y sanitización de filtros
 $numeroDocumento = htmlspecialchars(trim($numeroDocumento));
 $estado = htmlspecialchars(trim($estado));
@@ -230,13 +239,20 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
         let limit = 10;
 
         function setCookie(name, value, days = 30) {
-            let expires = "";
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "; expires=" + date.toUTCString();
+            document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Strict";
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) {
+                const cookieValue = parts.pop().split(';').shift();
+                return cookieValue === 'undefined' ? '' : cookieValue;
             }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+            return '';
         }
 
         function buscarDinamico() {
@@ -255,9 +271,14 @@ if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] 
             // Guardar en cookies antes de la búsqueda
             Object.entries(filtros).forEach(([key, value]) => {
                 if (key !== 'action' && key !== 'offset' && key !== 'limit') {
-                    setCookie(`filtro_op_${key}`, value);
+                    if (value) {
+                        setCookie(`filtro_op_${key}`, value);
+                    } else {
+                        setCookie(`filtro_op_${key}`, '');
+                    }
                 }
             });
+            setCookie('filtro_op_registrosPorPagina', $("#registrosPorPagina").val());
 
             $.ajax({
                 url: window.location.href, // Usar la misma página
