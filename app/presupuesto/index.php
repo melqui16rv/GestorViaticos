@@ -114,8 +114,8 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                                             <span class="multi-line"><?php echo htmlspecialchars($row['Dependencia']); ?></span>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['Fuente']); ?></span>
                                         </td>
-                                        <td><?php echo htmlspecialchars('$' . number_format((float)$row['Valor_Actual'], 2, '.', ',')); ?></td>
-                                        <td><?php echo htmlspecialchars('$' . number_format((float)$row['Saldo_por_Comprometer'], 2, '.', ',')); ?></td>
+                                        <td><?php echo htmlspecialchars('$ ' . number_format((float)$row['Valor_Actual'], 2, '.', ',')); ?></td>
+                                        <td><?php echo htmlspecialchars('$ ' . number_format((float)$row['Saldo_por_Comprometer'], 2, '.', ',')); ?></td>
                                         <td style="text-align: center;">
                                             <a href="control/CRP_asociado.php?cod_CDP=<?php echo htmlspecialchars($row['Numero_Documento']); ?>" 
                                                class="ingresarConsumo">
@@ -332,7 +332,7 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
 
         // Función para formatear números con signo de pesos
         function formatCurrency(value) {
-            return '$' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            return '$ ' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
         }
 
         // Modificar la función createTableRow para incluir el formato de moneda
