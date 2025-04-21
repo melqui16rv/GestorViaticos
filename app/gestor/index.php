@@ -13,15 +13,21 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gestor/metodosGestor.php';
 requireRole(['2']);
 $miClaseG = new gestor();
 
-$documento = $_GET['documento'] ?? '';
-$nombre = $_GET['nombre'] ?? '';
-$cdp = $_GET['cdp'] ?? '';
-$crp = $_GET['crp'] ?? '';
-$mes = $_GET['mes'] ?? '';
-$fechaInicio = $_GET['fechaInicio'] ?? '';
-$fechaFin = $_GET['fechaFin'] ?? '';
-$registrosPorPagina = $_GET['registrosPorPagina'] ?? '10';
-$offset = $_GET['offset'] ?? 0;
+// Leer filtros desde cookies si existen, si no, usar GET, si no, valores por defecto
+function getFiltroCookie($nombre, $default = '') {
+    return isset($_COOKIE[$nombre]) ? $_COOKIE[$nombre] : $default;
+}
+
+$documento = isset($_GET['documento']) ? $_GET['documento'] : getFiltroCookie('filtroGestor_documento', '');
+$nombre = isset($_GET['nombre']) ? $_GET['nombre'] : getFiltroCookie('filtroGestor_nombre', '');
+$cdp = isset($_GET['cdp']) ? $_GET['cdp'] : getFiltroCookie('filtroGestor_cdp', '');
+$crp = isset($_GET['crp']) ? $_GET['crp'] : getFiltroCookie('filtroGestor_crp', '');
+$mes = isset($_GET['mes']) ? $_GET['mes'] : getFiltroCookie('filtroGestor_mes', '');
+$fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : getFiltroCookie('filtroGestor_fechaInicio', '');
+$fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : getFiltroCookie('filtroGestor_fechaFin', '');
+$registrosPorPagina = getFiltroCookie('filtroGestor_registrosPorPagina', '10');
+$offset = 0;
+$limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
 
 $mesesDisponibles = $miClaseG->obtenerMesesDisponibles();
 
@@ -33,8 +39,8 @@ $datosSaldos = $miClaseG->obtenerSaldosAsignadosConFechas(
     $mes,
     $fechaInicio,
     $fechaFin,
-    $registrosPorPagina === 'todos' ? 999999 : (int)$registrosPorPagina,
-    (int)$offset
+    $limit,
+    $offset
 );
 
 if (empty($datosSaldos)) {
@@ -71,7 +77,7 @@ if (empty($datosSaldos)) {
                         </div>
                         <div class="filtro-grupo">
                             <label for="cdp">CDP</label>
-                            <input type="text" id="cdp" name="cdp" value="<?php echo isset($_GET['cdp']) ? htmlspecialchars($cdp) : ''; ?>" placeholder="Ejemplo: 125" class="filtro-dinamico">
+                            <input type="text" id="cdp" name="cdp" value="<?php echo htmlspecialchars($cdp); ?>" placeholder="Ejemplo: 125" class="filtro-dinamico">
                         </div>
                         <div class="filtro-grupo">
                             <label for="crp">CRP</label>
@@ -81,29 +87,29 @@ if (empty($datosSaldos)) {
                             <label for="mes">Mes</label>
                             <select id="mes" name="mes" class="filtro-dinamico">
                                 <option value="">Todos los meses</option>
-                                <?php foreach ($mesesDisponibles as $mes): ?>
-                                    <option value="<?php echo htmlspecialchars($mes['mes']); ?>">
-                                        <?php echo htmlspecialchars($mes['nombre_mes']); ?>
+                                <?php foreach ($mesesDisponibles as $mesOpt): ?>
+                                    <option value="<?php echo htmlspecialchars($mesOpt['mes']); ?>" <?php echo ($mesOpt['mes'] == $mes) ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($mesOpt['nombre_mes']); ?>
                                     </option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="filtro-grupo">
                             <label for="fechaInicio">Fecha Inicio</label>
-                            <input type="date" id="fechaInicio" name="fechaInicio" class="filtro-dinamico">
+                            <input type="date" id="fechaInicio" name="fechaInicio" value="<?php echo htmlspecialchars($fechaInicio); ?>" class="filtro-dinamico">
                         </div>
                         <div class="filtro-grupo">
                             <label for="fechaFin">Fecha Fin</label>
-                            <input type="date" id="fechaFin" name="fechaFin" class="filtro-dinamico">
+                            <input type="date" id="fechaFin" name="fechaFin" value="<?php echo htmlspecialchars($fechaFin); ?>" class="filtro-dinamico">
                         </div>
                         <div class="filtro-grupo">
                             <label for="registrosPorPagina">N° Registros</label>
                             <select id="registrosPorPagina" name="registrosPorPagina" class="filtro-dinamico">
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="40">40</option>
-                                <option value="60">60</option>
-                                <option value="todos">Todos</option>
+                                <option value="10" <?php echo ($registrosPorPagina=='10') ? 'selected' : ''; ?>>10</option>
+                                <option value="20" <?php echo ($registrosPorPagina=='20') ? 'selected' : ''; ?>>20</option>
+                                <option value="40" <?php echo ($registrosPorPagina=='40') ? 'selected' : ''; ?>>40</option>
+                                <option value="60" <?php echo ($registrosPorPagina=='60') ? 'selected' : ''; ?>>60</option>
+                                <option value="todos" <?php echo ($registrosPorPagina=='todos') ? 'selected' : ''; ?>>Todos</option>
                             </select>
                         </div>
                         <div class="filtro-botones">
@@ -172,127 +178,248 @@ if (empty($datosSaldos)) {
 </div>
 
 <script>
-    $(document).ready(function () {
-        let offset = 0;
-        let limit = 10;
-        let cargando = false;
+$(document).ready(function () {
+    let offset = 0;
+    let limit = <?php echo json_encode($limit); ?>;
+    let cargando = false;
 
-        function buscarDinamico() {
-            const filtros = {
-                documento: $("#documento").val(),
-                nombre: $("#nombre").val(),
-                cdp: $("#cdp").val(),
-                crp: $("#crp").val(),
-                mes: $("#mes").val(),
-                fechaInicio: $("#fechaInicio").val(),
-                fechaFin: $("#fechaFin").val(),
-                offset: 0,
-                limit: limit
-            };
-
-            $.ajax({
-                url: '',
-                method: 'GET',
-                data: filtros,
-                success: function (response) {
-                    const nuevaTabla = $(response).find('#tablaSaldosAsignados tbody').html();
-                    $('#tablaSaldosAsignados tbody').html(nuevaTabla);
-                    offset = limit;
-                    $("#cargarMas").show();
-                },
-                error: function () {
-                    alert('Error al realizar la búsqueda.');
-                }
-            });
+    // --- Función para establecer cookies ---
+    function setCookie(name, value, days = 30) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
         }
+        document.cookie = name + "=" + encodeURIComponent(value || "") + expires + "; path=/";
+    }
 
-        function cargarMasRegistros() {
-            if (cargando) return;
-            cargando = true;
+    // --- Guardar filtros en cookies cada vez que cambian ---
+    function guardarFiltrosEnCookies() {
+        setCookie('filtroGestor_documento', $("#documento").val());
+        setCookie('filtroGestor_nombre', $("#nombre").val());
+        setCookie('filtroGestor_cdp', $("#cdp").val());
+        setCookie('filtroGestor_crp', $("#crp").val());
+        setCookie('filtroGestor_mes', $("#mes").val());
+        setCookie('filtroGestor_fechaInicio', $("#fechaInicio").val());
+        setCookie('filtroGestor_fechaFin', $("#fechaFin").val());
+        setCookie('filtroGestor_registrosPorPagina', $("#registrosPorPagina").val());
+    }
 
-            const filtros = {
-                documento: $("#documento").val(),
-                nombre: $("#nombre").val(),
-                cdp: $("#cdp").val(),
-                crp: $("#crp").val(),
-                mes: $("#mes").val(),
-                fechaInicio: $("#fechaInicio").val(),
-                fechaFin: $("#fechaFin").val(),
-                offset: offset,
-                limit: limit
-            };
+    // --- Limpiar cookies de filtros ---
+    function limpiarCookiesFiltros() {
+        setCookie('filtroGestor_documento', '', -1);
+        setCookie('filtroGestor_nombre', '', -1);
+        setCookie('filtroGestor_cdp', '', -1);
+        setCookie('filtroGestor_crp', '', -1);
+        setCookie('filtroGestor_mes', '', -1);
+        setCookie('filtroGestor_fechaInicio', '', -1);
+        setCookie('filtroGestor_fechaFin', '', -1);
+        setCookie('filtroGestor_registrosPorPagina', '', -1);
+    }
 
-            $.ajax({
-                url: '',
-                method: 'GET',
-                data: filtros,
-                success: function (response) {
-                    const nuevaTabla = $(response).find('#tablaSaldosAsignados tbody').html();
-                    if (nuevaTabla.trim() === "") {
-                        alert("No se encontraron más registros.");
-                        $("#cargarMas").hide();
-                    } else {
-                        const registrosNuevos = $(response).find('#tablaSaldosAsignados tbody tr');
-                        registrosNuevos.each(function () {
-                            const idSaldo = $(this).data('id-saldo');
-                            if ($(`#tablaSaldosAsignados tbody tr[data-id-saldo="${idSaldo}"]`).length === 0) {
-                                $('#tablaSaldosAsignados tbody').append($(this));
-                            }
-                        });
-                        offset += limit;
-                    }
-                },
-                error: function () {
-                    alert('Error al cargar más registros.');
-                },
-                complete: function () {
-                    cargando = false;
-                }
-            });
+    // --- Leer cookies ---
+    function leerCookie(nombre) {
+        let nameEQ = nombre + "=";
+        let ca = document.cookie.split(';');
+        for(let i=0;i < ca.length;i++) {
+            let c = ca[i];
+            while (c.charAt(0)==' ') c = c.substring(1,c.length);
+            if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length,c.length));
         }
+        return null;
+    }
 
-        function limpiarFiltros() {
-            $("#documento, #nombre, #cdp, #crp, #mes, #fechaInicio, #fechaFin").val('');
-            $("#registrosPorPagina").val('10');
-            limit = 10;
-            offset = 0;
-            buscarDinamico();
-        }
-
-        $("#cargarMas").on("click", cargarMasRegistros);
-        $("#limpiarFiltros").on("click", limpiarFiltros);
-        $("#registrosPorPagina").on("change", function () {
-            const valorSeleccionado = $(this).val();
-            limit = valorSeleccionado === 'todos' ? 999999 : parseInt(valorSeleccionado);
-            offset = 0;
-            buscarDinamico();
-        });
-        $(".filtro-dinamico").on("input change", function () {
-            buscarDinamico();
-        });
-
-        $(document).on("click", ".ingresarConsumo", function (e) {
-            e.preventDefault();
-            const idSaldo = $(this).closest("tr").data("id-saldo");
-            if (idSaldo) {
-                window.location.href = `control/asignacion.php?id_saldo=${idSaldo}`;
+    // --- Setear filtros desde cookies al cargar la página ---
+    function setFiltrosDesdeCookies() {
+        let filtros = [
+            {id: 'documento', cookie: 'filtroGestor_documento'},
+            {id: 'nombre', cookie: 'filtroGestor_nombre'},
+            {id: 'cdp', cookie: 'filtroGestor_cdp'},
+            {id: 'crp', cookie: 'filtroGestor_crp'},
+            {id: 'mes', cookie: 'filtroGestor_mes'},
+            {id: 'fechaInicio', cookie: 'filtroGestor_fechaInicio'},
+            {id: 'fechaFin', cookie: 'filtroGestor_fechaFin'},
+            {id: 'registrosPorPagina', cookie: 'filtroGestor_registrosPorPagina'}
+        ];
+        filtros.forEach(function(f) {
+            let val = leerCookie(f.cookie);
+            if(val !== null && typeof val !== 'undefined' && val !== '') {
+                $("#" + f.id).val(val);
             }
         });
+        // Ajustar limit y offset según cookie de registrosPorPagina
+        let valReg = leerCookie('filtroGestor_registrosPorPagina');
+        if(valReg) {
+            limit = valReg === 'todos' ? 999999 : parseInt(valReg);
+            offset = 0;
+            if(valReg === 'todos') $("#cargarMas").hide();
+            else $("#cargarMas").show();
+        } else {
+            limit = 10;
+            offset = 0;
+        }
+    }
 
-        $("<style>")
-            .prop("type", "text/css")
-            .html(`
-                #filtros-activos { margin-top: 10px; }
-                .filtro-tag {
-                    background: #e9ecef;
-                    padding: 3px 8px;
-                    border-radius: 4px;
-                    margin: 0 5px;
-                    display: inline-block;
+    // --- Actualizar filtros activos ---
+    function actualizarFiltrosActivos() {
+        const filtros = {
+            'Documento': $("#documento").val(),
+            'Nombre': $("#nombre").val(),
+            'CDP': $("#cdp").val(),
+            'CRP': $("#crp").val(),
+            'Mes': $("#mes option:selected").text() !== 'Todos los meses' && $("#mes").val() !== '' ? $("#mes option:selected").text() : '',
+            'Fecha Inicio': $("#fechaInicio").val(),
+            'Fecha Fin': $("#fechaFin").val(),
+            'N° Registros': $("#registrosPorPagina").val() !== '10' ? $("#registrosPorPagina").val() : ''
+        };
+
+        let filtrosHTML = '<strong>Filtros activos:</strong> ';
+        let hayFiltros = false;
+
+        for (const [key, value] of Object.entries(filtros)) {
+            if (value) {
+                filtrosHTML += `<span class="filtro-tag">${key}: ${value}</span>`;
+                hayFiltros = true;
+            }
+        }
+
+        $("#filtros-activos").html(hayFiltros ? filtrosHTML : '');
+    }
+
+    // --- Buscar y actualizar tabla ---
+    function buscarDinamico(resetOffset = true) {
+        guardarFiltrosEnCookies();
+        if(resetOffset) offset = 0;
+        const filtros = {
+            documento: $("#documento").val(),
+            nombre: $("#nombre").val(),
+            cdp: $("#cdp").val(),
+            crp: $("#crp").val(),
+            mes: $("#mes").val(),
+            fechaInicio: $("#fechaInicio").val(),
+            fechaFin: $("#fechaFin").val(),
+            registrosPorPagina: $("#registrosPorPagina").val(),
+            offset: offset,
+            limit: limit
+        };
+
+        $.ajax({
+            url: '',
+            method: 'GET',
+            data: filtros,
+            success: function (response) {
+                const nuevaTabla = $(response).find('#tablaSaldosAsignados tbody').html();
+                $('#tablaSaldosAsignados tbody').html(nuevaTabla);
+                offset = limit;
+                if(limit === 999999) {
+                    $("#cargarMas").hide();
+                } else {
+                    $("#cargarMas").show();
                 }
-            `)
-            .appendTo("head");
+            },
+            error: function () {
+                alert('Error al realizar la búsqueda.');
+            }
+        });
+        actualizarFiltrosActivos();
+    }
+
+    // --- Cargar más registros ---
+    $("#cargarMas").on("click", function(e){
+        e.preventDefault();
+        if (cargando) return;
+        cargando = true;
+        offset += limit;
+        const filtros = {
+            documento: $("#documento").val(),
+            nombre: $("#nombre").val(),
+            cdp: $("#cdp").val(),
+            crp: $("#crp").val(),
+            mes: $("#mes").val(),
+            fechaInicio: $("#fechaInicio").val(),
+            fechaFin: $("#fechaFin").val(),
+            registrosPorPagina: $("#registrosPorPagina").val(),
+            offset: offset,
+            limit: limit
+        };
+
+        $.ajax({
+            url: '',
+            method: 'GET',
+            data: filtros,
+            success: function (response) {
+                const nuevaTabla = $(response).find('#tablaSaldosAsignados tbody').html();
+                if (nuevaTabla.trim() === "") {
+                    alert("No se encontraron más registros.");
+                    $("#cargarMas").hide();
+                } else {
+                    const registrosNuevos = $(response).find('#tablaSaldosAsignados tbody tr');
+                    registrosNuevos.each(function () {
+                        const idSaldo = $(this).data('id-saldo');
+                        if ($(`#tablaSaldosAsignados tbody tr[data-id-saldo="${idSaldo}"]`).length === 0) {
+                            $('#tablaSaldosAsignados tbody').append($(this));
+                        }
+                    });
+                }
+            },
+            error: function () {
+                alert('Error al cargar más registros.');
+            },
+            complete: function () {
+                cargando = false;
+            }
+        });
     });
+
+    // --- Limpiar filtros y cookies ---
+    $("#limpiarFiltros").on("click", function(){
+        limpiarCookiesFiltros();
+        $("#documento, #nombre, #cdp, #crp, #mes, #fechaInicio, #fechaFin").val('');
+        $("#registrosPorPagina").val('10');
+        limit = 10;
+        offset = 0;
+        buscarDinamico();
+    });
+
+    // --- Evento para cambio en registros por página ---
+    $("#registrosPorPagina").on('change', function() {
+        let valorSeleccionado = $(this).val();
+        limit = valorSeleccionado === 'todos' ? 999999 : parseInt(valorSeleccionado);
+        offset = 0;
+        if(valorSeleccionado === 'todos') {
+            $("#cargarMas").hide();
+        } else {
+            $("#cargarMas").show();
+        }
+        buscarDinamico();
+    });
+
+    // --- Evento para cualquier filtro dinámico ---
+    $(".filtro-dinamico").on('change keyup', function() {
+        buscarDinamico();
+    });
+
+    // --- Inicialización al cargar la página ---
+    setFiltrosDesdeCookies();
+    actualizarFiltrosActivos();
+    buscarDinamico();
+
+    // --- Estilos CSS inline para los filtros activos ---
+    $("<style>")
+        .prop("type", "text/css")
+        .html(`
+            #filtros-activos { margin-top: 10px; }
+            .filtro-tag {
+                background: #e9ecef;
+                padding: 3px 8px;
+                border-radius: 4px;
+                margin: 0 5px;
+                display: inline-block;
+            }
+        `)
+        .appendTo("head");
+});
 </script>
 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
