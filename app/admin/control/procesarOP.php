@@ -195,6 +195,9 @@ function depurar_datos_op($archivo) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
+        session_start();
+        $usuario_id = $_SESSION['usuario_id'];
+
         if (!isset($_FILES['dataop'])) {
             throw new Exception('No se recibió el archivo dataop');
         }
@@ -216,6 +219,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $resultado = $admin->procesar_csv_op($datosDepurados);
+
+        // Registrar la actualización
+        $stmt = $conn->prepare("
+            INSERT INTO registros_actualizaciones 
+            (tipo_tabla, nombre_archivo, registros_actualizados, registros_nuevos, usuario_id)
+            VALUES ('OP', ?, ?, ?, ?)
+        ");
+        
+        $nombre_archivo = $_FILES['dataop']['name'];
+        $stmt->bind_param("ssii", $nombre_archivo, $resultado['updated'], $resultado['inserted'], $usuario_id);
+        $stmt->execute();
 
         header('Content-Type: application/json');
         echo json_encode([

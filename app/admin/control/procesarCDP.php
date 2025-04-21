@@ -82,19 +82,43 @@ function depurar_datos_cdp($archivo) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataCDP'])) {
-    $admin = new admin();
-    $datosDepurados = depurar_datos_cdp($_FILES['dataCDP']);
-    $resultado = $admin->procesar_csv_cdp($datosDepurados);
+    try {
+        session_start();
+        $usuario_id = $_SESSION['usuario_id']; // Asumiendo que tienes el ID del usuario en la sesión
+        
+        $admin = new admin();
+        $datosDepurados = depurar_datos_cdp($_FILES['dataCDP']);
+        $resultado = $admin->procesar_csv_cdp($datosDepurados);
 
-    $response = [
-        'inserted' => $resultado['inserted'],
-        'updated' => $resultado['updated'],
-        'errors' => $resultado['errors']
-    ];
+        // Registrar la actualización
+        $stmt = $conn->prepare("
+            INSERT INTO registros_actualizaciones 
+            (tipo_tabla, nombre_archivo, registros_actualizados, registros_nuevos, usuario_id)
+            VALUES ('CDP', ?, ?, ?, ?)
+        ");
+        
+        $nombre_archivo = $_FILES['dataCDP']['name'];
+        $stmt->bind_param("ssii", $nombre_archivo, $resultado['updated'], $resultado['inserted'], $usuario_id);
+        $stmt->execute();
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit;
+        $response = [
+            'success' => true,
+            'inserted' => $resultado['inserted'],
+            'updated' => $resultado['updated'],
+            'errors' => $resultado['errors']
+        ];
+        
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit;
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
+        exit;
+    }
 } else {
     header('Content-Type: application/json');
     echo json_encode([

@@ -160,6 +160,18 @@ CREATE TABLE `imagenes_saldos_asignados` (
   CONSTRAINT `fk_imagen_saldo` FOREIGN KEY (`ID_SALDO`) REFERENCES `saldos_asignados` (`ID_SALDO`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `registros_actualizaciones` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `tipo_tabla` ENUM('CDP', 'CRP', 'OP') NOT NULL,
+  `nombre_archivo` VARCHAR(255) NOT NULL,
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `registros_actualizados` INT NOT NULL DEFAULT 0,
+  `registros_nuevos` INT NOT NULL DEFAULT 0,
+  `usuario_id` VARCHAR(79) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_registros_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`numero_documento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 COMMIT;
 
 -- Datos para la tabla `usuario`

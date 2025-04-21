@@ -275,5 +275,82 @@ class user extends Conexion{
         $result = $consult->fetch(PDO::FETCH_ASSOC); // Cambiamos a fetch para un solo registro
         return $result; // Regresamos un solo resultado
     }
+
+    /**
+     * Obtiene estadísticas generales de las actualizaciones por tipo de tabla
+     */
+    public function obtenerEstadisticasActualizaciones() {
+        $sql = "SELECT 
+                    tipo_tabla,
+                    COUNT(*) as total_actualizaciones,
+                    SUM(registros_actualizados) as total_registros_actualizados,
+                    SUM(registros_nuevos) as total_registros_nuevos,
+                    MAX(fecha_actualizacion) as ultima_actualizacion
+                FROM registros_actualizaciones
+                GROUP BY tipo_tabla";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Obtiene estadísticas de actualizaciones por fecha
+     */
+    public function obtenerEstadisticasPorFecha($fecha_inicio, $fecha_fin) {
+        $sql = "SELECT 
+                    DATE(fecha_actualizacion) as fecha,
+                    tipo_tabla,
+                    SUM(registros_actualizados) as actualizados,
+                    SUM(registros_nuevos) as nuevos
+                FROM registros_actualizaciones
+                WHERE fecha_actualizacion BETWEEN :fecha_inicio AND :fecha_fin
+                GROUP BY DATE(fecha_actualizacion), tipo_tabla
+                ORDER BY fecha_actualizacion";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute([
+            ':fecha_inicio' => $fecha_inicio,
+            ':fecha_fin' => $fecha_fin
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Obtiene estadísticas por usuario
+     */
+    public function obtenerEstadisticasPorUsuario() {
+        $sql = "SELECT 
+                    u.nombre_completo,
+                    ra.tipo_tabla,
+                    COUNT(*) as total_actualizaciones,
+                    SUM(ra.registros_actualizados) as total_actualizados,
+                    SUM(ra.registros_nuevos) as total_nuevos
+                FROM registros_actualizaciones ra
+                JOIN usuario u ON ra.usuario_id = u.numero_documento
+                GROUP BY u.numero_documento, ra.tipo_tabla
+                ORDER BY u.nombre_completo, ra.tipo_tabla";
+
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Obtiene el total de registros actuales en cada tabla
+     */
+    public function obtenerTotalRegistros() {
+        $totales = [];
+        
+        $tablas = ['cdp', 'crp', 'op'];
+        foreach ($tablas as $tabla) {
+            $sql = "SELECT COUNT(*) as total FROM " . $tabla;
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->execute();
+            $totales[$tabla] = $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+        }
+        
+        return $totales;
+    }
     
 }

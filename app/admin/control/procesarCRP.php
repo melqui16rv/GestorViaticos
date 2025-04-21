@@ -131,19 +131,43 @@ function depurar_datos_crp($archivo) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['dataCRP'])) {
-    $admin = new admin2();
-    $datosDepurados = depurar_datos_crp($_FILES['dataCRP']);
-    $resultado = $admin->procesar_csv_crp($datosDepurados);
+    try {
+        session_start();
+        $usuario_id = $_SESSION['usuario_id'];
+        
+        $admin = new admin2();
+        $datosDepurados = depurar_datos_crp($_FILES['dataCRP']);
+        $resultado = $admin->procesar_csv_crp($datosDepurados);
 
-    $response = [
-        'inserted' => $resultado['inserted'],
-        'updated' => $resultado['updated'],
-        'errors' => $resultado['errors']
-    ];
+        // Registrar la actualización
+        $stmt = $conn->prepare("
+            INSERT INTO registros_actualizaciones 
+            (tipo_tabla, nombre_archivo, registros_actualizados, registros_nuevos, usuario_id)
+            VALUES ('CRP', ?, ?, ?, ?)
+        ");
+        
+        $nombre_archivo = $_FILES['dataCRP']['name'];
+        $stmt->bind_param("ssii", $nombre_archivo, $resultado['updated'], $resultado['inserted'], $usuario_id);
+        $stmt->execute();
 
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit;
+        $response = [
+            'success' => true,
+            'inserted' => $resultado['inserted'],
+            'updated' => $resultado['updated'],
+            'errors' => $resultado['errors']
+        ];
+
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit;
+    } catch (Exception $e) {
+        header('Content-Type: application/json');
+        echo json_encode([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
+        exit;
+    }
 } else {
     header('Content-Type: application/json');
     echo json_encode([
