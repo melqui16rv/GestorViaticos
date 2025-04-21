@@ -15,17 +15,17 @@ $miClaseG = new planeacion();
 
 // Obtener valores desde cookies o GET
 $numeroDocumento = isset($_GET['numeroDocumento']) ? $_GET['numeroDocumento'] : 
-                  (isset($_COOKIE['filtro_op_numeroDocumento']) ? $_COOKIE['filtro_op_numeroDocumento'] : '');
+                  (isset($_COOKIE['filtro_op_numeroDocumento']) ? urldecode($_COOKIE['filtro_op_numeroDocumento']) : '');
 $estado = isset($_GET['estado']) ? $_GET['estado'] : 
-          (isset($_COOKIE['filtro_op_estado']) ? $_COOKIE['filtro_op_estado'] : 'Todos');
+          (isset($_COOKIE['filtro_op_estado']) ? urldecode($_COOKIE['filtro_op_estado']) : 'Todos');
 $beneficiario = isset($_GET['beneficiario']) ? $_GET['beneficiario'] : 
-                (isset($_COOKIE['filtro_op_beneficiario']) ? $_COOKIE['filtro_op_beneficiario'] : '');
+                (isset($_COOKIE['filtro_op_beneficiario']) ? urldecode($_COOKIE['filtro_op_beneficiario']) : '');
 $mes = isset($_GET['mes']) ? $_GET['mes'] : 
-       (isset($_COOKIE['filtro_op_mes']) ? $_COOKIE['filtro_op_mes'] : '');
+       (isset($_COOKIE['filtro_op_mes']) ? urldecode($_COOKIE['filtro_op_mes']) : '');
 $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : 
-               (isset($_COOKIE['filtro_op_fechaInicio']) ? $_COOKIE['filtro_op_fechaInicio'] : '');
+               (isset($_COOKIE['filtro_op_fechaInicio']) ? urldecode($_COOKIE['filtro_op_fechaInicio']) : '');
 $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : 
-            (isset($_COOKIE['filtro_op_fechaFin']) ? $_COOKIE['filtro_op_fechaFin'] : '');
+            (isset($_COOKIE['filtro_op_fechaFin']) ? urldecode($_COOKIE['filtro_op_fechaFin']) : '');
 $registrosPorPagina = isset($_COOKIE['filtro_op_registrosPorPagina']) ? $_COOKIE['filtro_op_registrosPorPagina'] : '10';
 
 // Validación y sanitización de filtros
