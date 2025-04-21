@@ -1,4 +1,7 @@
 <?php
+
+use Dom\Text;
+
 session_start();
 ob_start();
 
@@ -111,8 +114,8 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                                             <span class="multi-line"><?php echo htmlspecialchars($row['Dependencia']); ?></span>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['Fuente']); ?></span>
                                         </td>
-                                        <td><?php echo htmlspecialchars($row['Valor_Actual']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['Saldo_por_Comprometer']); ?></td>
+                                        <td><?php echo htmlspecialchars(number_format((float)$row['Valor_Actual'], 2, '.', ',')); ?></td>
+                                        <td><?php echo htmlspecialchars(number_format((float)$row['Saldo_por_Comprometer'],2, '.', ',')); ?></td>
                                         <td style="text-align: center;">
                                             <a href="control/CRP_asociado.php?cod_CDP=<?php echo htmlspecialchars($row['Numero_Documento']); ?>" 
                                                class="ingresarConsumo">

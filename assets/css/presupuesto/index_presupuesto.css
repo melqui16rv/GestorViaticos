@@ -169,6 +169,7 @@
     font-size: 0.8rem;
     font-weight: 600;
     position: sticky;
+    color: white;
     top: 0;
     z-index: 1;
     white-space: normal; /* Permitimos que el texto se ajuste */
