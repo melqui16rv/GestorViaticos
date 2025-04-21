@@ -113,82 +113,60 @@ class planeacion extends Conexion {
     }
 
     public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
-        // Construir la consulta base
-        $baseQuery = "SELECT 
-                      op.Numero_Documento,
-                      op.Fecha_de_Registro,
-                      op.Fecha_de_Pago,
-                      op.Estado,
-                      op.Nombre_Razon_Social,
-                      op.Valor_Bruto,
-                      op.Valor_Neto,
-                      op.Estado_Cuenta,
-                      op.Medio_de_Pago,
-                      op.CDP,
-                      op.CODIGO_CRP,
-                      op.Objeto_del_Compromiso
-                      FROM op 
-                      WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'";
+        $query = "SELECT 
+                  op.Numero_Documento,
+                  op.Fecha_de_Registro,
+                  op.Fecha_de_Pago,
+                  op.Estado,
+                  op.Nombre_Razon_Social,
+                  op.Valor_Bruto,
+                  op.Valor_Neto,
+                  op.Estado_Cuenta,
+                  op.Medio_de_Pago,
+                  op.CDP,
+                  op.CODIGO_CRP,
+                  op.Objeto_del_Compromiso
+                  FROM op 
+                  WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'";
         
         $params = [];
 
         // Filtro por número de documento
         if (!empty($filtros['numeroDocumento'])) {
-            $baseQuery .= " AND op.Numero_Documento LIKE :numeroDocumento";
+            $query .= " AND op.Numero_Documento LIKE :numeroDocumento";
             $params[':numeroDocumento'] = "%" . $filtros['numeroDocumento'] . "%";
         }
 
         // Filtro por estado
         if (!empty($filtros['estado']) && $filtros['estado'] != "Todos") {
-            $baseQuery .= " AND op.Estado = :estado";
+            $query .= " AND op.Estado = :estado";
             $params[':estado'] = $filtros['estado'];
         }
 
         // Filtro por beneficiario
         if (!empty($filtros['beneficiario'])) {
-            $baseQuery .= " AND op.Nombre_Razon_Social LIKE :beneficiario";
+            $query .= " AND op.Nombre_Razon_Social LIKE :beneficiario";
             $params[':beneficiario'] = "%" . $filtros['beneficiario'] . "%";
         }
 
         // Filtro por mes
         if (!empty($filtros['mes'])) {
-            $baseQuery .= " AND MONTH(op.Fecha_de_Registro) = :mes";
+            $query .= " AND MONTH(op.Fecha_de_Registro) = :mes";
             $params[':mes'] = $filtros['mes'];
         }
 
         // Filtro por rango de fechas
         if (!empty($filtros['fechaInicio']) && !empty($filtros['fechaFin'])) {
-            $baseQuery .= " AND op.Fecha_de_Registro BETWEEN :fechaInicio AND :fechaFin";
+            $query .= " AND op.Fecha_de_Registro BETWEEN :fechaInicio AND :fechaFin";
             $params[':fechaInicio'] = $filtros['fechaInicio'];
             $params[':fechaFin'] = $filtros['fechaFin'];
         }
 
-        // Nuevo manejo del límite "todos"
-        if ($limit === 999999 || $limit === PHP_INT_MAX) {
-            $countQuery = str_replace("SELECT op.Numero_Documento,", "SELECT COUNT(*) as total,", $baseQuery);
-            $countQuery = preg_replace("/ORDER BY.*$/", "", $countQuery);
-            
-            $stmtCount = $this->conexion->prepare($countQuery);
-            foreach ($params as $param => $value) {
-                if ($param !== ':limit' && $param !== ':offset') {
-                    $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
-                    $stmtCount->bindValue($param, $value, $type);
-                }
-            }
-            $stmtCount->execute();
-            $totalRegistros = $stmtCount->fetch(PDO::FETCH_ASSOC)['total'];
-            
-            if ($totalRegistros > 0) {
-                $limit = $totalRegistros;
-                $offset = 0;
-            }
-        }
-
-        $baseQuery .= " ORDER BY op.Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";
+        $query .= " ORDER BY op.Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";
         $params[':limit'] = (int)$limit;
         $params[':offset'] = (int)$offset;
 
-        $stmt = $this->conexion->prepare($baseQuery);
+        $stmt = $this->conexion->prepare($query);
         
         foreach ($params as $param => $value) {
             $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
