@@ -13,13 +13,28 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/planeacion/metodosGestor.php';
 requireRole(['3']);
 $miClaseG = new planeacion();
 
+// Obtener valores desde cookies o GET
+$numeroDocumento = isset($_GET['numeroDocumento']) ? $_GET['numeroDocumento'] : 
+                  (isset($_COOKIE['filtro_op_numeroDocumento']) ? $_COOKIE['filtro_op_numeroDocumento'] : '');
+$estado = isset($_GET['estado']) ? $_GET['estado'] : 
+         (isset($_COOKIE['filtro_op_estado']) ? $_COOKIE['filtro_op_estado'] : 'Todos');
+$beneficiario = isset($_GET['beneficiario']) ? $_GET['beneficiario'] : 
+               (isset($_COOKIE['filtro_op_beneficiario']) ? $_COOKIE['filtro_op_beneficiario'] : '');
+$mes = isset($_GET['mes']) ? $_GET['mes'] : 
+      (isset($_COOKIE['filtro_op_mes']) ? $_COOKIE['filtro_op_mes'] : '');
+$fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : 
+              (isset($_COOKIE['filtro_op_fechaInicio']) ? $_COOKIE['filtro_op_fechaInicio'] : '');
+$fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : 
+           (isset($_COOKIE['filtro_op_fechaFin']) ? $_COOKIE['filtro_op_fechaFin'] : '');
+$registrosPorPagina = isset($_COOKIE['filtro_op_registrosPorPagina']) ? $_COOKIE['filtro_op_registrosPorPagina'] : '10';
+
 // Validación y sanitización de filtros
-$numeroDocumento = isset($_GET['numeroDocumento']) ? htmlspecialchars(trim($_GET['numeroDocumento'])) : '';
-$estado = isset($_GET['estado']) ? htmlspecialchars(trim($_GET['estado'])) : 'Todos';
-$beneficiario = isset($_GET['beneficiario']) ? htmlspecialchars(trim($_GET['beneficiario'])) : '';
-$mes = isset($_GET['mes']) ? filter_var($_GET['mes'], FILTER_VALIDATE_INT) : '';
-$fechaInicio = isset($_GET['fechaInicio']) ? htmlspecialchars(trim($_GET['fechaInicio'])) : '';
-$fechaFin = isset($_GET['fechaFin']) ? htmlspecialchars(trim($_GET['fechaFin'])) : '';
+$numeroDocumento = htmlspecialchars(trim($numeroDocumento));
+$estado = htmlspecialchars(trim($estado));
+$beneficiario = htmlspecialchars(trim($beneficiario));
+$mes = filter_var($mes, FILTER_VALIDATE_INT);
+$fechaInicio = htmlspecialchars(trim($fechaInicio));
+$fechaFin = htmlspecialchars(trim($fechaFin));
 
 // Validar formato de fechas
 if (!empty($fechaInicio)) {
@@ -39,8 +54,9 @@ $filtrosIniciales = [
     'fechaFin' => $fechaFin
 ];
 
-// Se obtienen los primeros 10 registros
-$initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
+// Determinar el límite inicial basado en registrosPorPagina
+$limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
+$initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 ?>
 <html>
 <head>
@@ -192,6 +208,16 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
         let offset = 10;
         let limit = 10;
 
+        function setCookie(name, value, days = 30) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
         function buscarDinamico() {
             const filtros = {
                 action: 'buscarOP',
@@ -204,6 +230,15 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                 offset: 0,
                 limit: limit
             };
+
+            // Guardar en cookies
+            setCookie('filtro_op_numeroDocumento', filtros.numeroDocumento);
+            setCookie('filtro_op_estado', filtros.estado);
+            setCookie('filtro_op_beneficiario', filtros.beneficiario);
+            setCookie('filtro_op_mes', filtros.mes);
+            setCookie('filtro_op_fechaInicio', filtros.fechaInicio);
+            setCookie('filtro_op_fechaFin', filtros.fechaFin);
+            setCookie('filtro_op_registrosPorPagina', $("#registrosPorPagina").val());
 
             $.ajax({
                 url: './control/ajaxGestor.php',
@@ -272,13 +307,24 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
 
         // Actualizar limpiarFiltros
         $("#limpiarFiltros").on("click", function(){
+            // Limpiar cookies
+            setCookie('filtro_op_numeroDocumento', '');
+            setCookie('filtro_op_estado', 'Todos');
+            setCookie('filtro_op_beneficiario', '');
+            setCookie('filtro_op_mes', '');
+            setCookie('filtro_op_fechaInicio', '');
+            setCookie('filtro_op_fechaFin', '');
+            setCookie('filtro_op_registrosPorPagina', '10');
+
+            // Resetear campos
             $("#numeroDocumento").val('');
-            $("#beneficiario").val('');
             $("#estado").val('Todos');
+            $("#beneficiario").val('');
             $("#mes").val('');
             $("#fechaInicio").val('');
             $("#fechaFin").val('');
             $("#registrosPorPagina").val('10');
+            
             limit = 10;
             offset = 0;
             buscarDinamico();
@@ -512,6 +558,17 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
                 }
             `)
             .appendTo("head");
+
+        // Inicialización al cargar la página
+        $(document).ready(function(){
+            const hayCookies = document.cookie.split(';').some(c => c.trim().startsWith('filtro_op_'));
+            
+            if(hayCookies) {
+                // Solo realizar búsqueda si hay cookies de filtros
+                buscarDinamico();
+                actualizarFiltrosActivos();
+            }
+        });
     });
     </script>
 </body>
