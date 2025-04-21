@@ -114,8 +114,8 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                                             <span class="multi-line"><?php echo htmlspecialchars($row['Dependencia']); ?></span>
                                             <span class="multi-line"><?php echo htmlspecialchars($row['Fuente']); ?></span>
                                         </td>
-                                        <td><?php echo htmlspecialchars(number_format((float)$row['Valor_Actual'], 2, '.', ',')); ?></td>
-                                        <td><?php echo htmlspecialchars(number_format((float)$row['Saldo_por_Comprometer'],2, '.', ',')); ?></td>
+                                        <td><?php echo htmlspecialchars('$' . number_format((float)$row['Valor_Actual'], 2, '.', ',')); ?></td>
+                                        <td><?php echo htmlspecialchars('$' . number_format((float)$row['Saldo_por_Comprometer'], 2, '.', ',')); ?></td>
                                         <td style="text-align: center;">
                                             <a href="control/CRP_asociado.php?cod_CDP=<?php echo htmlspecialchars($row['Numero_Documento']); ?>" 
                                                class="ingresarConsumo">
@@ -330,7 +330,12 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
             });
         }
 
-        // Función para crear una nueva fila (modificada para incluir los data attributes)
+        // Función para formatear números con signo de pesos
+        function formatCurrency(value) {
+            return '$' + parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+        }
+
+        // Modificar la función createTableRow para incluir el formato de moneda
         function createTableRow(row) {
             return `
                 <tr data-documento="${row.Numero_Documento}">
@@ -342,8 +347,8 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                         <span class="multi-line">${row.Dependencia}</span>
                         <span class="multi-line">${row.Fuente}</span>
                     </td>
-                    <td>${row.Valor_Actual}</td>
-                    <td>${row.Saldo_por_Comprometer}</td>
+                    <td>${formatCurrency(row.Valor_Actual)}</td>
+                    <td>${formatCurrency(row.Saldo_por_Comprometer)}</td>
                     <td style="text-align: center;">                       
                         <a href="control/CRP_asociado.php?cod_CDP=${row.Numero_Documento}" 
                            class="ingresarConsumo">
@@ -353,7 +358,7 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                 </tr>`;
         }
 
-        // Modificar las funciones que agregan filas para usar createTableRow
+        // Asegurarse de que los datos cargados dinámicamente también estén formateados
         function updateTableWithData(response) {
             response.forEach(function(row) {
                 $("#tablaCDP tbody").append(createTableRow(row));
