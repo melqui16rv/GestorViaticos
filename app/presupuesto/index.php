@@ -16,10 +16,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/planeacion/metodosGestor.php';
 requireRole(['3']);
 $miClaseG = new planeacion();
 
-// Se obtienen los filtros iniciales (si existen)
-$numeroDocumento = isset($_GET['numeroDocumento']) ? $_GET['numeroDocumento'] : '';
-$fuente = isset($_GET['fuente']) ? $_GET['fuente'] : 'Todos';
-$reintegros = isset($_GET['reintegros']) ? $_GET['reintegros'] : 'Todos';
+// Se obtienen los filtros iniciales desde cookies o GET
+$numeroDocumento = isset($_GET['numeroDocumento']) ? $_GET['numeroDocumento'] : 
+                  (isset($_COOKIE['filtro_numeroDocumento']) ? $_COOKIE['filtro_numeroDocumento'] : '');
+$fuente = isset($_GET['fuente']) ? $_GET['fuente'] : 
+          (isset($_COOKIE['filtro_fuente']) ? $_COOKIE['filtro_fuente'] : 'Todos');
+$reintegros = isset($_GET['reintegros']) ? $_GET['reintegros'] : 
+              (isset($_COOKIE['filtro_reintegros']) ? $_COOKIE['filtro_reintegros'] : 'Todos');
+$registrosPorPagina = isset($_COOKIE['filtro_registrosPorPagina']) ? $_COOKIE['filtro_registrosPorPagina'] : '10';
 
 // Se obtienen los primeros 10 registros
 $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10, 0);
@@ -200,6 +204,12 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
 
         // Manejo del botón "Limpiar Filtros"
         $("#limpiarFiltros").on("click", function(){
+            // Limpiar cookies
+            setCookie('filtro_numeroDocumento', '');
+            setCookie('filtro_fuente', 'Todos');
+            setCookie('filtro_reintegros', 'Todos');
+            setCookie('filtro_registrosPorPagina', '10');
+
             // Resetear los valores de los filtros
             $("#numeroDocumento").val('');
             $("#fuente").val('Todos');
@@ -287,10 +297,28 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
             $("#filtros-activos").html(hayFiltros ? filtrosHTML : '');
         }
 
+        // Función para establecer cookies
+        function setCookie(name, value, days = 30) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
         function buscarDinamico() {
             const numeroDocumento = $("#numeroDocumento").val();
             const fuente = $("#fuente").val();
             const reintegros = $("#reintegros").val();
+            const registrosPorPagina = $("#registrosPorPagina").val();
+
+            // Guardar filtros en cookies
+            setCookie('filtro_numeroDocumento', numeroDocumento);
+            setCookie('filtro_fuente', fuente);
+            setCookie('filtro_reintegros', reintegros);
+            setCookie('filtro_registrosPorPagina', registrosPorPagina);
 
             // Resetear offset para nueva búsqueda
             offset = 10;
@@ -366,6 +394,24 @@ $initialData = $miClaseG->obtenerCDP($numeroDocumento, $fuente, $reintegros, 10,
                 $("#tablaCDP tbody").append(createTableRow(row));
             });
         }
+
+        // Establecer valores iniciales desde las cookies
+        $(document).ready(function(){
+            const cookieNumeroDocumento = document.cookie.split('; ').find(row => row.startsWith('filtro_numeroDocumento='));
+            const cookieFuente = document.cookie.split('; ').find(row => row.startsWith('filtro_fuente='));
+            const cookieReintegros = document.cookie.split('; ').find(row => row.startsWith('filtro_reintegros='));
+            const cookieRegistros = document.cookie.split('; ').find(row => row.startsWith('filtro_registrosPorPagina='));
+
+            if(cookieRegistros) {
+                $("#registrosPorPagina").val(cookieRegistros.split('=')[1]);
+            }
+            
+            // Si hay filtros guardados, realizar búsqueda inicial
+            if(cookieNumeroDocumento || cookieFuente || cookieReintegros || cookieRegistros) {
+                buscarDinamico();
+                actualizarFiltrosActivos();
+            }
+        });
 
         // Estilos CSS inline para los filtros activos
         $("<style>")
