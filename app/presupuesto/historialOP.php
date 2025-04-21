@@ -27,6 +27,7 @@ $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] :
 $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : 
             (isset($_COOKIE['filtro_op_fechaFin']) ? urldecode($_COOKIE['filtro_op_fechaFin']) : '');
 $registrosPorPagina = isset($_COOKIE['filtro_op_registrosPorPagina']) ? $_COOKIE['filtro_op_registrosPorPagina'] : '10';
+$limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
 
 // Validación y sanitización de filtros
 $numeroDocumento = htmlspecialchars(trim($numeroDocumento));
@@ -55,7 +56,7 @@ $filtrosIniciales = [
 ];
 
 // Se obtienen los primeros 10 registros
-$initialData = $miClaseG->obtenerOP($filtrosIniciales, 10, 0);
+$initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 ?>
 <html>
 <head>
