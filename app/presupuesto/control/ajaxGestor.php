@@ -21,11 +21,15 @@ try {
             'fechaFin' => $_GET['fechaFin'] ?? ''
         ];
         
-        $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
+        $limit = isset($_GET['limit']) ? ($_GET['limit'] === 'todos' ? 999999 : intval($_GET['limit'])) : 10;
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
         
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
-        echo json_encode($resultado); // Enviar solo los datos sin estructura adicional
+        if (empty($resultado)) {
+            echo json_encode([]);
+        } else {
+            echo json_encode($resultado);
+        }
     } elseif ($action === 'cargarMasCDP') {
         $numeroDocumento = $_GET['numeroDocumento'] ?? '';
         $fuente = $_GET['fuente'] ?? 'Todos';

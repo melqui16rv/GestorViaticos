@@ -205,10 +205,12 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 
     <script>
     $(document).ready(function(){
-        let offset = 10;
-        let limit = 10;
+        let offset = <?php echo ($registrosPorPagina === 'todos' ? 0 : 10); ?>;
+        let limit = <?php echo ($registrosPorPagina === 'todos' ? 999999 : 10); ?>;
 
         function buscarDinamico() {
+            const registrosPorPagina = $("#registrosPorPagina").val();
+            
             const filtros = {
                 action: 'buscarOP',
                 numeroDocumento: $("#numeroDocumento").val(),
@@ -218,7 +220,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 fechaInicio: $("#fechaInicio").val(),
                 fechaFin: $("#fechaFin").val(),
                 offset: 0,
-                limit: limit
+                limit: registrosPorPagina
             };
 
             // Guardar filtros en cookies
@@ -228,7 +230,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             setCookie('filtro_op_mes', filtros.mes);
             setCookie('filtro_op_fechaInicio', filtros.fechaInicio);
             setCookie('filtro_op_fechaFin', filtros.fechaFin);
-            setCookie('filtro_op_registrosPorPagina', $("#registrosPorPagina").val());
+            setCookie('filtro_op_registrosPorPagina', registrosPorPagina);
 
             $.ajax({
                 url: './control/ajaxGestor.php',
@@ -239,7 +241,11 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                     $("#tablaOP tbody").empty();
                     if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
-                        $("#cargarMas").show();
+                        if(registrosPorPagina === 'todos') {
+                            $("#cargarMas").hide();
+                        } else {
+                            $("#cargarMas").show();
+                        }
                     } else {
                         let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
                         $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
