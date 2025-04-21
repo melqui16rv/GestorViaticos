@@ -57,6 +57,27 @@ $filtrosIniciales = [
 // Determinar el límite inicial basado en registrosPorPagina
 $limit = ($registrosPorPagina === 'todos') ? 999999 : intval($registrosPorPagina);
 $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
+
+// Agregar manejo de Ajax en el mismo archivo
+if(isset($_GET['action']) && ($_GET['action'] === 'buscarOP' || $_GET['action'] === 'cargarMas')) {
+    header('Content-Type: application/json');
+    
+    $filtros = [
+        'numeroDocumento' => $_GET['numeroDocumento'] ?? '',
+        'estado' => $_GET['estado'] ?? 'Todos',
+        'beneficiario' => $_GET['beneficiario'] ?? '',
+        'mes' => $_GET['mes'] ?? '',
+        'fechaInicio' => $_GET['fechaInicio'] ?? '',
+        'fechaFin' => $_GET['fechaFin'] ?? ''
+    ];
+    
+    $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
+    $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
+    
+    $resultado = $miClaseG->obtenerOP($filtros, $limit, $offset);
+    echo json_encode($resultado);
+    exit;
+}
 ?>
 <html>
 <head>
@@ -231,17 +252,15 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 limit: limit
             };
 
-            // Guardar en cookies
-            setCookie('filtro_op_numeroDocumento', filtros.numeroDocumento);
-            setCookie('filtro_op_estado', filtros.estado);
-            setCookie('filtro_op_beneficiario', filtros.beneficiario);
-            setCookie('filtro_op_mes', filtros.mes);
-            setCookie('filtro_op_fechaInicio', filtros.fechaInicio);
-            setCookie('filtro_op_fechaFin', filtros.fechaFin);
-            setCookie('filtro_op_registrosPorPagina', $("#registrosPorPagina").val());
+            // Guardar en cookies antes de la búsqueda
+            Object.entries(filtros).forEach(([key, value]) => {
+                if (key !== 'action' && key !== 'offset' && key !== 'limit') {
+                    setCookie(`filtro_op_${key}`, value);
+                }
+            });
 
             $.ajax({
-                url: './control/ajaxGestor.php',
+                url: window.location.href, // Usar la misma página
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -251,12 +270,11 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                         updateTableWithData(response);
                         $("#cargarMas").show();
                     } else {
-                        let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
-                        $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
+                        $("#tablaOP tbody").append('<tr><td colspan="7" style="text-align: center;">No se encontraron resultados</td></tr>');
                         $("#cargarMas").hide();
                     }
                 },
-                error: function(xhr, status, error){
+                error: function(xhr, status, error) {
                     console.error("Error:", error);
                     alert("Error al realizar la búsqueda.");
                 }
@@ -278,7 +296,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             };
 
             $.ajax({
-                url: './control/ajaxGestor.php',
+                url: window.location.href, // Usar la misma página
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -364,7 +382,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             };
 
             $.ajax({
-                url: './control/ajaxGestor.php',
+                url: window.location.href, // Usar la misma página
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -395,7 +413,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 
             // Recargar la tabla con valores iniciales
             $.ajax({
-                url: './control/ajaxGestor.php',
+                url: window.location.href, // Usar la misma página
                 method: 'GET',
                 data: {
                     action: 'cargarMas',
@@ -483,7 +501,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             offset = 10;
 
             $.ajax({
-                url: './control/ajaxGestor.php',
+                url: window.location.href, // Usar la misma página
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -565,10 +583,33 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             
             if(hayCookies) {
                 // Solo realizar búsqueda si hay cookies de filtros
+                const cookieVals = {
+                    numeroDocumento: getCookie('filtro_op_numeroDocumento'),
+                    estado: getCookie('filtro_op_estado'),
+                    beneficiario: getCookie('filtro_op_beneficiario'),
+                    mes: getCookie('filtro_op_mes'),
+                    fechaInicio: getCookie('filtro_op_fechaInicio'),
+                    fechaFin: getCookie('filtro_op_fechaFin')
+                };
+
+                Object.entries(cookieVals).forEach(([key, value]) => {
+                    if(value) {
+                        $(`#${key}`).val(value);
+                    }
+                });
+
                 buscarDinamico();
                 actualizarFiltrosActivos();
             }
         });
+
+        // Función helper para obtener valores de cookies
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return '';
+        }
     });
     </script>
 </body>
