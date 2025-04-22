@@ -390,18 +390,18 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
                 const total = dataPie.reduce((a, b) => a + b, 0);
 
-                // Info de valores debajo de la torta (en moneda)
+                // Info de valores debajo de la torta (solo valor, color igual al label)
                 const infoDiv = document.createElement('div');
-                infoDiv.style.fontSize = '0.95em';
+                infoDiv.style.fontSize = '1em';
                 infoDiv.style.marginTop = '8px';
                 infoDiv.innerHTML = labelsPie.map((l, i) =>
-                    `<span style="color:${coloresPie[i]};font-weight:bold;">${l}:</span> $${dataPie[i].toLocaleString('es-CO', {minimumFractionDigits:2})}`
-                ).join('<br>');
+                    `<span style="color:${coloresPie[i]};font-weight:bold;">$${dataPie[i].toLocaleString('es-CO', {minimumFractionDigits:2})}</span>`
+                ).join(' ');
                 card.appendChild(infoDiv);
 
                 container.appendChild(card);
 
-                // Chart.js con porcentaje en la gráfica
+                // Chart.js con porcentaje en blanco y negrilla
                 charts.push(new Chart(canvas.getContext('2d'), {
                     type: 'pie',
                     data: {
@@ -415,7 +415,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                         responsive: true,
                         plugins: {
                             datalabels: {
-                                color: '#222',
+                                color: '#fff',
                                 font: { weight: 'bold', size: 15 },
                                 formatter: function(value, context) {
                                     const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
@@ -474,7 +474,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosCRP); ?>,
         ['Saldo por Utilizar', 'Saldo Utilizado'],
         ['saldo_por_utilizar', 'saldo_utilizado'],
-        ['rgba(255, 206, 86, 0.7)', 'rgba(75, 192, 192, 0.7)']
+        ['rgba(255, 206, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
     );
     // OP
     crearTorta(
