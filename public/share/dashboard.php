@@ -239,7 +239,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
         </div>
 
         <div class="stats-grid">
-            <?php foreach(['CDP', 'CRP', 'OP'] as $tipo): 
+            <?php foreach(['CDP', 'RP', 'OP'] as $tipo): 
                 $ultimaActualizacion = array_filter($actualizaciones, function($a) use ($tipo) {
                     return $a['tipo_tabla'] === $tipo;
                 });
@@ -336,8 +336,8 @@ foreach ($estadisticasPorFecha as $estadistica) {
             }, {
                 label: 'RP',
                 data: <?php echo json_encode(array_map(function($fecha) use ($datosGraficoLineas) {
-                    return isset($datosGraficoLineas[$fecha]['CRP']) ? 
-                        $datosGraficoLineas[$fecha]['CRP']['actualizados'] + $datosGraficoLineas[$fecha]['CRP']['nuevos'] : 0;
+                    return isset($datosGraficoLineas[$fecha]['RP']) ? 
+                        $datosGraficoLineas[$fecha]['RP']['actualizados'] + $datosGraficoLineas[$fecha]['RP']['nuevos'] : 0;
                 }, array_keys($datosGraficoLineas))); ?>,
                 borderColor: 'rgb(54, 162, 235)',
                 tension: 0.1
