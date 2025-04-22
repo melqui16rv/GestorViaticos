@@ -83,7 +83,13 @@ if (!isset($_SESSION['id_rol'])) {
             }
             
             // Inicializar la primera vista (dashboard por defecto)
-            showDashboard();
+            // Leer cookie para restaurar la vista seleccionada
+            const vista = getCookie('dashboard_vista');
+            if (vista === 'graficas') {
+                showGraficas();
+            } else {
+                showDashboard();
+            }
             
             // Inicializar el estado del sidebar según el tamaño de pantalla
             handleResize();
@@ -100,11 +106,31 @@ if (!isset($_SESSION['id_rol'])) {
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
 
+        // Función para establecer cookies
+        function setCookie(name, value, days = 30) {
+            let expires = "";
+            if (days) {
+                const date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        // Función para obtener cookies
+        function getCookie(name) {
+            const value = "; " + document.cookie;
+            const parts = value.split("; " + name + "=");
+            if (parts.length === 2) return parts.pop().split(";").shift();
+            return null;
+        }
+
         function showDashboard() {
             dashboardView.style.display = 'block';
             graficasView.style.display = 'none';
             navDashboard.classList.add('active');
             navGraficas.classList.remove('active');
+            setCookie('dashboard_vista', 'dashboard');
         }
         
         function showGraficas() {
@@ -112,6 +138,7 @@ if (!isset($_SESSION['id_rol'])) {
             graficasView.style.display = 'block';
             navDashboard.classList.remove('active');
             navGraficas.classList.add('active');
+            setCookie('dashboard_vista', 'graficas');
         }
         
         navDashboard.addEventListener('click', function(e) {
