@@ -118,12 +118,12 @@ foreach ($estadisticasPorFecha as $estadistica) {
         <tbody>
             <?php foreach($actualizaciones as $actualizacion): ?>
             <tr>
-                <td><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
-                <td><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
-                <td><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
-                <td><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
-                <td><?php echo $actualizacion['registros_nuevos']; ?></td>
-                <td><?php echo $actualizacion['registros_actualizados']; ?></td>
+                <td data-label="Tabla"><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
+                <td data-label="Archivo"><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
+                <td data-label="Fecha"><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
+                <td data-label="Usuario"><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
+                <td data-label="Registros Nuevos"><?php echo $actualizacion['registros_nuevos']; ?></td>
+                <td data-label="Registros Actualizados"><?php echo $actualizacion['registros_actualizados']; ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
