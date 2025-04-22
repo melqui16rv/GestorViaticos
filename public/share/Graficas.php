@@ -390,18 +390,18 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
                 const total = dataPie.reduce((a, b) => a + b, 0);
 
-                // Info de valores debajo de la torta (solo valor, color igual al label)
+                // Info de valores debajo de la torta (solo valor, color igual al label, con separador)
                 const infoDiv = document.createElement('div');
                 infoDiv.style.fontSize = '1em';
                 infoDiv.style.marginTop = '8px';
                 infoDiv.innerHTML = labelsPie.map((l, i) =>
                     `<span style="color:${coloresPie[i]};font-weight:bold;">$${dataPie[i].toLocaleString('es-CO', {minimumFractionDigits:2})}</span>`
-                ).join(' ');
+                ).join(' <span style="color:#bbb;">-</span> ');
                 card.appendChild(infoDiv);
 
                 container.appendChild(card);
 
-                // Chart.js con porcentaje en blanco y negrilla
+                // Chart.js con porcentaje en blanco, negrilla y sombra negra
                 charts.push(new Chart(canvas.getContext('2d'), {
                     type: 'pie',
                     data: {
@@ -417,6 +417,10 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                             datalabels: {
                                 color: '#fff',
                                 font: { weight: 'bold', size: 15 },
+                                textStrokeColor: '#000',
+                                textStrokeWidth: 3,
+                                textShadowColor: '#000',
+                                textShadowBlur: 6,
                                 formatter: function(value, context) {
                                     const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                                     if (sum === 0) return '';
