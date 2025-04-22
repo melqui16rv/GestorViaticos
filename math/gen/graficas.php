@@ -94,6 +94,7 @@ class graficas extends Conexion{
 
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
+            if ($codigo === 'Otro') continue; // Excluir "Otro"
             $valor_consumido = $info['valor_actual'] - $info['saldo_por_comprometer'];
             $datos[] = [
                 'codigo_dependencia' => $codigo,
@@ -144,6 +145,7 @@ class graficas extends Conexion{
 
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
+            if ($codigo === 'Otro') continue; // Excluir "Otro"
             $saldo_utilizado = $info['valor_actual'] - $info['saldo_por_utilizar'];
             $datos[] = [
                 'codigo_dependencia' => $codigo,
@@ -200,6 +202,7 @@ class graficas extends Conexion{
         $codigos = array_unique(array_merge(array_keys($crpAgrupados), array_keys($opAgrupados)));
         $datos = [];
         foreach ($codigos as $codigo) {
+            if ($codigo === 'Otro') continue; // Excluir "Otro"
             $suma_crp = isset($crpAgrupados[$codigo]) ? $crpAgrupados[$codigo] : 0;
             $suma_op = isset($opAgrupados[$codigo]) ? $opAgrupados[$codigo] : 0;
             $valor_restante = $suma_crp - $suma_op;
