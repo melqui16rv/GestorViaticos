@@ -33,8 +33,7 @@ if (isset($_SESSION['numero_documento'])) {
     $nombreUser = null;
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<html lang="es" style="--nav-height: 70px;scrollbar-width: none; /* Oculta la barra en Firefox */-ms-overflow-style: none;">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
