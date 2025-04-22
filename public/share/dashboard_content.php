@@ -82,11 +82,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
             <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
             <div class="number"><?php echo number_format($dep['total']); ?></div>
         </div>
-        <?php endforeach; ?>
-        <div class="stat-box" style="background:#f5f5f5;">
-            <h4><b>Total CDP</b></h4>
-            <div class="number"><b><?php echo number_format($totalCDP); ?></b></div>
-        </div>
     </div>
 
     <!-- Conteo de registros por dependencia: CRP -->
@@ -97,11 +92,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
             <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
             <div class="number"><?php echo number_format($dep['total']); ?></div>
         </div>
-        <?php endforeach; ?>
-        <div class="stat-box" style="background:#f5f5f5;">
-            <h4><b>Total CRP</b></h4>
-            <div class="number"><b><?php echo number_format($totalCRP); ?></b></div>
-        </div>
     </div>
 
     <!-- Conteo de registros por dependencia: OP -->
@@ -111,11 +101,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
         <div class="stat-box">
             <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
             <div class="number"><?php echo number_format($dep['total']); ?></div>
-        </div>
-        <?php endforeach; ?>
-        <div class="stat-box" style="background:#f5f5f5;">
-            <h4><b>Total OP</b></h4>
-            <div class="number"><b><?php echo number_format($totalOP); ?></b></div>
         </div>
     </div>
 
