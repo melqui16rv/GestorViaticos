@@ -321,7 +321,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                         plugins: {
                             datalabels: {
                                 color: '#fff',
-                                font: { weight: 'bold', size: 10 },
+                                font: { weight: 'bold', size: 13 },
                                 textStrokeColor: '#000',
                                 textStrokeWidth: 1,
                                 formatter: function(value, context) {
