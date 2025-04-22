@@ -387,7 +387,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 container.appendChild(card);
 
                 // Datos para la torta
-                const dataObj = datos.find(d => d.codigo_dependencia === t.codigo);
+                const dataObj = datos.find(d => String(d.codigo_dependencia) === String(t.codigo));
                 const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
 
                 // Chart.js
