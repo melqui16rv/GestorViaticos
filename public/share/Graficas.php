@@ -384,29 +384,23 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 canvas.id = containerId + '_pie_' + idx;
                 card.appendChild(canvas);
 
-                // Porcentajes
+                // Porcentajes y valores
                 const dataObj = datos.find(d => String(d.codigo_dependencia) === String(t.codigo));
                 const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
                 const total = dataPie.reduce((a, b) => a + b, 0);
-                let porcentajes = [];
-                if (total > 0) {
-                    porcentajes = dataPie.map(v => ((v / total) * 100).toFixed(1) + '%');
-                } else {
-                    porcentajes = dataPie.map(() => '0%');
-                }
 
-                // Info de porcentajes debajo de la torta
+                // Info de valores debajo de la torta (en moneda)
                 const infoDiv = document.createElement('div');
                 infoDiv.style.fontSize = '0.95em';
                 infoDiv.style.marginTop = '8px';
                 infoDiv.innerHTML = labelsPie.map((l, i) =>
-                    `<span style="color:${coloresPie[i]};font-weight:bold;">${l}:</span> ${porcentajes[i]}`
+                    `<span style="color:${coloresPie[i]};font-weight:bold;">${l}:</span> $${dataPie[i].toLocaleString('es-CO', {minimumFractionDigits:2})}`
                 ).join('<br>');
                 card.appendChild(infoDiv);
 
                 container.appendChild(card);
 
-                // Chart.js
+                // Chart.js con porcentaje en la gráfica
                 charts.push(new Chart(canvas.getContext('2d'), {
                     type: 'pie',
                     data: {
@@ -425,12 +419,22 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                                         const label = context.label || '';
                                         const value = context.parsed || 0;
                                         const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
-                                        return `${label}: ${value.toLocaleString()} (${percent}%)`;
+                                        return `${label}: $${value.toLocaleString('es-CO', {minimumFractionDigits:2})} (${percent}%)`;
                                     }
+                                }
+                            },
+                            datalabels: {
+                                color: '#222',
+                                font: { weight: 'bold', size: 15 },
+                                formatter: function(value, context) {
+                                    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                    if (sum === 0) return '';
+                                    return ((value / sum) * 100).toFixed(1) + '%';
                                 }
                             }
                         }
-                    }
+                    },
+                    plugins: [ChartDataLabels]
                 }));
             });
 
@@ -469,7 +473,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosCRP); ?>,
         ['Saldo por Utilizar', 'Saldo Utilizado'],
         ['saldo_por_utilizar', 'saldo_utilizado'],
-        ['rgba(255, 206, 86, 0.7)', 'rgba(75, 192, 192, 0.7)']
+        ['rgba(255, 206, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
     );
     // OP
     crearTorta(
