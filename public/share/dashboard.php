@@ -116,6 +116,12 @@ if (!isset($_SESSION['id_rol'])) {
         .sidebar-overlay.active {
             display: block;
         }
+        #dashboardView{
+            width: 100%;
+        }
+        #graficasView{
+            width: 100%;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen relative">
