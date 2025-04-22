@@ -114,11 +114,18 @@ class graficas extends Conexion{
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $agrupados = [];
+        $otrosDebug = []; // Para depuración
+
         foreach ($resultados as $fila) {
-            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
+            $dependencia = trim($fila['Dependencia']);
+            if ($dependencia === '' || $dependencia === null) {
+                continue; // Ignorar dependencias vacías o nulas
+            }
+            if (preg_match('/(\d{1,2}(\.\d)?$)/', $dependencia, $matches)) {
                 $codigo = $matches[1];
             } else {
                 $codigo = 'Otro';
+                $otrosDebug[] = $dependencia; // Guardar para depuración
             }
             if (!isset($agrupados[$codigo])) {
                 $agrupados[$codigo] = [
@@ -131,6 +138,9 @@ class graficas extends Conexion{
             $agrupados[$codigo]['valor_actual'] += is_numeric($fila['Valor_Actual']) ? floatval($fila['Valor_Actual']) : 0;
             $agrupados[$codigo]['saldo_por_utilizar'] += is_numeric($fila['Saldo_por_Utilizar']) ? floatval($fila['Saldo_por_Utilizar']) : 0;
         }
+
+        // Si quieres depurar, puedes descomentar la siguiente línea temporalmente:
+        // file_put_contents('/tmp/otros_dependencias.txt', print_r($otrosDebug, true));
 
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
