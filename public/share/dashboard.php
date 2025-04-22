@@ -10,7 +10,7 @@ if (!isset($_SESSION['id_rol'])) {
 }
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" style="--nav-height: 70px;scrollbar-width: none; /* Oculta la barra en Firefox */-ms-overflow-style: none;">
 <head>
     <meta charset="UTF-8">
     <title>Panel de Control</title>
