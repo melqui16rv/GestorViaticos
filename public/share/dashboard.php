@@ -110,20 +110,18 @@ if (!isset($_SESSION['id_rol'])) {
 <body class="bg-gray-50 min-h-screen relative">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
 
-    <!-- Botón para mostrar/ocultar sidebar SIEMPRE visible -->
-    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button" style="display: flex;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-    </button>
-    <!-- Overlay para móvil -->
-    <div id="sidebarOverlay" class="sidebar-overlay"></div>
-
     <div class="flex min-h-screen">
         <!-- Sidebar tipo Filament -->
         <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0">
-            <div class="h-16 flex items-center justify-center border-b border-gray-200">
-                <span class="text-xl font-bold text-blue-700">Panel de Control</span>
+            <!-- Botón para mostrar/ocultar sidebar: ahora DENTRO del sidebar, arriba a la izquierda -->
+            <div class="flex items-center border-b border-gray-200 relative h-16">
+                <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button"
+                    style="position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); display: flex;">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+                <span class="text-xl font-bold text-blue-700 mx-auto">Panel de Control</span>
             </div>
             <nav class="flex-1 py-4">
                 <ul>
@@ -143,6 +141,9 @@ if (!isset($_SESSION['id_rol'])) {
                 &copy; <?php echo date('Y'); ?> Gestor Viáticos
             </div>
         </aside>
+
+        <!-- Overlay para móvil -->
+        <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
         <!-- Contenido principal -->
         <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen ml-64 transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
