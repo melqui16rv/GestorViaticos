@@ -473,7 +473,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosCRP); ?>,
         ['Saldo por Utilizar', 'Saldo Utilizado'],
         ['saldo_por_utilizar', 'saldo_utilizado'],
-        ['rgba(255, 206, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
+        ['rgba(255, 206, 86, 0.7)', 'rgba(75, 192, 192, 0.7)']
     );
     // OP
     crearTorta(
