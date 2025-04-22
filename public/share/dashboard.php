@@ -28,6 +28,18 @@ if (!isset($_SESSION['id_rol'])) {
             background: #e0e7ef;
             color: #2563eb;
         }
+
+        /* Firefox */
+        body::-webkit-scrollbar {
+        scrollbar-width: none; /* Oculta la barra en Firefox */
+        -ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
+        }
+
+        /* WebKit (Chrome, Safari, Edge moderno, Opera) */
+        body::-webkit-scrollbar {
+        display: none; /* Oculta la barra en navegadores WebKit */
+        }
+
         .sidebar-link {
             transition: background 0.2s, color 0.2s;
         }
