@@ -210,7 +210,7 @@ class graficas extends Conexion{
             $datos[] = [
                 'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $nombre,
-                'suma_crp' => $suma_crp,
+                'suma_crp' => $suma_crp, // <-- Este es el valor correcto de CRP/RP
                 'suma_op' => $suma_op,
                 'valor_restante' => $valor_restante
             ];
