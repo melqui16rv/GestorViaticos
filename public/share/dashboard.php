@@ -20,8 +20,8 @@ if (!isset($_SESSION['id_rol'])) {
     <!-- Heroicons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="/assets/css/share/dashboard.css">
-    <link rel="stylesheet" href="/assets/css/share/grafica.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/share/dashboard.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/share/grafica.css">
     <style>
         body { background: #f3f4f6; }
         .sidebar-link.active, .sidebar-link:hover {
