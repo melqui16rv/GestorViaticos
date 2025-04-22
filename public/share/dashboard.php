@@ -1,8 +1,16 @@
 <?php
+session_start();
+ob_start();
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
 
-requireRole(['1']); 
+if (isset($_SESSION['id_rol'])) {
+    $rol = $_SESSION['id_rol'];
+} else {
+    header("Location: " . "includes/session/login.php");
+    exit;
+}
 
 $miClase = new user();
 $estadisticas = $miClase->obtenerEstadisticasActualizaciones();
