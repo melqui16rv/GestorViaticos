@@ -1,13 +1,18 @@
 <?php
-session_start();
 ob_start();
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 
-if (!isset($_SESSION['id_rol'])) {
-    header("Location: includes/session/login.php");
-    exit;
-}
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/admin/metodosCDP.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/admin/metodosCRP.php';
+
+requireRole(['1']);
 ?>
 <!DOCTYPE html>
 <html lang="es">
