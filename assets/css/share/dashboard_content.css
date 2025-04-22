@@ -50,13 +50,12 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    display: block;
-    overflow-x: auto;
-    border-radius: 8px;
     background: white;
+    border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    overflow-x: auto;
+    display: table;
+    min-width: 700px; /* Para evitar que se colapse demasiado en móvil */
 }
 
 .updates-table th,
@@ -77,51 +76,31 @@
     background-color: #f9f9f9;
 }
 
-.updates-table thead, .updates-table tbody, .updates-table tr {
-    display: table;
+/* Scroll horizontal en pantallas pequeñas */
+.updates-table-wrapper {
     width: 100%;
-    table-layout: fixed;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-@media (max-width: 768px) {
-    .updates-table, .updates-table thead, .updates-table tbody, .updates-table tr {
-        display: block;
-        width: 100%;
+@media (max-width: 900px) {
+    .updates-table {
+        min-width: 600px;
     }
-    .updates-table thead {
-        display: none;
-    }
-    .updates-table tr {
-        margin-bottom: 1rem;
-        border-radius: 8px;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.03);
-        background: #fff;
-        display: flex;
-        flex-direction: column;
-        padding: 0.5rem 0.5rem 0.5rem 0.5rem;
-    }
-    .updates-table td {
-        display: flex;
-        align-items: center;
-        padding: 10px 8px;
-        border: none;
-        border-bottom: 1px solid #f0f0f0;
-        position: relative;
-        font-size: 0.97em;
-    }
-    .updates-table td:before {
-        content: attr(data-label);
-        flex: 0 0 120px;
-        color: #6b7280;
-        font-weight: 600;
-        margin-right: 10px;
+}
+
+@media (max-width: 600px) {
+    .updates-table {
+        min-width: 500px;
         font-size: 0.95em;
-        text-align: left;
-        min-width: 110px;
-        display: inline-block;
     }
-    .updates-table td:last-child {
-        border-bottom: none;
+    .updates-table th, .updates-table td {
+        padding: 8px 6px;
+        min-width: 100px;
     }
 }
 

@@ -104,30 +104,32 @@ foreach ($estadisticasPorFecha as $estadistica) {
     </div>
 
     <h2>Historial de Actualizaciones</h2>
-    <table class="updates-table">
-        <thead>
-            <tr>
-                <th>Tabla</th>
-                <th>Archivo</th>
-                <th>Fecha</th>
-                <th>Usuario</th>
-                <th>Registros Nuevos</th>
-                <th>Registros Actualizados</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach($actualizaciones as $actualizacion): ?>
-            <tr>
-                <td data-label="Tabla"><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
-                <td data-label="Archivo"><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
-                <td data-label="Fecha"><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
-                <td data-label="Usuario"><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
-                <td data-label="Registros Nuevos"><?php echo $actualizacion['registros_nuevos']; ?></td>
-                <td data-label="Registros Actualizados"><?php echo $actualizacion['registros_actualizados']; ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="updates-table-wrapper">
+        <table class="updates-table">
+            <thead>
+                <tr>
+                    <th>Tabla</th>
+                    <th>Archivo</th>
+                    <th>Fecha</th>
+                    <th>Usuario</th>
+                    <th>Registros Nuevos</th>
+                    <th>Registros Actualizados</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($actualizaciones as $actualizacion): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
+                    <td><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
+                    <td><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
+                    <td><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
+                    <td><?php echo $actualizacion['registros_nuevos']; ?></td>
+                    <td><?php echo $actualizacion['registros_actualizados']); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
