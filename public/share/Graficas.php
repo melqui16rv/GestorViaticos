@@ -478,7 +478,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosCRP); ?>,
         ['Saldo por Utilizar', 'Saldo Utilizado'],
         ['saldo_por_utilizar', 'saldo_utilizado'],
-        ['rgba(255, 206, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
+        ['rgba(255, 185, 65, 0.88)', 'rgba(255, 114, 79, 0.56)']
     );
     // OP
     crearTorta(
@@ -486,7 +486,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosOP); ?>,
         ['Total Pagado (OP)', 'Valor Restante'],
         ['suma_op', 'valor_restante'],
-        ['rgba(255, 99, 132, 0.7)', 'rgba(255, 206, 86, 0.7)']
+        ['rgba(255, 99, 132, 0.7)', 'rgba(255, 185, 65, 0.88)']
     );
     </script>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
