@@ -145,7 +145,7 @@ if (!isset($_SESSION['id_rol'])) {
         </aside>
 
         <!-- Contenido principal -->
-        <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen ml-64 transition-all duration-200" style="overflow: scroll;height: 100vh;">
+        <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen ml-64 transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
             <div id="dashboardView">
                 <?php require 'dashboard_content.php'; ?>
             </div>

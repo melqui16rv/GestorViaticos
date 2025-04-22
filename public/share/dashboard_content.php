@@ -33,9 +33,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
 }
 
 ?>
-<div class="dashboard-container">
-    <h1>Dashboard de Actualizaciones</h1>
-    
+<div class="dashboard-container">    
     <!-- Filtros de fecha -->
     <div class="filtros-container">
         <form class="filtros-form" id="filtrosFecha">
