@@ -117,6 +117,34 @@ $datosOP = $miGraficas->obtenerGraficaOP();
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
+    // --- Funciones de cookies ---
+    function setCookie(name, value, days = 30) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + encodeURIComponent(JSON.stringify(value)) + expires + "; path=/";
+    }
+    function getCookie(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length === 2) {
+            try {
+                return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));
+            } catch (e) { return null; }
+        }
+        return null;
+    }
+
+    // --- Estado de labels (datasets) y tortas ---
+    let graficasLabelsState = getCookie('graficas_labels_state') || {};
+    let tortasState = getCookie('graficas_tortas_state') || {
+        tortasCDP: null, tortasCRP: null, tortasOP: null
+    };
+
+    // --- Gráficas de barras ---
     const datosCDP = <?php echo json_encode($datosCDP); ?>;
     const labels = datosCDP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
     const valorActual = datosCDP.map(d => d.valor_actual);
@@ -124,7 +152,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
     const valorConsumido = datosCDP.map(d => d.valor_consumido);
 
     const ctx = document.getElementById('graficaCDP').getContext('2d');
-    new Chart(ctx, {
+    const chartCDP = new Chart(ctx, {
         type: 'bar',
         data: {
             labels: labels,
@@ -148,21 +176,46 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         },
         options: {
             responsive: true,
-            scales: {
-                y: { beginAtZero: true }
+            scales: { y: { beginAtZero: true } },
+            plugins: {
+                legend: {
+                    onClick: function(e, legendItem, legend) {
+                        // Toggle dataset visibility y guardar en cookie
+                        const ci = legend.chart;
+                        const idx = legendItem.datasetIndex;
+                        ci.toggleDataVisibility(idx);
+                        ci.update();
+                        saveLabelsState('CDP', ci);
+                    }
+                }
             }
         }
     });
 
-    // Segunda gráfica: CRP
+    // Restaurar estado de labels de CDP
+    function restoreLabelsState(chart, key) {
+        if (graficasLabelsState[key]) {
+            graficasLabelsState[key].forEach((visible, i) => {
+                chart.setDatasetVisibility(i, visible);
+            });
+            chart.update();
+        }
+    }
+    function saveLabelsState(key, chart) {
+        graficasLabelsState[key] = chart.data.datasets.map((ds, i) => chart.isDatasetVisible(i));
+        setCookie('graficas_labels_state', graficasLabelsState);
+    }
+    restoreLabelsState(chartCDP, 'CDP');
+
+    // --- Segunda gráfica: CRP ---
     const datosCRP = <?php echo json_encode($datosCRP); ?>;
     const labelsCRP = datosCRP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
-    const valorActualCRP = datosCRP.map(d => d.valor_actual); // Debe ser 'valor_actual'
-    const saldoPorUtilizar = datosCRP.map(d => d.saldo_por_utilizar); // Debe ser 'saldo_por_utilizar'
-    const saldoUtilizado = datosCRP.map(d => d.saldo_utilizado); // Debe ser 'saldo_utilizado'
+    const valorActualCRP = datosCRP.map(d => d.valor_actual);
+    const saldoPorUtilizar = datosCRP.map(d => d.saldo_por_utilizar);
+    const saldoUtilizado = datosCRP.map(d => d.saldo_utilizado);
 
     const ctxCRP = document.getElementById('graficaCRP').getContext('2d');
-    new Chart(ctxCRP, {
+    const chartCRP = new Chart(ctxCRP, {
         type: 'bar',
         data: {
             labels: labelsCRP,
@@ -186,21 +239,31 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         },
         options: {
             responsive: true,
-            scales: {
-                y: { beginAtZero: true }
+            scales: { y: { beginAtZero: true } },
+            plugins: {
+                legend: {
+                    onClick: function(e, legendItem, legend) {
+                        const ci = legend.chart;
+                        const idx = legendItem.datasetIndex;
+                        ci.toggleDataVisibility(idx);
+                        ci.update();
+                        saveLabelsState('CRP', ci);
+                    }
+                }
             }
         }
     });
+    restoreLabelsState(chartCRP, 'CRP');
 
-    // Tercera gráfica: OP
+    // --- Tercera gráfica: OP ---
     const datosOP = <?php echo json_encode($datosOP); ?>;
     const labelsOP = datosOP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
-    const sumaCRP = datosOP.map(d => d.suma_crp); // Debe ser 'suma_crp'
-    const sumaOP = datosOP.map(d => d.suma_op); // Debe ser 'suma_op'
-    const valorRestante = datosOP.map(d => d.valor_restante); // Debe ser 'valor_restante'
+    const sumaCRP = datosOP.map(d => d.suma_crp);
+    const sumaOP = datosOP.map(d => d.suma_op);
+    const valorRestante = datosOP.map(d => d.valor_restante);
 
     const ctxOP = document.getElementById('graficaOP').getContext('2d');
-    new Chart(ctxOP, {
+    const chartOP = new Chart(ctxOP, {
         type: 'bar',
         data: {
             labels: labelsOP,
@@ -224,17 +287,28 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         },
         options: {
             responsive: true,
-            scales: {
-                y: { beginAtZero: true }
+            scales: { y: { beginAtZero: true } },
+            plugins: {
+                legend: {
+                    onClick: function(e, legendItem, legend) {
+                        const ci = legend.chart;
+                        const idx = legendItem.datasetIndex;
+                        ci.toggleDataVisibility(idx);
+                        ci.update();
+                        saveLabelsState('OP', ci);
+                    }
+                }
             }
         }
     });
+    restoreLabelsState(chartOP, 'OP');
 
-    // Utilidad para tortas dinámicas
+    // --- Utilidad para tortas dinámicas con persistencia ---
     function crearTorta(containerId, datos, labelsPie, camposPie, coloresPie, maxTortas = 2) {
         const container = document.getElementById(containerId);
-        let tortas = [];
         let charts = [];
+        // Leer estado de tortas desde cookie
+        let tortas = tortasState[containerId] || [];
 
         // Opciones para el select
         const opciones = datos.map((d, i) => ({
@@ -263,6 +337,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 select.value = t.codigo;
                 select.onchange = function() {
                     tortas[idx].codigo = this.value;
+                    saveTortasState();
                     render();
                 };
                 card.appendChild(select);
@@ -274,6 +349,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                     btn.innerHTML = '&times;';
                     btn.onclick = function() {
                         tortas.splice(idx, 1);
+                        saveTortasState();
                         render();
                     };
                     card.appendChild(btn);
@@ -295,7 +371,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
                 const total = dataPie.reduce((a, b) => a + b, 0);
 
-                // Info de valores debajo de la torta (solo valor, color igual al label, con separador)
+                // Info de valores debajo de la torta
                 const infoDiv = document.createElement('div');
                 infoDiv.style.fontSize = '1em';
                 infoDiv.style.marginTop = '8px';
@@ -306,7 +382,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
 
                 container.appendChild(card);
 
-                // Chart.js con porcentaje en blanco, negrilla y sombra negra
+                // Chart.js con porcentaje
                 charts.push(new Chart(canvas.getContext('2d'), {
                     type: 'pie',
                     data: {
@@ -351,8 +427,17 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             addBtn.disabled = tortas.length >= opciones.length;
         }
 
-        // Inicializar con dos tortas diferentes si hay suficientes dependencias
-        tortas = opciones.slice(0, Math.min(maxTortas, opciones.length)).map(opt => ({ codigo: opt.value }));
+        // Guardar estado de tortas en cookie
+        function saveTortasState() {
+            tortasState[containerId] = tortas;
+            setCookie('graficas_tortas_state', tortasState);
+        }
+
+        // Inicializar tortas si no hay cookie
+        if (!tortas || tortas.length === 0) {
+            tortas = opciones.slice(0, Math.min(maxTortas, opciones.length)).map(opt => ({ codigo: opt.value }));
+            saveTortasState();
+        }
         render();
 
         // Botón agregar
@@ -362,6 +447,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             const siguiente = opciones.find(o => !usados.includes(o.value));
             if (siguiente) {
                 tortas.push({ codigo: siguiente.value });
+                saveTortasState();
                 render();
             }
         };
