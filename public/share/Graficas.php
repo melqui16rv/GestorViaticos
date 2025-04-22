@@ -243,9 +243,9 @@ $datosOP = $miGraficas->obtenerGraficaOP();
     // Segunda gráfica: CRP
     const datosCRP = <?php echo json_encode($datosCRP); ?>;
     const labelsCRP = datosCRP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
-    const valorActualCRP = datosCRP.map(d => d.valor_actual);
-    const saldoPorUtilizar = datosCRP.map(d => d.saldo_por_utilizar);
-    const saldoUtilizado = datosCRP.map(d => d.saldo_utilizado);
+    const valorActualCRP = datosCRP.map(d => d.valor_actual); // Debe ser 'valor_actual'
+    const saldoPorUtilizar = datosCRP.map(d => d.saldo_por_utilizar); // Debe ser 'saldo_por_utilizar'
+    const saldoUtilizado = datosCRP.map(d => d.saldo_utilizado); // Debe ser 'saldo_utilizado'
 
     const ctxCRP = document.getElementById('graficaCRP').getContext('2d');
     new Chart(ctxCRP, {
@@ -304,9 +304,9 @@ $datosOP = $miGraficas->obtenerGraficaOP();
     // Tercera gráfica: OP
     const datosOP = <?php echo json_encode($datosOP); ?>;
     const labelsOP = datosOP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
-    const sumaCRP = datosOP.map(d => d.suma_crp);
-    const sumaOP = datosOP.map(d => d.suma_op);
-    const valorRestante = datosOP.map(d => d.valor_restante);
+    const sumaCRP = datosOP.map(d => d.suma_crp); // Debe ser 'suma_crp'
+    const sumaOP = datosOP.map(d => d.suma_op); // Debe ser 'suma_op'
+    const valorRestante = datosOP.map(d => d.valor_restante); // Debe ser 'valor_restante'
 
     const ctxOP = document.getElementById('graficaOP').getContext('2d');
     new Chart(ctxOP, {
