@@ -90,6 +90,17 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             <canvas id="graficaCDP"></canvas>
         </div>
 
+        <!-- Gráficas de torta por dependencia (CDP) -->
+        <h3>Detalle por Dependencia (CDP)</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <?php foreach ($datosCDP as $i => $fila): ?>
+                <div style="flex: 1 1 250px; min-width: 250px; max-width: 300px; text-align: center;">
+                    <strong><?php echo htmlspecialchars($fila['nombre_dependencia']); ?> (<?php echo htmlspecialchars($fila['codigo_dependencia']); ?>)</strong>
+                    <canvas id="tortaCDP_<?php echo $i; ?>"></canvas>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
         <!-- Segunda gráfica: CRP -->
         <h2>Utilización por Dependencia (CRP)</h2>
         <table>
@@ -118,6 +129,17 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             <canvas id="graficaCRP"></canvas>
         </div>
 
+        <!-- Gráficas de torta por dependencia (CRP) -->
+        <h3>Detalle por Dependencia (CRP)</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <?php foreach ($datosCRP as $i => $fila): ?>
+                <div style="flex: 1 1 250px; min-width: 250px; max-width: 300px; text-align: center;">
+                    <strong><?php echo htmlspecialchars($fila['nombre_dependencia']); ?> (<?php echo htmlspecialchars($fila['codigo_dependencia']); ?>)</strong>
+                    <canvas id="tortaCRP_<?php echo $i; ?>"></canvas>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
         <!-- Tercera gráfica: OP -->
         <h2>Pagos por Dependencia (OP)</h2>
         <table>
@@ -144,6 +166,17 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         </table>
         <div class="chart-wrapper">
             <canvas id="graficaOP"></canvas>
+        </div>
+
+        <!-- Gráficas de torta por dependencia (OP) -->
+        <h3>Detalle por Dependencia (OP)</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <?php foreach ($datosOP as $i => $fila): ?>
+                <div style="flex: 1 1 250px; min-width: 250px; max-width: 300px; text-align: center;">
+                    <strong><?php echo htmlspecialchars($fila['nombre_dependencia']); ?> (<?php echo htmlspecialchars($fila['codigo_dependencia']); ?>)</strong>
+                    <canvas id="tortaOP_<?php echo $i; ?>"></canvas>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
     <script>
@@ -184,6 +217,29 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         }
     });
 
+    // Gráficas de torta por dependencia (CDP)
+    <?php foreach ($datosCDP as $i => $fila): ?>
+    new Chart(document.getElementById('tortaCDP_<?php echo $i; ?>').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Saldo por Comprometer', 'Valor Consumido'],
+            datasets: [{
+                data: [
+                    <?php echo $fila['saldo_por_comprometer']; ?>,
+                    <?php echo $fila['valor_consumido']; ?>
+                ],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+    <?php endforeach; ?>
+
     // Segunda gráfica: CRP
     const datosCRP = <?php echo json_encode($datosCRP); ?>;
     const labelsCRP = datosCRP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
@@ -222,6 +278,29 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         }
     });
 
+    // Gráficas de torta por dependencia (CRP)
+    <?php foreach ($datosCRP as $i => $fila): ?>
+    new Chart(document.getElementById('tortaCRP_<?php echo $i; ?>').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Saldo por Utilizar', 'Saldo Utilizado'],
+            datasets: [{
+                data: [
+                    <?php echo $fila['saldo_por_utilizar']; ?>,
+                    <?php echo $fila['saldo_utilizado']; ?>
+                ],
+                backgroundColor: [
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+    <?php endforeach; ?>
+
     // Tercera gráfica: OP
     const datosOP = <?php echo json_encode($datosOP); ?>;
     const labelsOP = datosOP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
@@ -259,6 +338,29 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             }
         }
     });
+
+    // Gráficas de torta por dependencia (OP)
+    <?php foreach ($datosOP as $i => $fila): ?>
+    new Chart(document.getElementById('tortaOP_<?php echo $i; ?>').getContext('2d'), {
+        type: 'pie',
+        data: {
+            labels: ['Total Pagado (OP)', 'Valor Restante'],
+            datasets: [{
+                data: [
+                    <?php echo $fila['suma_op']; ?>,
+                    <?php echo $fila['valor_restante']; ?>
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(255, 206, 86, 0.7)'
+                ]
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+    <?php endforeach; ?>
     </script>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
