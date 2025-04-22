@@ -23,6 +23,17 @@ if (!isset($_SESSION['id_rol'])) {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/grafica.css">
     <style>
+        /* Firefox */
+        body {
+        scrollbar-width: none; /* Oculta la barra en Firefox */
+        -ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
+        }
+
+        /* WebKit (Chrome, Safari, Edge moderno, Opera) */
+        body::-webkit-scrollbar {
+        display: none; /* Oculta la barra en navegadores WebKit */
+        }
+
         body { background: #f3f4f6; }
         .sidebar-link.active, .sidebar-link:hover {
             background: #e0e7ef;
@@ -122,7 +133,7 @@ if (!isset($_SESSION['id_rol'])) {
 
     <div class="flex min-h-screen">
         <!-- Sidebar tipo Filament -->
-        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0">
+        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0" style="margin-top: 50px;">
             <div class="flex items-center border-b border-gray-200 relative h-16">
                 <span class="text-xl font-bold text-blue-700 mx-auto">Panel de Control</span>
             </div>
