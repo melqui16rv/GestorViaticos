@@ -35,12 +35,17 @@ if (!isset($_SESSION['id_rol'])) {
             display: none; /* Oculta la barra en navegadores WebKit */
         }
 
+        /* Calculamos la altura adecuada para el botón considerando el nav */
+        :root {
+            --nav-height: 60px; /* Ajusta esto según la altura de tu barra de navegación */
+        }
+
         /* Estilos mejorados para simular Filament UI */
         .sidebar-toggle-btn {
             position: fixed;
-            top: 1rem;
+            top: calc(var(--nav-height) + 1rem); /* Posición debajo del nav */
             left: 1rem;
-            z-index: 100;
+            z-index: 30; /* Un poco menor que el nav que suele ser 40-50 */
             background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 0.375rem;
@@ -72,8 +77,9 @@ if (!isset($_SESSION['id_rol'])) {
             width: 16rem;
             max-width: 100vw;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            z-index: 40;
+            z-index: 20; /* Por debajo del nav y del botón */
             background-color: white;
+            padding-top: var(--nav-height); /* Añadir espacio para el nav */
         }
 
         .sidebar-filament.closed {
@@ -87,17 +93,14 @@ if (!isset($_SESSION['id_rol'])) {
             transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             padding-left: 1rem;
             padding-right: 1rem;
+            padding-top: calc(var(--nav-height) + 1rem); /* Espacio para el nav */
         }
 
         /* Pantallas medianas y grandes */
         @media (min-width: 1024px) {
             .sidebar-toggle-btn {
-                top: 1.25rem;
+                top: calc(var(--nav-height) + 1.25rem);
                 left: 1.25rem;
-            }
-            
-            .main-content-filament {
-                padding-top: 1rem;
             }
             
             /* Cuando sidebar está abierto en pantallas grandes */
@@ -117,14 +120,13 @@ if (!isset($_SESSION['id_rol'])) {
             }
             
             .sidebar-toggle-btn {
-                top: 0.75rem;
+                top: calc(var(--nav-height) + 0.75rem);
                 left: 0.75rem;
             }
             
             /* Ajuste para crear espacio y evitar sobreposición */
             .main-content-filament {
                 margin-left: 0 !important;
-                padding-top: 3.5rem; /* Espacio para no solapar con el botón */
             }
             
             /* Cuando el sidebar está cerrado en móvil */
@@ -137,7 +139,7 @@ if (!isset($_SESSION['id_rol'])) {
         .sidebar-overlay {
             display: none;
             position: fixed;
-            z-index: 30;
+            z-index: 15; /* Por debajo del sidebar y botón */
             top: 0;
             left: 0;
             width: 100vw;
@@ -146,6 +148,8 @@ if (!isset($_SESSION['id_rol'])) {
             backdrop-filter: blur(2px);
             transition: opacity 0.3s;
             opacity: 0;
+            /* Aseguramos que empiece debajo del nav */
+            margin-top: var(--nav-height);
         }
 
         .sidebar-overlay.active {
@@ -201,7 +205,7 @@ if (!isset($_SESSION['id_rol'])) {
 
     <div class="flex min-h-screen">
         <!-- Sidebar tipo Filament -->
-        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0" style="padding-top: 50px;">
+        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0">
             <div class="flex items-center border-b border-gray-200 relative h-16">
                 <span class="text-xl font-bold text-blue-700 mx-auto">Panel de Control</span>
             </div>
@@ -235,6 +239,17 @@ if (!isset($_SESSION['id_rol'])) {
         </main>
     </div>
     <script>
+        // Configurar la altura del nav para los estilos
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intentar obtener la altura real del nav
+            const navElement = document.querySelector('nav'); // Ajusta este selector según tu estructura
+            if (navElement) {
+                const navHeight = navElement.offsetHeight;
+                document.documentElement.style.setProperty('--nav-height', navHeight + 'px');
+            }
+            // Si no se puede detectar automáticamente, mantener el valor por defecto en CSS
+        });
+    
         // Sidebar navegación
         const dashboardView = document.getElementById('dashboardView');
         const graficasView = document.getElementById('graficasView');
