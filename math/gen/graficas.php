@@ -18,15 +18,16 @@ class graficas extends Conexion{
         '09' => 'SST',
         '10' => 'Administradivos / Victimas',
         '11' => 'Victimas',
-        '20' => 'Administrativo',
         '14' => 'ENI',
         '18' => 'FIC',
+        '20' => 'Administrativo',
         '24' => 'Construciones',
         '27' => 'Actualización',
         '28' => 'ECCL',
         '34' => 'Produccion Centros',
         '38' => 'Campesena',
         '42' => 'Bienestar Aprendiz',
+        '43' => 'Bienestar Empleados',
         '44' => 'Apoyos Sostenible',
         '45' => 'Regular',
         '69' => 'Tecnoparque',
@@ -127,8 +128,8 @@ class graficas extends Conexion{
                     'saldo_por_utilizar' => 0
                 ];
             }
-            $agrupados[$codigo]['valor_actual'] += floatval($fila['Valor_Actual']);
-            $agrupados[$codigo]['saldo_por_utilizar'] += floatval($fila['Saldo_por_Utilizar']);
+            $agrupados[$codigo]['valor_actual'] += is_numeric($fila['Valor_Actual']) ? floatval($fila['Valor_Actual']) : 0;
+            $agrupados[$codigo]['saldo_por_utilizar'] += is_numeric($fila['Saldo_por_Utilizar']) ? floatval($fila['Saldo_por_Utilizar']) : 0;
         }
 
         $datos = [];
@@ -163,7 +164,7 @@ class graficas extends Conexion{
             if (!isset($crpAgrupados[$codigo])) {
                 $crpAgrupados[$codigo] = 0;
             }
-            $crpAgrupados[$codigo] += floatval($fila['Valor_Actual']);
+            $crpAgrupados[$codigo] += is_numeric($fila['Valor_Actual']) ? floatval($fila['Valor_Actual']) : 0;
         }
 
         // OP
@@ -182,7 +183,7 @@ class graficas extends Conexion{
             if (!isset($opAgrupados[$codigo])) {
                 $opAgrupados[$codigo] = 0;
             }
-            $opAgrupados[$codigo] += floatval($fila['Valor_Neto']);
+            $opAgrupados[$codigo] += is_numeric($fila['Valor_Neto']) ? floatval($fila['Valor_Neto']) : 0;
         }
 
         // Unir y calcular

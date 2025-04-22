@@ -70,7 +70,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                     <th>Dependencia</th>
                     <th>Valor Actual</th>
                     <th>Saldo por Comprometer</th>
-                    <th>Valor Consumido</th>
+                    <th>Valor Comprometido</th>
                 </tr>
             </thead>
             <tbody>
@@ -203,9 +203,9 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                     backgroundColor: 'rgba(255, 206, 86, 0.5)'
                 },
                 {
-                    label: 'Valor Consumido',
+                    label: 'Valor Comprometido',
                     data: valorConsumido,
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)'
+                    backgroundColor: 'rgba(255, 114, 79, 0.56)'
                 }
             ]
         },
