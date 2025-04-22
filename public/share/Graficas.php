@@ -274,7 +274,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 {
                     label: 'Saldo Utilizado',
                     data: saldoUtilizado,
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)'
+                    backgroundColor: 'rgba(255, 114, 79, 0.56)'
                 }
             ]
         },
@@ -307,7 +307,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 {
                     label: 'Total Pagado (OP)',
                     data: sumaOP,
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)'
+                    backgroundColor: 'rgba(255, 114, 79, 0.56)'
                 },
                 {
                     label: 'Valor Restante',
@@ -384,11 +384,27 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 canvas.id = containerId + '_pie_' + idx;
                 card.appendChild(canvas);
 
-                container.appendChild(card);
-
-                // Datos para la torta
+                // Porcentajes
                 const dataObj = datos.find(d => String(d.codigo_dependencia) === String(t.codigo));
                 const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
+                const total = dataPie.reduce((a, b) => a + b, 0);
+                let porcentajes = [];
+                if (total > 0) {
+                    porcentajes = dataPie.map(v => ((v / total) * 100).toFixed(1) + '%');
+                } else {
+                    porcentajes = dataPie.map(() => '0%');
+                }
+
+                // Info de porcentajes debajo de la torta
+                const infoDiv = document.createElement('div');
+                infoDiv.style.fontSize = '0.95em';
+                infoDiv.style.marginTop = '8px';
+                infoDiv.innerHTML = labelsPie.map((l, i) =>
+                    `<span style="color:${coloresPie[i]};font-weight:bold;">${l}:</span> ${porcentajes[i]}`
+                ).join('<br>');
+                card.appendChild(infoDiv);
+
+                container.appendChild(card);
 
                 // Chart.js
                 charts.push(new Chart(canvas.getContext('2d'), {
@@ -400,7 +416,21 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                             backgroundColor: coloresPie
                         }]
                     },
-                    options: { responsive: true }
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.label || '';
+                                        const value = context.parsed || 0;
+                                        const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                        return `${label}: ${value.toLocaleString()} (${percent}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }));
             });
 
