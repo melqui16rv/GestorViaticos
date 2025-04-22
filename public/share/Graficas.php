@@ -57,6 +57,55 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             width: 100%;
             height: 400px;
         }
+        .tortas-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .torta-card {
+            flex: 1 1 250px;
+            min-width: 250px;
+            max-width: 300px;
+            text-align: center;
+            background: #fafafa;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            padding: 10px 10px 20px 10px;
+            position: relative;
+        }
+        .torta-card select {
+            margin-bottom: 10px;
+            width: 90%;
+            padding: 4px;
+        }
+        .torta-card .remove-torta {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            background: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            font-size: 15px;
+            line-height: 20px;
+        }
+        .add-torta-btn {
+            margin: 10px 0 30px 0;
+            padding: 7px 18px;
+            background: #4a6fa5;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .add-torta-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
@@ -90,16 +139,10 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             <canvas id="graficaCDP"></canvas>
         </div>
 
-        <!-- Gráficas de torta por dependencia (CDP) -->
+        <!-- Tortas dinámicas para CDP -->
         <h3>Detalle por Dependencia (CDP)</h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-            <?php foreach ($datosCDP as $i => $fila): ?>
-                <div style="flex: 1 1 250px; min-width: 250px; max-width: 300px; text-align: center;">
-                    <strong><?php echo htmlspecialchars($fila['nombre_dependencia']); ?> (<?php echo htmlspecialchars($fila['codigo_dependencia']); ?>)</strong>
-                    <canvas id="tortaCDP_<?php echo $i; ?>"></canvas>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <button class="add-torta-btn" id="addTortaCDP">Agregar gráfica de torta</button>
+        <div class="tortas-container" id="tortasCDP"></div>
 
         <!-- Segunda gráfica: CRP -->
         <h2>Utilización por Dependencia (CRP)</h2>
@@ -129,16 +172,10 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             <canvas id="graficaCRP"></canvas>
         </div>
 
-        <!-- Gráficas de torta por dependencia (CRP) -->
+        <!-- Tortas dinámicas para CRP -->
         <h3>Detalle por Dependencia (CRP)</h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-            <?php foreach ($datosCRP as $i => $fila): ?>
-                <div style="flex: 1 1 250px; min-width: 250px; max-width: 300px; text-align: center;">
-                    <strong><?php echo htmlspecialchars($fila['nombre_dependencia']); ?> (<?php echo htmlspecialchars($fila['codigo_dependencia']); ?>)</strong>
-                    <canvas id="tortaCRP_<?php echo $i; ?>"></canvas>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <button class="add-torta-btn" id="addTortaCRP">Agregar gráfica de torta</button>
+        <div class="tortas-container" id="tortasCRP"></div>
 
         <!-- Tercera gráfica: OP -->
         <h2>Pagos por Dependencia (OP)</h2>
@@ -168,16 +205,10 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             <canvas id="graficaOP"></canvas>
         </div>
 
-        <!-- Gráficas de torta por dependencia (OP) -->
+        <!-- Tortas dinámicas para OP -->
         <h3>Detalle por Dependencia (OP)</h3>
-        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-            <?php foreach ($datosOP as $i => $fila): ?>
-                <div style="flex: 1 1 250px; min-width: 250px; max-width: 300px; text-align: center;">
-                    <strong><?php echo htmlspecialchars($fila['nombre_dependencia']); ?> (<?php echo htmlspecialchars($fila['codigo_dependencia']); ?>)</strong>
-                    <canvas id="tortaOP_<?php echo $i; ?>"></canvas>
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <button class="add-torta-btn" id="addTortaOP">Agregar gráfica de torta</button>
+        <div class="tortas-container" id="tortasOP"></div>
     </div>
     <script>
     const datosCDP = <?php echo json_encode($datosCDP); ?>;
@@ -217,29 +248,6 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         }
     });
 
-    // Gráficas de torta por dependencia (CDP)
-    <?php foreach ($datosCDP as $i => $fila): ?>
-    new Chart(document.getElementById('tortaCDP_<?php echo $i; ?>').getContext('2d'), {
-        type: 'pie',
-        data: {
-            labels: ['Saldo por Comprometer', 'Valor Consumido'],
-            datasets: [{
-                data: [
-                    <?php echo $fila['saldo_por_comprometer']; ?>,
-                    <?php echo $fila['valor_consumido']; ?>
-                ],
-                backgroundColor: [
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)'
-                ]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-    <?php endforeach; ?>
-
     // Segunda gráfica: CRP
     const datosCRP = <?php echo json_encode($datosCRP); ?>;
     const labelsCRP = datosCRP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
@@ -277,29 +285,6 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             }
         }
     });
-
-    // Gráficas de torta por dependencia (CRP)
-    <?php foreach ($datosCRP as $i => $fila): ?>
-    new Chart(document.getElementById('tortaCRP_<?php echo $i; ?>').getContext('2d'), {
-        type: 'pie',
-        data: {
-            labels: ['Saldo por Utilizar', 'Saldo Utilizado'],
-            datasets: [{
-                data: [
-                    <?php echo $fila['saldo_por_utilizar']; ?>,
-                    <?php echo $fila['saldo_utilizado']; ?>
-                ],
-                backgroundColor: [
-                    'rgba(255, 206, 86, 0.7)',
-                    'rgba(75, 192, 192, 0.7)'
-                ]
-            }]
-        },
-        options: {
-            responsive: true
-        }
-    });
-    <?php endforeach; ?>
 
     // Tercera gráfica: OP
     const datosOP = <?php echo json_encode($datosOP); ?>;
@@ -339,28 +324,131 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         }
     });
 
-    // Gráficas de torta por dependencia (OP)
-    <?php foreach ($datosOP as $i => $fila): ?>
-    new Chart(document.getElementById('tortaOP_<?php echo $i; ?>').getContext('2d'), {
-        type: 'pie',
-        data: {
-            labels: ['Total Pagado (OP)', 'Valor Restante'],
-            datasets: [{
-                data: [
-                    <?php echo $fila['suma_op']; ?>,
-                    <?php echo $fila['valor_restante']; ?>
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)',
-                    'rgba(255, 206, 86, 0.7)'
-                ]
-            }]
-        },
-        options: {
-            responsive: true
+    // Utilidad para tortas dinámicas
+    function crearTorta(containerId, datos, labelsPie, camposPie, coloresPie, maxTortas = 2) {
+        const container = document.getElementById(containerId);
+        let tortas = [];
+        let charts = [];
+
+        // Opciones para el select
+        const opciones = datos.map((d, i) => ({
+            value: d.codigo_dependencia,
+            label: d.nombre_dependencia + ' (' + d.codigo_dependencia + ')',
+            index: i
+        }));
+
+        function render() {
+            container.innerHTML = '';
+            charts.forEach(c => c.destroy());
+            charts = [];
+            tortas.forEach((t, idx) => {
+                // Card
+                const card = document.createElement('div');
+                card.className = 'torta-card';
+
+                // Select
+                const select = document.createElement('select');
+                opciones.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt.value;
+                    option.textContent = opt.label;
+                    select.appendChild(option);
+                });
+                select.value = t.codigo;
+                select.onchange = function() {
+                    tortas[idx].codigo = this.value;
+                    render();
+                };
+                card.appendChild(select);
+
+                // Remove button
+                if (tortas.length > 1) {
+                    const btn = document.createElement('button');
+                    btn.className = 'remove-torta';
+                    btn.innerHTML = '&times;';
+                    btn.onclick = function() {
+                        tortas.splice(idx, 1);
+                        render();
+                    };
+                    card.appendChild(btn);
+                }
+
+                // Título
+                const nombre = opciones.find(o => o.value === t.codigo)?.label || '';
+                const title = document.createElement('div');
+                title.innerHTML = `<strong>${nombre}</strong>`;
+                card.appendChild(title);
+
+                // Canvas
+                const canvas = document.createElement('canvas');
+                canvas.id = containerId + '_pie_' + idx;
+                card.appendChild(canvas);
+
+                container.appendChild(card);
+
+                // Datos para la torta
+                const dataObj = datos.find(d => d.codigo_dependencia === t.codigo);
+                const dataPie = camposPie.map(c => dataObj ? dataObj[c] : 0);
+
+                // Chart.js
+                charts.push(new Chart(canvas.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: labelsPie,
+                        datasets: [{
+                            data: dataPie,
+                            backgroundColor: coloresPie
+                        }]
+                    },
+                    options: { responsive: true }
+                }));
+            });
+
+            // Botón de agregar
+            const addBtn = document.getElementById('addTorta' + containerId.replace('tortas', ''));
+            addBtn.disabled = tortas.length >= opciones.length;
         }
-    });
-    <?php endforeach; ?>
+
+        // Inicializar con dos tortas diferentes si hay suficientes dependencias
+        tortas = opciones.slice(0, Math.min(maxTortas, opciones.length)).map(opt => ({ codigo: opt.value }));
+        render();
+
+        // Botón agregar
+        document.getElementById('addTorta' + containerId.replace('tortas', '')).onclick = function() {
+            // Buscar la primera dependencia no usada
+            const usados = tortas.map(t => t.codigo);
+            const siguiente = opciones.find(o => !usados.includes(o.value));
+            if (siguiente) {
+                tortas.push({ codigo: siguiente.value });
+                render();
+            }
+        };
+    }
+
+    // CDP
+    crearTorta(
+        'tortasCDP',
+        <?php echo json_encode($datosCDP); ?>,
+        ['Saldo por Comprometer', 'Valor Comprometido'],
+        ['saldo_por_comprometer', 'valor_consumido'],
+        ['rgba(255, 206, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
+    );
+    // CRP
+    crearTorta(
+        'tortasCRP',
+        <?php echo json_encode($datosCRP); ?>,
+        ['Saldo por Utilizar', 'Saldo Utilizado'],
+        ['saldo_por_utilizar', 'saldo_utilizado'],
+        ['rgba(255, 206, 86, 0.7)', 'rgba(75, 192, 192, 0.7)']
+    );
+    // OP
+    crearTorta(
+        'tortasOP',
+        <?php echo json_encode($datosOP); ?>,
+        ['Total Pagado (OP)', 'Valor Restante'],
+        ['suma_op', 'valor_restante'],
+        ['rgba(255, 99, 132, 0.7)', 'rgba(255, 206, 86, 0.7)']
+    );
     </script>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
