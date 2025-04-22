@@ -666,7 +666,17 @@ a:focus, button:focus {
 .navbar:has(.menu-principal a:hover) {
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
 }
-        
+/* Firefox */
+body {
+  scrollbar-width: none; /* Oculta la barra en Firefox */
+  -ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
+}
+
+/* WebKit (Chrome, Safari, Edge moderno, Opera) */
+body::-webkit-scrollbar {
+  display: none; /* Oculta la barra en navegadores WebKit */
+}
+
     </style>
 </head>
 <body>
