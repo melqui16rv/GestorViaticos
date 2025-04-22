@@ -11,29 +11,30 @@ $datosOP = $miGraficas->obtenerGraficaOP();
 
 <div class="container-graficas">
     <h2>Consumo por Dependencia (CDP)</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Dependencia</th>
-                <th>Valor Actual</th>
-                <th>Saldo por Comprometer</th>
-                <th>Valor Comprometido</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($datosCDP as $fila): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
-                <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
-                <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
-                <td><?php echo number_format($fila['saldo_por_comprometer'], 2, ',', '.'); ?></td>
-                <td><?php echo number_format($fila['valor_consumido'], 2, ',', '.'); ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
-
+    <div class="grafica-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Dependencia</th>
+                    <th>Valor Actual</th>
+                    <th>Saldo por Comprometer</th>
+                    <th>Valor Comprometido</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($datosCDP as $fila): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
+                    <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
+                    <td><?php echo number_format($fila['saldo_por_comprometer'], 2, ',', '.'); ?></td>
+                    <td><?php echo number_format($fila['valor_consumido'], 2, ',', '.'); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="chart-wrapper">
         <canvas id="graficaCDP"></canvas>
     </div>
@@ -45,28 +46,30 @@ $datosOP = $miGraficas->obtenerGraficaOP();
 
     <!-- Segunda gráfica: CRP -->
     <h2>Utilización por Dependencia (CRP)</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Dependencia</th>
-                <th>Valor Actual</th>
-                <th>Saldo por Utilizar</th>
-                <th>Saldo Utilizado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($datosCRP as $fila): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
-                <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
-                <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
-                <td><?php echo number_format($fila['saldo_por_utilizar'], 2, ',', '.'); ?></td>
-                <td><?php echo number_format($fila['saldo_utilizado'], 2, ',', '.'); ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="grafica-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Dependencia</th>
+                    <th>Valor Actual</th>
+                    <th>Saldo por Utilizar</th>
+                    <th>Saldo Utilizado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($datosCRP as $fila): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
+                    <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
+                    <td><?php echo number_format($fila['saldo_por_utilizar'], 2, ',', '.'); ?></td>
+                    <td><?php echo number_format($fila['saldo_utilizado'], 2, ',', '.'); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="chart-wrapper">
         <canvas id="graficaCRP"></canvas>
     </div>
@@ -78,28 +81,30 @@ $datosOP = $miGraficas->obtenerGraficaOP();
 
     <!-- Tercera gráfica: OP -->
     <h2>Pagos por Dependencia (OP)</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Código</th>
-                <th>Dependencia</th>
-                <th>Total CRP</th>
-                <th>Total Pagado (OP)</th>
-                <th>Valor Restante</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($datosOP as $fila): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
-                <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
-                <td><?php echo number_format($fila['suma_crp'], 2, ',', '.'); ?></td>
-                <td><?php echo number_format($fila['suma_op'], 2, ',', '.'); ?></td>
-                <td><?php echo number_format($fila['valor_restante'], 2, ',', '.'); ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <div class="grafica-table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Dependencia</th>
+                    <th>Total CRP</th>
+                    <th>Total Pagado (OP)</th>
+                    <th>Valor Restante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($datosOP as $fila): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
+                    <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
+                    <td><?php echo number_format($fila['suma_crp'], 2, ',', '.'); ?></td>
+                    <td><?php echo number_format($fila['suma_op'], 2, ',', '.'); ?></td>
+                    <td><?php echo number_format($fila['valor_restante'], 2, ',', '.'); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
     <div class="chart-wrapper">
         <canvas id="graficaOP"></canvas>
     </div>
