@@ -139,7 +139,7 @@ if (!isset($_SESSION['id_rol'])) {
 
     <div class="flex min-h-screen">
         <!-- Sidebar tipo Filament -->
-        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0" style="padding-top: 23px;">
+        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0" style="padding-top: 50px;">
             <div class="flex items-center border-b border-gray-200 relative h-16">
                 <span class="text-xl font-bold text-blue-700 mx-auto">Panel de Control</span>
             </div>
