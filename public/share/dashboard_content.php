@@ -65,46 +65,50 @@ foreach ($estadisticasPorFecha as $estadistica) {
     </div>
 
     <!-- Resumen de estadísticas -->
-    <div class="stats-summary">
+    <div class="stats-summary" id="statsSummary">
         <?php
         $labels = ['cdp' => 'CDP', 'crp' => 'RP', 'op' => 'OP'];
+        $first = true;
         foreach ($labels as $key => $label) {
-            echo '<div class="stat-box"><h4>Total ' . $label . '</h4><div class="number">' . number_format($totalesRegistros[$key] ?? 0) . '</div></div>';
+            echo '<div class="stat-box stat-selectable'.($first ? ' active' : '').'" data-tipo="'.$key.'"><h4>Total ' . $label . '</h4><div class="number">' . number_format($totalesRegistros[$key] ?? 0) . '</div></div>';
+            $first = false;
         }
         ?>
     </div>
 
-    <!-- Conteo de registros por dependencia: CDP -->
-    <h3 style="margin-top:2em;">Registros por Dependencia (CDP)</h3>
-    <div class="stats-summary">
-        <?php foreach($conteoCDP as $dep): ?>
-        <div class="stat-box">
-            <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
-            <div class="number"><?php echo number_format($dep['total']); ?></div>
+    <!-- Conteo de registros por dependencia: solo uno visible según selección -->
+    <div id="conteoDependenciaCDP" class="conteo-dependencia" style="display:block;">
+        <h3 style="margin-top:2em;">Registros por Dependencia (CDP)</h3>
+        <div class="stats-summary">
+            <?php foreach($conteoCDP as $dep): ?>
+            <div class="stat-box">
+                <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
+                <div class="number"><?php echo number_format($dep['total']); ?></div>
+            </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
     </div>
-
-    <!-- Conteo de registros por dependencia: CRP -->
-    <h3 style="margin-top:2em;">Registros por Dependencia (CRP)</h3>
-    <div class="stats-summary">
-        <?php foreach($conteoCRP as $dep): ?>
-        <div class="stat-box">
-            <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
-            <div class="number"><?php echo number_format($dep['total']); ?></div>
+    <div id="conteoDependenciaCRP" class="conteo-dependencia" style="display:none;">
+        <h3 style="margin-top:2em;">Registros por Dependencia (CRP)</h3>
+        <div class="stats-summary">
+            <?php foreach($conteoCRP as $dep): ?>
+            <div class="stat-box">
+                <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
+                <div class="number"><?php echo number_format($dep['total']); ?></div>
+            </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
     </div>
-
-    <!-- Conteo de registros por dependencia: OP -->
-    <h3 style="margin-top:2em;">Registros por Dependencia (OP)</h3>
-    <div class="stats-summary">
-        <?php foreach($conteoOP as $dep): ?>
-        <div class="stat-box">
-            <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
-            <div class="number"><?php echo number_format($dep['total']); ?></div>
+    <div id="conteoDependenciaOP" class="conteo-dependencia" style="display:none;">
+        <h3 style="margin-top:2em;">Registros por Dependencia (OP)</h3>
+        <div class="stats-summary">
+            <?php foreach($conteoOP as $dep): ?>
+            <div class="stat-box">
+                <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
+                <div class="number"><?php echo number_format($dep['total']); ?></div>
+            </div>
+            <?php endforeach; ?>
         </div>
-        <?php endforeach; ?>
     </div>
 
     <!-- Gráfico de barras -->
@@ -294,5 +298,39 @@ foreach ($estadisticasPorFecha as $estadistica) {
         if (localDashboardView) {
             localDashboardView.style.display = 'block';
         }
+
+        // Selección de tarjetas de resumen
+        const statBoxes = document.querySelectorAll('.stat-selectable');
+        const conteos = {
+            cdp: document.getElementById('conteoDependenciaCDP'),
+            crp: document.getElementById('conteoDependenciaCRP'),
+            op: document.getElementById('conteoDependenciaOP')
+        };
+
+        statBoxes.forEach(box => {
+            box.addEventListener('click', function() {
+                // Quitar clase activa de todas
+                statBoxes.forEach(b => b.classList.remove('active'));
+                // Activar la seleccionada
+                this.classList.add('active');
+                // Mostrar solo el conteo correspondiente
+                Object.keys(conteos).forEach(tipo => {
+                    conteos[tipo].style.display = (tipo === this.dataset.tipo) ? 'block' : 'none';
+                });
+            });
+        });
     });
 </script>
+<style>
+/* ...existing code... */
+.stat-selectable {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.stat-selectable.active {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px #2563eb33;
+    background: #f0f6ff;
+}
+</style>
