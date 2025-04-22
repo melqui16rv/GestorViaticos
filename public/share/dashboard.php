@@ -62,10 +62,10 @@ if (!isset($_SESSION['id_rol'])) {
     <!-- Contenido principal -->
     <main class="flex-1 bg-gray-50 min-h-screen">
         <div id="dashboardView">
-            <?php require __DIR__ . '/dashboard_content.php'; ?>
+            <?php require 'dashboard_content.php'; ?>
         </div>
         <div id="graficasView" style="display:none;">
-            <?php require __DIR__ . '/Graficas.php'; ?>
+            <?php require 'Graficas.php'; ?>
         </div>
     </main>
     <script>
