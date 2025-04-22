@@ -66,18 +66,12 @@ foreach ($estadisticasPorFecha as $estadistica) {
 
     <!-- Resumen de estadísticas -->
     <div class="stats-summary">
-        <div class="stat-box">
-            <h4>Total CDP</h4>
-            <div class="number"><?php echo number_format($totalesRegistros['cdp'] ?? 0); ?></div>
-        </div>
-        <div class="stat-box">
-            <h4>Total RP</h4>
-            <div class="number"><?php echo number_format($totalesRegistros['crp'] ?? 0); ?></div>
-        </div>
-        <div class="stat-box">
-            <h4>Total OP</h4>
-            <div class="number"><?php echo number_format($totalesRegistros['op'] ?? 0); ?></div>
-        </div>
+        <?php
+        $labels = ['cdp' => 'CDP', 'crp' => 'RP', 'op' => 'OP'];
+        foreach ($labels as $key => $label) {
+            echo '<div class="stat-box"><h4>Total ' . $label . '</h4><div class="number">' . number_format($totalesRegistros[$key] ?? 0) . '</div></div>';
+        }
+        ?>
     </div>
 
     <!-- Conteo de registros por dependencia: CDP -->
