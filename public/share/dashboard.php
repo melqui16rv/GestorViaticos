@@ -239,9 +239,11 @@ foreach ($estadisticasPorFecha as $estadistica) {
         </div>
 
         <div class="stats-grid">
-            <?php foreach(['CDP', 'RP', 'OP'] as $tipo): 
+            <?php foreach(['CDP', 'RP', 'OP'] as $tipo): // Cambiado CRP por RP aquí 
                 $ultimaActualizacion = array_filter($actualizaciones, function($a) use ($tipo) {
-                    return $a['tipo_tabla'] === $tipo;
+                    // Si es RP en la vista, buscar CRP en los datos
+                    $searchTipo = ($tipo === 'RP') ? 'CRP' : $tipo;
+                    return $a['tipo_tabla'] === $searchTipo;
                 });
                 $ultima = !empty($ultimaActualizacion) ? reset($ultimaActualizacion) : null;
             ?>
@@ -275,7 +277,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
             <tbody>
                 <?php foreach($actualizaciones as $actualizacion): ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($actualizacion['tipo_tabla']); ?></td>
+                    <td><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
                     <td><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
                     <td><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
                     <td><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
@@ -334,10 +336,10 @@ foreach ($estadisticasPorFecha as $estadistica) {
                 borderColor: 'rgb(255, 99, 132)',
                 tension: 0.1
             }, {
-                label: 'RP',
+                label: 'RP', // Cambiado de CRP a RP
                 data: <?php echo json_encode(array_map(function($fecha) use ($datosGraficoLineas) {
-                    return isset($datosGraficoLineas[$fecha]['RP']) ? 
-                        $datosGraficoLineas[$fecha]['RP']['actualizados'] + $datosGraficoLineas[$fecha]['RP']['nuevos'] : 0;
+                    return isset($datosGraficoLineas[$fecha]['CRP']) ? 
+                        $datosGraficoLineas[$fecha]['CRP']['actualizados'] + $datosGraficoLineas[$fecha]['CRP']['nuevos'] : 0;
                 }, array_keys($datosGraficoLineas))); ?>,
                 borderColor: 'rgb(54, 162, 235)',
                 tension: 0.1
