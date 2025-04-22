@@ -23,6 +23,11 @@ $totalCDP = array_sum(array_column($conteoCDP, 'total'));
 $totalCRP = array_sum(array_column($conteoCRP, 'total'));
 $totalOP  = array_sum(array_column($conteoOP, 'total'));
 
+// Ordenar los conteos por dependencia de mayor a menor
+usort($conteoCDP, function($a, $b) { return $b['total'] <=> $a['total']; });
+usort($conteoCRP, function($a, $b) { return $b['total'] <=> $a['total']; });
+usort($conteoOP,  function($a, $b) { return $b['total'] <=> $a['total']; });
+
 // Procesar fechas del filtro
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : date('Y-m-d');
 $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : date('Y-m-d', strtotime('-30 days'));
