@@ -16,6 +16,7 @@ class graficas extends Conexion{
     // Diccionario de dependencias
     private $dependencias = [
         '09' => 'SST',
+        '10' => 'Administradivos / Victimas',
         '11' => 'Victimas',
         '20' => 'Administrativo',
         '14' => 'ENI',
@@ -64,120 +65,134 @@ class graficas extends Conexion{
         return $resultados;
     }
 
-    // Gráfica 1: CDP - Consumo por dependencia
+    // Gráfica 1: CDP - Consumo por dependencia (agrupando por código)
     public function obtenerGraficaCDP() {
-        $sql = "SELECT Dependencia, 
-                       SUM(Valor_Actual) AS total_valor_actual, 
-                       SUM(Saldo_por_Comprometer) AS total_saldo_por_comprometer
-                FROM cdp
-                GROUP BY Dependencia";
+        $sql = "SELECT Dependencia, Valor_Actual, Saldo_por_Comprometer FROM cdp";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $datos = [];
+        $agrupados = [];
         foreach ($resultados as $fila) {
-            // Extraer código de dependencia
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
             } else {
                 $codigo = 'Otro';
             }
-            $nombre = isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro';
+            if (!isset($agrupados[$codigo])) {
+                $agrupados[$codigo] = [
+                    'codigo_dependencia' => $codigo,
+                    'nombre_dependencia' => isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro',
+                    'valor_actual' => 0,
+                    'saldo_por_comprometer' => 0
+                ];
+            }
+            $agrupados[$codigo]['valor_actual'] += floatval($fila['Valor_Actual']);
+            $agrupados[$codigo]['saldo_por_comprometer'] += floatval($fila['Saldo_por_Comprometer']);
+        }
 
-            $valor_actual = floatval($fila['total_valor_actual']);
-            $saldo_por_comprometer = floatval($fila['total_saldo_por_comprometer']);
-            $valor_consumido = $valor_actual - $saldo_por_comprometer;
-
+        $datos = [];
+        foreach ($agrupados as $codigo => $info) {
+            $valor_consumido = $info['valor_actual'] - $info['saldo_por_comprometer'];
             $datos[] = [
                 'codigo_dependencia' => $codigo,
-                'nombre_dependencia' => $nombre,
-                'valor_actual' => $valor_actual,
-                'saldo_por_comprometer' => $saldo_por_comprometer,
+                'nombre_dependencia' => $info['nombre_dependencia'],
+                'valor_actual' => $info['valor_actual'],
+                'saldo_por_comprometer' => $info['saldo_por_comprometer'],
                 'valor_consumido' => $valor_consumido
             ];
         }
         return $datos;
     }
 
-    // Gráfica 2: CRP - Utilización por dependencia
+    // Gráfica 2: CRP - Utilización por dependencia (agrupando por código)
     public function obtenerGraficaCRP() {
-        $sql = "SELECT Dependencia, 
-                       SUM(Valor_Actual) AS total_valor_actual, 
-                       SUM(Saldo_por_Utilizar) AS total_saldo_por_utilizar
-                FROM crp
-                GROUP BY Dependencia";
+        $sql = "SELECT Dependencia, Valor_Actual, Saldo_por_Utilizar FROM crp";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        $datos = [];
+        $agrupados = [];
         foreach ($resultados as $fila) {
-            // Extraer código de dependencia
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
             } else {
                 $codigo = 'Otro';
             }
-            $nombre = isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro';
+            if (!isset($agrupados[$codigo])) {
+                $agrupados[$codigo] = [
+                    'codigo_dependencia' => $codigo,
+                    'nombre_dependencia' => isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro',
+                    'valor_actual' => 0,
+                    'saldo_por_utilizar' => 0
+                ];
+            }
+            $agrupados[$codigo]['valor_actual'] += floatval($fila['Valor_Actual']);
+            $agrupados[$codigo]['saldo_por_utilizar'] += floatval($fila['Saldo_por_Utilizar']);
+        }
 
-            $valor_actual = floatval($fila['total_valor_actual']);
-            $saldo_por_utilizar = floatval($fila['total_saldo_por_utilizar']);
-            $saldo_utilizado = $valor_actual - $saldo_por_utilizar;
-
+        $datos = [];
+        foreach ($agrupados as $codigo => $info) {
+            $saldo_utilizado = $info['valor_actual'] - $info['saldo_por_utilizar'];
             $datos[] = [
                 'codigo_dependencia' => $codigo,
-                'nombre_dependencia' => $nombre,
-                'valor_actual' => $valor_actual,
-                'saldo_por_utilizar' => $saldo_por_utilizar,
+                'nombre_dependencia' => $info['nombre_dependencia'],
+                'valor_actual' => $info['valor_actual'],
+                'saldo_por_utilizar' => $info['saldo_por_utilizar'],
                 'saldo_utilizado' => $saldo_utilizado
             ];
         }
         return $datos;
     }
 
-    // Gráfica 3: OP - Pagos por dependencia
+    // Gráfica 3: OP - Pagos por dependencia (agrupando por código)
     public function obtenerGraficaOP() {
-        // Sumar Valor_Actual de CRP por dependencia
-        $sqlCRP = "SELECT Dependencia, SUM(Valor_Actual) AS suma_crp
-                   FROM crp
-                   GROUP BY Dependencia";
+        // CRP
+        $sqlCRP = "SELECT Dependencia, Valor_Actual FROM crp";
         $stmtCRP = $this->conexion->prepare($sqlCRP);
         $stmtCRP->execute();
         $crpData = $stmtCRP->fetchAll(PDO::FETCH_ASSOC);
 
-        // Sumar Valor_Neto de OP por dependencia
-        $sqlOP = "SELECT Dependencia, SUM(Valor_Neto) AS suma_op
-                  FROM op
-                  GROUP BY Dependencia";
-        $stmtOP = $this->conexion->prepare($sqlOP);
-        $stmtOP->execute();
-        $opData = $stmtOP->fetchAll(PDO::FETCH_ASSOC);
-
-        // Indexar OP por código de dependencia
-        $opPorDependencia = [];
-        foreach ($opData as $fila) {
-            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
-                $codigo = $matches[1];
-            } else {
-                $codigo = 'Otro';
-            }
-            $opPorDependencia[$codigo] = floatval($fila['suma_op']);
-        }
-
-        $datos = [];
+        $crpAgrupados = [];
         foreach ($crpData as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
             } else {
                 $codigo = 'Otro';
             }
-            $nombre = isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro';
+            if (!isset($crpAgrupados[$codigo])) {
+                $crpAgrupados[$codigo] = 0;
+            }
+            $crpAgrupados[$codigo] += floatval($fila['Valor_Actual']);
+        }
 
-            $suma_crp = floatval($fila['suma_crp']);
-            $suma_op = isset($opPorDependencia[$codigo]) ? $opPorDependencia[$codigo] : 0;
+        // OP
+        $sqlOP = "SELECT Dependencia, Valor_Neto FROM op";
+        $stmtOP = $this->conexion->prepare($sqlOP);
+        $stmtOP->execute();
+        $opData = $stmtOP->fetchAll(PDO::FETCH_ASSOC);
+
+        $opAgrupados = [];
+        foreach ($opData as $fila) {
+            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
+                $codigo = $matches[1];
+            } else {
+                $codigo = 'Otro';
+            }
+            if (!isset($opAgrupados[$codigo])) {
+                $opAgrupados[$codigo] = 0;
+            }
+            $opAgrupados[$codigo] += floatval($fila['Valor_Neto']);
+        }
+
+        // Unir y calcular
+        $codigos = array_unique(array_merge(array_keys($crpAgrupados), array_keys($opAgrupados)));
+        $datos = [];
+        foreach ($codigos as $codigo) {
+            $suma_crp = isset($crpAgrupados[$codigo]) ? $crpAgrupados[$codigo] : 0;
+            $suma_op = isset($opAgrupados[$codigo]) ? $opAgrupados[$codigo] : 0;
             $valor_restante = $suma_crp - $suma_op;
-
+            $nombre = isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro';
             $datos[] = [
                 'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $nombre,
