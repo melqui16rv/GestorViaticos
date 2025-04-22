@@ -33,7 +33,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
 }
 
 ?>
-<div class="dashboard-container">    
+<div class="dashboard-container" id="dashboardContent">    
     <!-- Filtros de fecha -->
     <div class="filtros-container">
         <form class="filtros-form" id="filtrosFecha">
@@ -124,7 +124,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
                     <td><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
                     <td><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
                     <td><?php echo $actualizacion['registros_nuevos']; ?></td>
-                    <td><?php echo $actualizacion['registros_actualizados']); ?></td>
+                    <td><?php echo $actualizacion['registros_actualizados']; ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -242,6 +242,13 @@ foreach ($estadisticasPorFecha as $estadistica) {
         function actualizarGraficos() {
             // ... existing chart code ...
             // Los gráficos se actualizarán automáticamente al recargar la página
+        }
+
+        // Forzar visibilidad si se carga directamente o el JS principal falla
+        var parentDashboardView = window.parent && window.parent.document.getElementById('dashboardView');
+        var localDashboardView = document.getElementById('dashboardView');
+        if (localDashboardView) {
+            localDashboardView.style.display = 'block';
         }
     });
 </script>
