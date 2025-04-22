@@ -470,7 +470,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosCDP); ?>,
         ['Saldo por Comprometer', 'Valor Comprometido'],
         ['saldo_por_comprometer', 'valor_consumido'],
-        ['rgba(255, 193, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
+        ['rgba(255, 185, 65, 0.88)', 'rgba(255, 114, 79, 0.56)']
     );
     // CRP
     crearTorta(
