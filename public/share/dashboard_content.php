@@ -39,257 +39,106 @@ foreach ($estadisticasPorFecha as $estadistica) {
 }
 
 ?>
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Actualizaciones</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        .dashboard-container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .stat-card h3 {
-            margin: 0 0 10px 0;
-            color: #333;
-            font-size: 1.2em;
-        }
-
-        .last-update {
-            color: #666;
-            font-size: 0.9em;
-        }
-
-        .updates-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        .updates-table th,
-        .updates-table td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .updates-table th {
-            background-color: #f5f5f5;
-            font-weight: 600;
-        }
-
-        .updates-table tr:hover {
-            background-color: #f9f9f9;
-        }
-
-        .chart-container {
-            position: relative;
-            margin: 20px 0;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .chart-wrapper {
-            height: 400px;
-        }
-
-        .stats-summary {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .stat-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-
-        .stat-box h4 {
-            margin: 0;
-            color: #666;
-        }
-
-        .stat-box .number {
-            font-size: 2em;
-            font-weight: bold;
-            color: #333;
-        }
-
-        .filtros-container {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .filtros-form {
-            display: flex;
-            gap: 15px;
-            align-items: flex-end;
-        }
-
-        .filtro-grupo {
-            flex: 1;
-        }
-
-        .filtro-grupo label {
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
-        }
-
-        .filtro-grupo input[type="date"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-
-        .btn-filtrar {
-            padding: 8px 20px;
-            background-color: #4a6fa5;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .btn-filtrar:hover {
-            background-color: #3a5982;
-        }
-    </style>
-</head>
-<body>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
-
-    <div class="dashboard-container">
-        <h1>Dashboard de Actualizaciones</h1>
-        
-        <!-- Filtros de fecha -->
-        <div class="filtros-container">
-            <form class="filtros-form" id="filtrosFecha">
-                <div class="filtro-grupo">
-                    <label for="fecha_inicio">Fecha Inicio:</label>
-                    <input type="date" id="fecha_inicio" name="fecha_inicio" 
-                           value="<?php echo $fecha_inicio; ?>" 
-                           max="<?php echo date('Y-m-d'); ?>">
-                </div>
-                <div class="filtro-grupo">
-                    <label for="fecha_fin">Fecha Fin:</label>
-                    <input type="date" id="fecha_fin" name="fecha_fin" 
-                           value="<?php echo $fecha_fin; ?>" 
-                           max="<?php echo date('Y-m-d'); ?>">
-                </div>
-                <button type="submit" class="btn-filtrar">Filtrar</button>
-            </form>
-        </div>
-
-        <!-- Resumen de estadísticas -->
-        <div class="stats-summary">
-            <?php foreach($totalesRegistros as $tabla => $total): ?>
-            <div class="stat-box">
-                <h4>Total <?php echo strtoupper($tabla === 'crp' ? 'RP' : $tabla); ?></h4>
-                <div class="number"><?php echo number_format($total); ?></div>
+<div class="dashboard-container">
+    <h1>Dashboard de Actualizaciones</h1>
+    
+    <!-- Filtros de fecha -->
+    <div class="filtros-container">
+        <form class="filtros-form" id="filtrosFecha">
+            <div class="filtro-grupo">
+                <label for="fecha_inicio">Fecha Inicio:</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio" 
+                       value="<?php echo $fecha_inicio; ?>" 
+                       max="<?php echo date('Y-m-d'); ?>">
             </div>
-            <?php endforeach; ?>
-        </div>
-
-        <!-- Gráfico de barras -->
-        <div class="chart-container">
-            <h2>Registros por Tipo de Tabla</h2>
-            <div class="chart-wrapper">
-                <canvas id="registrosChart"></canvas>
+            <div class="filtro-grupo">
+                <label for="fecha_fin">Fecha Fin:</label>
+                <input type="date" id="fecha_fin" name="fecha_fin" 
+                       value="<?php echo $fecha_fin; ?>" 
+                       max="<?php echo date('Y-m-d'); ?>">
             </div>
-        </div>
-
-        <!-- Gráfico de líneas -->
-        <div class="chart-container">
-            <h2>Actividad en los Últimos 30 Días</h2>
-            <div class="chart-wrapper">
-                <canvas id="actividadChart"></canvas>
-            </div>
-        </div>
-
-        <div class="stats-grid">
-            <?php foreach(['CDP', 'RP', 'OP'] as $tipo): // Cambiado CRP por RP aquí 
-                $ultimaActualizacion = array_filter($actualizaciones, function($a) use ($tipo) {
-                    // Si es RP en la vista, buscar CRP en los datos
-                    $searchTipo = ($tipo === 'RP') ? 'CRP' : $tipo;
-                    return $a['tipo_tabla'] === $searchTipo;
-                });
-                $ultima = !empty($ultimaActualizacion) ? reset($ultimaActualizacion) : null;
-            ?>
-            <div class="stat-card">
-                <h3>Tabla <?php echo $tipo; ?></h3>
-                <?php if ($ultima): ?>
-                    <p class="last-update">
-                        Última actualización: <?php echo date('d/m/Y H:i', strtotime($ultima['fecha_actualizacion'])); ?>
-                    </p>
-                    <p>Registros nuevos: <?php echo $ultima['registros_nuevos']; ?></p>
-                    <p>Registros actualizados: <?php echo $ultima['registros_actualizados']; ?></p>
-                <?php else: ?>
-                    <p>No hay actualizaciones registradas</p>
-                <?php endif; ?>
-            </div>
-            <?php endforeach; ?>
-        </div>
-
-        <h2>Historial de Actualizaciones</h2>
-        <table class="updates-table">
-            <thead>
-                <tr>
-                    <th>Tabla</th>
-                    <th>Archivo</th>
-                    <th>Fecha</th>
-                    <th>Usuario</th>
-                    <th>Registros Nuevos</th>
-                    <th>Registros Actualizados</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($actualizaciones as $actualizacion): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
-                    <td><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
-                    <td><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
-                    <td><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
-                    <td><?php echo $actualizacion['registros_nuevos']; ?></td>
-                    <td><?php echo $actualizacion['registros_actualizados']; ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+            <button type="submit" class="btn-filtrar">Filtrar</button>
+        </form>
     </div>
 
-    <script>
+    <!-- Resumen de estadísticas -->
+    <div class="stats-summary">
+        <?php foreach($totalesRegistros as $tabla => $total): ?>
+        <div class="stat-box">
+            <h4>Total <?php echo strtoupper($tabla === 'crp' ? 'RP' : $tabla); ?></h4>
+            <div class="number"><?php echo number_format($total); ?></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Gráfico de barras -->
+    <div class="chart-container">
+        <h2>Registros por Tipo de Tabla</h2>
+        <div class="chart-wrapper">
+            <canvas id="registrosChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Gráfico de líneas -->
+    <div class="chart-container">
+        <h2>Actividad en los Últimos 30 Días</h2>
+        <div class="chart-wrapper">
+            <canvas id="actividadChart"></canvas>
+        </div>
+    </div>
+
+    <div class="stats-grid">
+        <?php foreach(['CDP', 'RP', 'OP'] as $tipo): // Cambiado CRP por RP aquí 
+            $ultimaActualizacion = array_filter($actualizaciones, function($a) use ($tipo) {
+                // Si es RP en la vista, buscar CRP en los datos
+                $searchTipo = ($tipo === 'RP') ? 'CRP' : $tipo;
+                return $a['tipo_tabla'] === $searchTipo;
+            });
+            $ultima = !empty($ultimaActualizacion) ? reset($ultimaActualizacion) : null;
+        ?>
+        <div class="stat-card">
+            <h3>Tabla <?php echo $tipo; ?></h3>
+            <?php if ($ultima): ?>
+                <p class="last-update">
+                    Última actualización: <?php echo date('d/m/Y H:i', strtotime($ultima['fecha_actualizacion'])); ?>
+                </p>
+                <p>Registros nuevos: <?php echo $ultima['registros_nuevos']; ?></p>
+                <p>Registros actualizados: <?php echo $ultima['registros_actualizados']; ?></p>
+            <?php else: ?>
+                <p>No hay actualizaciones registradas</p>
+            <?php endif; ?>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <h2>Historial de Actualizaciones</h2>
+    <table class="updates-table">
+        <thead>
+            <tr>
+                <th>Tabla</th>
+                <th>Archivo</th>
+                <th>Fecha</th>
+                <th>Usuario</th>
+                <th>Registros Nuevos</th>
+                <th>Registros Actualizados</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($actualizaciones as $actualizacion): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($actualizacion['tipo_tabla'] === 'CRP' ? 'RP' : $actualizacion['tipo_tabla']); ?></td>
+                <td><?php echo htmlspecialchars($actualizacion['nombre_archivo']); ?></td>
+                <td><?php echo date('d/m/Y H:i', strtotime($actualizacion['fecha_actualizacion'])); ?></td>
+                <td><?php echo htmlspecialchars($actualizacion['usuario']); ?></td>
+                <td><?php echo $actualizacion['registros_nuevos']; ?></td>
+                <td><?php echo $actualizacion['registros_actualizados']; ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
     // Gráfico de barras
     const ctxBarras = document.getElementById('registrosChart').getContext('2d');
     new Chart(ctxBarras, {
@@ -401,8 +250,4 @@ foreach ($estadisticasPorFecha as $estadistica) {
             // Los gráficos se actualizarán automáticamente al recargar la página
         }
     });
-    </script>
-
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
-</body>
-</html>
+</script>

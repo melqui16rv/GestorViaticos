@@ -3,41 +3,11 @@ session_start();
 ob_start();
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
 
-if (isset($_SESSION['id_rol'])) {
-    $rol = $_SESSION['id_rol'];
-} else {
-    header("Location: " . "includes/session/login.php");
+if (!isset($_SESSION['id_rol'])) {
+    header("Location: includes/session/login.php");
     exit;
 }
-
-$miClase = new user();
-$estadisticas = $miClase->obtenerEstadisticasActualizaciones();
-$estadisticasUsuarios = $miClase->obtenerEstadisticasPorUsuario();
-$totalesRegistros = $miClase->obtenerTotalRegistros();
-$actualizaciones = $miClase->obtenerUltimasActualizaciones(); // Cambiado para usar el método de la clase
-
-// Procesar fechas del filtro
-$fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : date('Y-m-d');
-$fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : date('Y-m-d', strtotime('-30 days'));
-$estadisticasPorFecha = $miClase->obtenerEstadisticasPorFecha($fecha_inicio, $fecha_fin);
-
-// Preparar datos para los gráficos
-$datosGraficoBarras = [
-    'labels' => array_column($estadisticas, 'tipo_tabla'),
-    'actualizados' => array_column($estadisticas, 'total_registros_actualizados'),
-    'nuevos' => array_column($estadisticas, 'total_registros_nuevos')
-];
-
-$datosGraficoLineas = [];
-foreach ($estadisticasPorFecha as $estadistica) {
-    $datosGraficoLineas[$estadistica['fecha']][$estadistica['tipo_tabla']] = [
-        'actualizados' => $estadistica['actualizados'],
-        'nuevos' => $estadistica['nuevos']
-    ];
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -49,8 +19,9 @@ foreach ($estadisticasPorFecha as $estadistica) {
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Heroicons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Estilos personalizados -->
+    <link rel="stylesheet" href="/assets/css/share/dashboard.css">
+    <link rel="stylesheet" href="/assets/css/share/grafica.css">
     <style>
         body { background: #f3f4f6; }
         .sidebar-link.active, .sidebar-link:hover {
@@ -61,10 +32,9 @@ foreach ($estadisticasPorFecha as $estadistica) {
             transition: background 0.2s, color 0.2s;
         }
     </style>
-    <!-- Puedes agregar aquí tus propios estilos si lo deseas -->
-    <link rel="stylesheet" href="/assets/css/share/dashboard.css">
 </head>
 <body class="flex min-h-screen">
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
     <!-- Sidebar tipo Filament -->
     <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
         <div class="h-16 flex items-center justify-center border-b border-gray-200">
@@ -91,16 +61,14 @@ foreach ($estadisticasPorFecha as $estadistica) {
 
     <!-- Contenido principal -->
     <main class="flex-1 bg-gray-50 min-h-screen">
-        <!-- Dashboard -->
         <div id="dashboardView">
             <?php require __DIR__ . '/dashboard_content.php'; ?>
         </div>
-        <!-- Gráficas -->
         <div id="graficasView" style="display:none;">
             <?php require __DIR__ . '/Graficas.php'; ?>
         </div>
     </main>
-
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <script>
     // Sidebar navegación
     const dashboardView = document.getElementById('dashboardView');
@@ -128,7 +96,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
         e.preventDefault();
         showGraficas();
     });
-
     // Por defecto mostrar dashboard
     showDashboard();
     </script>

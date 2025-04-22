@@ -18,200 +18,109 @@ $datosCRP = $miGraficas->obtenerGraficaCRP();
 $datosOP = $miGraficas->obtenerGraficaOP();
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Gráficas de Consumo por Dependencia</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
-    <style>
-        .container-graficas {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 40px;
-        }
-        th, td {
-            padding: 10px 8px;
-            border-bottom: 1px solid #eee;
-            text-align: right;
-        }
-        th {
-            background: #f5f5f5;
-            text-align: center;
-        }
-        td:first-child, th:first-child {
-            text-align: left;
-        }
-        h2 {
-            margin-top: 0;
-        }
-        .chart-wrapper {
-            width: 100%;
-            height: 400px;
-        }
-        .tortas-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-        .torta-card {
-            flex: 1 1 250px;
-            min-width: 250px;
-            max-width: 300px;
-            text-align: center;
-            background: #fafafa;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-            padding: 10px 10px 20px 10px;
-            position: relative;
-        }
-        .torta-card select {
-            margin-bottom: 10px;
-            width: 90%;
-            padding: 4px;
-        }
-        .torta-card .remove-torta {
-            position: absolute;
-            top: 8px;
-            right: 12px;
-            background: #e74c3c;
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 22px;
-            height: 22px;
-            cursor: pointer;
-            font-size: 15px;
-            line-height: 20px;
-        }
-        .add-torta-btn {
-            margin: 10px 0 30px 0;
-            padding: 7px 18px;
-            background: #4a6fa5;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .add-torta-btn:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-        }
-    </style>
-</head>
-<body>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
-    <div class="container-graficas">
-        <h2>Consumo por Dependencia (CDP)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Dependencia</th>
-                    <th>Valor Actual</th>
-                    <th>Saldo por Comprometer</th>
-                    <th>Valor Comprometido</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($datosCDP as $fila): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
-                    <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($fila['saldo_por_comprometer'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($fila['valor_consumido'], 2, ',', '.'); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+<div class="container-graficas">
+    <h2>Consumo por Dependencia (CDP)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Dependencia</th>
+                <th>Valor Actual</th>
+                <th>Saldo por Comprometer</th>
+                <th>Valor Comprometido</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($datosCDP as $fila): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
+                <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
+                <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
+                <td><?php echo number_format($fila['saldo_por_comprometer'], 2, ',', '.'); ?></td>
+                <td><?php echo number_format($fila['valor_consumido'], 2, ',', '.'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-        <div class="chart-wrapper">
-            <canvas id="graficaCDP"></canvas>
-        </div>
-
-        <!-- Tortas dinámicas para CDP -->
-        <h3>Detalle por Dependencia (CDP)</h3>
-        <button class="add-torta-btn" id="addTortaCDP">Agregar gráfica de torta</button>
-        <div class="tortas-container" id="tortasCDP"></div>
-
-        <!-- Segunda gráfica: CRP -->
-        <h2>Utilización por Dependencia (CRP)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Dependencia</th>
-                    <th>Valor Actual</th>
-                    <th>Saldo por Utilizar</th>
-                    <th>Saldo Utilizado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($datosCRP as $fila): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
-                    <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($fila['saldo_por_utilizar'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($fila['saldo_utilizado'], 2, ',', '.'); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <div class="chart-wrapper">
-            <canvas id="graficaCRP"></canvas>
-        </div>
-
-        <!-- Tortas dinámicas para CRP -->
-        <h3>Detalle por Dependencia (CRP)</h3>
-        <button class="add-torta-btn" id="addTortaCRP">Agregar gráfica de torta</button>
-        <div class="tortas-container" id="tortasCRP"></div>
-
-        <!-- Tercera gráfica: OP -->
-        <h2>Pagos por Dependencia (OP)</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Dependencia</th>
-                    <th>Total CRP</th>
-                    <th>Total Pagado (OP)</th>
-                    <th>Valor Restante</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($datosOP as $fila): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
-                    <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
-                    <td><?php echo number_format($fila['suma_crp'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($fila['suma_op'], 2, ',', '.'); ?></td>
-                    <td><?php echo number_format($fila['valor_restante'], 2, ',', '.'); ?></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-        <div class="chart-wrapper">
-            <canvas id="graficaOP"></canvas>
-        </div>
-
-        <!-- Tortas dinámicas para OP -->
-        <h3>Detalle por Dependencia (OP)</h3>
-        <button class="add-torta-btn" id="addTortaOP">Agregar gráfica de torta</button>
-        <div class="tortas-container" id="tortasOP"></div>
+    <div class="chart-wrapper">
+        <canvas id="graficaCDP"></canvas>
     </div>
-    <script>
+
+    <!-- Tortas dinámicas para CDP -->
+    <h3>Detalle por Dependencia (CDP)</h3>
+    <button class="add-torta-btn" id="addTortaCDP">Agregar gráfica de torta</button>
+    <div class="tortas-container" id="tortasCDP"></div>
+
+    <!-- Segunda gráfica: CRP -->
+    <h2>Utilización por Dependencia (CRP)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Dependencia</th>
+                <th>Valor Actual</th>
+                <th>Saldo por Utilizar</th>
+                <th>Saldo Utilizado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($datosCRP as $fila): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
+                <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
+                <td><?php echo number_format($fila['valor_actual'], 2, ',', '.'); ?></td>
+                <td><?php echo number_format($fila['saldo_por_utilizar'], 2, ',', '.'); ?></td>
+                <td><?php echo number_format($fila['saldo_utilizado'], 2, ',', '.'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="chart-wrapper">
+        <canvas id="graficaCRP"></canvas>
+    </div>
+
+    <!-- Tortas dinámicas para CRP -->
+    <h3>Detalle por Dependencia (CRP)</h3>
+    <button class="add-torta-btn" id="addTortaCRP">Agregar gráfica de torta</button>
+    <div class="tortas-container" id="tortasCRP"></div>
+
+    <!-- Tercera gráfica: OP -->
+    <h2>Pagos por Dependencia (OP)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Dependencia</th>
+                <th>Total CRP</th>
+                <th>Total Pagado (OP)</th>
+                <th>Valor Restante</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($datosOP as $fila): ?>
+            <tr>
+                <td><?php echo htmlspecialchars($fila['codigo_dependencia']); ?></td>
+                <td><?php echo htmlspecialchars($fila['nombre_dependencia']); ?></td>
+                <td><?php echo number_format($fila['suma_crp'], 2, ',', '.'); ?></td>
+                <td><?php echo number_format($fila['suma_op'], 2, ',', '.'); ?></td>
+                <td><?php echo number_format($fila['valor_restante'], 2, ',', '.'); ?></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <div class="chart-wrapper">
+        <canvas id="graficaOP"></canvas>
+    </div>
+
+    <!-- Tortas dinámicas para OP -->
+    <h3>Detalle por Dependencia (OP)</h3>
+    <button class="add-torta-btn" id="addTortaOP">Agregar gráfica de torta</button>
+    <div class="tortas-container" id="tortasOP"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<script>
     const datosCDP = <?php echo json_encode($datosCDP); ?>;
     const labels = datosCDP.map(d => d.nombre_dependencia + ' (' + d.codigo_dependencia + ')');
     const valorActual = datosCDP.map(d => d.valor_actual);
@@ -488,7 +397,4 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         ['suma_op', 'valor_restante'],
         ['rgba(255, 99, 132, 0.7)', 'rgba(255, 185, 65, 0.88)']
     );
-    </script>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
-</body>
-</html>
+</script>
