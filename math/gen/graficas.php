@@ -140,7 +140,7 @@ class graficas extends Conexion{
         }
 
         // Si quieres depurar, puedes descomentar la siguiente línea temporalmente:
-        // file_put_contents('/tmp/otros_dependencias.txt', print_r($otrosDebug, true));
+        file_put_contents('/tmp/otros_dependencias.txt', print_r($otrosDebug, true));
 
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
