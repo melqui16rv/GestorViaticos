@@ -24,6 +24,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
     <meta charset="UTF-8">
     <title>Gráficas de Consumo por Dependencia</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
     <style>
         .container-graficas {
             max-width: 1100px;
@@ -332,7 +333,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
 
         // Opciones para el select
         const opciones = datos.map((d, i) => ({
-            value: d.codigo_dependencia,
+            value: String(d.codigo_dependencia),
             label: d.nombre_dependencia + ' (' + d.codigo_dependencia + ')',
             index: i
         }));
@@ -413,6 +414,15 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                     options: {
                         responsive: true,
                         plugins: {
+                            datalabels: {
+                                color: '#222',
+                                font: { weight: 'bold', size: 15 },
+                                formatter: function(value, context) {
+                                    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                    if (sum === 0) return '';
+                                    return ((value / sum) * 100).toFixed(1) + '%';
+                                }
+                            },
                             tooltip: {
                                 callbacks: {
                                     label: function(context) {
@@ -421,15 +431,6 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                                         const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
                                         return `${label}: $${value.toLocaleString('es-CO', {minimumFractionDigits:2})} (${percent}%)`;
                                     }
-                                }
-                            },
-                            datalabels: {
-                                color: '#222',
-                                font: { weight: 'bold', size: 15 },
-                                formatter: function(value, context) {
-                                    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                    if (sum === 0) return '';
-                                    return ((value / sum) * 100).toFixed(1) + '%';
                                 }
                             }
                         }
