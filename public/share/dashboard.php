@@ -334,7 +334,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
                 borderColor: 'rgb(255, 99, 132)',
                 tension: 0.1
             }, {
-                label: 'CRP',
+                label: 'RP',
                 data: <?php echo json_encode(array_map(function($fecha) use ($datosGraficoLineas) {
                     return isset($datosGraficoLineas[$fecha]['CRP']) ? 
                         $datosGraficoLineas[$fecha]['CRP']['actualizados'] + $datosGraficoLineas[$fecha]['CRP']['nuevos'] : 0;
