@@ -20,9 +20,9 @@ if (!isset($_SESSION['id_rol'])) {
     <!-- Heroicons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
     <!-- Estilos personalizados -->
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/grafica.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
 </head>
 <body class="bg-gray-50 min-h-screen relative">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
