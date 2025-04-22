@@ -28,18 +28,6 @@ if (!isset($_SESSION['id_rol'])) {
             background: #e0e7ef;
             color: #2563eb;
         }
-
-        /* Firefox */
-        body::-webkit-scrollbar {
-        scrollbar-width: none; /* Oculta la barra en Firefox */
-        -ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
-        }
-
-        /* WebKit (Chrome, Safari, Edge moderno, Opera) */
-        body::-webkit-scrollbar {
-        display: none; /* Oculta la barra en navegadores WebKit */
-        }
-
         .sidebar-link {
             transition: background 0.2s, color 0.2s;
         }
@@ -74,14 +62,14 @@ if (!isset($_SESSION['id_rol'])) {
             position: fixed;
             top: 1rem;
             left: 1rem;
-            z-index: 50;
+            z-index: 100;
             background: #fff;
             border: 1px solid #e5e7eb;
             border-radius: 6px;
             padding: 0.4rem 0.6rem;
             cursor: pointer;
             box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-            display: flex;
+            display: flex !important;
             align-items: center;
             transition: background 0.2s;
         }
@@ -90,7 +78,7 @@ if (!isset($_SESSION['id_rol'])) {
         }
         @media (min-width: 1024px) {
             .sidebar-toggle-btn {
-                display: none;
+                display: flex !important;
             }
         }
         .main-content-filament {
@@ -122,8 +110,8 @@ if (!isset($_SESSION['id_rol'])) {
 <body class="bg-gray-50 min-h-screen relative">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
 
-    <!-- Botón para mostrar/ocultar sidebar SIEMPRE visible en móvil/tablet -->
-    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button">
+    <!-- Botón para mostrar/ocultar sidebar SIEMPRE visible -->
+    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button" style="display: flex;">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -241,6 +229,9 @@ if (!isset($_SESSION['id_rol'])) {
         }
         window.addEventListener('resize', handleResize);
         handleResize();
+
+        // Forzar mostrar el botón siempre
+        document.getElementById('sidebarToggle').style.display = 'flex';
     </script>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
