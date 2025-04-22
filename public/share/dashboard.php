@@ -216,7 +216,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
         <div class="stats-summary">
             <?php foreach($totalesRegistros as $tabla => $total): ?>
             <div class="stat-box">
-                <h4>Total <?php echo strtoupper($tabla); ?></h4>
+                <h4>Total <?php echo strtoupper($tabla === 'crp' ? 'RP' : $tabla); ?></h4>
                 <div class="number"><?php echo number_format($total); ?></div>
             </div>
             <?php endforeach; ?>
