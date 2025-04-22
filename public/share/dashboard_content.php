@@ -18,6 +18,11 @@ $conteoCDP = $miGraficas->contarRegistrosPorDependenciaCDP();
 $conteoCRP = $miGraficas->contarRegistrosPorDependenciaCRP();
 $conteoOP  = $miGraficas->contarRegistrosPorDependenciaOP();
 
+// Mostrar totales globales de los conteos por dependencia para validación
+$totalCDP = array_sum(array_column($conteoCDP, 'total'));
+$totalCRP = array_sum(array_column($conteoCRP, 'total'));
+$totalOP  = array_sum(array_column($conteoOP, 'total'));
+
 // Procesar fechas del filtro
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : date('Y-m-d');
 $fecha_inicio = isset($_GET['fecha_inicio']) ? $_GET['fecha_inicio'] : date('Y-m-d', strtotime('-30 days'));
@@ -78,6 +83,10 @@ foreach ($estadisticasPorFecha as $estadistica) {
             <div class="number"><?php echo number_format($dep['total']); ?></div>
         </div>
         <?php endforeach; ?>
+        <div class="stat-box" style="background:#f5f5f5;">
+            <h4><b>Total CDP</b></h4>
+            <div class="number"><b><?php echo number_format($totalCDP); ?></b></div>
+        </div>
     </div>
 
     <!-- Conteo de registros por dependencia: CRP -->
@@ -89,6 +98,10 @@ foreach ($estadisticasPorFecha as $estadistica) {
             <div class="number"><?php echo number_format($dep['total']); ?></div>
         </div>
         <?php endforeach; ?>
+        <div class="stat-box" style="background:#f5f5f5;">
+            <h4><b>Total CRP</b></h4>
+            <div class="number"><b><?php echo number_format($totalCRP); ?></b></div>
+        </div>
     </div>
 
     <!-- Conteo de registros por dependencia: OP -->
@@ -100,6 +113,10 @@ foreach ($estadisticasPorFecha as $estadistica) {
             <div class="number"><?php echo number_format($dep['total']); ?></div>
         </div>
         <?php endforeach; ?>
+        <div class="stat-box" style="background:#f5f5f5;">
+            <h4><b>Total OP</b></h4>
+            <div class="number"><b><?php echo number_format($totalOP); ?></b></div>
+        </div>
     </div>
 
     <!-- Gráfico de barras -->
