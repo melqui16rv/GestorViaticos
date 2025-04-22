@@ -5,10 +5,17 @@
     background: #f3f4f6;
 }
 
+/* Firefox */
+body{
+scrollbar-width: none; /* Oculta la barra en Firefox */
+-ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
+}
+
 /* WebKit (Chrome, Safari, Edge moderno, Opera) */
 body::-webkit-scrollbar {
-    display: none; /* Oculta la barra en navegadores WebKit */
+display: none; /* Oculta la barra en navegadores WebKit */
 }
+  
 
 /* Calculamos la altura adecuada para el botón considerando el nav */
 :root {
