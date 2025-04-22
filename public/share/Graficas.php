@@ -416,11 +416,11 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                         plugins: {
                             datalabels: {
                                 color: '#fff',
-                                font: { weight: 'bold', size: 15 },
+                                font: { weight: 'bold', size: 10 },
                                 textStrokeColor: '#000',
-                                textStrokeWidth: 3,
+                                textStrokeWidth: 2,
                                 textShadowColor: '#000',
-                                textShadowBlur: 6,
+                                textShadowBlur: 4,
                                 formatter: function(value, context) {
                                     const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                                     if (sum === 0) return '';
@@ -470,7 +470,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
         <?php echo json_encode($datosCDP); ?>,
         ['Saldo por Comprometer', 'Valor Comprometido'],
         ['saldo_por_comprometer', 'valor_consumido'],
-        ['rgba(255, 206, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
+        ['rgba(255, 193, 86, 0.7)', 'rgba(255, 114, 79, 0.56)']
     );
     // CRP
     crearTorta(
