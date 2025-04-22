@@ -323,7 +323,7 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                                 color: '#fff',
                                 font: { weight: 'bold', size: 13 },
                                 textStrokeColor: '#000',
-                                textStrokeWidth: 1,
+                                textStrokeWidth: 1.4,
                                 formatter: function(value, context) {
                                     const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                                     if (sum === 0) return '';
