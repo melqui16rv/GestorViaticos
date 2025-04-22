@@ -49,13 +49,17 @@ if (!isset($_SESSION['id_rol'])) {
                 top: 0;
                 background: #fff;
                 border-right: 1px solid #e5e7eb;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.12);
             }
             .sidebar-filament.closed {
                 margin-left: -16rem;
             }
+            .sidebar-overlay {
+                display: block;
+            }
         }
         .sidebar-toggle-btn {
-            position: absolute;
+            position: fixed;
             top: 1rem;
             left: 1rem;
             z-index: 50;
@@ -87,17 +91,33 @@ if (!isset($_SESSION['id_rol'])) {
                 margin-left: 0 !important;
             }
         }
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            z-index: 30;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0,0,0,0.25);
+            transition: opacity 0.2s;
+        }
+        .sidebar-overlay.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-50 min-h-screen relative">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
 
-    <!-- Botón para mostrar/ocultar sidebar -->
-    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú">
+    <!-- Botón para mostrar/ocultar sidebar SIEMPRE visible en móvil/tablet -->
+    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
     </button>
+    <!-- Overlay para móvil -->
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
     <div class="flex min-h-screen">
         <!-- Sidebar tipo Filament -->
@@ -143,6 +163,7 @@ if (!isset($_SESSION['id_rol'])) {
         const sidebar = document.getElementById('sidebarFilament');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const mainContent = document.getElementById('mainContentFilament');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
 
         function showDashboard() {
             dashboardView.style.display = '';
@@ -168,28 +189,42 @@ if (!isset($_SESSION['id_rol'])) {
         showDashboard();
 
         // Sidebar toggle
-        let sidebarOpen = true;
-        sidebarToggle.addEventListener('click', function() {
-            sidebarOpen = !sidebarOpen;
-            if (sidebarOpen) {
-                sidebar.classList.remove('closed');
+        let sidebarOpen = window.innerWidth >= 1024;
+        function openSidebar() {
+            sidebar.classList.remove('closed');
+            if (window.innerWidth < 1024) {
+                sidebarOverlay.classList.add('active');
+            }
+            if (window.innerWidth >= 1024) {
                 mainContent.classList.add('ml-64');
-            } else {
-                sidebar.classList.add('closed');
+            }
+            sidebarOpen = true;
+        }
+        function closeSidebar() {
+            sidebar.classList.add('closed');
+            sidebarOverlay.classList.remove('active');
+            if (window.innerWidth >= 1024) {
                 mainContent.classList.remove('ml-64');
             }
+            sidebarOpen = false;
+        }
+        sidebarToggle.addEventListener('click', function() {
+            if (sidebarOpen) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+        sidebarOverlay.addEventListener('click', function() {
+            closeSidebar();
         });
 
         // Responsive: cerrar sidebar por defecto en móvil
         function handleResize() {
             if (window.innerWidth < 1024) {
-                sidebar.classList.add('closed');
-                mainContent.classList.remove('ml-64');
-                sidebarOpen = false;
+                closeSidebar();
             } else {
-                sidebar.classList.remove('closed');
-                mainContent.classList.add('ml-64');
-                sidebarOpen = true;
+                openSidebar();
             }
         }
         window.addEventListener('resize', handleResize);
