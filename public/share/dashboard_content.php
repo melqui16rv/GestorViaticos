@@ -3,6 +3,7 @@
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/graficas.php';
 
 
 
@@ -11,6 +12,11 @@ $estadisticas = $miClase->obtenerEstadisticasActualizaciones();
 $estadisticasUsuarios = $miClase->obtenerEstadisticasPorUsuario();
 $totalesRegistros = $miClase->obtenerTotalRegistros();
 $actualizaciones = $miClase->obtenerUltimasActualizaciones(); // Cambiado para usar el método de la clase
+
+$miGraficas = new graficas();
+$conteoCDP = $miGraficas->contarRegistrosPorDependenciaCDP();
+$conteoCRP = $miGraficas->contarRegistrosPorDependenciaCRP();
+$conteoOP  = $miGraficas->contarRegistrosPorDependenciaOP();
 
 // Procesar fechas del filtro
 $fecha_fin = isset($_GET['fecha_fin']) ? $_GET['fecha_fin'] : date('Y-m-d');
@@ -59,6 +65,39 @@ foreach ($estadisticasPorFecha as $estadistica) {
         <div class="stat-box">
             <h4>Total <?php echo strtoupper($tabla === 'crp' ? 'RP' : $tabla); ?></h4>
             <div class="number"><?php echo number_format($total); ?></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Conteo de registros por dependencia: CDP -->
+    <h3 style="margin-top:2em;">Registros por Dependencia (CDP)</h3>
+    <div class="stats-summary">
+        <?php foreach($conteoCDP as $dep): ?>
+        <div class="stat-box">
+            <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
+            <div class="number"><?php echo number_format($dep['total']); ?></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Conteo de registros por dependencia: CRP -->
+    <h3 style="margin-top:2em;">Registros por Dependencia (CRP)</h3>
+    <div class="stats-summary">
+        <?php foreach($conteoCRP as $dep): ?>
+        <div class="stat-box">
+            <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
+            <div class="number"><?php echo number_format($dep['total']); ?></div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+    <!-- Conteo de registros por dependencia: OP -->
+    <h3 style="margin-top:2em;">Registros por Dependencia (OP)</h3>
+    <div class="stats-summary">
+        <?php foreach($conteoOP as $dep): ?>
+        <div class="stat-box">
+            <h4><?php echo htmlspecialchars($dep['nombre_dependencia']); ?> (<?php echo htmlspecialchars($dep['codigo_dependencia']); ?>)</h4>
+            <div class="number"><?php echo number_format($dep['total']); ?></div>
         </div>
         <?php endforeach; ?>
     </div>

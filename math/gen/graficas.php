@@ -217,4 +217,91 @@ class graficas extends Conexion{
         }
         return $datos;
     }
+
+    // Conteo de registros por dependencia en CDP
+    public function contarRegistrosPorDependenciaCDP() {
+        $sql = "SELECT Dependencia FROM cdp";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $conteo = [];
+        foreach ($resultados as $fila) {
+            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
+                $codigo = $matches[1];
+            } else {
+                $codigo = 'Otro';
+            }
+            if (!isset($conteo[$codigo])) {
+                $conteo[$codigo] = [
+                    'codigo_dependencia' => $codigo,
+                    'nombre_dependencia' => isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro',
+                    'total' => 0
+                ];
+            }
+            $conteo[$codigo]['total']++;
+        }
+        // Excluir "Otro"
+        return array_values(array_filter($conteo, function($item) {
+            return $item['codigo_dependencia'] !== 'Otro';
+        }));
+    }
+
+    // Conteo de registros por dependencia en CRP
+    public function contarRegistrosPorDependenciaCRP() {
+        $sql = "SELECT Dependencia FROM crp";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $conteo = [];
+        foreach ($resultados as $fila) {
+            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
+                $codigo = $matches[1];
+            } else {
+                $codigo = 'Otro';
+            }
+            if (!isset($conteo[$codigo])) {
+                $conteo[$codigo] = [
+                    'codigo_dependencia' => $codigo,
+                    'nombre_dependencia' => isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro',
+                    'total' => 0
+                ];
+            }
+            $conteo[$codigo]['total']++;
+        }
+        // Excluir "Otro"
+        return array_values(array_filter($conteo, function($item) {
+            return $item['codigo_dependencia'] !== 'Otro';
+        }));
+    }
+
+    // Conteo de registros por dependencia en OP
+    public function contarRegistrosPorDependenciaOP() {
+        $sql = "SELECT Dependencia FROM op";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $conteo = [];
+        foreach ($resultados as $fila) {
+            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
+                $codigo = $matches[1];
+            } else {
+                $codigo = 'Otro';
+            }
+            if (!isset($conteo[$codigo])) {
+                $conteo[$codigo] = [
+                    'codigo_dependencia' => $codigo,
+                    'nombre_dependencia' => isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro',
+                    'total' => 0
+                ];
+            }
+            $conteo[$codigo]['total']++;
+        }
+        // Excluir "Otro"
+        return array_values(array_filter($conteo, function($item) {
+            return $item['codigo_dependencia'] !== 'Otro';
+        }));
+    }
 }
