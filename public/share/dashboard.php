@@ -33,7 +33,7 @@ if (!isset($_SESSION['id_rol'])) {
         }
     </style>
 </head>
-<body class="flex min-h-screen">
+<body >
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
     <!-- Sidebar tipo Filament -->
     <aside class="w-64 bg-white border-r border-gray-200 flex flex-col">
@@ -68,36 +68,36 @@ if (!isset($_SESSION['id_rol'])) {
             <?php require __DIR__ . '/Graficas.php'; ?>
         </div>
     </main>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <script>
-    // Sidebar navegación
-    const dashboardView = document.getElementById('dashboardView');
-    const graficasView = document.getElementById('graficasView');
-    const navDashboard = document.getElementById('navDashboard');
-    const navGraficas = document.getElementById('navGraficas');
-
-    function showDashboard() {
-        dashboardView.style.display = '';
-        graficasView.style.display = 'none';
-        navDashboard.classList.add('active');
-        navGraficas.classList.remove('active');
-    }
-    function showGraficas() {
-        dashboardView.style.display = 'none';
-        graficasView.style.display = '';
-        navDashboard.classList.remove('active');
-        navGraficas.classList.add('active');
-    }
-    navDashboard.addEventListener('click', function(e) {
-        e.preventDefault();
+        // Sidebar navegación
+        const dashboardView = document.getElementById('dashboardView');
+        const graficasView = document.getElementById('graficasView');
+        const navDashboard = document.getElementById('navDashboard');
+        const navGraficas = document.getElementById('navGraficas');
+        
+        function showDashboard() {
+            dashboardView.style.display = '';
+            graficasView.style.display = 'none';
+            navDashboard.classList.add('active');
+            navGraficas.classList.remove('active');
+        }
+        function showGraficas() {
+            dashboardView.style.display = 'none';
+            graficasView.style.display = '';
+            navDashboard.classList.remove('active');
+            navGraficas.classList.add('active');
+        }
+        navDashboard.addEventListener('click', function(e) {
+            e.preventDefault();
+            showDashboard();
+        });
+        navGraficas.addEventListener('click', function(e) {
+            e.preventDefault();
+            showGraficas();
+        });
+        // Por defecto mostrar dashboard
         showDashboard();
-    });
-    navGraficas.addEventListener('click', function(e) {
-        e.preventDefault();
-        showGraficas();
-    });
-    // Por defecto mostrar dashboard
-    showDashboard();
-    </script>
+        </script>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
 </html>
