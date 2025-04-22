@@ -200,7 +200,7 @@
 .filtros-form {
     display: flex;
     gap: 10px;
-    align-items: flex-end;
+    align-items: flex-center;
     flex-direction: column;
 }
 
