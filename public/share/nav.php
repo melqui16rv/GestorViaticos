@@ -725,6 +725,13 @@ a:focus, button:focus {
                         <a href="<?php echo BASE_URL; ?>public/share/dashboard.php" 
                            class="<?php echo ($currentPath === '/viaticosApp/public/share/dashboard.php') ? 'activeURL' : ''; ?>">Panel Datos</a>-->
                     </li>
+                    <li>
+                        <?php
+                            $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
+                        ?>
+                        <a href="<?php echo BASE_URL; ?>public/share/Graficas.php" 
+                           class="<?php echo ($currentPath === '/viaticosApp/public/share/Graficas.php') ? 'activeURL' : ''; ?>">Graficas</a>-->
+                    </li>
             
                     <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '3'): ?>
                         <li>
