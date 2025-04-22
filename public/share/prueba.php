@@ -25,58 +25,16 @@ if (!isset($_SESSION['id_rol'])) {
     <style>
         /* Firefox */
         body {
-        scrollbar-width: none; /* Oculta la barra en Firefox */
-        -ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
-        background: #f3f4f6;
+            scrollbar-width: none; /* Oculta la barra en Firefox */
+            -ms-overflow-style: none; /* Oculta la barra en IE y Edge antiguos */
+            background: #f3f4f6;
         }
 
         /* WebKit (Chrome, Safari, Edge moderno, Opera) */
         body::-webkit-scrollbar {
-        display: none; /* Oculta la barra en navegadores WebKit */
+            display: none; /* Oculta la barra en navegadores WebKit */
         }
-        .sidebar-link.active, .sidebar-link:hover {
-            background: rgba(59, 130, 246, 0.1);
-            color: #3b82f6;
-        }
-        .sidebar-link.active {
-            font-weight: 600;
-        }
-        .sidebar-link {
-            transition: all 0.2s;
-            border-radius: 0.375rem;
-            margin: 0 0.5rem;
-            padding: 0.625rem 0.75rem;
-        }
-        .sidebar-filament {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            min-width: 16rem;
-            width: 16rem;
-            max-width: 100vw;
-            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-            z-index: 40;
-            background-color: white;
-        }
-        .sidebar-filament.closed {
-            margin-left: -16rem;
-        }
-        @media (max-width: 1023px) {
-            .sidebar-filament {
-                position: fixed;
-                z-index: 40;
-                height: 100vh;
-                left: 0;
-                top: 0;
-                background: #fff;
-                border-right: 1px solid #e5e7eb;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-            }
-            .sidebar-filament.closed {
-                margin-left: -16rem;
-            }
-            .sidebar-overlay {
-                display: block;
-            }
-        }
+
         /* Estilos mejorados para simular Filament UI */
         .sidebar-toggle-btn {
             position: fixed;
@@ -96,14 +54,42 @@ if (!isset($_SESSION['id_rol'])) {
             width: 2.25rem;
             height: 2.25rem;
         }
+
         .sidebar-toggle-btn:hover {
             background: #f3f4f6;
             transform: scale(1.05);
         }
+
         .sidebar-toggle-btn svg {
             width: 1.25rem;
             height: 1.25rem;
         }
+
+        /* Mejora en la sidebar al estilo Filament */
+        .sidebar-filament {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            min-width: 16rem;
+            width: 16rem;
+            max-width: 100vw;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            z-index: 40;
+            background-color: white;
+        }
+
+        .sidebar-filament.closed {
+            margin-left: -16rem;
+        }
+
+        /* Mejora en el contenido principal */
+        .main-content-filament {
+            flex: 1 1 0%;
+            min-width: 0;
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* Pantallas medianas y grandes */
         @media (min-width: 1024px) {
             .sidebar-toggle-btn {
                 top: 1.25rem;
@@ -120,13 +106,8 @@ if (!isset($_SESSION['id_rol'])) {
                 padding-left: 2rem;
             }
         }
-        .main-content-filament {
-            flex: 1 1 0%;
-            min-width: 0;
-            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-left: 1rem;
-            padding-right: 1rem;
-        }
+
+        /* Pantallas pequeñas */
         @media (max-width: 1023px) {
             .sidebar-filament {
                 position: fixed;
@@ -151,6 +132,8 @@ if (!isset($_SESSION['id_rol'])) {
                 padding-left: 3.5rem;
             }
         }
+
+        /* Mejorar el overlay */
         .sidebar-overlay {
             display: none;
             position: fixed;
@@ -164,10 +147,30 @@ if (!isset($_SESSION['id_rol'])) {
             transition: opacity 0.3s;
             opacity: 0;
         }
+
         .sidebar-overlay.active {
             display: block;
             opacity: 1;
         }
+
+        /* Mejoras en los enlaces del sidebar */
+        .sidebar-link {
+            transition: all 0.2s;
+            border-radius: 0.375rem;
+            margin: 0 0.5rem;
+            padding: 0.625rem 0.75rem;
+        }
+
+        .sidebar-link.active, .sidebar-link:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+
+        .sidebar-link.active {
+            font-weight: 600;
+        }
+
+        /* Hacer que el botón de toggle gire cuando cambia el estado */
         .sidebar-toggle-btn .toggle-icon {
             transition: transform 0.3s;
         }
@@ -188,10 +191,9 @@ if (!isset($_SESSION['id_rol'])) {
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
 
     <!-- Botón para mostrar/ocultar sidebar: SIEMPRE visible, fuera del sidebar -->
-    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button"
-        style="top: 5.5rem; left: 1rem; display: flex;">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+    <button id="sidebarToggle" class="sidebar-toggle-btn" aria-label="Mostrar/Ocultar menú" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
         </svg>
     </button>
     <!-- Overlay para móvil -->
@@ -223,7 +225,7 @@ if (!isset($_SESSION['id_rol'])) {
         </aside>
 
         <!-- Contenido principal -->
-        <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen ml-64 transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
+        <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
             <div id="dashboardView">
                 <?php require 'dashboard_content.php'; ?>
             </div>
@@ -242,6 +244,7 @@ if (!isset($_SESSION['id_rol'])) {
         const sidebarToggle = document.getElementById('sidebarToggle');
         const mainContent = document.getElementById('mainContentFilament');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const body = document.body;
 
         function showDashboard() {
             dashboardView.style.display = '';
@@ -249,43 +252,70 @@ if (!isset($_SESSION['id_rol'])) {
             navDashboard.classList.add('active');
             navGraficas.classList.remove('active');
         }
+        
         function showGraficas() {
             dashboardView.style.display = 'none';
             graficasView.style.display = '';
             navDashboard.classList.remove('active');
             navGraficas.classList.add('active');
         }
+        
         navDashboard.addEventListener('click', function(e) {
             e.preventDefault();
             showDashboard();
+            if (window.innerWidth < 1024) {
+                closeSidebar(); // En móvil, cerrar sidebar después de navegar
+            }
         });
+        
         navGraficas.addEventListener('click', function(e) {
             e.preventDefault();
             showGraficas();
+            if (window.innerWidth < 1024) {
+                closeSidebar(); // En móvil, cerrar sidebar después de navegar
+            }
         });
+        
         // Por defecto mostrar dashboard
         showDashboard();
 
         // Sidebar toggle
         let sidebarOpen = window.innerWidth >= 1024;
+        
         function openSidebar() {
             sidebar.classList.remove('closed');
+            mainContent.classList.add('sidebar-open');
+            body.classList.remove('sidebar-closed');
+            
             if (window.innerWidth < 1024) {
                 sidebarOverlay.classList.add('active');
             }
-            if (window.innerWidth >= 1024) {
-                mainContent.classList.add('ml-64');
-            }
+            
             sidebarOpen = true;
+            
+            // Cambiar el icono a un "×" (cerrar)
+            sidebarToggle.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                </svg>
+            `;
         }
+        
         function closeSidebar() {
             sidebar.classList.add('closed');
+            mainContent.classList.remove('sidebar-open');
+            body.classList.add('sidebar-closed');
             sidebarOverlay.classList.remove('active');
-            if (window.innerWidth >= 1024) {
-                mainContent.classList.remove('ml-64');
-            }
             sidebarOpen = false;
+            
+            // Cambiar el icono a "≡" (hamburguesa)
+            sidebarToggle.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+            `;
         }
+        
         sidebarToggle.addEventListener('click', function() {
             if (sidebarOpen) {
                 closeSidebar();
@@ -293,6 +323,7 @@ if (!isset($_SESSION['id_rol'])) {
                 openSidebar();
             }
         });
+        
         sidebarOverlay.addEventListener('click', function() {
             closeSidebar();
         });
@@ -305,11 +336,11 @@ if (!isset($_SESSION['id_rol'])) {
                 openSidebar();
             }
         }
+        
         window.addEventListener('resize', handleResize);
+        
+        // Inicialización
         handleResize();
-
-        // Forzar mostrar el botón siempre
-        document.getElementById('sidebarToggle').style.display = 'flex';
     </script>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
