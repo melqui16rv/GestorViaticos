@@ -186,34 +186,9 @@ foreach ($estadisticasPorFecha as $estadistica) {
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // --- Funciones de cookies ---
-    function setCookie(name, value, days = 30) {
-        let expires = "";
-        if (days) {
-            const date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = "; expires=" + date.toUTCString();
-        }
-        document.cookie = name + "=" + encodeURIComponent(JSON.stringify(value)) + expires + "; path=/";
-    }
-    function getCookie(name) {
-        const value = "; " + document.cookie;
-        const parts = value.split("; " + name + "=");
-        if (parts.length === 2) {
-            try {
-                return JSON.parse(decodeURIComponent(parts.pop().split(";").shift()));
-            } catch (e) { return null; }
-        }
-        return null;
-    }
-
-    // --- Estado de labels (datasets) y selección de tarjeta ---
-    let dashboardLabelsState = getCookie('dashboard_labels_state') || {};
-    let dashboardActiveStat = getCookie('dashboard_active_stat') || 'cdp';
-
     // Gráfico de barras
     const ctxBarras = document.getElementById('registrosChart').getContext('2d');
-    const chartBarras = new Chart(ctxBarras, {
+    new Chart(ctxBarras, {
         type: 'bar',
         data: {
             labels: <?php echo json_encode($datosGraficoBarras['labels']); ?>,
@@ -235,17 +210,8 @@ foreach ($estadisticasPorFecha as $estadistica) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { beginAtZero: true }
-            },
-            plugins: {
-                legend: {
-                    onClick: function(e, legendItem, legend) {
-                        const ci = legend.chart;
-                        const idx = legendItem.datasetIndex;
-                        ci.toggleDataVisibility(idx);
-                        ci.update();
-                        saveLabelsState('barras', ci);
-                    }
+                y: {
+                    beginAtZero: true
                 }
             }
         }
@@ -253,7 +219,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
 
     // Gráfico de líneas
     const ctxLineas = document.getElementById('actividadChart').getContext('2d');
-    const chartLineas = new Chart(ctxLineas, {
+    new Chart(ctxLineas, {
         type: 'line',
         data: {
             labels: <?php echo json_encode(array_keys($datosGraficoLineas)); ?>,
@@ -266,7 +232,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
                 borderColor: 'rgb(255, 99, 132)',
                 tension: 0.1
             }, {
-                label: 'RP',
+                label: 'RP', // Cambiado de CRP a RP
                 data: <?php echo json_encode(array_map(function($fecha) use ($datosGraficoLineas) {
                     return isset($datosGraficoLineas[$fecha]['CRP']) ? 
                         $datosGraficoLineas[$fecha]['CRP']['actualizados'] + $datosGraficoLineas[$fecha]['CRP']['nuevos'] : 0;
@@ -287,37 +253,12 @@ foreach ($estadisticasPorFecha as $estadistica) {
             responsive: true,
             maintainAspectRatio: false,
             scales: {
-                y: { beginAtZero: true }
-            },
-            plugins: {
-                legend: {
-                    onClick: function(e, legendItem, legend) {
-                        const ci = legend.chart;
-                        const idx = legendItem.datasetIndex;
-                        ci.toggleDataVisibility(idx);
-                        ci.update();
-                        saveLabelsState('lineas', ci);
-                    }
+                y: {
+                    beginAtZero: true
                 }
             }
         }
     });
-
-    // Guardar/Restaurar estado de labels
-    function saveLabelsState(key, chart) {
-        dashboardLabelsState[key] = chart.data.datasets.map((ds, i) => chart.isDatasetVisible(i));
-        setCookie('dashboard_labels_state', dashboardLabelsState);
-    }
-    function restoreLabelsState(chart, key) {
-        if (dashboardLabelsState[key]) {
-            dashboardLabelsState[key].forEach((visible, i) => {
-                chart.setDatasetVisibility(i, visible);
-            });
-            chart.update();
-        }
-    }
-    restoreLabelsState(chartBarras, 'barras');
-    restoreLabelsState(chartLineas, 'lineas');
 
     document.addEventListener('DOMContentLoaded', function() {
         const formFiltros = document.getElementById('filtrosFecha');
@@ -371,18 +312,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
             op: document.getElementById('conteoDependenciaOP')
         };
 
-        // Restaurar selección activa desde cookie
-        statBoxes.forEach(box => {
-            if (box.dataset.tipo === dashboardActiveStat) {
-                box.classList.add('active');
-                Object.keys(conteos).forEach(tipo => {
-                    conteos[tipo].style.display = (tipo === dashboardActiveStat) ? 'block' : 'none';
-                });
-            } else {
-                box.classList.remove('active');
-            }
-        });
-
         statBoxes.forEach(box => {
             box.addEventListener('click', function() {
                 // Quitar clase activa de todas
@@ -393,8 +322,6 @@ foreach ($estadisticasPorFecha as $estadistica) {
                 Object.keys(conteos).forEach(tipo => {
                     conteos[tipo].style.display = (tipo === this.dataset.tipo) ? 'block' : 'none';
                 });
-                // Guardar selección en cookie
-                setCookie('dashboard_active_stat', this.dataset.tipo);
             });
         });
     });
