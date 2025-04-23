@@ -16,7 +16,7 @@ class graficas extends Conexion{
     // Diccionario de dependencias
     private $dependencias = [
         '09' => 'SST',
-        '10' => 'Administradivos / Victimas',
+        '10' => 'Administrativos / Victimas',
         '11' => 'Victimas',
         '14' => 'ENI',
         '18' => 'FIC',
