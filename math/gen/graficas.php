@@ -20,7 +20,7 @@ class graficas extends Conexion{
         '11' => 'Victimas',
         '14' => 'ENI',
         '18' => 'FIC',
-        '20' => 'Administrativo',
+        '20' => 'Administrativo(DC)',
         '24' => 'Construciones',
         '27' => 'Actualización',
         '28' => 'ECCL',
