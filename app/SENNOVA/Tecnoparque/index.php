@@ -2,12 +2,15 @@
 session_start();
 ob_start();
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 
-if (!isset($_SESSION['id_rol'])) {
-    header("Location: includes/session/login.php");
-    exit;
-}
+requireRole(['5']);
+$miClaseG = new gestor();
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
