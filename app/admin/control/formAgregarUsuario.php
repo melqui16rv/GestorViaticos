@@ -367,9 +367,12 @@ input[type="submit"]:active {
                     <label for="rol">Rol:</label>
                     <select id="rol" name="id_rol" required onchange="mostrarCoordinaciones()">
                         <option value="">Seleccione un rol</option>
-                        <option value="3">Planeación</option>
-                        <option value="2">Gestor</option>
                         <option value="1">Administrador</option>
+                        <option value="2">Gestor</option>
+                        <option value="3">Planeación</option>
+                        <option value="4">SENNOVA</option>
+                        <option value="5">Tecnoparque</option>
+                        <option value="6">Tecnoacademia</option>
                     </select>
                 </div>
             </div>
