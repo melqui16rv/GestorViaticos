@@ -29,6 +29,7 @@ class graficas_tecnoacademia extends Conexion{
         '43' => 'Bienestar Empleados',
         '44' => 'Apoyos Sostenible',
         '45' => 'Regular',
+        '62' => 'WORLDSKILLS',
         '69' => 'Tecnoparque',
         '70' => 'Tecnoacademia',
         '84' => 'ECCL Campesena',
