@@ -293,4 +293,48 @@ class graficas_general_sennova extends Conexion{
         // Excluir "Otro"
         return array_values($conteo);
     }
+
+    // Totales de viáticos CDP solo para dependencias permitidas
+    public function obtenerTotalesViaticosPorDependencias() {
+        $dependencias = $this->dependencias_permitidas;
+        $placeholders = implode(',', array_fill(0, count($dependencias), '?'));
+        $sql = "SELECT SUM(Valor_Actual) as valor_actual, SUM(Saldo_por_Comprometer) as saldo_por_comprometer
+                FROM cdp
+                WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%')
+                  AND (";
+        $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
+        $sql .= ")";
+        $params = [];
+        foreach ($dependencias as $dep) {
+            $params[] = "%$dep";
+        }
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            'valor_actual' => floatval($row['valor_actual']),
+            'saldo_por_comprometer' => floatval($row['saldo_por_comprometer'])
+        ];
+    }
+
+    // Totales de viáticos OP solo para dependencias permitidas
+    public function obtenerTotalesViaticosOPPorDependencias() {
+        $dependencias = $this->dependencias_permitidas;
+        $sql = "SELECT SUM(Valor_Neto) as valor_op
+                FROM op
+                WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')
+                  AND (";
+        $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
+        $sql .= ")";
+        $params = [];
+        foreach ($dependencias as $dep) {
+            $params[] = "%$dep";
+        }
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return [
+            'valor_op' => floatval($row['valor_op'])
+        ];
+    }
 }
