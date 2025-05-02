@@ -9,8 +9,6 @@ error_reporting(E_ALL);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 
 requireRole(['4']);
-$miClaseG = new gestor();
-
 ?>
 <!DOCTYPE html>
 <html lang="es">
