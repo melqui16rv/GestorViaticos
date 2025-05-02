@@ -154,6 +154,15 @@ class user extends Conexion{
                 
                 // Redireccionar según el rol
                 switch ($rol) {
+                    case '6':
+                        header('Location: ' . BASE_URL . 'app/SENNOVA/Tecnoacademia/index.php');
+                        break;
+                    case '5':
+                        header('Location: ' . BASE_URL . 'app/SENNOVA/Tecnoparque/index.php');
+                        break;
+                    case '4':
+                        header('Location: ' . BASE_URL . 'app/SENNOVA/General/index.php');
+                        break;
                     case '3':
                         header('Location: ' . BASE_URL . 'app/presupuesto/index.php');
                         break;
