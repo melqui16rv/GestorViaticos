@@ -113,6 +113,7 @@ class sennova_general_presuspuestal extends Conexion {
     }
 
     public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
+        $dependenciasPermitidas = ['62', '66', '69', '70'];
         $query = "SELECT 
                   op.Numero_Documento,
                   op.Fecha_de_Registro,
@@ -125,52 +126,61 @@ class sennova_general_presuspuestal extends Conexion {
                   op.Medio_de_Pago,
                   op.CDP,
                   op.CODIGO_CRP,
-                  op.Objeto_del_Compromiso
+                  op.Objeto_del_Compromiso,
+                  op.Dependencia
                   FROM op 
                   WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'";
-        
+
         $params = [];
+
+        // Filtro por dependencias permitidas
+        $query .= " AND (";
+        $depConds = [];
+        foreach ($dependenciasPermitidas as $dep) {
+            $depConds[] = "op.Dependencia LIKE ?";
+            $params[] = "%$dep";
+        }
+        $query .= implode(' OR ', $depConds) . ")";
 
         // Filtro por número de documento
         if (!empty($filtros['numeroDocumento'])) {
-            $query .= " AND op.Numero_Documento LIKE :numeroDocumento";
-            $params[':numeroDocumento'] = "%" . $filtros['numeroDocumento'] . "%";
+            $query .= " AND op.Numero_Documento LIKE ?";
+            $params[] = "%" . $filtros['numeroDocumento'] . "%";
         }
 
         // Filtro por estado
         if (!empty($filtros['estado']) && $filtros['estado'] != "Todos") {
-            $query .= " AND op.Estado = :estado";
-            $params[':estado'] = $filtros['estado'];
+            $query .= " AND op.Estado = ?";
+            $params[] = $filtros['estado'];
         }
 
         // Filtro por beneficiario
         if (!empty($filtros['beneficiario'])) {
-            $query .= " AND op.Nombre_Razon_Social LIKE :beneficiario";
-            $params[':beneficiario'] = "%" . $filtros['beneficiario'] . "%";
+            $query .= " AND op.Nombre_Razon_Social LIKE ?";
+            $params[] = "%" . $filtros['beneficiario'] . "%";
         }
 
         // Filtro por mes
         if (!empty($filtros['mes'])) {
-            $query .= " AND MONTH(op.Fecha_de_Registro) = :mes";
-            $params[':mes'] = $filtros['mes'];
+            $query .= " AND MONTH(op.Fecha_de_Registro) = ?";
+            $params[] = $filtros['mes'];
         }
 
         // Filtro por rango de fechas
         if (!empty($filtros['fechaInicio']) && !empty($filtros['fechaFin'])) {
-            $query .= " AND op.Fecha_de_Registro BETWEEN :fechaInicio AND :fechaFin";
-            $params[':fechaInicio'] = $filtros['fechaInicio'];
-            $params[':fechaFin'] = $filtros['fechaFin'];
+            $query .= " AND op.Fecha_de_Registro BETWEEN ? AND ?";
+            $params[] = $filtros['fechaInicio'];
+            $params[] = $filtros['fechaFin'];
         }
 
-        $query .= " ORDER BY op.Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";
-        $params[':limit'] = (int)$limit;
-        $params[':offset'] = (int)$offset;
+        $query .= " ORDER BY op.Fecha_de_Registro DESC LIMIT ? OFFSET ?";
+        $params[] = (int)$limit;
+        $params[] = (int)$offset;
 
         $stmt = $this->conexion->prepare($query);
-        
-        foreach ($params as $param => $value) {
+        foreach ($params as $idx => $value) {
             $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
-            $stmt->bindValue($param, $value, $type);
+            $stmt->bindValue($idx + 1, $value, $type);
         }
 
         $stmt->execute();
