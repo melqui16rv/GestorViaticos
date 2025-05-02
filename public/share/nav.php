@@ -753,7 +753,7 @@ body::-webkit-scrollbar {
                             <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
-                                class="<?php echo ($currentPath === '/viaticosApp/app/SENNOVA/General/index.php') ? 'activeURL' : ''; ?>">
+                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
                                 Panel - SENNOVA
                             </a>
                         </li>
@@ -766,7 +766,7 @@ body::-webkit-scrollbar {
                             <!-- Bloque exclusivo para usuarios con rol 5 (Tecnoparque) -->
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/index.php"
-                                class="<?php echo ($currentPath === '/viaticosApp/app/SENNOVA/Tecnoparque/index.php') ? 'activeURL' : ''; ?>">
+                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/index.php') ? 'activeURL' : ''; ?>">
                                 Panel - Tecnoparque
                             </a>
                         </li>
