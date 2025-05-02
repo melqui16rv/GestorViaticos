@@ -736,16 +736,57 @@ body::-webkit-scrollbar {
         <div class="navbar-left">
             <nav class="menu">
                 <ul class="menu-principal" id="menu-principal">
+                <!-- ----- inicio para rolres 1,2 y 3--------- -->
                     <?php if (isset($_SESSION['id_rol']) && in_array($_SESSION['id_rol'], ['1', '2', '3'])): ?>
                         <li>
                             <?php
                                 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
-                            ?>
+                                ?>
                             <a href="<?php echo BASE_URL; ?>public/share/dashboard.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/public/share/dashboard.php') ? 'activeURL' : ''; ?>">Panel Datos</a>
                         </li>
+                        <?php endif; ?>
+                <!-- ----- fin para rolres 1,2 y 3--------- -->
+                        
+                <!-- ----- inicio para rol 4--------- -->
+                    <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '4'): ?>
+                        <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
+                        <li>
+                            <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                               class="<?php echo ($currentPath === '/viaticosApp/app/SENNOVA/General/index.php') ? 'activeURL' : ''; ?>">
+                                Panel - SENNOVA
+                            </a>
+                        </li>
+                        <!-- Puedes agregar más opciones aquí para el rol 4 -->
                     <?php endif; ?>
-            
+                <!-- ----- fin para rol 4--------- -->
+                <!-- ----- inicio para rol 5--------- -->
+
+                    <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '5'): ?>
+                        <!-- Bloque exclusivo para usuarios con rol 5 (Tecnoparque) -->
+                        <li>
+                            <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/index.php"
+                               class="<?php echo ($currentPath === '/viaticosApp/app/SENNOVA/Tecnoparque/index.php') ? 'activeURL' : ''; ?>">
+                               Panel - Tecnoparque
+                            </a>
+                        </li>
+                        <!-- Puedes agregar más opciones aquí para el rol 5 -->
+                    <?php endif; ?>
+                <!-- ----- fin para rol 5--------- -->
+                <!-- ----- inicio para rol 6--------- -->
+
+                    <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '6'): ?>
+                        <!-- Bloque exclusivo para usuarios con rol 6 (Tecnoacademia) -->
+                        <li>
+                            <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoacademia/index.php"
+                               class="<?php echo ($currentPath === '/viaticosApp/app/SENNOVA/Tecnoacademia/index.php') ? 'activeURL' : ''; ?>">
+                               Panel - Tecnoacademia
+                            </a>
+                        </li>
+                        <!-- Puedes agregar más opciones aquí para el rol 6 -->
+                    <?php endif; ?>
+                <!-- ----- fin para rol 6--------- -->
+                <!-- ----- inicio para rol 3--------- -->
                     <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '3'): ?>
                         <li>
                             <?php
@@ -764,6 +805,8 @@ body::-webkit-scrollbar {
                             <a href="<?php echo BASE_URL; ?>app/presupuesto/historialOP.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/historialOP.php') ? 'activeURL' : ''; ?>">Registros RP (Viáticos)</a>
                         </li>
+                <!-- ----- fin para rol 3--------- -->
+                <!-- ----- inicio para rol 1--------- -->
                     <?php elseif (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '1'): ?>
                         <li>
                             <?php
@@ -773,6 +816,8 @@ body::-webkit-scrollbar {
                             <a href="<?php echo BASE_URL; ?>app/admin/index.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/admin/index.php') ? 'activeURL' : ''; ?>">Panel de control</a>
                         </li>
+                <!-- ----- fin para rol 1--------- -->
+                <!-- ----- inicio para rol 2--------- -->
                     <?php elseif (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '2'): ?>
                         <li>
                             <?php
@@ -783,10 +828,10 @@ body::-webkit-scrollbar {
                                class="<?php echo ($currentPath === '/viaticosApp/app/gestor/index.php') ? 'activeURL' : ''; ?>">
                                Gestor
                             </a>
-
-
                         </li>
+                <!-- ----- fin para rol 2--------- -->
                     <?php endif; ?>
+
                 </ul>
             </nav>
     
