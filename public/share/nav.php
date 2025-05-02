@@ -736,13 +736,15 @@ body::-webkit-scrollbar {
         <div class="navbar-left">
             <nav class="menu">
                 <ul class="menu-principal" id="menu-principal">
-                    <li>
-                        <?php
-                            $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
-                        ?>
-                        <a href="<?php echo BASE_URL; ?>public/share/dashboard.php" 
-                           class="<?php echo ($currentPath === '/viaticosApp/public/share/dashboard.php') ? 'activeURL' : ''; ?>">Panel Datos</a>
-                    </li>
+                    <?php if (isset($_SESSION['id_rol']) && in_array($_SESSION['id_rol'], ['1', '2', '3'])): ?>
+                        <li>
+                            <?php
+                                $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
+                            ?>
+                            <a href="<?php echo BASE_URL; ?>public/share/dashboard.php" 
+                            class="<?php echo ($currentPath === '/viaticosApp/public/share/dashboard.php') ? 'activeURL' : ''; ?>">Panel Datos</a>
+                        </li>
+                    <?php endif; ?>
             
                     <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '3'): ?>
                         <li>
