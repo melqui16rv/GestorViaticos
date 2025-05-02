@@ -717,7 +717,7 @@ body::-webkit-scrollbar {
                                 echo "Tecnoparque ";
                                 break;
                             case '6':
-                                echo "Tecnoparque ";
+                                echo "Tecnoacademia ";
                                 break;
                             default:
                                 echo "";
