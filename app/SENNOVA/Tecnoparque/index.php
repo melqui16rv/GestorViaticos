@@ -69,6 +69,7 @@ requireRole(['5']);
             </div>
             <div id="graficasView">
                 <?php require './Graficas.php'; ?>
+                
             </div>
         </main>
     </div>
