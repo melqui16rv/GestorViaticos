@@ -710,6 +710,15 @@ body::-webkit-scrollbar {
                             case '1':
                                 echo "Admin ";
                                 break;
+                            case '4':
+                                echo "SENNOVA ";
+                                break;
+                            case '5':
+                                echo "Tecnoparque ";
+                                break;
+                            case '6':
+                                echo "Tecnoparque ";
+                                break;
                             default:
                                 echo "";
                         }
