@@ -11,7 +11,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/user.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/metodosGestor.php';
 
 requireRole(['4']);
-$miClaseG = new planeacion();
+$miClaseG = new sennova_general_presuspuestal();
 
 // Leer filtros desde cookies si existen, si no, usar GET, si no, valores por defecto
 function getFiltroCookie($nombre, $default = '') {

@@ -2,7 +2,7 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/sql/conexion.php';
 
-class gestor extends Conexion {
+class sennova_general_presuspuestal extends Conexion {
     private $conexion;
 
     public function __construct() {
@@ -10,196 +10,171 @@ class gestor extends Conexion {
         $this->conexion = $this->obtenerConexion(); // Usar el método heredado
     }
 
-    public function obtenerSaldosAsignados($documento = '', $nombre = '', $cdp = '', $crp = '', $limit = 10, $offset = 0) {
-        $sql = "SELECT sa.*, 
-                       cdp.Numero_Documento AS Numero_Documento_CDP, 
-                       crp.Numero_Documento AS Numero_Documento_CRP
-                FROM saldos_asignados sa
-                INNER JOIN cdp ON sa.CODIGO_CDP = cdp.CODIGO_CDP
-                INNER JOIN crp ON sa.CODIGO_CRP = crp.CODIGO_CRP
-                WHERE 1=1";
+    public function obtenerCDP($numeroDocumento = '', $fuente = '', $reintegros = '', $limit = 10, $offset = 0) {
+        // Construir la consulta base
+        $baseQuery = "SELECT 
+                      Numero_Documento, 
+                      Fecha_de_Registro, 
+                      IFNULL(Fecha_de_Creacion, '') AS Fecha_de_Creacion, 
+                      IFNULL(Estado, '') AS Estado, 
+                      IFNULL(Dependencia, '') AS Dependencia, 
+                      IFNULL(Fuente, '') AS Fuente, 
+                      IFNULL(Valor_Actual, 0) AS Valor_Actual, 
+                      IFNULL(Saldo_por_Comprometer, 0) AS Saldo_por_Comprometer, 
+                      IFNULL(Reintegros, 0) AS Reintegros
+                      FROM cdp
+                      WHERE 1";
+        
         $params = [];
-    
-        if (!empty($documento)) {
-            $sql .= " AND sa.DOCUMENTO_PERSONA LIKE :documento";
-            $params[':documento'] = "%$documento%";
+
+        // Aplicar filtros
+        if (!empty($numeroDocumento)) {
+            $baseQuery .= " AND Numero_Documento LIKE :numeroDocumento";
+            $params[':numeroDocumento'] = "%" . $numeroDocumento . "%";
         }
-    
-        if (!empty($nombre)) {
-            $sql .= " AND sa.NOMBRE_PERSONA LIKE :nombre";
-            $params[':nombre'] = "%$nombre%";
+
+        if (!empty($fuente) && $fuente != "Todos") {
+            $baseQuery .= " AND Fuente = :fuente";
+            $params[':fuente'] = $fuente;
         }
-    
-        if (!empty($cdp)) {
-            $sql .= " AND cdp.Numero_Documento LIKE :cdp";
-            $params[':cdp'] = "%$cdp%";
+
+        if (!empty($reintegros) && $reintegros != "Todos") {
+            if ($reintegros == "Con reintegro") {
+                $baseQuery .= " AND Reintegros <> 0";
+            } elseif ($reintegros == "Sin reintegro") {
+                $baseQuery .= " AND (Reintegros = 0 OR Reintegros IS NULL)";
+            }
         }
-    
-        if (!empty($crp)) {
-            $sql .= " AND crp.Numero_Documento LIKE :crp";
-            $params[':crp'] = "%$crp%";
+
+        // Ordenar por fecha de registro
+        $baseQuery .= " ORDER BY Fecha_de_Registro DESC";
+
+        // Si limit es 'todos', obtener el total de registros
+        if ($limit === 999999) {
+            $countQuery = "SELECT COUNT(*) FROM cdp WHERE 1" . substr($baseQuery, strpos($baseQuery, "WHERE 1") + 7);
+            $stmtCount = $this->conexion->prepare($countQuery);
+            foreach ($params as $param => $value) {
+                $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+                $stmtCount->bindValue($param, $value, $type);
+            }
+            $stmtCount->execute();
+            $totalRegistros = $stmtCount->fetchColumn();
+            $limit = $totalRegistros; // Establecer límite al total de registros
         }
-    
-        $sql .= " ORDER BY sa.FECHA_REGISTRO DESC LIMIT :limit OFFSET :offset";
-        $stmt = $this->conexion->prepare($sql);
-    
-        foreach ($params as $key => $val) {
-            $stmt->bindValue($key, $val);
+
+        // Agregar LIMIT y OFFSET a la consulta principal
+        $baseQuery .= " LIMIT :limit OFFSET :offset";
+        $params[':limit'] = (int)$limit;
+        $params[':offset'] = (int)$offset;
+
+        $stmt = $this->conexion->prepare($baseQuery);
+        
+        // Vincular parámetros
+        foreach ($params as $param => $value) {
+            $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue($param, $value, $type);
         }
-    
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-    
+
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function obtenerSaldosAsignadosConFechas($documento = '', $nombre = '', $cdp = '', $crp = '', $mes = '', $fechaInicio = '', $fechaFin = '', $limit = 10, $offset = 0) {
-        $sql = "SELECT sa.*, 
-                       cdp.Numero_Documento AS Numero_Documento_CDP, 
-                       crp.Numero_Documento AS Numero_Documento_CRP
-                FROM saldos_asignados sa
-                INNER JOIN cdp ON sa.CODIGO_CDP = cdp.CODIGO_CDP
-                INNER JOIN crp ON sa.CODIGO_CRP = crp.CODIGO_CRP
-                WHERE 1=1";
+    // Método adicional para obtener el total de registros
+    public function obtenerTotalCDP($numeroDocumento = '', $fuente = '', $reintegros = '') {
+        $query = "SELECT COUNT(*) FROM cdp WHERE 1";
         $params = [];
 
-        if (!empty($documento)) {
-            $sql .= " AND sa.DOCUMENTO_PERSONA LIKE :documento";
-            $params[':documento'] = "%$documento%";
+        if (!empty($numeroDocumento)) {
+            $query .= " AND Numero_Documento LIKE :numeroDocumento";
+            $params[':numeroDocumento'] = "%" . $numeroDocumento . "%";
         }
 
-        if (!empty($nombre)) {
-            $sql .= " AND sa.NOMBRE_PERSONA LIKE :nombre";
-            $params[':nombre'] = "%$nombre%";
+        if (!empty($fuente) && $fuente != "Todos") {
+            $query .= " AND Fuente = :fuente";
+            $params[':fuente'] = $fuente;
         }
 
-        if (!empty($cdp)) {
-            $sql .= " AND cdp.Numero_Documento LIKE :cdp";
-            $params[':cdp'] = "%$cdp%";
+        if (!empty($reintegros) && $reintegros != "Todos") {
+            if ($reintegros == "Con reintegro") {
+                $query .= " AND Reintegros <> 0";
+            } elseif ($reintegros == "Sin reintegro") {
+                $query .= " AND (Reintegros = 0 OR Reintegros IS NULL)";
+            }
         }
 
-        if (!empty($crp)) {
-            $sql .= " AND crp.Numero_Documento LIKE :crp";
-            $params[':crp'] = "%$crp%";
+        $stmt = $this->conexion->prepare($query);
+        foreach ($params as $param => $value) {
+            $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue($param, $value, $type);
         }
-
-        if (!empty($mes)) {
-            $sql .= " AND MONTH(sa.FECHA_REGISTRO) = :mes";
-            $params[':mes'] = $mes;
-        }
-
-        if (!empty($fechaInicio)) {
-            $sql .= " AND DATE(sa.FECHA_REGISTRO) >= :fechaInicio";
-            $params[':fechaInicio'] = $fechaInicio;
-        }
-
-        if (!empty($fechaFin)) {
-            $sql .= " AND DATE(sa.FECHA_REGISTRO) <= :fechaFin";
-            $params[':fechaFin'] = $fechaFin;
-        }
-
-        $sql .= " ORDER BY sa.FECHA_REGISTRO DESC LIMIT :limit OFFSET :offset";
-        $stmt = $this->conexion->prepare($sql);
-
-        foreach ($params as $key => $val) {
-            $stmt->bindValue($key, $val);
-        }
-
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
-
-        try {
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerSaldosAsignadosConFechas: " . $e->getMessage());
-            return [];
-        }
+        
+        $stmt->execute();
+        return $stmt->fetchColumn();
     }
 
-    public function obtenerDetalleSaldo($idSaldo) {
-        $sql = "SELECT sa.*, 
-                       cdp.Numero_Documento AS Numero_Documento_CDP, 
-                       crp.Numero_Documento AS Numero_Documento_CRP
-                FROM saldos_asignados sa
-                INNER JOIN cdp ON sa.CODIGO_CDP = cdp.CODIGO_CDP
-                INNER JOIN crp ON sa.CODIGO_CRP = crp.CODIGO_CRP
-                WHERE sa.ID_SALDO = :idSaldo";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindValue(':idSaldo', $idSaldo, PDO::PARAM_INT);
+    public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
+        $query = "SELECT 
+                  op.Numero_Documento,
+                  op.Fecha_de_Registro,
+                  op.Fecha_de_Pago,
+                  op.Estado,
+                  op.Nombre_Razon_Social,
+                  op.Valor_Bruto,
+                  op.Valor_Neto,
+                  op.Estado_Cuenta,
+                  op.Medio_de_Pago,
+                  op.CDP,
+                  op.CODIGO_CRP,
+                  op.Objeto_del_Compromiso
+                  FROM op 
+                  WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'";
+        
+        $params = [];
 
-        try {
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerDetalleSaldo: " . $e->getMessage());
-            return null;
+        // Filtro por número de documento
+        if (!empty($filtros['numeroDocumento'])) {
+            $query .= " AND op.Numero_Documento LIKE :numeroDocumento";
+            $params[':numeroDocumento'] = "%" . $filtros['numeroDocumento'] . "%";
         }
-    }
 
-    public function obtenerDetalleCDP($codigoCDP, $campos = '*') {
-        $sql = "SELECT $campos FROM cdp WHERE CODIGO_CDP = :codigoCDP";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindValue(':codigoCDP', $codigoCDP, PDO::PARAM_STR);
-
-        try {
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerDetalleCDP: " . $e->getMessage());
-            return null;
+        // Filtro por estado
+        if (!empty($filtros['estado']) && $filtros['estado'] != "Todos") {
+            $query .= " AND op.Estado = :estado";
+            $params[':estado'] = $filtros['estado'];
         }
-    }
 
-    public function obtenerDetalleCRP($codigoCRP, $campos = '*') {
-        $sql = "SELECT $campos FROM crp WHERE CODIGO_CRP = :codigoCRP";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindValue(':codigoCRP', $codigoCRP, PDO::PARAM_STR);
-
-        try {
-            $stmt->execute();
-            return $stmt->fetch(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerDetalleCRP: " . $e->getMessage());
-            return null;
+        // Filtro por beneficiario
+        if (!empty($filtros['beneficiario'])) {
+            $query .= " AND op.Nombre_Razon_Social LIKE :beneficiario";
+            $params[':beneficiario'] = "%" . $filtros['beneficiario'] . "%";
         }
-    }
 
-    public function obtenerMesesDisponibles() {
-        $sql = "SELECT DISTINCT MONTH(FECHA_REGISTRO) AS mes, 
-                       MONTHNAME(FECHA_REGISTRO) AS nombre_mes 
-                FROM saldos_asignados 
-                ORDER BY mes";
-        $stmt = $this->conexion->prepare($sql);
-
-        try {
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerMesesDisponibles: " . $e->getMessage());
-            return [];
+        // Filtro por mes
+        if (!empty($filtros['mes'])) {
+            $query .= " AND MONTH(op.Fecha_de_Registro) = :mes";
+            $params[':mes'] = $filtros['mes'];
         }
-    }
 
-    // ================================
-    //      MÉTODO PARA IMÁGENES
-    // ================================
-    public function obtenerImagenesDeSaldo($idSaldo) {
-        $sql = "SELECT ID_IMAGEN, ID_SALDO, NOMBRE_ORIGINAL, RUTA_IMAGEN, FECHA_SUBIDA
-                FROM imagenes_saldos_asignados
-                WHERE ID_SALDO = :id_saldo";
-
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->bindValue(':id_saldo', $idSaldo, PDO::PARAM_INT);
-
-        try {
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_ASSOC);
-        } catch (PDOException $e) {
-            error_log("Error en obtenerImagenesDeSaldo: " . $e->getMessage());
-            return [];
+        // Filtro por rango de fechas
+        if (!empty($filtros['fechaInicio']) && !empty($filtros['fechaFin'])) {
+            $query .= " AND op.Fecha_de_Registro BETWEEN :fechaInicio AND :fechaFin";
+            $params[':fechaInicio'] = $filtros['fechaInicio'];
+            $params[':fechaFin'] = $filtros['fechaFin'];
         }
+
+        $query .= " ORDER BY op.Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";
+        $params[':limit'] = (int)$limit;
+        $params[':offset'] = (int)$offset;
+
+        $stmt = $this->conexion->prepare($query);
+        
+        foreach ($params as $param => $value) {
+            $type = is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue($param, $value, $type);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 ?>
