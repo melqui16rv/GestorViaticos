@@ -6,6 +6,9 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/metodosGestor.ph
 requireRole(['4']);
 header('Content-Type: application/json');
 
+// Elimina cualquier salida previa
+ob_clean();
+
 try {
     $gestor = new sennova_general_presuspuestal();
     $action = isset($_GET['action']) ? $_GET['action'] : '';
@@ -25,7 +28,6 @@ try {
         
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
 
-        // Filtrar dependencias permitidas por seguridad extra
         $dependenciasPermitidas = ['62', '66', '69', '70'];
         $resultado = array_values(array_filter($resultado, function($row) use ($dependenciasPermitidas) {
             $dep = null;
@@ -42,11 +44,18 @@ try {
             return false;
         }));
 
+        // Limpia el buffer de salida antes de enviar JSON
+        if (ob_get_length()) ob_end_clean();
         echo json_encode($resultado);
+        exit;
     } else {
-        throw new Exception("Acción no válida");
+        if (ob_get_length()) ob_end_clean();
+        echo json_encode(['error' => 'Acción no válida']);
+        exit;
     }
 } catch (Exception $e) {
+    if (ob_get_length()) ob_end_clean();
     echo json_encode(['error' => $e->getMessage()]);
+    exit;
 }
 ?>
