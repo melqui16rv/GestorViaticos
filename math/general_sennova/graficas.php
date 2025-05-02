@@ -31,6 +31,7 @@ class graficas_general_sennova extends Conexion{
         '44' => 'Apoyos Sostenible',
         '45' => 'Regular',
         '62' => 'WORLDSKILLS',
+        '66' => 'Semilleros de Investigación',
         '69' => 'Tecnoparque',
         '70' => 'Tecnoacademia',
         '84' => 'ECCL Campesena',
