@@ -51,21 +51,8 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 // Filtrar solo dependencias permitidas y asegurar que el campo exista
 $dependenciasPermitidas = ['62', '66', '69', '70'];
 $initialData = array_values(array_filter($initialData, function($row) use ($dependenciasPermitidas) {
-    // Buscar el campo de dependencia (puede estar en 'Dependencia', 'dependencia', o en el objeto del compromiso)
-    $dep = null;
-    if (isset($row['Dependencia'])) {
-        $dep = $row['Dependencia'];
-    } elseif (isset($row['dependencia'])) {
-        $dep = $row['dependencia'];
-    } elseif (isset($row['Objeto_del_Compromiso'])) {
-        // Extraer el código de dependencia del campo Objeto_del_Compromiso si es necesario
-        // Pero normalmente debe venir en el campo Dependencia
-        // Si no existe, no mostrar
-        return false;
-    } else {
-        return false;
-    }
-    if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($dep), $matches)) {
+    if (!isset($row['Dependencia'])) return false;
+    if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($row['Dependencia']), $matches)) {
         return in_array($matches[1], $dependenciasPermitidas);
     }
     return false;
@@ -345,6 +332,14 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                 dataType: 'json',
                 success: function(response) {
                     $("#tablaOP tbody").empty();
+                    // --- NUEVO: Manejo de error JSON ---
+                    if (response && typeof response === 'object' && response.error) {
+                        let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
+                        $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
+                        $("#cargarMas").hide();
+                        return;
+                    }
+                    // --- FIN NUEVO ---
                     if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
                         if(limit === 999999) {
@@ -359,7 +354,9 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                     }
                 },
                 error: function(xhr, status, error){
+                    // --- NUEVO: Mostrar respuesta cruda para depuración ---
                     console.error("Error:", error);
+                    console.log("Respuesta cruda:", xhr.responseText);
                     alert("Error al realizar la búsqueda.");
                 }
             });
