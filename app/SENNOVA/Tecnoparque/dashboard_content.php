@@ -1,21 +1,18 @@
 <?php
 
-ni_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/mmath/sennova/tecnoparque/user.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/sennova/tecnoparque/graficas.php';
 
 
 
-$miClase = new user();
+$miClase = new user_tecnoparque();
 $estadisticas = $miClase->obtenerEstadisticasActualizaciones();
 $estadisticasUsuarios = $miClase->obtenerEstadisticasPorUsuario();
 $totalesRegistros = $miClase->obtenerTotalRegistros();
 $actualizaciones = $miClase->obtenerUltimasActualizaciones(); // Cambiado para usar el método de la clase
 
-$miGraficas = new graficas();
+$miGraficas = new graficas_tecnoparque();
 $conteoCDP = $miGraficas->contarRegistrosPorDependenciaCDP();
 $conteoCRP = $miGraficas->contarRegistrosPorDependenciaCRP();
 $conteoOP  = $miGraficas->contarRegistrosPorDependenciaOP();
