@@ -48,13 +48,24 @@ $filtrosIniciales = [
 // Se obtienen los primeros registros según los filtros de cookies o GET
 $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 
-// Filtrar solo dependencias permitidas
+// Filtrar solo dependencias permitidas y asegurar que el campo exista
 $dependenciasPermitidas = ['62', '66', '69', '70'];
 $initialData = array_values(array_filter($initialData, function($row) use ($dependenciasPermitidas) {
-    // El campo puede llamarse 'Dependencia', 'dependencia', o similar según tu estructura
-    // Ajusta el nombre del campo si es necesario
-    if (!isset($row['Dependencia'])) return false;
-    if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($row['Dependencia']), $matches)) {
+    // Buscar el campo de dependencia (puede estar en 'Dependencia', 'dependencia', o en el objeto del compromiso)
+    $dep = null;
+    if (isset($row['Dependencia'])) {
+        $dep = $row['Dependencia'];
+    } elseif (isset($row['dependencia'])) {
+        $dep = $row['dependencia'];
+    } elseif (isset($row['Objeto_del_Compromiso'])) {
+        // Extraer el código de dependencia del campo Objeto_del_Compromiso si es necesario
+        // Pero normalmente debe venir en el campo Dependencia
+        // Si no existe, no mostrar
+        return false;
+    } else {
+        return false;
+    }
+    if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($dep), $matches)) {
         return in_array($matches[1], $dependenciasPermitidas);
     }
     return false;
@@ -178,7 +189,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                                         <td><?php echo htmlspecialchars($row['Estado']); ?></td>
                                         <td><?php echo htmlspecialchars($row['Nombre_Razon_Social']); ?></td>
                                         <td>
-                                            <span class="multi-line"><?php echo '$ ' . number_format($row['Valor_Neto'], 2, '.', ','); ?></span>
+                                            <span class="multi-line"><?php echo '$ ' . number_format($row['Valor_Neto'], 2, ',', '.'); ?></span>
                                         </td>
                                         <td>
                                             <span class="multi-line">Estado: <?php echo htmlspecialchars($row['Estado_Cuenta']); ?></span>
