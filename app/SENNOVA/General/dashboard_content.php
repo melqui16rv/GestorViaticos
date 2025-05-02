@@ -1,5 +1,4 @@
 <?php
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/user.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/graficas.php';
