@@ -65,10 +65,10 @@ requireRole(['4']);
         <!-- Contenido principal -->
         <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
             <div id="dashboardView">
-                <?php require './dashboard_content.php'; ?>
+                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/dashboard_content.php'; ?>
             </div>
             <div id="graficasView">
-                <?php require './Graficas.php'; ?>
+                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/Graficas.php'; ?>
             </div>
         </main>
     </div>
