@@ -1,9 +1,9 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/sennova/general/graficas.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general-sennova/graficas.php';
 
-$miGraficas = new graficas();
+$miGraficas = new graficas_general_sennova();
 $datosCDP = $miGraficas->obtenerGraficaCDP();
 $datosCRP = $miGraficas->obtenerGraficaCRP();
 $datosOP = $miGraficas->obtenerGraficaOP();

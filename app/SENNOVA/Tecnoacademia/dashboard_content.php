@@ -2,18 +2,18 @@
 
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/sennova/tecnoacademia/user.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/sennova/tecnoacademia/graficas.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoacademia/user.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoacademia/graficas.php';
 
 
 
-$miClase = new user();
+$miClase = new user_tecnoacademia();
 $estadisticas = $miClase->obtenerEstadisticasActualizaciones();
 $estadisticasUsuarios = $miClase->obtenerEstadisticasPorUsuario();
 $totalesRegistros = $miClase->obtenerTotalRegistros();
 $actualizaciones = $miClase->obtenerUltimasActualizaciones(); // Cambiado para usar el método de la clase
 
-$miGraficas = new graficas();
+$miGraficas = new graficas_tecnoacademia();
 $conteoCDP = $miGraficas->contarRegistrosPorDependenciaCDP();
 $conteoCRP = $miGraficas->contarRegistrosPorDependenciaCRP();
 $conteoOP  = $miGraficas->contarRegistrosPorDependenciaOP();

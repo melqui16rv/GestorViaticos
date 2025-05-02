@@ -1,9 +1,9 @@
 <?php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/sennova/tecnoacademia/user.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoacademia/graficas.php';
 
-$miGraficas = new graficas();
+$miGraficas = new graficas_tecnoacademia();
 $datosCDP = $miGraficas->obtenerGraficaCDP();
 $datosCRP = $miGraficas->obtenerGraficaCRP();
 $datosOP = $miGraficas->obtenerGraficaOP();

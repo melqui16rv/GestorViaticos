@@ -2,10 +2,9 @@
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/sql/conexion.php';
 
-require_once __DIR__ . '/../../../sql/conexion.php';
+require_once __DIR__ . '/../../sql/conexion.php';
 
-
-class graficas extends Conexion{
+class graficas_tecnoparque extends Conexion{
     private $conexion;
 
     public function __construct() {
