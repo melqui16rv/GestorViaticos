@@ -20,6 +20,10 @@ requireRole(['4']);
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Heroicons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/index_presupuesto.css">
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/grafica.css">
@@ -80,7 +84,7 @@ requireRole(['4']);
             </div>
         </main>
     </div>
-
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <script>
         // Configurar la altura del nav para los estilos
         document.addEventListener('DOMContentLoaded', function() {
