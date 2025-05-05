@@ -92,8 +92,8 @@ if (isset($_POST['Validar'])) {
                         <i class="fa-solid fa-user"></i>
                         <input type="text" placeholder="Número de documento" name="numero_doc" required>
                     </label>
-                    <div class="password-container"> <label for="">
-                            <i class="fa-solid fa-lock"></i>
+                    <div class="password-container">
+                        <label for="">
                             <input type="password" id="password" placeholder="Contraseña" name="contraseña" required>
                             <i class="fa-solid fa-eye" id="login-togglePassword"></i>
                         </label>
