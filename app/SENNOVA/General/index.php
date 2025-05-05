@@ -69,7 +69,7 @@ requireRole(['4']);
                     </li>
                     <li>
                         <a href="#" id="navIndicadores" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-bar-chart mr-3"></i> Indicadores Viáticos
+                            <i class="ti ti-award mr-3"></i> Indicadores Viáticos
                         </a>
                     </li>
                 </ul>
