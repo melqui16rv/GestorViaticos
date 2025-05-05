@@ -71,9 +71,14 @@ foreach ($estadisticasPorFecha as $estadistica) {
     <div class="stats-summary" id="statsSummary">
         <?php
         $labels = ['cdp' => 'CDP', 'crp' => 'RP', 'op' => 'OP'];
+        $totalesPorDependencia = [
+            'cdp' => $totalCDP,
+            'crp' => $totalCRP,
+            'op'  => $totalOP
+        ];
         $first = true;
         foreach ($labels as $key => $label) {
-            echo '<div class="stat-box stat-selectable'.($first ? ' active' : '').'" data-tipo="'.$key.'"><h4>Total ' . $label . '</h4><div class="number">' . number_format($totalesRegistros[$key] ?? 0) . '</div></div>';
+            echo '<div class="stat-box stat-selectable'.($first ? ' active' : '').'" data-tipo="'.$key.'"><h4>Total ' . $label . '</h4><div class="number">' . number_format($totalesPorDependencia[$key] ?? 0) . '</div></div>';
             $first = false;
         }
         ?>
