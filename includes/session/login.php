@@ -38,12 +38,12 @@ if (isset($_POST['Validar'])) {
     <title>Inicio de Sesión SENA</title>
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/login.css?v=<?php echo filemtime($_SERVER['DOCUMENT_ROOT'] . '/assets/css/share/login.css'); ?>">
-    <link rel="preload" as="image" href="<?php echo BASE_URL; ?>assets/img/public/foto.jpeg">
+    <link rel="preload" as="image" href="<?php echo BASE_URL; ?>assets/img/public/fotoSENA.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         .login-body {
             min-height: 100vh;
-            background: url('<?php echo BASE_URL; ?>assets/img/public/foto.jpeg') no-repeat center center fixed;
+            background: url('<?php echo BASE_URL; ?>assets/img/public/fotoSENA.png') no-repeat center center fixed;
             background-size: cover;
             position: relative;
         }
