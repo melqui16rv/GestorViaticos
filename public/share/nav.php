@@ -765,9 +765,9 @@ body::-webkit-scrollbar {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '5'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 5 (Tecnoparque) -->
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/index.php"
-                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/index.php') ? 'activeURL' : ''; ?>">
-                                Panel - Tecnoparque
+                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
+                                Panel - SENNOVA
                             </a>
                         </li>
                         <!-- Puedes agregar más opciones aquí para el rol 5 -->
@@ -778,9 +778,9 @@ body::-webkit-scrollbar {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '6'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 6 (Tecnoacademia) -->
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoacademia/index.php"
-                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoacademia/index.php') ? 'activeURL' : ''; ?>">
-                                Panel - Tecnoacademia
+                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
+                                Panel - SENNOVA
                             </a>
                         </li>
                         <!-- Puedes agregar más opciones aquí para el rol 6 -->
