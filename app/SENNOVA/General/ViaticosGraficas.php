@@ -20,73 +20,90 @@ $porcentaje_disponible = $valor_actual > 0 ? ($saldo_por_comprometer / $valor_ac
 $porcentaje_consumido_op = $consumo_cdp > 0 ? ($valor_op / $consumo_cdp) * 100 : 0;
 $porcentaje_disponible_op = $consumo_cdp > 0 ? ($saldo_op / $consumo_cdp) * 100 : 0;
 ?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Viáticos</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .contenedorPresupuestoTotal { max-width: 600px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 24px; }
-        .graficaContenedor { width: 100%; height: 320px; }
-        .resultados-container { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; }
-        .resultado-item { flex: 1 1 180px; background: #f7f7f7; border-radius: 8px; padding: 12px 16px; }
-        .resultado-titulo { font-size: 1em; color: #555; margin-bottom: 4px; }
-        .resultado-valor { font-size: 1.2em; font-weight: bold; }
-        .resultado-porcentaje { font-size: 0.95em; color: #888; margin-left: 8px; }
+        body {
+            font-family: 'Inter', sans-serif;
+        }
     </style>
-<body>
-    <!-- PRIMERA SECCIÓN: Presupuesto basado en CDP -->
-    <div class="contenedorPresupuestoTotal">
-        <div class="graficaContenedor">
-            <canvas id="viaticosCDPChart"></canvas>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="container mx-auto grid gap-8">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">Presupuesto de Viáticos (CDP)</h2>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-full md:w-1/2">
+                    <div class="graficaContenedor">
+                        <canvas id="viaticosCDPChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex flex-col gap-6">
+                    <div class="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">Valor Total Viáticos (CDP)</div>
+                        <div class="text-lg font-bold text-blue-600">
+                            $<?php echo number_format($valor_actual, 2, ',', '.'); ?>
+                            <span class="text-green-500 font-medium">100%</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">Saldo Disponible Viáticos (CDP)</div>
+                        <div class="text-lg font-bold text-green-600">
+                            $<?php echo number_format($saldo_por_comprometer, 2, ',', '.'); ?>
+                            <span class="text-blue-500 font-medium"><?php echo number_format($porcentaje_disponible, 2, ',', '.'); ?>%</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">Consumo CDP Viáticos</div>
+                        <div class="text-lg font-bold text-red-600">
+                            $<?php echo number_format($consumo_cdp, 2, ',', '.'); ?>
+                            <span class="text-blue-500 font-medium"><?php echo number_format($porcentaje_consumido, 2, ',', '.'); ?>%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="resultados-container">
-            <div class="resultado-item valor-total">
-                <div class="resultado-titulo">Valor Total Viáticos (CDP)</div>
-                <div class="resultado-valor">
-                    $<?php echo number_format($valor_actual, 2, ',', '.'); ?>
-                    <span class="resultado-porcentaje">100%</span>
-                </div>
-            </div>
-            <div class="resultado-item saldo-disponible">
-                <div class="resultado-titulo">Saldo Disponible Viáticos (CDP)</div>
-                <div class="resultado-valor">
-                    $<?php echo number_format($saldo_por_comprometer, 2, ',', '.'); ?>
-                    <span class="resultado-porcentaje"><?php echo number_format($porcentaje_disponible, 2, ',', '.'); ?>%</span>
-                </div>
-            </div>
-            <div class="resultado-item consumo-cdp">
-                <div class="resultado-titulo">Consumo CDP Viáticos</div>
-                <div class="resultado-valor">
-                    $<?php echo number_format($consumo_cdp, 2, ',', '.'); ?>
-                    <span class="resultado-porcentaje"><?php echo number_format($porcentaje_consumido, 2, ',', '.'); ?>%</span>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <!-- SEGUNDA SECCIÓN: Ejecución del presupuesto (OP) sobre lo comprometido en CDP -->
-    <div class="contenedorPresupuestoTotal">
-        <div class="graficaContenedor">
-            <canvas id="viaticosOPChart"></canvas>
-        </div>
-        <div class="resultados-container">
-            <div class="resultado-item valor-total">
-                <div class="resultado-titulo">Valor Total Comprometido (CDP)</div>
-                <div class="resultado-valor">
-                    $<?php echo number_format($consumo_cdp, 2, ',', '.'); ?>
-                    <span class="resultado-porcentaje">100%</span>
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold text-gray-800 mb-6">Ejecución del Presupuesto (OP)</h2>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-full md:w-1/2">
+                    <div class="graficaContenedor">
+                        <canvas id="viaticosOPChart"></canvas>
+                    </div>
                 </div>
-            </div>
-            <div class="resultado-item saldo-disponible">
-                <div class="resultado-titulo">Saldo Disponible (CDP - OP)</div>
-                <div class="resultado-valor">
-                    $<?php echo number_format($saldo_op, 2, ',', '.'); ?>
-                    <span class="resultado-porcentaje"><?php echo number_format($porcentaje_disponible_op, 2, ',', '.'); ?>%</span>
-                </div>
-            </div>
-            <div class="resultado-item consumo-cdp">
-                <div class="resultado-titulo">Consumo OP Viáticos</div>
-                <div class="resultado-valor">
-                    $<?php echo number_format($valor_op, 2, ',', '.'); ?>
-                    <span class="resultado-porcentaje"><?php echo number_format($porcentaje_consumido_op, 2, ',', '.'); ?>%</span>
+                <div class="w-full md:w-1/2 flex flex-col gap-6">
+                    <div class="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">Valor Total Comprometido (CDP)</div>
+                        <div class="text-lg font-bold text-blue-600">
+                            $<?php echo number_format($consumo_cdp, 2, ',', '.'); ?>
+                            <span class="text-green-500 font-medium">100%</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">Saldo Disponible (CDP - OP)</div>
+                        <div class="text-lg font-bold text-green-600">
+                            $<?php echo number_format($saldo_op, 2, ',', '.'); ?>
+                            <span class="text-blue-500 font-medium"><?php echo number_format($porcentaje_disponible_op, 2, ',', '.'); ?>%</span>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 rounded-lg p-4 flex justify-between items-center">
+                        <div class="text-sm text-gray-600">Consumo OP Viáticos</div>
+                        <div class="text-lg font-bold text-red-600">
+                            $<?php echo number_format($valor_op, 2, ',', '.'); ?>
+                            <span class="text-blue-500 font-medium"><?php echo number_format($porcentaje_consumido_op, 2, ',', '.'); ?>%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -123,19 +140,38 @@ $porcentaje_disponible_op = $consumo_cdp > 0 ? ($saldo_op / $consumo_cdp) * 100 
                 plugins: {
                     datalabels: {
                         color: '#fff',
-                        font: { weight: 'bold', size: 14 },
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
                         formatter: (value, ctx) => value ? value.toFixed(2) + '%' : '',
                         textAlign: 'center'
                     },
-                    legend: { position: 'top', labels: { font: { size: 13 }, padding: 15 } },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 13
+                            },
+                            padding: 15
+                        }
+                    },
                     title: {
                         display: true,
-                        text: 'Distribución del Presupuesto de Viáticos (CDP) - Solo dependencias 62, 66, 69, 70',
-                        font: { size: 16, weight: 'bold' },
-                        padding: { top: 10, bottom: 15 }
+                        text: 'Distribución del Presupuesto de Viáticos (CDP)',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 15
+                        }
                     }
                 },
-                layout: { padding: 10 }
+                layout: {
+                    padding: 10
+                }
             }
         });
 
@@ -166,21 +202,41 @@ $porcentaje_disponible_op = $consumo_cdp > 0 ? ($saldo_op / $consumo_cdp) * 100 
                 plugins: {
                     datalabels: {
                         color: '#fff',
-                        font: { weight: 'bold', size: 14 },
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        },
                         formatter: (value, ctx) => value ? value.toFixed(2) + '%' : '',
                         textAlign: 'center'
                     },
-                    legend: { position: 'top', labels: { font: { size: 13 }, padding: 15 } },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 13
+                            },
+                            padding: 15
+                        }
+                    },
                     title: {
                         display: true,
-                        text: 'Distribución del Presupuesto de Viáticos Consumidos (OP) - Solo dependencias 62, 66, 69, 70',
-                        font: { size: 16, weight: 'bold' },
-                        padding: { top: 10, bottom: 15 }
+                        text: 'Ejecución del Presupuesto de Viáticos (OP)',
+                        font: {
+                            size: 18,
+                            weight: 'bold'
+                        },
+                        padding: {
+                            top: 10,
+                            bottom: 15
+                        }
                     }
                 },
-                layout: { padding: 10 }
+                layout: {
+                    padding: 10
+                }
             }
         });
     });
     </script>
 </body>
+</html>
