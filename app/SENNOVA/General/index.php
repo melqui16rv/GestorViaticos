@@ -25,7 +25,7 @@ requireRole(['4']);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/index_presupuesto.css">
+    <!-- <link rel="stylesheet" href="assets/css/presupuesto/index_presupuesto.css"> -->
     <!-- inicio vista viaticosGravias.php -->
 
     <!-- fin vista viaticosGravias.php -->
