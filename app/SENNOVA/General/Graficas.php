@@ -34,9 +34,6 @@ $datosOP = $miGraficas->obtenerGraficaOP();
             </tbody>
         </table>
     </div>
-    <div class="chart-wrapper">
-        <canvas id="graficaCDP"></canvas>
-    </div>
 
     <!-- Tortas dinámicas para CDP -->
     <h3>Detalle por Dependencia (CDP)</h3>
@@ -68,10 +65,6 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-    <div class="chart-wrapper">
-        <canvas id="graficaCRP"></canvas>
-    </div>
 
     <!-- Tortas dinámicas para CRP -->
     <h3>Detalle por Dependencia (CRP)</h3>
@@ -103,9 +96,6 @@ $datosOP = $miGraficas->obtenerGraficaOP();
                 <?php endforeach; ?>
             </tbody>
         </table>
-    </div>
-    <div class="chart-wrapper">
-        <canvas id="graficaOP"></canvas>
     </div>
 
     <!-- Tortas dinámicas para OP -->
