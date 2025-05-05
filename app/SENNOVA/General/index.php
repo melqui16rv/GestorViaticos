@@ -55,6 +55,11 @@ requireRole(['4']);
                             <i class="ti ti-chart-pie-2 mr-3"></i> Gráficas
                         </a>
                     </li>
+                    <li>
+                        <a href="#" id="navIndicadores" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-bar-chart mr-3"></i> Indicadores Viáticos
+                        </a>
+                    </li>
                 </ul>
             </nav>
             <div class="p-4 border-t border-gray-200 text-xs text-gray-500">
@@ -69,6 +74,9 @@ requireRole(['4']);
             </div>
             <div id="graficasView">
                 <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/Graficas.php'; ?>
+            </div>
+            <div id="indicadoresView">
+                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/IndicadoresViaticos.php'; ?>
             </div>
         </main>
     </div>
@@ -88,6 +96,8 @@ requireRole(['4']);
             const vista = getCookie('dashboard_vista');
             if (vista === 'graficas') {
                 showGraficas();
+            } else if (vista === 'indicadores') {
+                showIndicadores();
             } else {
                 showDashboard();
             }
@@ -99,8 +109,10 @@ requireRole(['4']);
         // Sidebar navegación
         const dashboardView = document.getElementById('dashboardView');
         const graficasView = document.getElementById('graficasView');
+        const indicadoresView = document.getElementById('indicadoresView');
         const navDashboard = document.getElementById('navDashboard');
         const navGraficas = document.getElementById('navGraficas');
+        const navIndicadores = document.getElementById('navIndicadores');
         const sidebar = document.getElementById('sidebarFilament');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const mainContent = document.getElementById('mainContentFilament');
@@ -129,19 +141,33 @@ requireRole(['4']);
         function showDashboard() {
             dashboardView.style.display = 'block';
             graficasView.style.display = 'none';
+            indicadoresView.style.display = 'none';
             navDashboard.classList.add('active');
             navGraficas.classList.remove('active');
+            navIndicadores.classList.remove('active');
             setCookie('dashboard_vista', 'dashboard');
         }
         
         function showGraficas() {
             dashboardView.style.display = 'none';
             graficasView.style.display = 'block';
+            indicadoresView.style.display = 'none';
             navDashboard.classList.remove('active');
             navGraficas.classList.add('active');
+            navIndicadores.classList.remove('active');
             setCookie('dashboard_vista', 'graficas');
         }
-        
+
+        function showIndicadores() {
+            dashboardView.style.display = 'none';
+            graficasView.style.display = 'none';
+            indicadoresView.style.display = 'block';
+            navDashboard.classList.remove('active');
+            navGraficas.classList.remove('active');
+            navIndicadores.classList.add('active');
+            setCookie('dashboard_vista', 'indicadores');
+        }
+
         navDashboard.addEventListener('click', function(e) {
             e.preventDefault();
             showDashboard();
@@ -155,6 +181,13 @@ requireRole(['4']);
             showGraficas();
             if (window.innerWidth < 1024) {
                 closeSidebar(); // En móvil, cerrar sidebar después de navegar
+            }
+        });
+        navIndicadores.addEventListener('click', function(e) {
+            e.preventDefault();
+            showIndicadores();
+            if (window.innerWidth < 1024) {
+                closeSidebar();
             }
         });
 
