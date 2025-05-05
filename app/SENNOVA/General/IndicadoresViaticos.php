@@ -8,7 +8,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/user.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/metodosGestor.php';
 
-requireRole(['4']);
+requireRole(['4', '5', '6']);
 $miClaseG = new sennova_general_presuspuestal();
 
 // Función para leer filtros de cookies o usar valores por defecto
