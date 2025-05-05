@@ -153,7 +153,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                     </div>
                 </div>
 
-                <div class="bg-white rounded-lg shadow-md overflow-x-auto">
+                <div class="bg-white rounded-lg shadow-md overflow-x-auto" style="padding: 20px;">
                     <div class="py-3">
                         <table id="tablaOP" class="min-w-full table-auto rounded-lg">
                             <thead class="thead-sticky bg-gray-100">
