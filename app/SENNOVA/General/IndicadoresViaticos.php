@@ -91,15 +91,15 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                                 <div>
                                     <label for="numeroDocumento" class="block text-gray-700 text-sm font-bold mb-2">N° Orden de Pago</label>
-                                    <input type="text" id="numeroDocumento" name="numeroDocumento" value="<?php echo htmlspecialchars($numeroDocumento); ?>" placeholder="Número OP" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <input type="text" id="numeroDocumento" name="numeroDocumento" value="<?php echo htmlspecialchars($numeroDocumento); ?>" placeholder="Número OP" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div>
                                     <label for="beneficiario" class="block text-gray-700 text-sm font-bold mb-2">Beneficiario</label>
-                                    <input type="text" id="beneficiario" name="beneficiario" value="<?php echo htmlspecialchars($beneficiario); ?>" placeholder="Nombre beneficiario" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <input type="text" id="beneficiario" name="beneficiario" value="<?php echo htmlspecialchars($beneficiario); ?>" placeholder="Nombre beneficiario" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div>
                                     <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">Estado</label>
-                                    <select id="estado" name="estado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <select id="estado" name="estado" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                         <option value="Todos" <?php echo ($estado=='Todos') ? 'selected' : ''; ?>>Todos</option>
                                         <option value="Pagada" <?php echo ($estado=='Pagada') ? 'selected' : ''; ?>>Pagada</option>
                                         <option value="Pendiente" <?php echo ($estado=='Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
@@ -107,38 +107,38 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                                 </div>
                                 <div>
                                     <label for="mes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
-                                    <select id="mes" name="mes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <select id="mes" name="mes" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                         <option value="">Todos los meses</option>
-                                        <option value="1">Enero</option>
-                                        <option value="2">Febrero</option>
-                                        <option value="3">Marzo</option>
-                                        <option value="4">Abril</option>
-                                        <option value="5">Mayo</option>
-                                        <option value="6">Junio</option>
-                                        <option value="7">Julio</option>
-                                        <option value="8">Agosto</option>
-                                        <option value="9">Septiembre</option>
-                                        <option value="10">Octubre</option>
-                                        <option value="11">Noviembre</option>
-                                        <option value="12">Diciembre</option>
+                                        <option value="1" <?php echo ($mes=='1') ? 'selected' : ''; ?>>Enero</option>
+                                        <option value="2" <?php echo ($mes=='2') ? 'selected' : ''; ?>>Febrero</option>
+                                        <option value="3" <?php echo ($mes=='3') ? 'selected' : ''; ?>>Marzo</option>
+                                        <option value="4" <?php echo ($mes=='4') ? 'selected' : ''; ?>>Abril</option>
+                                        <option value="5" <?php echo ($mes=='5') ? 'selected' : ''; ?>>Mayo</option>
+                                        <option value="6" <?php echo ($mes=='6') ? 'selected' : ''; ?>>Junio</option>
+                                        <option value="7" <?php echo ($mes=='7') ? 'selected' : ''; ?>>Julio</option>
+                                        <option value="8" <?php echo ($mes=='8') ? 'selected' : ''; ?>>Agosto</option>
+                                        <option value="9" <?php echo ($mes=='9') ? 'selected' : ''; ?>>Septiembre</option>
+                                        <option value="10" <?php echo ($mes=='10') ? 'selected' : ''; ?>>Octubre</option>
+                                        <option value="11" <?php echo ($mes=='11') ? 'selected' : ''; ?>>Noviembre</option>
+                                        <option value="12" <?php echo ($mes=='12') ? 'selected' : ''; ?>>Diciembre</option>
                                     </select>
                                 </div>
                                 <div>
                                     <label for="fechaInicio" class="block text-gray-700 text-sm font-bold mb-2">Fecha Inicio</label>
-                                    <input type="date" id="fechaInicio" name="fechaInicio" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <input type="date" id="fechaInicio" name="fechaInicio" value="<?php echo htmlspecialchars($fechaInicio); ?>" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div>
                                     <label for="fechaFin" class="block text-gray-700 text-sm font-bold mb-2">Fecha Fin</label>
-                                    <input type="date" id="fechaFin" name="fechaFin" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    <input type="date" id="fechaFin" name="fechaFin" value="<?php echo htmlspecialchars($fechaFin); ?>" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                  <div>
                                     <label for="registrosPorPagina" class="block text-gray-700 text-sm font-bold mb-2">N° Registros</label>
-                                    <select id="registrosPorPagina" name="registrosPorPagina" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                        <option value="10">10</option>
-                                        <option value="20">20</option>
-                                        <option value="40">40</option>
-                                        <option value="60">60</option>
-                                        <option value="todos">Todos</option>
+                                    <select id="registrosPorPagina" name="registrosPorPagina" class="filtro-dinamico shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        <option value="10" <?php echo ($registrosPorPagina=='10') ? 'selected' : ''; ?>>10</option>
+                                        <option value="20" <?php echo ($registrosPorPagina=='20') ? 'selected' : ''; ?>>20</option>
+                                        <option value="40" <?php echo ($registrosPorPagina=='40') ? 'selected' : ''; ?>>40</option>
+                                        <option value="60" <?php echo ($registrosPorPagina=='60') ? 'selected' : ''; ?>>60</option>
+                                        <option value="todos" <?php echo ($registrosPorPagina=='todos') ? 'selected' : ''; ?>>Todos</option>
                                     </select>
                                 </div>
                                 <div class="flex items-end justify-end space-x-2 mt-2">
@@ -479,7 +479,6 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
 // --- Inicialización: establecer filtros y realizar la primera búsqueda ---
             setFiltrosDesdeCookies();
             actualizarFiltrosActivos();
-            buscarDinamico();
         });
     </script>
 </body>
