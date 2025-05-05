@@ -20,7 +20,17 @@ $porcentaje_disponible = $valor_actual > 0 ? ($saldo_por_comprometer / $valor_ac
 $porcentaje_consumido_op = $consumo_cdp > 0 ? ($valor_op / $consumo_cdp) * 100 : 0;
 $porcentaje_disponible_op = $consumo_cdp > 0 ? ($saldo_op / $consumo_cdp) * 100 : 0;
 ?>
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <style>
+        .contenedorPresupuestoTotal { max-width: 600px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 24px; }
+        .graficaContenedor { width: 100%; height: 320px; }
+        .resultados-container { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; }
+        .resultado-item { flex: 1 1 180px; background: #f7f7f7; border-radius: 8px; padding: 12px 16px; }
+        .resultado-titulo { font-size: 1em; color: #555; margin-bottom: 4px; }
+        .resultado-valor { font-size: 1.2em; font-weight: bold; }
+        .resultado-porcentaje { font-size: 0.95em; color: #888; margin-left: 8px; }
+    </style>
 <body>
     <!-- PRIMERA SECCIÓN: Presupuesto basado en CDP -->
     <div class="contenedorPresupuestoTotal">

@@ -27,17 +27,7 @@ requireRole(['4']);
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/index_presupuesto.css">
     <!-- inicio vista viaticosGravias.php -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
-    <style>
-        .contenedorPresupuestoTotal { max-width: 600px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #0001; padding: 24px; }
-        .graficaContenedor { width: 100%; height: 320px; }
-        .resultados-container { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 18px; }
-        .resultado-item { flex: 1 1 180px; background: #f7f7f7; border-radius: 8px; padding: 12px 16px; }
-        .resultado-titulo { font-size: 1em; color: #555; margin-bottom: 4px; }
-        .resultado-valor { font-size: 1.2em; font-weight: bold; }
-        .resultado-porcentaje { font-size: 0.95em; color: #888; margin-left: 8px; }
-    </style>
+
     <!-- fin vista viaticosGravias.php -->
 
 <!-- fin vista IndicadoresViaticos.php -->
