@@ -326,7 +326,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
             };
 
             $.ajax({
-                url: './control.php/ajaxGestor.php',
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
@@ -380,7 +380,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
             };
 
             $.ajax({
-                url: './control.php/ajaxGestor.php',
+                url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',

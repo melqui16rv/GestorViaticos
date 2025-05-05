@@ -6,13 +6,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/metodosGestor.ph
 requireRole(['4']);
 header('Content-Type: application/json');
 
-// Elimina cualquier salida previa
-ob_clean();
+// --- Quitar ob_clean y ob_end_clean para evitar problemas de buffer ---
+// ob_clean();
 
 try {
     $gestor = new sennova_general_presuspuestal();
     $action = isset($_GET['action']) ? $_GET['action'] : '';
-    
+
+    // --- Log temporal para depuración ---
+    // file_put_contents('/tmp/ajaxgestor.log', "action: $action\n", FILE_APPEND);
+
     if ($action === 'buscarOP' || $action === 'cargarMas') {
         $filtros = [
             'numeroDocumento' => $_GET['numeroDocumento'] ?? '',
@@ -22,10 +25,10 @@ try {
             'fechaInicio' => $_GET['fechaInicio'] ?? '',
             'fechaFin' => $_GET['fechaFin'] ?? ''
         ];
-        
+
         $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
-        
+
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
 
         $dependenciasPermitidas = ['62', '66', '69', '70'];
@@ -44,17 +47,14 @@ try {
             return false;
         }));
 
-        // Limpia el buffer de salida antes de enviar JSON
-        if (ob_get_length()) ob_end_clean();
+        // --- Siempre retornar JSON válido ---
         echo json_encode($resultado);
         exit;
     } else {
-        if (ob_get_length()) ob_end_clean();
         echo json_encode(['error' => 'Acción no válida']);
         exit;
     }
 } catch (Exception $e) {
-    if (ob_get_length()) ob_end_clean();
     echo json_encode(['error' => $e->getMessage()]);
     exit;
 }
