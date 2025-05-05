@@ -43,7 +43,7 @@ body, html {
 
 /* Contenedor del formulario - con un leve blur y muy poca opacidad */
 .login-formulario-contenedor {
-    background: rgba(27, 60, 91, 0.15); /* Azul oscuro con muy poca opacidad */
+    background: rgba(0, 0, 0, 0.15); /* Azul oscuro con muy poca opacidad */
     border-radius: 15px;
     padding: 2rem;
     width: 100%;
