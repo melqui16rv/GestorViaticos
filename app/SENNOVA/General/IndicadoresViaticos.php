@@ -64,105 +64,50 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial de Órdenes de Pago</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Estilos personalizados (puedes agregarlos aquí o en un archivo CSS aparte) */
-        .contenedor {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .contenido {
-            flex: 1;
-        }
-        .contenedorStandar {
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-        .filtrosContenedor {
-            margin-bottom: 15px;
-            padding: 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-            background-color: #f8f9fa;
-        }
-        .filtro-grupo {
-            margin-bottom: 10px;
-        }
-        .filtro-botones {
-            margin-top: 10px;
-        }
-        .contenderDeTabla {
-            overflow-x: auto; /* Para hacer la tabla horizontalmente desplazable en pantallas pequeñas */
-        }
-        .tablaBusqueda {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .tablaBusqueda th, .tablaBusqueda td {
-            border: 1px solid #dee2e6;
-            padding: 8px;
-            text-align: left;
-            vertical-align: middle;
-        }
-        .tablaBusqueda th {
-            background-color: #007bff;
-            color: white;
-        }
-        .multi-line {
-            display: block;
-            margin-bottom: 5px;
-        }
-         .contenedorStandar2 {
-            padding: 20px;
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0.25rem;
-        }
-        #filtros-activos {
-            margin-top: 10px;
-        }
-        .filtro-tag {
-            background: #e9ecef;
-            padding: 0.3em 0.6em;
-            border-radius: 0.25em;
-            margin-right: 0.5em;
-            font-size: 0.875rem;
-        }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      .thead-sticky {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
     </style>
 </head>
-<body>
-    <div class="contenedor">
-        <div class="contenido">
-            <div class="contenedorStandar">
-                <div class="filtrosContenedor">
-                    <div id="filtros">
-                        <form id="filtroForm" method="GET" action="historialOP.php" onsubmit="return false;">
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                    <label for="numeroDocumento">N° Orden de Pago</label>
-                                    <input type="text" class="form-control filtro-dinamico" id="numeroDocumento" name="numeroDocumento"
-                                           value="<?php echo htmlspecialchars($numeroDocumento); ?>"
-                                           placeholder="Número OP">
-                                </div
-                                <div class="form-group col-md-3">
-                                    <label for="beneficiario">Beneficiario</label>
-                                    <input type="text" class="form-control filtro-dinamico" id="beneficiario" name="beneficiario"
-                                           value="<?php echo htmlspecialchars($beneficiario); ?>"
-                                           placeholder="Nombre beneficiario">
+<body class="bg-gray-100">
+    <div class="min-h-screen flex flex-col">
+        <div class="flex-grow">
+            <div class="container mx-auto px-4 py-8">
+                <div class="bg-white rounded-lg shadow-md mb-6">
+                    <div class="p-6">
+                        <h2 class="text-xl font-semibold text-gray-800 mb-4">Filtros de Búsqueda</h2>
+                        <form id="filtroForm" method="GET" action="historialOP.php" onsubmit="return false;" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                                <div>
+                                    <label for="numeroDocumento" class="block text-gray-700 text-sm font-bold mb-2">N° Orden de Pago</label>
+                                    <input type="text" id="numeroDocumento" name="numeroDocumento" value="<?php echo htmlspecialchars($numeroDocumento); ?>" placeholder="Número OP" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="estado">Estado</label>
-                                    <select id="estado" name="estado" class="form-control filtro-dinamico">
+                                <div>
+                                    <label for="beneficiario" class="block text-gray-700 text-sm font-bold mb-2">Beneficiario</label>
+                                    <input type="text" id="beneficiario" name="beneficiario" value="<?php echo htmlspecialchars($beneficiario); ?>" placeholder="Nombre beneficiario" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div>
+                                    <label for="estado" class="block text-gray-700 text-sm font-bold mb-2">Estado</label>
+                                    <select id="estado" name="estado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                         <option value="Todos" <?php echo ($estado=='Todos') ? 'selected' : ''; ?>>Todos</option>
                                         <option value="Pagada" <?php echo ($estado=='Pagada') ? 'selected' : ''; ?>>Pagada</option>
                                         <option value="Pendiente" <?php echo ($estado=='Pendiente') ? 'selected' : ''; ?>>Pendiente</option>
                                     </select>
                                 </div>
-                                 <div class="form-group col-md-3">
-                                    <label for="mes">Mes</label>
-                                    <select id="mes" name="mes" class="form-control filtro-dinamico">
+                                <div>
+                                    <label for="mes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
+                                    <select id="mes" name="mes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                         <option value="">Todos los meses</option>
                                         <option value="1">Enero</option>
                                         <option value="2">Febrero</option>
@@ -178,20 +123,17 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                                         <option value="12">Diciembre</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-3">
-                                     <label for="fechaInicio">Fecha Inicio</label>
-                                    <input type="date" id="fechaInicio" name="fechaInicio" class="form-control filtro-dinamico">
+                                <div>
+                                    <label for="fechaInicio" class="block text-gray-700 text-sm font-bold mb-2">Fecha Inicio</label>
+                                    <input type="date" id="fechaInicio" name="fechaInicio" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-                                <div class="form-group col-md-3">
-                                    <label for="fechaFin">Fecha Fin</label>
-                                    <input type="date" id="fechaFin" name="fechaFin" class="form-control filtro-dinamico">
+                                <div>
+                                    <label for="fechaFin" class="block text-gray-700 text-sm font-bold mb-2">Fecha Fin</label>
+                                    <input type="date" id="fechaFin" name="fechaFin" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-
-                                <div class="form-group col-md-3">
-                                    <label for="registrosPorPagina">N° Registros</label>
-                                    <select id="registrosPorPagina" name="registrosPorPagina" class="form-control filtro-dinamico">
+                                 <div>
+                                    <label for="registrosPorPagina" class="block text-gray-700 text-sm font-bold mb-2">N° Registros</label>
+                                    <select id="registrosPorPagina" name="registrosPorPagina" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                         <option value="10">10</option>
                                         <option value="20">20</option>
                                         <option value="40">40</option>
@@ -199,51 +141,52 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                                         <option value="todos">Todos</option>
                                     </select>
                                 </div>
-                                <div class="form-group col-md-3 d-flex align-items-end">
-                                    <button type="button" id="limpiarFiltros" class="btn btn-outline-danger mr-2">
-                                        <i class="fas fa-times"></i> Limpiar
+                                <div class="flex items-end justify-end space-x-2 mt-2">
+                                    <button type="button" id="limpiarFiltros" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                                        <i class="fas fa-times mr-2"></i> Limpiar
                                     </button>
-                                    <button id="cargarMas" class="btn btn-primary">+ Registros</button>
+                                    <button id="cargarMas" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">+ Registros</button>
                                 </div>
                             </div>
                         </form>
-                        <div id="filtros-activos"></div>
+                        <div id="filtros-activos" class="mt-4 text-sm text-gray-600"></div>
                     </div>
                 </div>
-                <div class="contenderDeTabla">
-                    <div class="contendor_tabla">
-                        <table id="tablaOP" class="table table-striped table-bordered table-hover">
-                            <thead class="thead-dark">
+
+                <div class="bg-white rounded-lg shadow-md overflow-x-auto">
+                    <div class="py-3">
+                        <table id="tablaOP" class="min-w-full table-auto rounded-lg">
+                            <thead class="thead-sticky bg-gray-100">
                                 <tr>
-                                    <th>N° OP</th>
-                                    <th>Fechas</th>
-                                    <th>Estado</th>
-                                    <th>Beneficiario</th>
-                                    <th>Valor Neto</th>
-                                    <th>Información<br>Bancaria</th>
-                                    <th>Códigos Asociados</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">N° OP</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">Fechas</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">Estado</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">Beneficiario</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">Valor Neto</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">Información Bancaria</th>
+                                    <th class="px-4 py-2 text-left text-gray-600 font-semibold uppercase">Códigos Asociados</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="text-gray-700">
                                 <?php foreach ($initialData as $row): ?>
                                     <tr data-documento="<?php echo htmlspecialchars($row['Numero_Documento']); ?>">
-                                        <td><?php echo htmlspecialchars($row['Numero_Documento']); ?></td>
-                                         <td>
-                                            <span class="multi-line">Registro: <?php echo htmlspecialchars($row['Fecha_de_Registro']); ?></span>
-                                            <span class="multi-line">Pago: <?php echo htmlspecialchars($row['Fecha_de_Pago']); ?></span>
+                                        <td class="border px-4 py-2"><?php echo htmlspecialchars($row['Numero_Documento']); ?></td>
+                                        <td class="border px-4 py-2">
+                                            <span class="block"><?php echo htmlspecialchars($row['Fecha_de_Registro']); ?></span>
+                                            <span class="block"><?php echo htmlspecialchars($row['Fecha_de_Pago']); ?></span>
                                         </td>
-                                        <td><?php echo htmlspecialchars($row['Estado']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['Nombre_Razon_Social']); ?></td>
-                                        <td>
-                                            <span class="multi-line"><?php echo '$ ' . number_format($row['Valor_Neto'], 2, ',', '.'); ?></span>
+                                        <td class="border px-4 py-2"><?php echo htmlspecialchars($row['Estado']); ?></td>
+                                        <td class="border px-4 py-2"><?php echo htmlspecialchars($row['Nombre_Razon_Social']); ?></td>
+                                        <td class="border px-4 py-2">
+                                            <span class="block"><?php echo '$ ' . number_format($row['Valor_Neto'], 2, ',', '.'); ?></span>
                                         </td>
-                                        <td>
-                                            <span class="multi-line">Estado: <?php echo htmlspecialchars($row['Estado_Cuenta']); ?></span>
-                                            <span class="multi-line">Medio: <?php echo htmlspecialchars($row['Medio_de_Pago']); ?></span>
+                                        <td class="border px-4 py-2">
+                                            <span class="block">Estado: <?php echo htmlspecialchars($row['Estado_Cuenta']); ?></span>
+                                            <span class="block">Medio: <?php echo htmlspecialchars($row['Medio_de_Pago']); ?></span>
                                         </td>
-                                        <td>
-                                            <span class="multi-line">CDP: <?php echo htmlspecialchars($row['CDP']); ?></span>
-                                            <span class="multi-line">CRP: <?php echo htmlspecialchars($row['CODIGO_CRP']); ?></span>
+                                        <td class="border px-4 py-2">
+                                            <span class="block">CDP: <?php echo htmlspecialchars($row['CDP']); ?></span>
+                                            <span class="block">CRP: <?php echo htmlspecialchars($row['CODIGO_CRP']); ?></span>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
@@ -252,18 +195,15 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                     </div>
                 </div>
             </div>
-            <div class="contenedorStandar2">
-                <div class="contenedorGrafiaca">
+             <div class="container mx-auto px-4 py-8">
+                <div class="bg-white rounded-lg shadow-md p-6">
                     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/ViaticosGraficas.php'; ?>
                 </div>
             </div>
         </div>
     </div>
 
-     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
         $(document).ready(function(){
             // --- Variables de paginación ---
@@ -368,7 +308,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
 
                 for (const [key, value] of Object.entries(filtros)) {
                     if (value) {
-                        filtrosHTML += `<span class="filtro-tag">${key}: ${value}</span>`;
+                        filtrosHTML += `<span class="inline-block bg-indigo-200 text-indigo-700 px-2 py-1 rounded-full text-sm font-semibold mr-2">${key}: ${value}</span>`;
                         hayFiltros = true;
                     }
                 }
@@ -402,7 +342,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                          // --- Manejo de la respuesta ---
                         if (response && typeof response === 'object' && response.error) {
                             let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
-                            $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
+                            $("#tablaOP tbody").append(`<tr><td colspan='7' class="px-4 py-2 border text-center text-gray-500">${mensajeNoResultados}</td></tr>`);
                             $("#cargarMas").hide();
                             return;
                         }
@@ -415,7 +355,7 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
                             }
                         } else {
                              let mensajeNoResultados = "No se encontraron resultados con los filtros seleccionados";
-                            $("#tablaOP tbody").append(`<tr><td colspan='7' style='text-align: center;'>${mensajeNoResultados}</td></tr>`);
+                            $("#tablaOP tbody").append(`<tr><td colspan='7' class="px-4 py-2 border text-center text-gray-500">${mensajeNoResultados}</td></tr>`);
                             $("#cargarMas").hide();
                         }
                     },
@@ -507,10 +447,10 @@ $initialData = array_values(array_filter($initialData, function($row) use ($depe
             function createTableRow(row) {
                 return `
                     <tr data-documento="${row.Numero_Documento}">
-                        <td>${row.Numero_Documento}</td>
-                        <td>
-                            <span class="multi-line">Registro: ${row.Fecha_de_Registro}</span>
-                            <span class="multi-line">Pago: ${row.Fecha_de_Pago}</span>
+                        <td class="border px-4 py-2">${row.Numero_Documento}</td>
+                        <td class="border px-4 py-2">
+                            <span class="block">${row.Fecha_de_Registro}</span>
+                            <span class="block">${row.Fecha_de_Pago}</span>
                         </td>
                         <td>${row.Estado}</td>
                         <td>${row.Nombre_Razon_Social}</td>
