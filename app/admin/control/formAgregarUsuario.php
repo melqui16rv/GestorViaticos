@@ -180,9 +180,37 @@ if (isset($_POST['Registrar'])) {
             margin-top: 0.25rem;
             text-align: center;
         }
+
+        .back-button {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            background-color: #e5e7eb;
+            color: #374151;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-button:hover {
+            background-color: #d1d5db;
+        }
+
+        .back-button i {
+            font-size: 1.25rem;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
+    <button class="back-button" onclick="window.history.back()">
+        <i class="fas fa-arrow-left"></i> Regresar
+    </button>
     <div class="card">
         <form action="" method="POST" class="space-y-6">
             <h2 class="form-section-title">Agregar Usuario</h2>
