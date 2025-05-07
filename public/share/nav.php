@@ -772,7 +772,7 @@ body::-webkit-scrollbar {
                             </li>
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
-                                    class="<?php echo ($currentPath === '/viaticosapp/app/SENNOVA/Tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
+                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/Tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
                                     Panel - Metas
                                 </a>
                             </li>
