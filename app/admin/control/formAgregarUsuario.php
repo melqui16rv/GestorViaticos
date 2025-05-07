@@ -294,19 +294,19 @@ if (isset($_POST['Registrar'])) {
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <div class="password-container">
                         <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese la contraseña" required class="form-input password-input">
-                        <span class="password-toggle" id="togglePassword">👁️‍🗨️</span>
+                        <span class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></span>
                     </div>
-                    <div class="password-container">
-                        <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input">
-                        <span class="password-toggle" id="toggleConfirmPassword">👁️‍🗨️</span>
+                    <div class="password-strength">
+                        <div id="passwordStrengthBar" class="password-strength-bar"></div>
                     </div>
-
+                    <div id="passwordStrengthText" class="password-strength-text"> </div>
                 </div>
+
                 <div>
                     <label for="contraseña_confirmation" class="form-label">Confirmar Contraseña</label>
                     <div class="password-container">
                         <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input">
-                        <i class="far fa-eye password-toggle" id="toggleConfirmPassword"></i>
+                        <span class="password-toggle" id="toggleConfirmPassword"><i class="far fa-eye"></i></span>
                     </div>
                 </div>
             </div>
