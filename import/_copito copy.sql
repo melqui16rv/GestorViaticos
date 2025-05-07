@@ -176,8 +176,14 @@ COMMIT;
 
 -- Datos para la tabla `usuario`
 INSERT INTO `usuario` (`numero_documento`, `tipo_doc`, `nombre_completo`, `contraseña`, `email`, `telefono`, `id_rol`) VALUES
-('1007695451', 'Cédula de ciudadanía', 'Julian Camilo Piñeros Zubieta', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'jcpinerosz@sena.edu.co', '3015325123', '3'),
+('1007695451', 'Cédula de ciudadanía', 'Julian Camilo Piñeros Zubieta', '$2y$10$k7MrQs0EI3ERe6/KE.EGyO1eW4g2Uvoz/LvHD71tUl1MTJIamE/HG', 'jcpinerosz@sena.edu.co', '3015325123', '3'),
 ('1010244141', 'Cédula de ciudadanía', 'Laura Lopez Rodriguez', '$2y$10$pDbPQMkUEjzzkfTd4yPi5O812xUQyLyhZuXyH040eijTQ98oS2jte', 'laulopezr@sena.edu.co', '3164101647', '3'),
 ('1073672380', 'Cédula de ciudadanía', 'Melqui Alexander Romero', '$2y$10$u2iloUCRe9Bahko.YETDz.vHr/kOfdRWEZ6iIO5t/4923X8/r0fH6', 'melquiveru@gmail.com', '3026074008', '1'),
+('1111', 'Cédula de ciudadanía', 'SENNOVA ADMINISTRADOR', '$2y$10$jNoWJl67VSkVt.avkTJtKu.LRB1A3xiZcgjcv4g8JZlxcAu.YRbBa', 'SENNOVA@ADMINISTRADOR.COM', '3000', '4'),
+('2222', 'Cédula de ciudadanía', 'Tecnoparque ADMINISTRADOR', '$2y$10$zOlah79nlXDP95M7jFzv7.3nJh0qH9gfm86frtCzEakHV1edvRDZS', 'Tecnoparque@ADMINISTRADOR.com', '2222', '5'),
 ('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'juliancamilo290700@gmail.com', '3015325123', '1'),
-('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'medinab@sena.edu.co', '123445', '2');
+('3333', 'Cédula de ciudadanía', 'Tecnoacademia ADMINISTRADOR', '$2y$10$ONIqKEj/3gj7bSYQmVIlR.LdRIW0XBgzK.dna8QB4taR.4IMX.qry', 'Tecnoacademia@ADMINISTRADOR.com', '3333', '6'),
+('52366315', 'Cédula de ciudadanía', 'Carolina Cárdenas Herrera', '$2y$10$TvAj3BiRQ6t62K7EKUZJ0OrfMY7Jb8br5EXCzmAgjLyxx2rXTwA0m', 'ccardenash@sena.edu.co', '3168975203', '4'),
+('5555', 'Cédula de ciudadanía', 'mmm ppp', '$2y$10$VKVnFKEPPvB3HwcrVdFv1OwJsRUlhSVAviXboVQjvcslNb057miOq', 'melqui@gmail.com', '000', '2'),
+('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '$2y$10$0kJAeSsQH9h2FQ23A1ge1uduPyQA2ss7PsbeL10.8tRVWWJ2IGIi2', 'medinab@sena.edu.co', '123445', '3'),
+('80153856', 'Cédula de ciudadanía', 'Juan Carlos Arias Chavarro', '$2y$10$fNkr/T7MA2JW3x/bfF5z3./HdyBU0HRjV.xa8w/opNVsWlk35Q3aq', 'jariasc@sena.edu.co', '3045766105', '6');
