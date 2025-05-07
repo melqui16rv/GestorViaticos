@@ -8,17 +8,17 @@ if (isset($_POST['Registrar'])) {
     $num_doc = $_POST['num_doc'];
     $tipo_doc = $_POST['tipo_doc'];
     $nombres = $_POST['nombres'];
-    $apellidos = $_apellidos = $_POST['apellidos'];
+    $apellidos = $_POST['apellidos'];
     $nombre_completo = $nombres . ' ' . $apellidos;
     $email = $_POST['email'];
     $telefono = $_POST['telefono'];
     $id_rol = $_POST['id_rol'];
     $contraseña = $_POST['contraseña'];
-    $contraseña_confirmation = $_POST['contraseña_confirmation']; // Obtener la confirmación
+    $contraseña_confirmation = $_POST['contraseña_confirmation'];
 
     // Validar la confirmación de la contraseña
     if ($contraseña !== $contraseña_confirmation) {
-        $error_message = "Las contraseñas no coinciden."; // Establecer un mensaje de error
+        $error_message = "Las contraseñas no coinciden.";
     } else {
         $dato->crearUsuario($num_doc, $tipo_doc, $nombre_completo, $contraseña, $email, $telefono, $id_rol);
         //  potencialmente redirigir o mostrar éxito
@@ -37,60 +37,73 @@ if (isset($_POST['Registrar'])) {
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* bg-gray-100 */
+            background-color: #f3f4f6;
         }
+
         .form-label {
             font-weight: 600;
-            color: #4b5563; /* text-gray-700 */
-            margin-bottom: 0.5rem; /* mb-2 */
+            color: #4b5563;
+            margin-bottom: 0.5rem;
             display: block;
         }
+
         .form-input, .form-select {
-            border-radius: 0.375rem; /* rounded-md */
+            border-radius: 0.375rem;
             border-width: 1px;
-            border-color: #d1d5db; /* border-gray-300 */
-            padding: 0.75rem 1rem; /* px-4 py-3 */
-            font-size: 1rem; /* text-base */
-            line-height: 1.5rem; /* leading-5 */
+            border-color: #d1d5db;
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5rem;
             width: 100%;
             transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
             outline: none;
             background-color: white;
         }
+
         .form-input:focus, .form-select:focus {
-            border-color: #3b82f6; /* focus:border-blue-500 */
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); /* focus:ring-blue-500, focus:ring-opacity-20 */
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
+
         .form-input.error {
-            border-color: #dc2626; /* border-red-500 */
+            border-color: #dc2626;
         }
+
+        .form-input.success {
+            border-color: #16a34a;
+        }
+
         .error-message {
-            color: #dc2626; /* text-red-500 */
-            font-size: 0.875rem; /* text-sm */
-            margin-top: 0.5rem; /* mt-2 */
+            color: #dc2626;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
         }
+
         .password-container {
             position: relative;
             display: flex;
             width: 100%;
         }
+
         .password-input {
             width: 100%;
         }
+
         .password-toggle {
             position: absolute;
             right: 1rem;
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
-            color: #6b7280; /* text-gray-500 */
+            color: #6b7280;
         }
+
         .password-toggle:hover {
             color: #3b82f6;
         }
 
         .form-submit {
-            background-color: #4CAF50; /* Green */
+            background-color: #4CAF50;
             color: white;
             padding: 0.75rem 2rem;
             border: none;
@@ -135,6 +148,30 @@ if (isset($_POST['Registrar'])) {
             padding-bottom: 1rem;
         }
 
+        .password-strength {
+            margin-top: 0.5rem;
+            height: 0.5rem;
+            border-radius: 0.375rem;
+            background-color: #f3f4f6;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            border-radius: 0.375rem;
+            transition: width 0.3s ease;
+        }
+
+        .password-strength-text {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-top: 0.25rem;
+            text-align: center;
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
@@ -189,9 +226,13 @@ if (isset($_POST['Registrar'])) {
                 <div>
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <div class="password-container">
-                        <input type="password" name="contraseña" id="contraseña" required placeholder="Ingrese la contraseña" class="form-input password-input">
+                        <input type="password" name="contraseña" id="contraseña"  placeholder="Ingrese la contraseña" required class="form-input password-input">
                         <i class="far fa-eye password-toggle" id="togglePassword"></i>
                     </div>
+                    <div class="password-strength">
+                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                    </div>
+                    <p class="password-strength-text" id="passwordStrengthText"></p>
                 </div>
                 <div>
                     <label for="contraseña_confirmation" class="form-label">Confirmar Contraseña</label>
@@ -226,6 +267,49 @@ if (isset($_POST['Registrar'])) {
         const togglePasswordButton = document.getElementById('togglePassword');
         const confirmPasswordInput = document.getElementById('contraseña_confirmation');
         const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
+        const passwordStrengthBar = document.getElementById('passwordStrengthBar');
+        const passwordStrengthText = document.getElementById('passwordStrengthText');
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            let strength = 0;
+            let color = '';
+            let text = '';
+
+            if (password.length >= 8) {
+                strength += 25;
+            }
+            if (password.match(/[a-z]+/)) {
+                strength += 25;
+            }
+            if (password.match(/[A-Z]+/)) {
+                strength += 25;
+            }
+            if (password.match(/[0-9]+/)) {
+                strength += 25;
+            }
+
+            if (strength < 50) {
+                color = '#dc2626';
+                text = 'Débil';
+                passwordInput.classList.remove('success');
+                passwordInput.classList.add('error');
+            } else if (strength < 80) {
+                color = '#f59e0b';
+                text = 'Moderada';
+                passwordInput.classList.remove('success');
+                passwordInput.classList.remove('error');
+            } else {
+                color = '#16a34a';
+                text = 'Fuerte';
+                passwordInput.classList.remove('error');
+                passwordInput.classList.add('success');
+            }
+
+            passwordStrengthBar.style.width = `${strength}%`;
+            passwordStrengthBar.style.backgroundColor = color;
+            passwordStrengthText.textContent = text;
+        });
 
         togglePasswordButton.addEventListener('click', () => {
             if (passwordInput.type === 'password') {
@@ -248,6 +332,16 @@ if (isset($_POST['Registrar'])) {
                 confirmPasswordInput.type = 'password';
                 toggleConfirmPasswordButton.classList.remove('fa-eye-slash');
                 toggleConfirmPasswordButton.classList.add('fa-eye');
+            }
+        });
+
+        confirmPasswordInput.addEventListener('input', () => {
+            if (confirmPasswordInput.value === passwordInput.value) {
+                confirmPasswordInput.classList.remove('error');
+                confirmPasswordInput.classList.add('success');
+            } else {
+                confirmPasswordInput.classList.remove('success');
+                confirmPasswordInput.classList.add('error');
             }
         });
     </script>
