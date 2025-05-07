@@ -383,29 +383,3 @@ class user_general_sennova extends Conexion{
     }
     
 }
-
-// private $dependencias = [
-//     '09' => 'Salud Ocupacional',
-//     '10' => 'Administrativos / Victimas',
-//     '11' => 'Programa de Articulación con la Media',
-//     '14' => 'ENI----',
-//     '18' => 'F.I.C.',
-//     '20' => 'Administrativo (DC)----',
-//     '24' => 'Construcciones y Adecuaciones',
-//     '27' => 'Modernización de Ambientes',
-//     '28' => 'Certificación Laboral',
-//     '34' => 'Producción de Centros',
-//     '38' => 'CampeSENA',
-//     '42' => 'Bienestar de Alumnos',
-//     '43' => 'Servicios de Bienestar Social',
-//     '44' => 'Apoyos de Sostenimiento',
-//     '45' => 'Servicios Prestados de Formación Profesional',
-//     '62' => 'WorldSkills',
-//     '66' => 'Semilleros de Investigación',
-//     '69' => 'TecnoParque',
-//     '70' => 'TecnoAcademia',
-//     '84' => 'Certificación Laboral - CampeSENA',
-//     '85' => 'Servicios Prestados de Economía Popular',
-//     '86' => 'Certificación Laboral - Full Popular',
-//     '90' => 'Economía Popular y Campesina - Aula Móvil'
-// ];

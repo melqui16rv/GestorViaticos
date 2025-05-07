@@ -4,15 +4,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
 requireRole(['1']);
 $dato = new user();
 
-// Inicializar variables para mantener los valores del formulario
-$num_doc = '';
-$tipo_doc = '';
-$nombres = '';
-$apellidos = '';
-$email = '';
-$telefono = '';
-$id_rol = '';
-
 if (isset($_POST['Registrar'])) {
     $num_doc = $_POST['num_doc'];
     $tipo_doc = $_POST['tipo_doc'];
@@ -23,266 +14,358 @@ if (isset($_POST['Registrar'])) {
     $telefono = $_POST['telefono'];
     $id_rol = $_POST['id_rol'];
     $contraseña = $_POST['contraseña'];
-    $contraseña_confirmation = $_POST['contraseña_confirmation'];
 
-    // Validar la confirmación de la contraseña
-    if ($contraseña !== $contraseña_confirmation) {
-        $error_message = "Las contraseñas no coinciden.";
-    } else {
-        $dato->crearUsuario($num_doc, $tipo_doc, $nombre_completo, $contraseña, $email, $telefono, $id_rol);
-        //  potencialmente redirigir o mostrar éxito
-    }
+    $dato->crearUsuario($num_doc, $tipo_doc, $nombre_completo, $contraseña, $email, $telefono, $id_rol);
 }
+
 ?>
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <link rel="stylesheet" href="../../assets/css/links/agregarUsuario.css">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6;
-        }
+/* Estilos generales */
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
 
-        .form-label {
-            font-weight: 600;
-            color: #4b5563;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
+form {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 1300px;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: all 0.3s ease;
+}
 
-        .form-input, .form-select {
-            border-radius: 0.375rem;
-            border-width: 1px;
-            border-color: #d1d5db;
-            padding: 0.75rem 1rem;
-            font-size: 1rem;
-            line-height: 1.5rem;
-            width: 100%;
-            transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
-            outline: none;
-            background-color: white;
-        }
+/* Estilos de etiquetas */
+label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
 
-        .form-input:focus, .form-select:focus {
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
-        }
+/* Estilos de los campos */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select {
+    padding: 0.6rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100%;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-        .form-input.error {
-            border-color: #dc2626;
-        }
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus {
+    border-color: #0073e6;
+    box-shadow: 0px 0px 6px rgba(0, 115, 230, 0.2);
+}
 
-        .form-input.success {
-            border-color: #16a34a;
-        }
+/* Botón de enviar */
+input[type="submit"] {
+    background-color: #0073e6;
+    color: white;
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    align-self: flex-end;
+}
 
-        .error-message {
-            color: #dc2626;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-        }
+input[type="submit"]:hover {
+    background-color: #005bb5;
+    transform: scale(1.02);
+}
 
-        .password-container {
-            position: relative;
-            display: flex;
-            width: 100%;
-        }
+/* Estilos de las filas y grupos del formulario */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
 
-        .password-input {
-            width: 100%;
-        }
+.form-group {
+    flex: 1 1 30%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .password-toggle {
-            position: absolute;
-            right: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #6b7280;
-        }
+/* Secciones condicionales */
+.conditional-sections {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
 
-        .password-toggle:hover {
-            color: #3b82f6;
-        }
+.conditional-sections > div {
+    flex: 1 1 30%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .form-submit {
-            background-color: #4CAF50;
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s ease;
-            margin-top: 2rem;
-            width: 100%;
-            max-width: 320px;
-            align-self: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+#coordinacionDiv,
+#agregarCategoriaDiv,
+#categoriasOpcionesDiv {
+    display: none;
+}
 
-        .form-submit:hover {
-            background-color: #45a049;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-        }
+#categoriasOpcionesDiv {
+    margin-top: 1rem;
+}
 
-        .form-submit:active {
-            background-color: #388E3C;
-            transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+/* Estilos para las categorías */
+#categoriaOpciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
 
-        .card {
-            background-color: white;
-            border-radius: 0.75rem;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 100%;
-            max-width: 800px;
-        }
+.categoria-checkbox {
+    flex: 1 1 30%;
+    display: flex;
+    align-items: center;
+}
 
-        .form-section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 1.5rem;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 1rem;
-        }
+.categoria-checkbox input[type="checkbox"] {
+    margin-right: 0.5rem;
+}
 
-        .password-strength {
-            margin-top: 0.5rem;
-            height: 0.5rem;
-            border-radius: 0.375rem;
-            background-color: #f3f4f6;
-            position: relative;
-            overflow: hidden;
-        }
+@media (max-width: 768px) {
+    .form-group, .conditional-sections > div {
+        flex: 1 1 100%;
+    }
 
-        .password-strength-bar {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            border-radius: 0.375rem;
-            transition: width 0.3s ease;
-        }
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+/* Estilos generales */
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f5f7fa; /* Fondo claro */
+    min-height: 100vh;
+}
 
-        .password-strength-text {
-            font-size: 0.875rem;
-            color: #4b5563;
-            margin-top: 0.25rem;
-            text-align: center;
-        }
+form {
+    background-color: #ffffff;
+    width: 100%;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.3s ease;
+}
 
-        .back-button {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 0.375rem;
-            background-color: #e5e7eb;
-            color: #374151;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background-color 0.2s ease;
-            z-index: 10;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+/* Estilos de etiquetas */
+label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #5a5a5a;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
 
-        .back-button:hover {
-            background-color: #d1d5db;
-        }
+/* Estilos de los campos */
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="tel"],
+select {
+    padding: 0.8rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    background-color: #f9f9f9;
+    color: #333;
+    outline: none;
+    transition: all 0.3s ease;
+    box-shadow: inset 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
 
-        .back-button i {
-            font-size: 1.25rem;
-        }
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+select:focus {
+    border-color: #0073e6;
+    box-shadow: 0px 0px 6px rgba(0, 115, 230, 0.4);
+}
+
+/* Botón de enviar */
+input[type="submit"] {
+    background-color: #253f56;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    align-self: center;
+    width: 50%;
+}
+
+input[type="submit"]:hover {
+    background-color: #253f56;
+    transform: translateY(-2px);
+    box-shadow: 0px 4px 12px rgba(0, 91, 181, 0.2);
+}
+
+input[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+/* Estilos de las filas y grupos del formulario */
+.form-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.form-group {
+    flex: 1 1 45%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Secciones condicionales */
+.conditional-sections {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+}
+
+.conditional-sections > div {
+    flex: 1 1 45%;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Opciones de categorías */
+#categoriasOpcionesDiv {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f1f1f1;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Estilos para las categorías */
+#categoriaOpciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.categoria-checkbox {
+    flex: 1 1 45%;
+    display: flex;
+    align-items: center;
+}
+
+.categoria-checkbox input[type="checkbox"] {
+    margin-right: 0.5rem;
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .form-group, .conditional-sections > div {
+        flex: 1 1 100%;
+    }
+
+    input[type="submit"] {
+        width: 100%;
+    }
+}
+
     </style>
 </head>
-<body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
-    <button class="back-button" onclick="window.history.back()">
-        <i class="fas fa-arrow-left"></i> Regresar
-    </button>
-    <div class="card">
-        <form action="" method="POST" class="space-y-6">
-            <h2 class="form-section-title">Agregar Usuario</h2>
-            <?php if (isset($error_message)): ?>
-                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                    <strong class="font-bold">Error:</strong>
-                    <span class="block sm:inline"><?php echo $error_message; ?></span>
+<body>
+    <?php
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php';
+    ?>
+    <div class="contenedor">
+        <form action="" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="documento">Número de documento:</label>
+                    <input type="text" id="documento" name="num_doc" placeholder="Ingrese el número de documento" required>
                 </div>
-            <?php endif; ?>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="documento" class="form-label">Número de documento:</label>
-                    <input type="text" id="documento" name="num_doc" placeholder="Ingrese el número de documento" required value="<?php echo $num_doc; ?>" class="form-input">
-                </div>
-                <div>
-                    <label for="tipo_doc" class="form-label">Tipo de documento</label>
-                    <select name="tipo_doc" id="tipo_doc" class="form-select" value="<?php echo $tipo_doc; ?>">
+                <div class="form-group">
+                    <label for="tipo_doc">Tipo de documento</label>
+                    <select name="tipo_doc" id="tipo_doc">
                         <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
                         <option value="Cédula de extranjería">Cédula de extranjería</option>
                         <option value="Pasaporte">Pasaporte</option>
                     </select>
                 </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="nombre" class="form-label">Nombres:</label>
-                    <input type="text" id="nombre" name="nombres" placeholder="Ingrese el primer nombre" required value="<?php echo $nombres; ?>" class="form-input">
-                </div>
-                <div>
-                    <label for="Apellido" class="form-label">Apellidos:</label>
-                    <input type="text" id="Apellido" name="apellidos" placeholder="Ingrese el primer Apellido" required value="<?php echo $apellidos; ?>" class="form-input">
+                <div class="form-group">
+                    <label for="contraseña">Contraseña</label>
+                    <input type="password" name="contraseña" id="contraseña" required placeholder="Ingrese la contraseña">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                 <div>
-                    <label for="email" class="form-label">Correo:</label>
-                    <input type="email" name="email" id="email" required placeholder="Ingrese su correo" value="<?php echo $email; ?>" class="form-input">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="nombre">Nombres:</label>
+                    <input type="text" id="nombre" name="nombres" placeholder="Ingrese el primer nombre" required>
                 </div>
-                <div>
-                    <label for="telefono" class="form-label">Teléfono:</label>
-                    <input type="tel" name="telefono" id="telefono" placeholder="Ingrese un número de teléfono" required value="<?php echo $telefono; ?>" class="form-input">
+                <div class="form-group">
+                    <label for="Apellido">Apellidos:</label>
+                    <input type="text" id="Apellido" name="apellidos" placeholder="Ingrese el primer Apellido" required>
                 </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="contraseña" class="form-label">Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" name="contraseña" id="contraseña"  placeholder="Ingrese la contraseña" required class="form-input password-input">
-                        <i class="far fa-eye password-toggle" id="togglePassword"></i>
-                    </div>
-                    <div class="password-strength">
-                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
-                    </div>
-                    <p class="password-strength-text" id="passwordStrengthText"></p>
-                </div>
-                <div>
-                    <label for="contraseña_confirmation" class="form-label">Confirmar Contraseña</label>
-                    <div class="password-container">
-                        <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input">
-                        <i class="far fa-eye password-toggle" id="toggleConfirmPassword"></i>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Correo:</label>
+                    <input type="email" name="email" id="email" required placeholder="Ingrese su correo">
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label for="rol" class="form-label">Rol:</label>
-                    <select name="id_rol" id="rol" class="form-select" value="<?php echo $id_rol; ?>">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" name="telefono" id="telefono" placeholder="Ingrese un número de teléfono" required>
+                </div>
+                <div class="form-group">
+                    <label for="rol">Rol:</label>
+                    <select id="rol" name="id_rol" required onchange="mostrarCoordinaciones()">
                         <option value="">Seleccione un rol</option>
                         <option value="1">Administrador</option>
                         <option value="2">Gestor</option>
@@ -294,92 +377,12 @@ if (isset($_POST['Registrar'])) {
                 </div>
             </div>
 
-            <input type="submit" value="Crear Usuario" name="Registrar" class="form-submit">
+            <input type="submit" value="Crear Usuario" name="Registrar">
         </form>
     </div>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
-    <script>
-        const passwordInput = document.getElementById('contraseña');
-        const togglePasswordButton = document.getElementById('togglePassword');
-        const confirmPasswordInput = document.getElementById('contraseña_confirmation');
-        const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
-        const passwordStrengthBar = document.getElementById('passwordStrengthBar');
-        const passwordStrengthText = document.getElementById('passwordStrengthText');
+    <?php 
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php';
+    ?>
 
-        passwordInput.addEventListener('input', () => {
-            const password = passwordInput.value;
-            let strength = 0;
-            let color = '';
-            let text = '';
-
-            if (password.length >= 8) {
-                strength += 25;
-            }
-            if (password.match(/[a-z]+/)) {
-                strength += 25;
-            }
-            if (password.match(/[A-Z]+/)) {
-                strength += 25;
-            }
-            if (password.match(/[0-9]+/)) {
-                strength += 25;
-            }
-
-            if (strength < 50) {
-                color = '#dc2626';
-                text = 'Débil';
-                passwordInput.classList.remove('success');
-                passwordInput.classList.add('error');
-            } else if (strength < 80) {
-                color = '#f59e0b';
-                text = 'Moderada';
-                passwordInput.classList.remove('success');
-                passwordInput.classList.remove('error');
-            } else {
-                color = '#16a34a';
-                text = 'Fuerte';
-                passwordInput.classList.remove('error');
-                passwordInput.classList.add('success');
-            }
-
-            passwordStrengthBar.style.width = `${strength}%`;
-            passwordStrengthBar.style.backgroundColor = color;
-            passwordStrengthText.textContent = text;
-        });
-
-        togglePasswordButton.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                togglePasswordButton.classList.remove('fa-eye');
-                togglePasswordButton.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                togglePasswordButton.classList.remove('fa-eye-slash');
-                togglePasswordButton.classList.add('fa-eye');
-            }
-        });
-
-        toggleConfirmPasswordButton.addEventListener('click', () => {
-            if (confirmPasswordInput.type === 'password') {
-                confirmPasswordInput.type = 'text';
-                toggleConfirmPasswordButton.classList.remove('fa-eye');
-                toggleConfirmPasswordButton.classList.add('fa-eye-slash');
-            } else {
-                confirmPasswordInput.type = 'password';
-                toggleConfirmPasswordButton.classList.remove('fa-eye-slash');
-                toggleConfirmPasswordButton.classList.add('fa-eye');
-            }
-        });
-
-        confirmPasswordInput.addEventListener('input', () => {
-            if (confirmPasswordInput.value === passwordInput.value) {
-                confirmPasswordInput.classList.remove('error');
-                confirmPasswordInput.classList.add('success');
-            } else {
-                confirmPasswordInput.classList.remove('success');
-                confirmPasswordInput.classList.add('error');
-            }
-        });
-    </script>
 </body>
 </html>
