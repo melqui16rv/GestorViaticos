@@ -29,7 +29,7 @@ if (isset($_POST['Registrar'])) {
     if ($contraseña !== $contraseña_confirmation) {
         $error_message = "Las contraseñas no coinciden.";
     } else {
-        $dato->crearUsuario($num_doc, $tipo_doc, nombre_completo, contraseña, email, telefono, id_rol);
+        $dato->crearUsuario($num_doc, $tipo_doc, $nombre_completo, $contraseña, $email, $telefono, $id_rol);
         //  potencialmente redirigir o mostrar éxito
     }
 }
@@ -243,7 +243,7 @@ if (isset($_POST['Registrar'])) {
         <i class="fas fa-arrow-left"></i> Regresar
     </button>
     <div class="card">
-        <form action="" method="POST" class="space-y-6" autocomplete="off">
+        <form action="" method="POST" class="space-y-6">
             <h2 class="form-section-title">Agregar Usuario</h2>
             <?php if (isset($error_message)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -255,11 +255,11 @@ if (isset($_POST['Registrar'])) {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="documento" class="form-label">Número de documento:</label>
-                    <input type="text" id="documento" name="num_doc" placeholder="Ingrese el número de documento" required value="<?php echo $num_doc; ?>" class="form-input" autocomplete="off">
+                    <input type="text" id="documento" name="num_doc" placeholder="Ingrese el número de documento" required value="<?php echo $num_doc; ?>" class="form-input">
                 </div>
                 <div>
                     <label for="tipo_doc" class="form-label">Tipo de documento</label>
-                    <select name="tipo_doc" id="tipo_doc" class="form-select" value="<?php echo $tipo_doc; ?>" autocomplete="off">
+                    <select name="tipo_doc" id="tipo_doc" class="form-select" value="<?php echo $tipo_doc; ?>">
                         <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
                         <option value="Cédula de extranjería">Cédula de extranjería</option>
                         <option value="Pasaporte">Pasaporte</option>
@@ -270,22 +270,22 @@ if (isset($_POST['Registrar'])) {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="nombre" class="form-label">Nombres:</label>
-                    <input type="text" id="nombre" name="nombres" placeholder="Ingrese el primer nombre" required value="<?php echo $nombres; ?>" class="form-input" autocomplete="off">
+                    <input type="text" id="nombre" name="nombres" placeholder="Ingrese el primer nombre" required value="<?php echo $nombres; ?>" class="form-input">
                 </div>
                 <div>
                     <label for="Apellido" class="form-label">Apellidos:</label>
-                    <input type="text" id="Apellido" name="apellidos" placeholder="Ingrese el primer Apellido" required value="<?php echo $apellidos; ?>" class="form-input" autocomplete="off">
+                    <input type="text" id="Apellido" name="apellidos" placeholder="Ingrese el primer Apellido" required value="<?php echo $apellidos; ?>" class="form-input">
                 </div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div>
                     <label for="email" class="form-label">Correo:</label>
-                    <input type="email" name="email" id="email" required placeholder="Ingrese su correo" value="<?php echo $email; ?>" class="form-input" autocomplete="off">
+                    <input type="email" name="email" id="email" required placeholder="Ingrese su correo" value="<?php echo $email; ?>" class="form-input">
                 </div>
                 <div>
                     <label for="telefono" class="form-label">Teléfono:</label>
-                    <input type="tel" name="telefono" id="telefono" placeholder="Ingrese un número de teléfono" required value="<?php echo $telefono; ?>" class="form-input" autocomplete="off">
+                    <input type="tel" name="telefono" id="telefono" placeholder="Ingrese un número de teléfono" required value="<?php echo $telefono; ?>" class="form-input">
                 </div>
             </div>
 
@@ -293,7 +293,7 @@ if (isset($_POST['Registrar'])) {
                 <div>
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <div class="password-container">
-                        <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese la contraseña" required class="form-input password-input" autocomplete="new-password">
+                        <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese la contraseña" required class="form-input password-input">
                         <span class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></span>
                     </div>
                     <div class="password-strength">
@@ -305,7 +305,7 @@ if (isset($_POST['Registrar'])) {
                 <div>
                     <label for="contraseña_confirmation" class="form-label">Confirmar Contraseña</label>
                     <div class="password-container">
-                        <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input" autocomplete="new-password">
+                        <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input">
                         <span class="password-toggle" id="toggleConfirmPassword"><i class="far fa-eye"></i></span>
                     </div>
                 </div>
@@ -314,7 +314,7 @@ if (isset($_POST['Registrar'])) {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="rol" class="form-label">Rol:</label>
-                    <select name="id_rol" id="rol" class="form-select" value="<?php echo $id_rol; ?>" autocomplete="off">
+                    <select name="id_rol" id="rol" class="form-select" value="<?php echo $id_rol; ?>">
                         <option value="">Seleccione un rol</option>
                         <option value="1">Administrador</option>
                         <option value="2">Gestor</option>
