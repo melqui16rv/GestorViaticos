@@ -113,9 +113,8 @@ requireRole(['4', '5', '6']);
                 document.documentElement.style.setProperty('--nav-height', navHeight + 'px');
             }
             
-            // Inicializar la primera vista (dashboard por defecto)
-            // Leer cookie para restaurar la vista seleccionada
-            const vista = getCookie('dashboard_vista');
+            // Inicializar la primera vista usando la cookie específica
+            const vista = getCookie('tecnoparque_metas_vista');
             if (vista === 'graficas') {
                 showGraficas();
             } else if (vista === 'indicadores') {
@@ -160,6 +159,8 @@ requireRole(['4', '5', '6']);
             return null;
         }
 
+        // Modificar las funciones de vista para usar cookies específicas
+
         function showDashboard() {
             dashboardView.style.display = 'block';
             graficasView.style.display = 'none';
@@ -167,9 +168,9 @@ requireRole(['4', '5', '6']);
             navDashboard.classList.add('active');
             navGraficas.classList.remove('active');
             navIndicadores.classList.remove('active');
-            setCookie('dashboard_vista', 'dashboard');
+            setCookie('tecnoparque_metas_vista', 'dashboard'); // Nombre específico de cookie
         }
-        
+
         function showGraficas() {
             dashboardView.style.display = 'none';
             graficasView.style.display = 'block';
@@ -177,7 +178,7 @@ requireRole(['4', '5', '6']);
             navDashboard.classList.remove('active');
             navGraficas.classList.add('active');
             navIndicadores.classList.remove('active');
-            setCookie('dashboard_vista', 'graficas');
+            setCookie('tecnoparque_metas_vista', 'graficas'); // Nombre específico de cookie
         }
 
         function showIndicadores() {
@@ -187,7 +188,7 @@ requireRole(['4', '5', '6']);
             navDashboard.classList.remove('active');
             navGraficas.classList.remove('active');
             navIndicadores.classList.add('active');
-            setCookie('dashboard_vista', 'indicadores');
+            setCookie('tecnoparque_metas_vista', 'indicadores'); // Nombre específico de cookie
         }
 
         navDashboard.addEventListener('click', function(e) {
@@ -274,5 +275,5 @@ requireRole(['4', '5', '6']);
         window.addEventListener('resize', handleResize);
     </script>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
-</body>
-</html>
+    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
+</body></html>
