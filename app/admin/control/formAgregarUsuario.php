@@ -305,6 +305,20 @@ if (isset($_POST['Registrar'])) {
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
+        // Función para alternar la visibilidad de la contraseña
+        function togglePasswordVisibility(inputField, toggleButton) {
+            const type = inputField.type === 'password' ? 'text' : 'password';
+            inputField.type = type;
+            
+            // Actualizar el icono
+            if (type === 'password') {
+                toggleButton.innerHTML = '<i class="far fa-eye"></i>';
+            } else {
+                toggleButton.innerHTML = '<i class="far fa-eye-slash"></i>';
+            }
+        }
+
+        // Configuración para el campo de contraseña
         const passwordInput = document.getElementById('contraseña');
         const togglePasswordButton = document.getElementById('togglePassword');
         const confirmPasswordInput = document.getElementById('contraseña_confirmation');
@@ -312,6 +326,16 @@ if (isset($_POST['Registrar'])) {
         const passwordStrengthBar = document.getElementById('passwordStrengthBar');
         const passwordStrengthText = document.getElementById('passwordStrengthText');
 
+        // Eventos para mostrar/ocultar contraseña
+        togglePasswordButton.addEventListener('click', () => {
+            togglePasswordVisibility(passwordInput, togglePasswordButton);
+        });
+
+        toggleConfirmPasswordButton.addEventListener('click', () => {
+            togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordButton);
+        });
+
+        // El resto del código JavaScript para la validación de contraseña
         passwordInput.addEventListener('input', () => {
             const password = passwordInput.value;
             let strength = 0;
@@ -351,30 +375,6 @@ if (isset($_POST['Registrar'])) {
             passwordStrengthBar.style.width = `${strength}%`;
             passwordStrengthBar.style.backgroundColor = color;
             passwordStrengthText.textContent = text;
-        });
-
-        togglePasswordButton.addEventListener('click', () => {
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                togglePasswordButton.classList.remove('fa-eye');
-                togglePasswordButton.classList.add('fa-eye-slash');
-            } else {
-                passwordInput.type = 'password';
-                togglePasswordButton.classList.remove('fa-eye-slash');
-                togglePasswordButton.classList.add('fa-eye');
-            }
-        });
-
-        toggleConfirmPasswordButton.addEventListener('click', () => {
-            if (confirmPasswordInput.type === 'password') {
-                confirmPasswordInput.type = 'text';
-                toggleConfirmPasswordButton.classList.remove('fa-eye');
-                toggleConfirmPasswordButton.classList.add('fa-eye-slash');
-            } else {
-                confirmPasswordInput.type = 'password';
-                toggleConfirmPasswordButton.classList.remove('fa-eye-slash');
-                toggleConfirmPasswordButton.classList.add('fa-eye');
-            }
         });
 
         confirmPasswordInput.addEventListener('input', () => {
