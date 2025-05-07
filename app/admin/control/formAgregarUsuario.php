@@ -8,40 +8,42 @@ if (isset($_POST['Registrar'])) {
     $num_doc = $_POST['num_doc'];
     $tipo_doc = $_POST['tipo_doc'];
     $nombres = $_POST['nombres'];
-    $apellidos = $_POST['apellidos'];
+    $apellidos = $_apellidos = $_POST['apellidos'];
     $nombre_completo = $nombres . ' ' . $apellidos;
     $email = $_POST['email'];
     $telefono = $_POST['telefono'];
     $id_rol = $_POST['id_rol'];
     $contraseña = $_POST['contraseña'];
-    $contraseña_confirmation = $_POST['contraseña_confirmation']; // Get the confirmation
+    $contraseña_confirmation = $_POST['contraseña_confirmation']; // Obtener la confirmación
 
-    // Validate password confirmation
+    // Validar la confirmación de la contraseña
     if ($contraseña !== $contraseña_confirmation) {
-        $error_message = "Las contraseñas no coinciden."; // Set an error message
+        $error_message = "Las contraseñas no coinciden."; // Establecer un mensaje de error
     } else {
         $dato->crearUsuario($num_doc, $tipo_doc, $nombre_completo, $contraseña, $email, $telefono, $id_rol);
-        //  potentially redirect or show success
+        //  potencialmente redirigir o mostrar éxito
     }
 }
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario</title>
-    <link rel="stylesheet" href="../../assets/css/links/agregarUsuario.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* bg-gray-100 */
         }
         .form-label {
             font-weight: 600;
             color: #4b5563; /* text-gray-700 */
+            margin-bottom: 0.5rem; /* mb-2 */
+            display: block;
         }
         .form-input, .form-select {
             border-radius: 0.375rem; /* rounded-md */
@@ -53,6 +55,7 @@ if (isset($_POST['Registrar'])) {
             width: 100%;
             transition: border-color 0.15s ease-in-out, shadow-sm 0.15s ease-in-out;
             outline: none;
+            background-color: white;
         }
         .form-input:focus, .form-select:focus {
             border-color: #3b82f6; /* focus:border-blue-500 */
@@ -82,15 +85,62 @@ if (isset($_POST['Registrar'])) {
             cursor: pointer;
             color: #6b7280; /* text-gray-500 */
         }
+        .password-toggle:hover {
+            color: #3b82f6;
+        }
+
+        .form-submit {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 320px;
+            align-self: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-submit:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .form-submit:active {
+            background-color: #388E3C;
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .form-section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 1rem;
+        }
+
     </style>
 </head>
-<body class="bg-gray-100">
-    <?php
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php';
-    ?>
-    <div class="flex justify-center items-center min-h-screen py-10">
-        <form action="" method="POST" class="bg-white rounded-xl shadow-lg p-8 w-full max-w-2xl space-y-6">
-            <h2 class="text-2xl font-semibold text-gray-900">Agregar Usuario</h2>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
+    <div class="card">
+        <form action="" method="POST" class="space-y-6">
+            <h2 class="form-section-title">Agregar Usuario</h2>
             <?php if (isset($error_message)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Error:</strong>
@@ -98,7 +148,7 @@ if (isset($_POST['Registrar'])) {
                 </div>
             <?php endif; ?>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="documento" class="form-label">Número de documento:</label>
                     <input type="text" id="documento" name="num_doc" placeholder="Ingrese el número de documento" required class="form-input">
@@ -113,7 +163,7 @@ if (isset($_POST['Registrar'])) {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="nombre" class="form-label">Nombres:</label>
                     <input type="text" id="nombre" name="nombres" placeholder="Ingrese el primer nombre" required class="form-input">
@@ -124,7 +174,7 @@ if (isset($_POST['Registrar'])) {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                  <div>
                     <label for="email" class="form-label">Correo:</label>
                     <input type="email" name="email" id="email" required placeholder="Ingrese su correo" class="form-input">
@@ -135,7 +185,7 @@ if (isset($_POST['Registrar'])) {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <div class="password-container">
@@ -152,7 +202,7 @@ if (isset($_POST['Registrar'])) {
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label for="rol" class="form-label">Rol:</label>
                     <select id="rol" name="id_rol" required class="form-select">
@@ -167,13 +217,11 @@ if (isset($_POST['Registrar'])) {
                 </div>
             </div>
 
-            <input type="submit" value="Crear Usuario" name="Registrar" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline self-center w-full md:w-1/2">
+            <input type="submit" value="Crear Usuario" name="Registrar" class="form-submit">
         </form>
     </div>
-    <?php
-        require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php';
-    ?>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script> <script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script>
         const passwordInput = document.getElementById('contraseña');
         const togglePasswordButton = document.getElementById('togglePassword');
         const confirmPasswordInput = document.getElementById('contraseña_confirmation');
