@@ -29,8 +29,9 @@ if (isset($_POST['Registrar'])) {
     if ($contraseña !== $contraseña_confirmation) {
         $error_message = "Las contraseñas no coinciden.";
     } else {
-        $dato->crearUsuario($num_doc, $tipo_doc, nombre_completo, contraseña, email, telefono, id_rol);
-        //  potencialmente redirigir o mostrar éxito
+        $dato->crearUsuario($num_doc, $tipo_doc, $nombre_completo, $contraseña, $email, $telefono, $id_rol);
+        //  Opcional: Agregar mensaje de éxito o redirección
+        $success_message = "Usuario creado exitosamente";
     }
 }
 ?>
@@ -249,6 +250,12 @@ if (isset($_POST['Registrar'])) {
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                     <strong class="font-bold">Error:</strong>
                     <span class="block sm:inline"><?php echo $error_message; ?></span>
+                </div>
+            <?php endif; ?>
+            <?php if (isset($success_message)): ?>
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">¡Éxito!</strong>
+                    <span class="block sm:inline"><?php echo $success_message; ?></span>
                 </div>
             <?php endif; ?>
 
