@@ -41,6 +41,7 @@ if (isset($_POST['Registrar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
     <style>
         body {
@@ -104,6 +105,11 @@ if (isset($_POST['Registrar'])) {
             transform: translateY(-50%);
             cursor: pointer;
             color: #6b7280;
+            z-index: 10;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .password-toggle:hover {
@@ -297,7 +303,7 @@ if (isset($_POST['Registrar'])) {
             <input type="submit" value="Crear Usuario" name="Registrar" class="form-submit">
         </form>
     </div>
-    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
         const passwordInput = document.getElementById('contraseña');
         const togglePasswordButton = document.getElementById('togglePassword');
