@@ -41,7 +41,6 @@ if (isset($_POST['Registrar'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Usuario</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
     <style>
         body {
@@ -105,11 +104,6 @@ if (isset($_POST['Registrar'])) {
             transform: translateY(-50%);
             cursor: pointer;
             color: #6b7280;
-            z-index: 10;
-            padding: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
         .password-toggle:hover {
@@ -211,31 +205,6 @@ if (isset($_POST['Registrar'])) {
         .back-button i {
             font-size: 1.25rem;
         }
-        .password-toggle {
-    position: absolute;
-    right: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    font-size: 1.5rem;
-    z-index: 10;
-    transition: transform 0.2s ease;
-}
-
-.password-toggle:hover {
-    transform: translateY(-50%) scale(1.2);
-}
-
-.password-toggle:active {
-    animation: bounce 0.3s;
-}
-
-@keyframes bounce {
-    0%   { transform: translateY(-50%) scale(1); }
-    50%  { transform: translateY(-50%) scale(1.3); }
-    100% { transform: translateY(-50%) scale(1); }
-}
-
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
@@ -293,20 +262,19 @@ if (isset($_POST['Registrar'])) {
                 <div>
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <div class="password-container">
-                        <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese la contraseña" required class="form-input password-input">
-                        <span class="password-toggle" id="togglePassword"><i class="far fa-eye"></i></span>
+                        <input type="password" name="contraseña" id="contraseña"  placeholder="Ingrese la contraseña" required class="form-input password-input">
+                        <i class="far fa-eye password-toggle" id="togglePassword"></i>
                     </div>
                     <div class="password-strength">
-                        <div id="passwordStrengthBar" class="password-strength-bar"></div>
+                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
                     </div>
-                    <div id="passwordStrengthText" class="password-strength-text"> </div>
+                    <p class="password-strength-text" id="passwordStrengthText"></p>
                 </div>
-
                 <div>
                     <label for="contraseña_confirmation" class="form-label">Confirmar Contraseña</label>
                     <div class="password-container">
                         <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input">
-                        <span class="password-toggle" id="toggleConfirmPassword"><i class="far fa-eye"></i></span>
+                        <i class="far fa-eye password-toggle" id="toggleConfirmPassword"></i>
                     </div>
                 </div>
             </div>
@@ -329,42 +297,15 @@ if (isset($_POST['Registrar'])) {
             <input type="submit" value="Crear Usuario" name="Registrar" class="form-submit">
         </form>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://kit.fontawesome.com/your-fontawesome-kit.js" crossorigin="anonymous"></script>
     <script>
-        // Función para alternar la visibilidad de la contraseña
-        function togglePasswordVisibility(inputField, toggleButton) {
-            const type = inputField.type === 'password' ? 'text' : 'password';
-            inputField.type = type;
-
-            // Actualizar el ícono
-            if (type === 'password') {
-                toggleButton.innerHTML = '<i class="far fa-eye"></i>';
-            } else {
-                toggleButton.innerHTML = '<i class="far fa-eye-slash"></i>';
-            }
-        }
-
-        // Elementos de contraseña y confirmación
         const passwordInput = document.getElementById('contraseña');
         const togglePasswordButton = document.getElementById('togglePassword');
-
         const confirmPasswordInput = document.getElementById('contraseña_confirmation');
         const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
-
         const passwordStrengthBar = document.getElementById('passwordStrengthBar');
         const passwordStrengthText = document.getElementById('passwordStrengthText');
 
-        // Mostrar/ocultar contraseña principal
-        togglePasswordButton.addEventListener('click', () => {
-            togglePasswordVisibility(passwordInput, togglePasswordButton);
-        });
-
-        // Mostrar/ocultar confirmación de contraseña
-        toggleConfirmPasswordButton.addEventListener('click', () => {
-            togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordButton);
-        });
-
-        // Validación de fuerza de contraseña
         passwordInput.addEventListener('input', () => {
             const password = passwordInput.value;
             let strength = 0;
@@ -385,17 +326,17 @@ if (isset($_POST['Registrar'])) {
             }
 
             if (strength < 50) {
-                color = '#dc2626'; // rojo
+                color = '#dc2626';
                 text = 'Débil';
                 passwordInput.classList.remove('success');
                 passwordInput.classList.add('error');
             } else if (strength < 80) {
-                color = '#f59e0b'; // naranja
+                color = '#f59e0b';
                 text = 'Moderada';
                 passwordInput.classList.remove('success');
                 passwordInput.classList.remove('error');
             } else {
-                color = '#16a34a'; // verde
+                color = '#16a34a';
                 text = 'Fuerte';
                 passwordInput.classList.remove('error');
                 passwordInput.classList.add('success');
@@ -406,7 +347,30 @@ if (isset($_POST['Registrar'])) {
             passwordStrengthText.textContent = text;
         });
 
-        // Validación en tiempo real de coincidencia de contraseñas
+        togglePasswordButton.addEventListener('click', () => {
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                togglePasswordButton.classList.remove('fa-eye');
+                togglePasswordButton.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                togglePasswordButton.classList.remove('fa-eye-slash');
+                togglePasswordButton.classList.add('fa-eye');
+            }
+        });
+
+        toggleConfirmPasswordButton.addEventListener('click', () => {
+            if (confirmPasswordInput.type === 'password') {
+                confirmPasswordInput.type = 'text';
+                toggleConfirmPasswordButton.classList.remove('fa-eye');
+                toggleConfirmPasswordButton.classList.add('fa-eye-slash');
+            } else {
+                confirmPasswordInput.type = 'password';
+                toggleConfirmPasswordButton.classList.remove('fa-eye-slash');
+                toggleConfirmPasswordButton.classList.add('fa-eye');
+            }
+        });
+
         confirmPasswordInput.addEventListener('input', () => {
             if (confirmPasswordInput.value === passwordInput.value) {
                 confirmPasswordInput.classList.remove('error');
