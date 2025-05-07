@@ -211,6 +211,31 @@ if (isset($_POST['Registrar'])) {
         .back-button i {
             font-size: 1.25rem;
         }
+        .password-toggle {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.5rem;
+    z-index: 10;
+    transition: transform 0.2s ease;
+}
+
+.password-toggle:hover {
+    transform: translateY(-50%) scale(1.2);
+}
+
+.password-toggle:active {
+    animation: bounce 0.3s;
+}
+
+@keyframes bounce {
+    0%   { transform: translateY(-50%) scale(1); }
+    50%  { transform: translateY(-50%) scale(1.3); }
+    100% { transform: translateY(-50%) scale(1); }
+}
+
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
@@ -268,13 +293,14 @@ if (isset($_POST['Registrar'])) {
                 <div>
                     <label for="contraseña" class="form-label">Contraseña</label>
                     <div class="password-container">
-                        <input type="password" name="contraseña" id="contraseña"  placeholder="Ingrese la contraseña" required class="form-input password-input">
-                        <i class="far fa-eye password-toggle" id="togglePassword"></i>
+                        <input type="password" name="contraseña" id="contraseña" placeholder="Ingrese la contraseña" required class="form-input password-input">
+                        <span class="password-toggle" id="togglePassword">👁️‍🗨️</span>
                     </div>
-                    <div class="password-strength">
-                        <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                    <div class="password-container">
+                        <input type="password" name="contraseña_confirmation" id="contraseña_confirmation" required placeholder="Confirme la contraseña" class="form-input password-input">
+                        <span class="password-toggle" id="toggleConfirmPassword">👁️‍🗨️</span>
                     </div>
-                    <p class="password-strength-text" id="passwordStrengthText"></p>
+
                 </div>
                 <div>
                     <label for="contraseña_confirmation" class="form-label">Confirmar Contraseña</label>
@@ -309,8 +335,8 @@ if (isset($_POST['Registrar'])) {
         function togglePasswordVisibility(inputField, toggleButton) {
             const type = inputField.type === 'password' ? 'text' : 'password';
             inputField.type = type;
-            
-            // Actualizar el icono
+
+            // Actualizar el ícono
             if (type === 'password') {
                 toggleButton.innerHTML = '<i class="far fa-eye"></i>';
             } else {
@@ -318,24 +344,27 @@ if (isset($_POST['Registrar'])) {
             }
         }
 
-        // Configuración para el campo de contraseña
+        // Elementos de contraseña y confirmación
         const passwordInput = document.getElementById('contraseña');
         const togglePasswordButton = document.getElementById('togglePassword');
+
         const confirmPasswordInput = document.getElementById('contraseña_confirmation');
         const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
+
         const passwordStrengthBar = document.getElementById('passwordStrengthBar');
         const passwordStrengthText = document.getElementById('passwordStrengthText');
 
-        // Eventos para mostrar/ocultar contraseña
+        // Mostrar/ocultar contraseña principal
         togglePasswordButton.addEventListener('click', () => {
             togglePasswordVisibility(passwordInput, togglePasswordButton);
         });
 
+        // Mostrar/ocultar confirmación de contraseña
         toggleConfirmPasswordButton.addEventListener('click', () => {
             togglePasswordVisibility(confirmPasswordInput, toggleConfirmPasswordButton);
         });
 
-        // El resto del código JavaScript para la validación de contraseña
+        // Validación de fuerza de contraseña
         passwordInput.addEventListener('input', () => {
             const password = passwordInput.value;
             let strength = 0;
@@ -356,17 +385,17 @@ if (isset($_POST['Registrar'])) {
             }
 
             if (strength < 50) {
-                color = '#dc2626';
+                color = '#dc2626'; // rojo
                 text = 'Débil';
                 passwordInput.classList.remove('success');
                 passwordInput.classList.add('error');
             } else if (strength < 80) {
-                color = '#f59e0b';
+                color = '#f59e0b'; // naranja
                 text = 'Moderada';
                 passwordInput.classList.remove('success');
                 passwordInput.classList.remove('error');
             } else {
-                color = '#16a34a';
+                color = '#16a34a'; // verde
                 text = 'Fuerte';
                 passwordInput.classList.remove('error');
                 passwordInput.classList.add('success');
@@ -377,6 +406,7 @@ if (isset($_POST['Registrar'])) {
             passwordStrengthText.textContent = text;
         });
 
+        // Validación en tiempo real de coincidencia de contraseñas
         confirmPasswordInput.addEventListener('input', () => {
             if (confirmPasswordInput.value === passwordInput.value) {
                 confirmPasswordInput.classList.remove('error');
