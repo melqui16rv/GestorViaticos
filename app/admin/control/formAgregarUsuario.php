@@ -243,7 +243,7 @@ if (isset($_POST['Registrar'])) {
         <i class="fas fa-arrow-left"></i> Regresar
     </button>
     <div class="card">
-        <form action="" method="POST" class="space-y-6">
+        <form action="" method="POST" class="space-y-6" autocomplete="off">
             <h2 class="form-section-title">Agregar Usuario</h2>
             <?php if (isset($error_message)): ?>
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
