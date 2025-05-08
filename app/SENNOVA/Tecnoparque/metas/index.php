@@ -133,14 +133,12 @@ requireRole(['4', '5', '6']);
             'navVisitasAprendices': 'visitasAprendices'
         };
 
-        // Ocultar todos los dashboards
         function hideAllDashboards() {
             Object.values(dashboards).forEach(dashboard => {
                 if (dashboard) dashboard.style.display = 'none';
             });
         }
 
-        // Mostrar dashboard específico y marcar activo
         function showDashboard(id) {
             hideAllDashboards();
             const dashboard = dashboards[id];
@@ -152,13 +150,16 @@ requireRole(['4', '5', '6']);
             if (navId) {
                 const navElement = document.getElementById(navId);
                 if (navElement) navElement.classList.add('active');
-                // Guardar en cookie la vista actual
                 setCookie('tecnoparque_metas_vista', id, 30);
             }
         }
 
-        // Restaurar la vista desde cookie al cargar
-        let vista = getCookie('tecnoparque_metas_vista') || 'proyectosTecnologicos';
+        // Si no hay cookie, inicializa con la vista de proyectos tecnológicos
+        let vista = getCookie('tecnoparque_metas_vista');
+        if (!vista || !dashboards[vista]) {
+            vista = 'proyectosTecnologicos';
+            setCookie('tecnoparque_metas_vista', vista, 30);
+        }
         showDashboard(vista);
 
         // Event listeners para la navegación
