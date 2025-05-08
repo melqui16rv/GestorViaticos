@@ -195,4 +195,32 @@ class metas_tecnoparque extends Conexion{
         }
     }
 
+    public function obtenerProyectosTecPorTipo($tipo = 'Tecnológico') {
+        $sql = "SELECT * FROM proyectos_tecnoparque WHERE tipo = :tipo";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function obtenerSumaProyectosTecPorTipo($tipo = 'Tecnológico') {
+        $sql = "SELECT 
+            SUM(terminados) as total_terminados, 
+            SUM(en_proceso) as total_en_proceso 
+            FROM proyectos_tecnoparque
+            WHERE tipo = :tipo";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total_terminados = $result['total_terminados'] ?? 0;
+        $total_en_proceso = $result['total_en_proceso'] ?? 0;
+        $total = $total_terminados + $total_en_proceso;
+        return array(
+            'total_terminados' => $total_terminados, 
+            'total_en_proceso' => $total_en_proceso, 
+            'total' => $total
+        );
+    }
+
 }
