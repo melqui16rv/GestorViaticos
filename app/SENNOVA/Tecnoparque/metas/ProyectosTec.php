@@ -46,8 +46,15 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($proyectos as $p): 
+                <?php
+                $total_terminados = 0;
+                $total_en_proceso = 0;
+                $total_proyeccion = 0;
+                foreach ($proyectos as $p):
                     $proy = (int)$p['terminados'] + (int)$p['en_proceso'];
+                    $total_terminados += (int)$p['terminados'];
+                    $total_en_proceso += (int)$p['en_proceso'];
+                    $total_proyeccion += $proy;
                 ?>
                 <tr>
                     <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
@@ -58,6 +65,13 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
                     </td>
                 </tr>
                 <?php endforeach; ?>
+                <!-- Fila Total informativa -->
+                <tr style="background:#f6f8fa;font-weight:bold;">
+                    <td>Total</td>
+                    <td><?php echo $total_terminados; ?></td>
+                    <td><?php echo $total_en_proceso; ?></td>
+                    <td><span style="color:#f59e42;"><?php echo $total_proyeccion; ?></span></td>
+                </tr>
             </tbody>
         </table>
     </div>
