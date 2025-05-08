@@ -172,11 +172,13 @@ CREATE TABLE `registros_actualizaciones` (
   CONSTRAINT `fk_registros_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`numero_documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-CREATE TABLE `proyectos_tecnologicos` (
+CREATE TABLE `proyectos_tecnoparque` (
   `id_PBT` INT NOT NULL AUTO_INCREMENT,
+  `tipo` ENUM('Tecnológico', 'Extensionismo') NOT NULL,
   `nombre_linea` varchar(55) NOT NULL,
-  `terminados` int NOT NULL,
-  `en_proceso` int NOT NULL,
+  `terminados` int,
+  `en_proceso` int,
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_PBT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -200,11 +202,12 @@ INSERT INTO `usuario` (`numero_documento`, `tipo_doc`, `nombre_completo`, `contr
 ('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'juliancamilo290700@gmail.com', '3015325123', '1'),
 ('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'medinab@sena.edu.co', '123445', '2');
 
-INSERT INTO `proyectos_tecnologicos` (`nombre_linea`, `terminados`, `en_proceso`) VALUES
-('Diseño', 4, 21),
-('Producción',3, 14),
-('TI', 5, 4),
-('UCL', 0, 0);
+INSERT INTO `proyectos_tecnoparque` (`tipo`, `nombre_linea`, `terminados`, `en_proceso`) VALUES
+('Tecnológico','Diseño', 4, 21),
+('Tecnológico','Producción',3, 14),
+('Tecnológico','TI', 5, 4),
+('Tecnológico','UCL', 0, 0),
+('Extensionismo','Extensionismo', 0, 0);
 
 -- Datos para la tabla listadosvisitasApre
 INSERT INTO `listadosvisitasApre` (`encargado`, `numAsistentes`, `fechaCharla`) VALUES
