@@ -172,6 +172,14 @@ CREATE TABLE `registros_actualizaciones` (
   CONSTRAINT `fk_registros_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`numero_documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `proyectos_tecnologicos` (
+  `id_PBT` INT NOT NULL AUTO_INCREMENT,
+  `nombre_linea` varchar(55) NOT NULL,
+  `terminados` int NOT NULL,
+  `en_proceso` int NOT NULL,
+  PRIMARY KEY (`id_PBT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 COMMIT;
 
 -- Datos para la tabla `usuario`
@@ -181,3 +189,9 @@ INSERT INTO `usuario` (`numero_documento`, `tipo_doc`, `nombre_completo`, `contr
 ('1073672380', 'Cédula de ciudadanía', 'Melqui Alexander Romero', '$2y$10$u2iloUCRe9Bahko.YETDz.vHr/kOfdRWEZ6iIO5t/4923X8/r0fH6', 'melquiveru@gmail.com', '3026074008', '1'),
 ('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'juliancamilo290700@gmail.com', '3015325123', '1'),
 ('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'medinab@sena.edu.co', '123445', '2');
+
+INSERT INTO `proyectos_tecnologicos` (`nombre_linea`, `terminados`, `en_proceso`) VALUES
+('Diseño', 4, 21),
+('Producción',3, 14),
+('TI', 5, 4),
+('UCL', 0, 0);
