@@ -292,13 +292,6 @@ function renderTortas() {
 renderTortas();
 </script>
 <style>
-#graficaProyectosTec {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 350px !important;
-    display: block;
-    margin: 0 auto;
-}
 .torta-card {
     background: #fff;
     border-radius: 8px;
