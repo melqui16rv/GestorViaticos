@@ -180,6 +180,16 @@ CREATE TABLE `proyectos_tecnologicos` (
   PRIMARY KEY (`id_PBT`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `listadosvisitasApre` (
+  `id_visita` INT NOT NULL AUTO_INCREMENT,
+  `nodo` VARCHAR(100) DEFAULT 'Cundinamarca',
+  `encargado` VARCHAR(155) NOT NULL,
+  `numAsistentes` INT NOT NULL,
+  `fechaCharla` DATETIME NOT NULL,
+  `fecha_insert` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_visita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 COMMIT;
 
 -- Datos para la tabla `usuario`
@@ -195,3 +205,9 @@ INSERT INTO `proyectos_tecnologicos` (`nombre_linea`, `terminados`, `en_proceso`
 ('Producción',3, 14),
 ('TI', 5, 4),
 ('UCL', 0, 0);
+
+-- Datos para la tabla listadosvisitasApre
+INSERT INTO `listadosvisitasApre` (`encargado`, `numAsistentes`, `fechaCharla`) VALUES
+('Juan Pérez', 25, '2024-05-15 10:00:00'),
+('María Rodríguez', 30, '2024-05-16 14:30:00'),
+('Carlos Gómez', 15, '2024-05-17 09:00:00');
