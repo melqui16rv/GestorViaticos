@@ -96,6 +96,9 @@ h1 {
     border-radius: 1rem;
     padding: 2rem;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 
