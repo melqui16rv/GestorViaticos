@@ -1,45 +1,49 @@
+/* CONTENEDOR PRINCIPAL */
 .dashboard-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 2rem;
 }
 
+/* TITULO */
 h1 {
-    color: #222;
+    color: #1f2937;
     margin-bottom: 2rem;
     text-align: center;
-    font-weight: 700;
-    font-size: 2.25rem;
+    font-weight: 800;
+    font-size: 2.5rem;
 }
 
+/* TARJETAS DE ESTADISTICAS */
 .stats-card {
     display: flex;
     justify-content: center;
-    gap: 4rem;
+    gap: 3rem;
     margin-bottom: 2rem;
     flex-wrap: wrap;
 }
 
 .stat-item {
-    background-color: #fff;
-    padding: 1.5rem;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
     text-align: center;
-    min-width: 150px;
+    min-width: 180px;
 }
 
 .stat-value {
-    font-size: 2rem;
-    font-weight: 600;
+    font-size: 2.2rem;
+    font-weight: 700;
     margin-bottom: 0.5rem;
 }
 
 .stat-label {
     font-size: 1.1rem;
-    color: #666;
+    color: #4b5563;
 }
 
+/* TABLA */
 .grafica-table-wrapper {
     margin-bottom: 2rem;
     overflow-x: auto;
@@ -48,136 +52,145 @@ h1 {
 .styled-table {
     width: 100%;
     border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
     overflow: hidden;
+    text-align: center;
 }
 
 .styled-table thead th {
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: left;
-    padding: 1.2rem;
-    font-weight: 600;
-    border-bottom: 2px solid #e0e0e0;
+    background-color: #e5e7eb;
+    color: #111827;
+    padding: 1rem;
+    font-weight: 700;
+    border-bottom: 2px solid #d1d5db;
 }
 
 .styled-table tbody tr:nth-child(even) {
-    background-color: #f8f8f8;
+    background-color: #f9fafb;
 }
 
 .styled-table tbody tr:hover {
-    background-color: #f0f0f0;
+    background-color: #f3f4f6;
 }
 
-.styled-table tbody td {
-    padding: 1.2rem;
-    border-bottom: 1px solid #e0e0e0;
+.styled-table tbody td,
+.styled-table tfoot td {
+    padding: 1rem;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 1rem;
 }
 
-.styled-table tbody td:last-child {
-    border-right: none;
+.styled-table tfoot td {
+    font-weight: 700;
+    background-color: #f3f4f6;
+    color: #111827;
+    border-top: 2px solid #d1d5db;
 }
 
+/* GRAFICA DE BARRAS */
 .chart-wrapper {
     margin-bottom: 2rem;
-    background-color: #fff;
-    border-radius: 0.75rem;
+    background-color: #ffffff;
+    border-radius: 1rem;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    height: auto;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
 }
 
-.tortas-title {
-    font-size: 1.5rem;
-    color: #222;
-    margin-bottom: 1.5rem;
-    text-align: center;
-    font-weight: 600;
-}
-
-/* Aplica solo al canvas de la gráfica de barras */
 #graficaProyectosTec {
     width: 100% !important;
-    height: auto !important;
-    max-height: 350px !important;
+    max-height: 400px !important;
     display: block;
     margin: 0 auto;
 }
+
+/* TITULO TORTAS */
+.tortas-title {
+    font-size: 1.75rem;
+    color: #1f2937;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+/* CONTENEDOR DE TORTAS */
 .tortas-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    gap: 1.5rem;
     margin-top: 1rem;
 }
 
+/* TARJETAS TORTA */
 .torta-card {
-    background: #fff;
-    border-radius: 0.75rem;
+    background: #ffffff;
+    border-radius: 1rem;
     padding: 1.5rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    display: inline-block;
-    min-width: 280px;
-    text-align: center;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-width: 260px;
+    text-align: center;
 }
 
 .torta-card canvas {
-    width: 250px;
-    height: 250px;
+    width: 240px;
+    height: 240px;
     margin-bottom: 1rem;
 }
 
 .torta-card .torta-title {
     font-size: 1.2rem;
-    color: #222;
-    margin-bottom: 1rem;
-    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 0.8rem;
+    font-weight: 700;
 }
 
 .torta-card .torta-info {
     font-size: 1rem;
     margin-top: 0.5rem;
-    color: #555;
+    color: #374151;
 }
 
 .terminados-label {
-    color: #2563eb;
+    color: #16a34a;
     font-weight: 600;
 }
 
 .en-proceso-label {
-    color: #fde047;
+    color: #eab308;
     font-weight: 600;
 }
 
 .separator {
-    color: #ccc;
+    color: #9ca3af;
 }
 
 #addTortaTec {
     display: none;
 }
 
+/* RESPONSIVE */
 @media (max-width: 768px) {
     .stats-card {
         flex-direction: column;
-        gap: 2rem;
+        gap: 1.5rem;
     }
+
     .stat-item {
         min-width: 100%;
     }
+
     .tortas-container {
         flex-direction: column;
         align-items: center;
     }
+
     .torta-card {
         width: 95%;
-        margin-right: 0;
     }
 }
 
@@ -185,20 +198,26 @@ h1 {
     .dashboard-container {
         padding: 1rem;
     }
+
     .styled-table thead th,
-    .styled-table tbody td {
+    .styled-table tbody td,
+    .styled-table tfoot td {
         padding: 0.75rem;
         font-size: 0.9rem;
     }
+
     h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
     }
+
     .stat-value {
-        font-size: 1.5rem;
+        font-size: 1.75rem;
     }
+
     .stat-label {
         font-size: 1rem;
     }
+
     .chart-wrapper {
         padding: 1rem;
     }
