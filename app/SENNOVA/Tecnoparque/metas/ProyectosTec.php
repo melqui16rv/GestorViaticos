@@ -47,7 +47,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
 }
 
 ?>
-<h1 class="titulo" id="titulo1">5 Proyectos de Extensionismo Tecnológico</h1>
+<h1 class="titulo" id="titulo1">100 Proyectos de Extensionismo Tecnológico</h1>
 <div class="dashboard-container" id="dashboardContent">    
     <!-- Filtros de fecha -->
     <div class="filtros-container">
