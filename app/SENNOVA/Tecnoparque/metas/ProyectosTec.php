@@ -16,7 +16,6 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 </head>
-<h1 class="titulo" id="titulo1">Meta: 100 Proyectos Tecnológicos Terminados</h1>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
         <div class="stat-item">
