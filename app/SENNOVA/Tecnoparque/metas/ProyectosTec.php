@@ -42,7 +42,6 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
         <canvas id="graficaProyectosTec"></canvas>
     </div>
     <h3>Detalle por Línea (Torta)</h3>
-    <button class="add-torta-btn" id="addTortaTec">Agregar gráfica de torta</button>
     <div class="tortas-container" id="tortasTec"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
