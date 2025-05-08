@@ -16,10 +16,11 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 </head>
+<h1 class="titulo" id="titulo1">Meta: 100 Proyectos Tecnológicos Terminados</h1>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
         <div class="stat-item">
-            <div class="stat-value text-blue-700"><?php echo $resumen['total_terminados']; ?></div>
+            <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
             <div class="stat-label">Terminados</div>
         </div>
         <div class="stat-item">
@@ -27,12 +28,12 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
             <div class="stat-label">Terminados (%)</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value text-orange-500"><?php echo $total_esperado; ?></div>
-            <div class="stat-label">Proyección</div>
-        </div>
-        <div class="stat-item">
             <div class="stat-value text-yellow-500"><?php echo $porcentaje_esperado; ?>%</div>
             <div class="stat-label">Proyección (%)</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value text-blue-500"><?php echo $total_esperado; ?></div>
+            <div class="stat-label">Proyección (Terminados + En Proceso)</div>
         </div>
     </div>
     <div class="grafica-table-wrapper mb-8">
@@ -58,21 +59,22 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
                 ?>
                 <tr>
                     <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
-                    <td><?php echo (int)$p['terminados']; ?></td>
-                    <td><?php echo (int)$p['en_proceso']; ?></td>
-                    <td>
-                        <span style="font-weight:bold;color:#f59e42;"><?php echo $proy; ?></span>
+                    <td class="td-terminados"><?php echo (int)$p['terminados']; ?></td>
+                    <td class="td-enproceso"><?php echo (int)$p['en_proceso']; ?></td>
+                    <td class="td-proyeccion">
+                        <?php echo $proy; ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>
-                <!-- Fila Total informativa -->
-                <tr style="background:#f6f8fa;font-weight:bold;">
-                    <td>Total</td>
-                    <td><?php echo $total_terminados; ?></td>
-                    <td><?php echo $total_en_proceso; ?></td>
-                    <td><span style="color:#f59e42;"><?php echo $total_proyeccion; ?></span></td>
-                </tr>
             </tbody>
+            <tfoot>
+                <tr>
+                    <td>Total</td>
+                    <td class="td-terminados"><?php echo $total_terminados; ?></td>
+                    <td class="td-enproceso"><?php echo $total_en_proceso; ?></td>
+                    <td class="td-proyeccion"><?php echo $total_proyeccion; ?></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
     <div class="chart-wrapper mb-8">
@@ -99,19 +101,19 @@ new Chart(ctx, {
             {
                 label: 'Terminados',
                 data: terminados,
-                backgroundColor: 'rgba(37, 99, 235, 0.7)',
+                backgroundColor: 'rgba(22, 163, 74, 0.85)', // verde
                 borderWidth: 0
             },
             {
                 label: 'En Proceso',
                 data: enProceso,
-                backgroundColor: 'rgba(253, 224, 71, 0.7)',
+                backgroundColor: 'rgba(234, 179, 8, 0.85)', // amarillo
                 borderWidth: 0
             },
             {
                 label: 'Proyección',
                 data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
-                backgroundColor: 'rgba(245, 158, 66, 0.7)',
+                backgroundColor: 'rgba(14, 165, 233, 0.7)', // azul
                 borderWidth: 0
             }
         ]
@@ -206,7 +208,7 @@ function renderTortas() {
                 labels: ['Terminados', 'En Proceso'],
                 datasets: [{
                     data: dataPie,
-                    backgroundColor: ['#2563eb', '#fde047'],
+                    backgroundColor: ['#16a34a', '#fde047'], // verde y amarillo
                     borderWidth: 0
                 }]
             },
