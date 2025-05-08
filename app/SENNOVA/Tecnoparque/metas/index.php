@@ -103,7 +103,6 @@ requireRole(['4', '5', '6']);
             </div>
         </main>
     </div>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <script>
     // Utilidad para cookies
     function setCookie(name, value, days = 30) {

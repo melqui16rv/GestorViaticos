@@ -92,7 +92,6 @@ requireRole(['4', '5', '6']);
             </div>
         </main>
     </div>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <script>
         // Configurar la altura del nav para los estilos
         document.addEventListener('DOMContentLoaded', function() {
