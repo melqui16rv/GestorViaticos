@@ -9,6 +9,8 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 </head>
+max-width: 100%;
+max-height: 350px;
     <h1 class="titulo" id="titulo1">Meta: 100 Proyectos Tecnológicos Terminados</h1>
     <div class="dashboard-container" id="dashboardContent">
         <div class="stats-card flex flex-wrap gap-6 mb-6">
@@ -42,7 +44,7 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
             </table>
         </div>
         <div class="chart-wrapper mb-8">
-            <canvas id="graficaProyectosTec"></canvas>
+            <canvas id="graficaProyectosTec" style="height: auto; width: 100%; max-height: 350px;"></canvas>
         </div>
         <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
         <div class="tortas-container" id="tortasTec"></div>
