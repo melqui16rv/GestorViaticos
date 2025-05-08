@@ -49,17 +49,7 @@ if (isset($_SESSION['id_rol'])) {
         <div class="contenedor">
 
                 <div class="main-content">
-                    <h1>Bienvenido a la plataforma de Gestion Viaticos</h1>
-                    <div class="actions">
-                        <?php if(isset($_SESSION['id_rol'])): ?>
-                            <a href="<?php echo BASE_URL; ?>includes/session/salir.php" onclick="return salir()"><button class="login-button">Cerrar Sesión</button></a>
-                            <button onclick="redirigirSegunRol()" class="btn-entrar">
-                                Entrar
-                            </button>
-                        <?php else: ?>
-                            <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="preload-link"><button class="login-button">Iniciar sesión</button></a>
-                        <?php endif; ?>
-                    </div>
+                    <h1>Bienvenido a la plataforma del Centro Industrial y de Desarrollo Empresarial de Soacha</h1>
                 </div>
             </div>
         </div>
