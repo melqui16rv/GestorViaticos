@@ -47,25 +47,6 @@ h1 {
 
 .styled-table {
     width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-}
-
-.styled-table thead th {
-    background-color: #f0f0f0;
-    color: #333;
-    text-align: left;
-    padding: 1.2rem;
-    font-weight: 600;
-    border-bottom: 2px solid #e0e0e0;
-}
-
-/* Mejorar estilos de la tabla */
-.styled-table {
-    width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     background-color: #fff;
@@ -74,6 +55,7 @@ h1 {
     overflow: hidden;
     font-size: 1.05rem;
 }
+
 .styled-table thead th {
     background: linear-gradient(90deg, #e0f7e9 0%, #fffbe6 100%);
     color: #222;
@@ -83,40 +65,48 @@ h1 {
     border-bottom: 2px solid #e0e0e0;
     letter-spacing: 0.5px;
 }
+
 .styled-table tbody td {
     padding: 1.1rem;
     text-align: center;
     border-bottom: 1px solid #f0f0f0;
     vertical-align: middle;
 }
+
 .styled-table tbody tr:nth-child(even) {
     background-color: #f8fafc;
 }
+
 .styled-table tbody tr:hover {
     background-color: #f0f6f3;
 }
+
 .styled-table .td-terminados {
     color: #16a34a;
     font-weight: bold;
     background: #e0f7e9;
     border-radius: 0.5rem;
 }
+
 .styled-table .td-enproceso {
     color: #eab308;
     font-weight: bold;
     background: #fffbe6;
     border-radius: 0.5rem;
 }
+
 .styled-table .td-proyeccion {
     color: #0ea5e9;
     font-weight: bold;
     background: #e0f2fe;
     border-radius: 0.5rem;
 }
+
 .styled-table tfoot tr {
     background: #f1f5f9;
     font-weight: bold;
 }
+
 .styled-table tfoot td {
     border-top: 2px solid #e0e0e0;
 }
