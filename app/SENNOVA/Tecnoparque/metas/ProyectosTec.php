@@ -163,7 +163,6 @@ function crearTortaTec(lineaInicial = null) {
 }
 
 function renderTortas() {
-    // Actualiza selects y gráficos de todas las tortas
     tortas.forEach((torta, index) => {
         // Actualiza opciones del select
         Array.from(torta.select.options).forEach(option => {
@@ -185,8 +184,14 @@ function renderTortas() {
             `<span style="color:#fde047;font-weight:bold;">En Proceso: ${enProcesoVal}</span>`
         ].join(' <span style="color:#bbb;">-</span> ');
 
+        // Limpia el canvas anterior y crea uno nuevo
         if (charts[index]) charts[index].destroy();
-        const ctx = torta.canvas.getContext('2d');
+        const oldCanvas = torta.canvas;
+        const newCanvas = document.createElement('canvas');
+        oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
+        torta.canvas = newCanvas;
+
+        const ctx = newCanvas.getContext('2d');
         charts[index] = new Chart(ctx, {
             type: 'pie',
             data: {
