@@ -92,19 +92,19 @@ requireRole(['4', '5', '6']);
         <!-- Contenido principal -->
         <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
             <div id="dashboardProyectosTecnologicos">
-                <?php require_once 'ProyectosTec.php'; ?>
+                <?php require_once './ProyectosTec.php'; ?>
             </div>
             <div id="dashboardAsesorarAsociaciones">
-                <?php require_once 'AsesorarAso.php'; ?>
+                <?php require_once './AsesorarAso.php'; ?>
             </div>
             <div id="dashboardAsesorarAprendices">
-                <?php require_once 'AsesorarApre.php'; ?>
+                <?php require_once './AsesorarApre.php'; ?>
             </div>
             <div id="dashboardExtensionismo">
-                <?php require_once 'ProyectosExt.php'; ?>
+                <?php require_once './ProyectosExt.php'; ?>
             </div>
             <div id="dashboardVisitasAprendices">
-                <?php require_once 'VisitasApre.php'; ?>
+                <?php require_once './VisitasApre.php'; ?>
             </div>
         </main>
     </div>
