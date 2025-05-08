@@ -58,47 +58,53 @@ requireRole(['4', '5', '6']);
             <nav class="flex-1 py-4">
                 <ul>
                     <li>
-                        <a href="#" id="navDashboard" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-layout-dashboard mr-3"></i> 100 Proyectos de Base Tecnológica
+                        <a href="#" id="navProyectosTecnologicos" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-device-laptop mr-3"></i> 100 Proyectos de Base Tecnológica
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="navGraficas" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-chart-pie-2 mr-3"></i> Asesorar a 20 Asociaciones
+                        <a href="#" id="navAsesorarAsociaciones" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-users-group mr-3"></i> Asesorar a 20 Asociaciones
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="navIndicadores" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-award mr-3"></i> Asesorar a 1 Cooperativa de Aprendices
+                        <a href="#" id="navAsesorarAprendices" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-school mr-3"></i> Asesorar a 1 Cooperativa de Aprendices
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="navIndicadores" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-award mr-3"></i> 5 Proyectos de Extensionismo Tecnológico
+                        <a href="#" id="navExtensionismo" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-rocket mr-3"></i> 5 Proyectos de Extensionismo Tecnológico
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="navIndicadores" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-award mr-3"></i> Visitas de Aprendices
+                        <a href="#" id="navVisitasAprendices" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-route mr-3"></i> Visitas de Aprendices
                         </a>
                     </li>
                 </ul>
             </nav>
             <div class="p-4 border-t border-gray-200 text-xs text-gray-500">
-                &copy; <?php echo date('Y'); ?> Gestor Viáticos
+                &copy; <?php echo date('Y'); ?> Gestor Tecnoparque
             </div>
         </aside>
 
         <!-- Contenido principal -->
         <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">
-            <div id="dashboardView">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/dashboard_content.php'; ?>
+            <div id="dashboardProyectosTecnologicos">
+                <?php require_once 'ProyectosTec.php'; ?>
             </div>
-            <div id="graficasView">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/Graficas.php'; ?>
+            <div id="dashboardAsesorarAsociaciones">
+                <?php require_once 'AsesorarAso.php'; ?>
             </div>
-            <div id="indicadoresView">
-                <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/General/IndicadoresViaticos.php'; ?>
+            <div id="dashboardAsesorarAprendices">
+                <?php require_once 'AsesorarApre.php'; ?>
+            </div>
+            <div id="dashboardExtensionismo">
+                <?php require_once 'ProyectosExt.php'; ?>
+            </div>
+            <div id="dashboardVisitasAprendices">
+                <?php require_once 'VisitasApre.php'; ?>
             </div>
         </main>
     </div>
@@ -274,6 +280,102 @@ requireRole(['4', '5', '6']);
         
         window.addEventListener('resize', handleResize);
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Referencias a los elementos del DOM
+    const dashboards = {
+        proyectosTecnologicos: document.getElementById('dashboardProyectosTecnologicos'),
+        asesorarAsociaciones: document.getElementById('dashboardAsesorarAsociaciones'),
+        asesorarAprendices: document.getElementById('dashboardAsesorarAprendices'),
+        extensionismo: document.getElementById('dashboardExtensionismo'),
+        visitasAprendices: document.getElementById('dashboardVisitasAprendices')
+    };
+
+    // Ocultar todos los dashboards
+    function hideAllDashboards() {
+        Object.values(dashboards).forEach(dashboard => {
+            if (dashboard) dashboard.style.display = 'none';
+        });
+    }
+
+    // Mostrar dashboard específico
+    function showDashboard(id) {
+        hideAllDashboards();
+        const dashboard = dashboards[id];
+        if (dashboard) dashboard.style.display = 'block';
+    }
+
+    // Event listeners para la navegación
+    const navLinks = {
+        'navProyectosTecnologicos': 'proyectosTecnologicos',
+        'navAsesorarAsociaciones': 'asesorarAsociaciones',
+        'navAsesorarAprendices': 'asesorarAprendices',
+        'navExtensionismo': 'extensionismo',
+        'navVisitasAprendices': 'visitasAprendices'
+    };
+
+    Object.entries(navLinks).forEach(([navId, dashboardId]) => {
+        const navElement = document.getElementById(navId);
+        if (navElement) {
+            navElement.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remover clase activa de todos los enlaces
+                document.querySelectorAll('.sidebar-link').forEach(link => {
+                    link.classList.remove('active');
+                });
+                
+                // Agregar clase activa al enlace actual
+                this.classList.add('active');
+                
+                showDashboard(dashboardId);
+                
+                // En móvil, cerrar sidebar después de navegar
+                if (window.innerWidth < 1024) {
+                    closeSidebar();
+                }
+            });
+        }
+    });
+
+    // Mostrar el dashboard inicial
+    showDashboard('proyectosTecnologicos');
+
+    // ... resto del código existente ...
+});
+
+// Agregar estilos para el enlace activo
+</script>
+
+<style>
+.sidebar-link.active {
+    background-color: #f0f6ff;
+    color: #2563eb;
+    border-right: 3px solid #2563eb;
+}
+
+.dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Estilos para las tarjetas de estadísticas */
+.stats-card {
+    background: white;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+}
+</style>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body></html>
