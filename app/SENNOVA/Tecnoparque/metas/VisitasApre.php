@@ -47,6 +47,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
 }
 
 ?>
+<h1 class="titulo" id="titulo1">Visitas de Aprendices</h1>
 <div class="dashboard-container" id="dashboardContent">    
     <!-- Filtros de fecha -->
     <div class="filtros-container">

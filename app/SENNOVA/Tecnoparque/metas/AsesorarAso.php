@@ -7,7 +7,7 @@ $datosCDP = $miGraficas->obtenerGraficaCDP();
 $datosCRP = $miGraficas->obtenerGraficaCRP();
 $datosOP = $miGraficas->obtenerGraficaOP();
 ?>
-
+<h2 class="titulo" id="titulo1">Asesorar a 20 Asociaciones</h2>
 <div class="container-graficas">
     <h2>Consumo por Dependencia (CDP)</h2>
     <div class="grafica-table-wrapper">

@@ -8,6 +8,7 @@ $datosCRP = $miGraficas->obtenerGraficaCRP();
 $datosOP = $miGraficas->obtenerGraficaOP();
 ?>
 
+<h2>100 Proyectos de Base Tecnológica</h2>
 <div class="container-graficas">
     <h2>Consumo por Dependencia (CDP)</h2>
     <div class="grafica-table-wrapper">

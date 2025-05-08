@@ -47,6 +47,7 @@ foreach ($estadisticasPorFecha as $estadistica) {
 }
 
 ?>
+<h2 class="titulo" id="titulo1">Asesorar a 1 Cooperativa de Aprendices</h2>
 <div class="dashboard-container" id="dashboardContent">    
     <!-- Filtros de fecha -->
     <div class="filtros-container">
