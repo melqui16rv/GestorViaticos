@@ -96,8 +96,14 @@ h1 {
     text-align: center;
     font-weight: 600;
 }
-#graficaProyectosTec{
-    height: auto; width: 100%; max-height: 350px;
+
+/* Aplica solo al canvas de la gráfica de barras */
+#graficaProyectosTec {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 350px !important;
+    display: block;
+    margin: 0 auto;
 }
 .tortas-container {
     display: flex;
