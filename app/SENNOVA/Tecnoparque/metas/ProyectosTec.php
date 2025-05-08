@@ -91,6 +91,14 @@ const labels = proyectos.map(p => p.nombre_linea);
 const terminados = proyectos.map(p => Number(p.terminados));
 const enProceso = proyectos.map(p => Number(p.en_proceso));
 
+// Paleta de colores suaves y agradables
+const verdeSuave = 'rgba(34,197,94,0.75)';      // verde pastel
+const verdeBorde = 'rgba(34,197,94,1)';
+const amarilloSuave = 'rgba(253,224,71,0.65)';  // amarillo pastel
+const amarilloBorde = 'rgba(253,224,71,1)';
+const azulSuave = 'rgba(59,130,246,0.60)';      // azul pastel
+const azulBorde = 'rgba(59,130,246,1)';
+
 // Gráfica de barras por línea (terminados y en proceso)
 const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
 new Chart(ctx, {
@@ -101,20 +109,32 @@ new Chart(ctx, {
             {
                 label: 'Terminados',
                 data: terminados,
-                backgroundColor: 'rgba(22, 163, 74, 0.85)', // verde
-                borderWidth: 0
+                backgroundColor: verdeSuave,
+                borderColor: verdeBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
             },
             {
                 label: 'En Proceso',
                 data: enProceso,
-                backgroundColor: 'rgba(234, 179, 8, 0.85)', // amarillo
-                borderWidth: 0
+                backgroundColor: amarilloSuave,
+                borderColor: amarilloBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
             },
             {
                 label: 'Proyección',
                 data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
-                backgroundColor: 'rgba(14, 165, 233, 0.7)', // azul
-                borderWidth: 0
+                backgroundColor: azulSuave,
+                borderColor: azulBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
             }
         ]
     },
@@ -124,12 +144,20 @@ new Chart(ctx, {
             y: {
                 beginAtZero: true,
                 grid: {
-                    color: 'rgba(0, 0, 0, 0.1)'
+                    color: 'rgba(0,0,0,0.06)'
+                },
+                ticks: {
+                    color: '#64748b',
+                    font: { size: 14 }
                 }
             },
             x: {
                 grid: {
-                    color: 'rgba(0, 0, 0, 0.1)'
+                    color: 'rgba(0,0,0,0.04)'
+                },
+                ticks: {
+                    color: '#64748b',
+                    font: { size: 14 }
                 }
             }
         },
@@ -137,8 +165,8 @@ new Chart(ctx, {
             legend: {
                 position: 'bottom',
                 labels: {
-                    fontColor: '#555',
-                    fontSize: 14
+                    color: '#334155',
+                    font: { size: 15, weight: 'bold' }
                 }
             }
         }
@@ -208,8 +236,9 @@ function renderTortas() {
                 labels: ['Terminados', 'En Proceso'],
                 datasets: [{
                     data: dataPie,
-                    backgroundColor: ['#16a34a', '#fde047'], // verde y amarillo
-                    borderWidth: 0
+                    backgroundColor: [verdeSuave, amarilloSuave],
+                    borderColor: [verdeBorde, amarilloBorde],
+                    borderWidth: 2
                 }]
             },
             options: {
@@ -221,8 +250,8 @@ function renderTortas() {
                             weight: 'bold',
                             size: 14
                         },
-                        textStrokeColor: '#333',
-                        textStrokeWidth: 1.6,
+                        textStrokeColor: '#334155',
+                        textStrokeWidth: 1.2,
                         formatter: function(value, context) {
                             const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
                             if (sum === 0) return '';
@@ -230,10 +259,10 @@ function renderTortas() {
                         }
                     },
                     tooltip: {
-                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        backgroundColor: 'rgba(51,65,85,0.95)',
                         titleColor: '#fff',
                         bodyColor: '#fff',
-                        borderColor: '#333',
+                        borderColor: '#64748b',
                         borderWidth: 1,
                         callbacks: {
                             label: function(context) {
