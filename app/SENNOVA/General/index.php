@@ -263,6 +263,5 @@ requireRole(['4', '5', '6']);
         
         window.addEventListener('resize', handleResize);
     </script>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
 </html>

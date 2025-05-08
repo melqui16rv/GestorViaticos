@@ -260,6 +260,5 @@ requireRole(['4', '5', '6']);
     }
 }
     </style>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
 </body>
 </html>
