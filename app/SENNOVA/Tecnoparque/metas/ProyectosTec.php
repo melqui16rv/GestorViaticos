@@ -165,7 +165,7 @@ function renderTortas() {
         const titleElement = torta.title;
         const infoDivElement = torta.infoDiv;
 
-
+        console.log('Renderizando torta:', index, 'con línea:', linea); // NUEVO
         const nombre = opciones.find(o => o.value === linea)?.label || '';
         titleElement.innerHTML = `<strong>${nombre}</strong>`;
 
@@ -184,6 +184,11 @@ function renderTortas() {
             charts[index].destroy();
         }
         const ctx = canvas.getContext('2d');
+        console.log('Contexto del canvas:', ctx); // NUEVO
+        if (!ctx) {
+            console.error('No se pudo obtener el contexto del canvas'); //NUEVO
+            return;
+        }
         const newChart = new Chart(ctx, {
             type: 'pie',
             data: {
