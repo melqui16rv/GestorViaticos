@@ -1,0 +1,197 @@
+.dashboard-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+h1 {
+    color: #222;
+    margin-bottom: 2rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: 2.25rem;
+}
+
+.stats-card {
+    display: flex;
+    justify-content: center;
+    gap: 4rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 150px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: #666;
+}
+
+.grafica-table-wrapper {
+    margin-bottom: 2rem;
+    overflow-x: auto;
+}
+
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.styled-table thead th {
+    background-color: #f0f0f0;
+    color: #333;
+    text-align: left;
+    padding: 1.2rem;
+    font-weight: 600;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.styled-table tbody tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+.styled-table tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+.styled-table tbody td {
+    padding: 1.2rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.styled-table tbody td:last-child {
+    border-right: none;
+}
+
+.chart-wrapper {
+    margin-bottom: 2rem;
+    background-color: #fff;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.tortas-title {
+    font-size: 1.5rem;
+    color: #222;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.tortas-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.torta-card {
+    background: #fff;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+    min-width: 280px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.torta-card canvas {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 1rem;
+}
+
+.torta-card .torta-title {
+    font-size: 1.2rem;
+    color: #222;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.torta-card .torta-info {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    color: #555;
+}
+
+.terminados-label {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.en-proceso-label {
+    color: #fde047;
+    font-weight: 600;
+}
+
+.separator {
+    color: #ccc;
+}
+
+#addTortaTec {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .stats-card {
+        flex-direction: column;
+        gap: 2rem;
+    }
+    .stat-item {
+        min-width: 100%;
+    }
+    .tortas-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .torta-card {
+        width: 95%;
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 1rem;
+    }
+    .styled-table thead th,
+    .styled-table tbody td {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    h1 {
+        font-size: 1.8rem;
+    }
+    .stat-value {
+        font-size: 1.5rem;
+    }
+    .stat-label {
+        font-size: 1rem;
+    }
+    .chart-wrapper {
+        padding: 1rem;
+    }
+}
