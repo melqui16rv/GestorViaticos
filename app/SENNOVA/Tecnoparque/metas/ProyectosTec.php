@@ -24,6 +24,7 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
                 <tr>
                     <th>Línea</th>
                     <th>Terminados</th>
+                    <th>En Proceso</th>
                 </tr>
             </thead>
             <tbody>
@@ -31,6 +32,7 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
                 <tr>
                     <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
                     <td><?php echo (int)$p['terminados']; ?></td>
+                    <td><?php echo (int)$p['en_proceso']; ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -49,8 +51,9 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
 const proyectos = <?php echo json_encode($proyectos); ?>;
 const labels = proyectos.map(p => p.nombre_linea);
 const terminados = proyectos.map(p => Number(p.terminados));
+const enProceso = proyectos.map(p => Number(p.en_proceso));
 
-// Gráfica de barras por línea
+// Gráfica de barras por línea (terminados y en proceso)
 const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
 new Chart(ctx, {
     type: 'bar',
@@ -61,13 +64,18 @@ new Chart(ctx, {
                 label: 'Terminados',
                 data: terminados,
                 backgroundColor: 'rgba(37, 99, 235, 0.7)'
+            },
+            {
+                label: 'En Proceso',
+                data: enProceso,
+                backgroundColor: 'rgba(253, 224, 71, 0.7)'
             }
         ]
     },
     options: {
         responsive: true,
         scales: {
-            y: { beginAtZero: true, max: 100 }
+            y: { beginAtZero: true }
         }
     }
 });
@@ -126,15 +134,17 @@ function crearTortaTec() {
             card.appendChild(canvas);
 
             const dataObj = proyectos.find(p => String(p.nombre_linea) === String(t.linea));
-            const dataPie = [dataObj ? Number(dataObj.terminados) : 0, 100 - (dataObj ? Number(dataObj.terminados) : 0)];
-            const total = 100;
+            const terminadosVal = dataObj ? Number(dataObj.terminados) : 0;
+            const enProcesoVal = dataObj ? Number(dataObj.en_proceso) : 0;
+            const total = terminadosVal + enProcesoVal;
+            const dataPie = total > 0 ? [terminadosVal, enProcesoVal] : [0, 0];
 
             const infoDiv = document.createElement('div');
             infoDiv.style.fontSize = '1em';
             infoDiv.style.marginTop = '8px';
             infoDiv.innerHTML = [
-                `<span style="color:#2563eb;font-weight:bold;">Terminados: ${dataPie[0]}</span>`,
-                `<span style="color:#bbb;font-weight:bold;">Restantes: ${dataPie[1]}</span>`
+                `<span style="color:#2563eb;font-weight:bold;">Terminados: ${terminadosVal}</span>`,
+                `<span style="color:#fde047;font-weight:bold;">En Proceso: ${enProcesoVal}</span>`
             ].join(' <span style="color:#bbb;">-</span> ');
             card.appendChild(infoDiv);
 
@@ -143,10 +153,10 @@ function crearTortaTec() {
             charts.push(new Chart(canvas.getContext('2d'), {
                 type: 'pie',
                 data: {
-                    labels: ['Terminados', 'Restantes'],
+                    labels: ['Terminados', 'En Proceso'],
                     datasets: [{
                         data: dataPie,
-                        backgroundColor: ['#2563eb', '#e5e7eb']
+                        backgroundColor: ['#2563eb', '#fde047']
                     }]
                 },
                 options: {
