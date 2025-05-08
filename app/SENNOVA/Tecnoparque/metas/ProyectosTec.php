@@ -44,7 +44,7 @@ max-height: 350px;
             </table>
         </div>
         <div class="chart-wrapper mb-8">
-            <canvas id="graficaProyectosTec" style="height: auto; width: 100%; max-height: 350px;"></canvas>
+            <canvas id="graficaProyectosTec"></canvas>
         </div>
         <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
         <div class="tortas-container" id="tortasTec"></div>
