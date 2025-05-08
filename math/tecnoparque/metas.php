@@ -223,4 +223,18 @@ class metas_tecnoparque extends Conexion{
         );
     }
 
+    public function obtenerSumaProyectosTecTerminadosPorTipo($tipo = 'Tecnológico') {
+        $sql = "SELECT SUM(terminados) as total_terminados FROM proyectos_tecnoparque WHERE tipo = :tipo";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        $total_terminados = $result['total_terminados'] ?? 0;
+        return [
+            'total_terminados' => $total_terminados,
+            'meta' => 100,
+            'avance_porcentaje' => $total_terminados > 0 ? round(($total_terminados / 100) * 100, 1) : 0
+        ];
+    }
+
 }

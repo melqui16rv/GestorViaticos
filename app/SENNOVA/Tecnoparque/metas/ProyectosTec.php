@@ -3,11 +3,10 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
 $metas = new metas_tecnoparque();
-// Obtener solo proyectos de tipo 'Tecnológico'
 $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
-$resumen = $metas->obtenerSumaProyectosTecPorTipo('Tecnológico');
+$resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
 ?>
-<h1 class="titulo" id="titulo1">100 Proyectos de Base Tecnológica</h1>
+<h1 class="titulo" id="titulo1">Meta: 100 Proyectos Tecnológicos Terminados</h1>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
         <div>
@@ -15,15 +14,7 @@ $resumen = $metas->obtenerSumaProyectosTecPorTipo('Tecnológico');
             <div class="text-gray-600">Terminados</div>
         </div>
         <div>
-            <div class="text-2xl font-bold text-yellow-600"><?php echo $resumen['total_en_proceso']; ?></div>
-            <div class="text-gray-600">En Proceso</div>
-        </div>
-        <div>
-            <div class="text-2xl font-bold text-gray-800"><?php echo $resumen['total']; ?></div>
-            <div class="text-gray-600">Total Registrados</div>
-        </div>
-        <div>
-            <div class="text-2xl font-bold text-green-700"><?php echo round(($resumen['total'] / 100) * 100, 1); ?>%</div>
+            <div class="text-2xl font-bold text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
             <div class="text-gray-600">Avance Meta (100)</div>
         </div>
     </div>
@@ -33,8 +24,6 @@ $resumen = $metas->obtenerSumaProyectosTecPorTipo('Tecnológico');
                 <tr>
                     <th>Línea</th>
                     <th>Terminados</th>
-                    <th>En Proceso</th>
-                    <th>Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,8 +31,6 @@ $resumen = $metas->obtenerSumaProyectosTecPorTipo('Tecnológico');
                 <tr>
                     <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
                     <td><?php echo (int)$p['terminados']; ?></td>
-                    <td><?php echo (int)$p['en_proceso']; ?></td>
-                    <td><?php echo (int)$p['terminados'] + (int)$p['en_proceso']; ?></td>
                 </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -62,7 +49,6 @@ $resumen = $metas->obtenerSumaProyectosTecPorTipo('Tecnológico');
 const proyectos = <?php echo json_encode($proyectos); ?>;
 const labels = proyectos.map(p => p.nombre_linea);
 const terminados = proyectos.map(p => Number(p.terminados));
-const enProceso = proyectos.map(p => Number(p.en_proceso));
 
 // Gráfica de barras por línea
 const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
@@ -75,18 +61,13 @@ new Chart(ctx, {
                 label: 'Terminados',
                 data: terminados,
                 backgroundColor: 'rgba(37, 99, 235, 0.7)'
-            },
-            {
-                label: 'En Proceso',
-                data: enProceso,
-                backgroundColor: 'rgba(253, 224, 71, 0.7)'
             }
         ]
     },
     options: {
         responsive: true,
         scales: {
-            y: { beginAtZero: true }
+            y: { beginAtZero: true, max: 100 }
         }
     }
 });
@@ -145,15 +126,16 @@ function crearTortaTec() {
             card.appendChild(canvas);
 
             const dataObj = proyectos.find(p => String(p.nombre_linea) === String(t.linea));
-            const dataPie = [dataObj ? Number(dataObj.terminados) : 0, dataObj ? Number(dataObj.en_proceso) : 0];
-            const total = dataPie.reduce((a, b) => a + b, 0);
+            const dataPie = [dataObj ? Number(dataObj.terminados) : 0, 100 - (dataObj ? Number(dataObj.terminados) : 0)];
+            const total = 100;
 
             const infoDiv = document.createElement('div');
             infoDiv.style.fontSize = '1em';
             infoDiv.style.marginTop = '8px';
-            infoDiv.innerHTML = ['Terminados', 'En Proceso'].map((l, i) =>
-                `<span style="color:${i === 0 ? '#2563eb' : '#fde047'};font-weight:bold;">${l}: ${dataPie[i]}</span>`
-            ).join(' <span style="color:#bbb;">-</span> ');
+            infoDiv.innerHTML = [
+                `<span style="color:#2563eb;font-weight:bold;">Terminados: ${dataPie[0]}</span>`,
+                `<span style="color:#bbb;font-weight:bold;">Restantes: ${dataPie[1]}</span>`
+            ].join(' <span style="color:#bbb;">-</span> ');
             card.appendChild(infoDiv);
 
             container.appendChild(card);
@@ -161,10 +143,10 @@ function crearTortaTec() {
             charts.push(new Chart(canvas.getContext('2d'), {
                 type: 'pie',
                 data: {
-                    labels: ['Terminados', 'En Proceso'],
+                    labels: ['Terminados', 'Restantes'],
                     datasets: [{
                         data: dataPie,
-                        backgroundColor: ['#2563eb', '#fde047']
+                        backgroundColor: ['#2563eb', '#e5e7eb']
                     }]
                 },
                 options: {
