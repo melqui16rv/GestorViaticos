@@ -90,7 +90,19 @@ const opciones = proyectos.map((p) => ({
 }));
 const addTortaBtn = document.getElementById('addTortaTec');
 
+function getLineasUsadas() {
+    return tortas.map(t => t.linea);
+}
+
 function crearTortaTec(lineaInicial = null) {
+    // Buscar la primera línea disponible si no se pasa una
+    let linea = lineaInicial;
+    if (!linea) {
+        const usadas = getLineasUsadas();
+        const libre = opciones.find(opt => !usadas.includes(opt.value));
+        linea = libre ? libre.value : opciones[0].value;
+    }
+
     const card = document.createElement('div');
     card.className = 'torta-card';
 
@@ -100,17 +112,16 @@ function crearTortaTec(lineaInicial = null) {
         const option = document.createElement('option');
         option.value = opt.value;
         option.textContent = opt.label;
+        // Deshabilita si ya está usada en otra torta
+        if (getLineasUsadas().includes(opt.value) && opt.value !== linea) {
+            option.disabled = true;
+        }
         select.appendChild(option);
     });
-    select.value = lineaInicial;  // Establecer el valor inicial
+    select.value = linea;
     select.onchange = function() {
-        const index = tortas.findIndex(t => t.select === this);
-        if (index !== -1) {
-            tortas[index].linea = this.value;
-            renderTortas(); // Re-renderizar todas las tortas
-        } else {
-             console.error("No se encontró la torta para actualizar"); // Para Debug
-        }
+        tortas[Array.from(tortasContainer.children).indexOf(card)].linea = this.value;
+        renderTortas();
     };
     card.appendChild(select);
 
@@ -118,19 +129,14 @@ function crearTortaTec(lineaInicial = null) {
     removeBtn.className = 'remove-torta';
     removeBtn.innerHTML = '&times;';
     removeBtn.onclick = function() {
-        const index = tortas.findIndex(t => t.select === select);
-        if (index !== -1) {
-            charts[index].destroy();
-            charts.splice(index, 1);
-            tortas.splice(index, 1);
-            tortasContainer.removeChild(card);
-            updateAddTortaButtonState(); // Actualizar el estado del botón
-        } else {
-            console.error("No se encontró la torta para eliminar");  // Para Debug
-        }
+        const idx = Array.from(tortasContainer.children).indexOf(card);
+        if (charts[idx]) charts[idx].destroy();
+        charts.splice(idx, 1);
+        tortas.splice(idx, 1);
+        tortasContainer.removeChild(card);
+        renderTortas();
     };
     card.appendChild(removeBtn);
-
 
     const title = document.createElement('div');
     title.className = 'torta-title';
@@ -145,51 +151,43 @@ function crearTortaTec(lineaInicial = null) {
 
     tortasContainer.appendChild(card);
 
-    const nuevaTorta = {
-        linea: lineaInicial || opciones[0].value,
-        select: select, // Guardar la referencia al select
+    tortas.push({
+        linea: linea,
+        select: select,
         canvas: canvas,
         title: title,
         infoDiv: infoDiv,
         card: card
-    };
-    tortas.push(nuevaTorta);
+    });
     renderTortas();
-    return nuevaTorta; // Devuelve la nueva torta creada
 }
 
 function renderTortas() {
+    // Actualiza selects y gráficos de todas las tortas
     tortas.forEach((torta, index) => {
-        const linea = torta.linea;
-        const canvas = torta.canvas;
-        const titleElement = torta.title;
-        const infoDivElement = torta.infoDiv;
+        // Actualiza opciones del select
+        Array.from(torta.select.options).forEach(option => {
+            option.disabled = getLineasUsadas().includes(option.value) && option.value !== torta.linea;
+        });
 
-        console.log('Renderizando torta:', index, 'con línea:', linea); // NUEVO
-        const nombre = opciones.find(o => o.value === linea)?.label || '';
-        titleElement.innerHTML = `<strong>${nombre}</strong>`;
+        // Actualiza título y datos
+        const nombre = opciones.find(o => o.value === torta.linea)?.label || '';
+        torta.title.innerHTML = `<strong>${nombre}</strong>`;
 
-        const dataObj = proyectos.find(p => String(p.nombre_linea) === String(linea));
+        const dataObj = proyectos.find(p => String(p.nombre_linea) === String(torta.linea));
         const terminadosVal = dataObj ? Number(dataObj.terminados) : 0;
         const enProcesoVal = dataObj ? Number(dataObj.en_proceso) : 0;
         const total = terminadosVal + enProcesoVal;
         const dataPie = total > 0 ? [terminadosVal, enProcesoVal] : [0, 0];
 
-        infoDivElement.innerHTML = [
+        torta.infoDiv.innerHTML = [
             `<span style="color:#2563eb;font-weight:bold;">Terminados: ${terminadosVal}</span>`,
             `<span style="color:#fde047;font-weight:bold;">En Proceso: ${enProcesoVal}</span>`
         ].join(' <span style="color:#bbb;">-</span> ');
 
-        if (charts[index]) {
-            charts[index].destroy();
-        }
-        const ctx = canvas.getContext('2d');
-        console.log('Contexto del canvas:', ctx); // NUEVO
-        if (!ctx) {
-            console.error('No se pudo obtener el contexto del canvas'); //NUEVO
-            return;
-        }
-        const newChart = new Chart(ctx, {
+        if (charts[index]) charts[index].destroy();
+        const ctx = torta.canvas.getContext('2d');
+        charts[index] = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: ['Terminados', 'En Proceso'],
@@ -217,7 +215,8 @@ function renderTortas() {
                             label: function(context) {
                                 const label = context.label || '';
                                 const value = context.parsed || 0;
-                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                                const sum = context.dataset.data.reduce((a, b) => a + b, 0);
+                                const percent = sum > 0 ? ((value / sum) * 100).toFixed(1) : 0;
                                 return `${label}: ${value} (${percent}%)`;
                             }
                         }
@@ -226,12 +225,7 @@ function renderTortas() {
             },
             plugins: [ChartDataLabels]
         });
-        charts[index] = newChart;
     });
-    updateAddTortaButtonState();
-}
-
-function updateAddTortaButtonState() {
     addTortaBtn.disabled = tortas.length >= opciones.length;
 }
 
@@ -244,10 +238,7 @@ if (opciones.length > 0) {
 }
 
 addTortaBtn.onclick = function() {
-    const nuevaTorta = crearTortaTec();
-    if (!nuevaTorta) {
-        updateAddTortaButtonState();
-    }
+    crearTortaTec();
 };
 </script>
 <style>
