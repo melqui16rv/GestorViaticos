@@ -314,4 +314,34 @@ renderTortas();
     font-size: 1em;
     margin-top: 0.5em;
 }
+/* Botón de actualizar tabla */
+.actualizar-tabla-link {
+    text-decoration: none;
+}
+.actualizar-tabla-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.08rem;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+}
+.actualizar-tabla-btn:hover, .actualizar-tabla-btn:focus {
+    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
+    box-shadow: 0 4px 16px rgba(52,211,153,0.13), 0 3px 12px rgba(96,165,250,0.13);
+    transform: translateY(-2px) scale(1.03);
+}
+.icon-refresh {
+    width: 1.3em;
+    height: 1.3em;
+    stroke-width: 2.2;
+}
 </style>
