@@ -5,51 +5,68 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 $metas = new metas_tecnoparque();
 $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
 $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
+
+// Calcular el total esperado (terminados + en proceso)
+$total_esperado = 0;
+foreach ($proyectos as $p) {
+    $total_esperado += (int)$p['terminados'] + (int)$p['en_proceso'];
+}
+$porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 </head>
-max-width: 100%;
-max-height: 350px;
-    <h1 class="titulo" id="titulo1">Meta: 100 Proyectos Tecnológicos Terminados</h1>
-    <div class="dashboard-container" id="dashboardContent">
-        <div class="stats-card flex flex-wrap gap-6 mb-6">
-            <div class="stat-item">
-                <div class="stat-value text-blue-700"><?php echo $resumen['total_terminados']; ?></div>
-                <div class="stat-label">Terminados</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
-                <div class="stat-label">Avance Meta (100%)</div>
-            </div>
+<h1 class="titulo" id="titulo1">Meta: 100 Proyectos Tecnológicos Terminados</h1>
+<div class="dashboard-container" id="dashboardContent">
+    <div class="stats-card flex flex-wrap gap-6 mb-6">
+        <div class="stat-item">
+            <div class="stat-value text-blue-700"><?php echo $resumen['total_terminados']; ?></div>
+            <div class="stat-label">Terminados</div>
         </div>
-        <div class="grafica-table-wrapper mb-8">
-            <table class="styled-table">
-                <thead>
-                    <tr>
-                        <th>Línea</th>
-                        <th>Terminados</th>
-                        <th>En Proceso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($proyectos as $p): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
-                        <td><?php echo (int)$p['terminados']; ?></td>
-                        <td><?php echo (int)$p['en_proceso']; ?></td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
+        <div class="stat-item">
+            <div class="stat-value text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
+            <div class="stat-label">Avance Meta (100%)</div>
         </div>
-        <div class="chart-wrapper mb-8">
-            <canvas id="graficaProyectosTec"></canvas>
+        <div class="stat-item">
+            <div class="stat-value text-yellow-500"><?php echo $porcentaje_esperado; ?>%</div>
+            <div class="stat-label">Proyección (Terminados + En Proceso)</div>
         </div>
-        <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
-        <div class="tortas-container" id="tortasTec"></div>
     </div>
-    <script>
+    <div class="grafica-table-wrapper mb-8">
+        <table class="styled-table">
+            <thead>
+                <tr>
+                    <th>Línea</th>
+                    <th>Terminados</th>
+                    <th>En Proceso</th>
+                    <th>Proyección</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($proyectos as $p): 
+                    $proy = (int)$p['terminados'] + (int)$p['en_proceso'];
+                ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
+                    <td><?php echo (int)$p['terminados']; ?></td>
+                    <td><?php echo (int)$p['en_proceso']; ?></td>
+                    <td>
+                        <span style="font-weight:bold;color:#f59e42;"><?php echo $proy; ?></span>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <div class="chart-wrapper mb-8">
+        <canvas id="graficaProyectosTec"></canvas>
+    </div>
+    <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
+    <div class="tortas-container" id="tortasTec"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<script>
 const proyectos = <?php echo json_encode($proyectos); ?>;
 const labels = proyectos.map(p => p.nombre_linea);
 const terminados = proyectos.map(p => Number(p.terminados));
@@ -72,6 +89,12 @@ new Chart(ctx, {
                 label: 'En Proceso',
                 data: enProceso,
                 backgroundColor: 'rgba(253, 224, 71, 0.7)',
+                borderWidth: 0
+            },
+            {
+                label: 'Proyección',
+                data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
+                backgroundColor: 'rgba(245, 158, 66, 0.7)',
                 borderWidth: 0
             }
         ]
@@ -220,3 +243,35 @@ function renderTortas() {
 // Inicializar las tortas
 renderTortas();
 </script>
+<style>
+#graficaProyectosTec {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 350px !important;
+    display: block;
+    margin: 0 auto;
+}
+.torta-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    display: inline-block;
+    margin-right: 1rem;
+    min-width: 220px;
+    vertical-align: top;
+    position: relative;
+}
+.torta-card .torta-title{
+    min-height: 1.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+.torta-card .torta-info{
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+</style>
