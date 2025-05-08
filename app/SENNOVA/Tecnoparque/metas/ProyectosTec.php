@@ -28,12 +28,12 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
             <div class="stat-label">Avance Meta (100%)</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value text-yellow-500"><?php echo $porcentaje_esperado; ?>%</div>
-            <div class="stat-label">Proyección (%)</div>
-        </div>
-        <div class="stat-item">
             <div class="stat-value text-orange-500"><?php echo $total_esperado; ?></div>
             <div class="stat-label">Proyección (Terminados + En Proceso)</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-value text-yellow-500"><?php echo $porcentaje_esperado; ?>%</div>
+            <div class="stat-label">Proyección (%)</div>
         </div>
     </div>
     <div class="grafica-table-wrapper mb-8">
