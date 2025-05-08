@@ -15,7 +15,7 @@ $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
         </div>
         <div>
             <div class="text-2xl font-bold text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
-            <div class="text-gray-600">Avance Meta (100)</div>
+            <div class="text-gray-600">Avance Meta (100%)</div>
         </div>
     </div>
     <div class="grafica-table-wrapper mb-8">
@@ -85,10 +85,9 @@ function crearTortaTec() {
     const container = document.getElementById('tortasTec');
     let tortas = [];
     let charts = [];
-    const opciones = proyectos.map((p, i) => ({
+    const opciones = proyectos.map((p) => ({
         value: String(p.nombre_linea),
-        label: p.nombre_linea,
-        index: i
+        label: p.nombre_linea
     }));
 
     function render() {
@@ -99,11 +98,16 @@ function crearTortaTec() {
             const card = document.createElement('div');
             card.className = 'torta-card';
 
+            // Select con TODAS las opciones, pero deshabilita las ya usadas en otras tortas
             const select = document.createElement('select');
             opciones.forEach(opt => {
                 const option = document.createElement('option');
                 option.value = opt.value;
                 option.textContent = opt.label;
+                // Solo deshabilita si está usada en otra torta distinta a esta
+                if (tortas.some((tt, i) => tt.linea === opt.value && i !== idx)) {
+                    option.disabled = true;
+                }
                 select.appendChild(option);
             });
             select.value = t.linea;
@@ -189,6 +193,7 @@ function crearTortaTec() {
             }));
         });
 
+        // Solo deshabilita el botón si ya están todas las líneas usadas
         document.getElementById('addTortaTec').disabled = tortas.length >= opciones.length;
     }
 
