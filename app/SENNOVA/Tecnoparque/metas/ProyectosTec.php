@@ -81,61 +81,11 @@ new Chart(ctx, {
 
 // Tortas dinámicas por línea
 const tortasContainer = document.getElementById('tortasTec');
-let tortas = [];
 let charts = [];
-const opciones = proyectos.map((p) => ({
-    value: String(p.nombre_linea),
-    label: p.nombre_linea
-}));
-const addTortaBtn = document.getElementById('addTortaTec');
 
-function getLineasUsadas() {
-    return tortas.map(t => t.linea);
-}
-
-function crearTortaTec(lineaInicial = null) {
-    // Buscar la primera línea disponible si no se pasa una
-    let linea = lineaInicial;
-    if (!linea) {
-        const usadas = getLineasUsadas();
-        const libre = opciones.find(opt => !usadas.includes(opt.value));
-        linea = libre ? libre.value : opciones[0].value;
-    }
-
+function crearTortaTec(linea) { // Ahora la función requiere la línea como argumento.
     const card = document.createElement('div');
     card.className = 'torta-card';
-
-    // Select con TODAS las opciones, pero deshabilita las ya usadas en otras tortas
-    const select = document.createElement('select');
-    opciones.forEach(opt => {
-        const option = document.createElement('option');
-        option.value = opt.value;
-        option.textContent = opt.label;
-        // Deshabilita si ya está usada en otra torta
-        if (getLineasUsadas().includes(opt.value) && opt.value !== linea) {
-            option.disabled = true;
-        }
-        select.appendChild(option);
-    });
-    select.value = linea;
-    select.onchange = function() {
-        tortas[Array.from(tortasContainer.children).indexOf(card)].linea = this.value;
-        renderTortas();
-    };
-    card.appendChild(select);
-
-    const removeBtn = document.createElement('button');
-    removeBtn.className = 'remove-torta';
-    removeBtn.innerHTML = '&times;';
-    removeBtn.onclick = function() {
-        const idx = Array.from(tortasContainer.children).indexOf(card);
-        if (charts[idx]) charts[idx].destroy();
-        charts.splice(idx, 1);
-        tortas.splice(idx, 1);
-        tortasContainer.removeChild(card);
-        renderTortas();
-    };
-    card.appendChild(removeBtn);
 
     const title = document.createElement('div');
     title.className = 'torta-title';
@@ -150,48 +100,44 @@ function crearTortaTec(lineaInicial = null) {
 
     tortasContainer.appendChild(card);
 
-    tortas.push({
+    return { // Devuelve un objeto con las referencias a los elementos creados.
         linea: linea,
-        select: select,
         canvas: canvas,
         title: title,
         infoDiv: infoDiv,
         card: card
-    });
-    renderTortas();
+    };
 }
 
 function renderTortas() {
-    tortas.forEach((torta, index) => {
-        // Actualiza opciones del select
-        Array.from(torta.select.options).forEach(option => {
-            option.disabled = getLineasUsadas().includes(option.value) && option.value !== torta.linea;
-        });
+    // Limpiar el contenedor antes de renderizar las tortas
+    tortasContainer.innerHTML = '';
+    charts.forEach(chart => chart.destroy());
+    charts = [];
 
-        // Actualiza título y datos
-        const nombre = opciones.find(o => o.value === torta.linea)?.label || '';
-        torta.title.innerHTML = `<strong>${nombre}</strong>`;
+    proyectos.forEach((proyecto, index) => { // Iterar sobre los proyectos directamente.
+        const torta = crearTortaTec(proyecto.nombre_linea); // Crear una torta para cada proyecto
+        const linea = torta.linea;
+        const canvas = torta.canvas;
+        const titleElement = torta.title;
+        const infoDivElement = torta.infoDiv;
+        const card = torta.card;
 
-        const dataObj = proyectos.find(p => String(p.nombre_linea) === String(torta.linea));
-        const terminadosVal = dataObj ? Number(dataObj.terminados) : 0;
-        const enProcesoVal = dataObj ? Number(dataObj.en_proceso) : 0;
+        const nombre = proyecto.nombre_linea;
+        titleElement.innerHTML = `<strong>${nombre}</strong>`;
+
+        const terminadosVal = Number(proyecto.terminados);
+        const enProcesoVal = Number(proyecto.en_proceso);
         const total = terminadosVal + enProcesoVal;
         const dataPie = total > 0 ? [terminadosVal, enProcesoVal] : [0, 0];
 
-        torta.infoDiv.innerHTML = [
+        infoDivElement.innerHTML = [
             `<span style="color:#2563eb;font-weight:bold;">Terminados: ${terminadosVal}</span>`,
             `<span style="color:#fde047;font-weight:bold;">En Proceso: ${enProcesoVal}</span>`
         ].join(' <span style="color:#bbb;">-</span> ');
 
-        // Limpia el canvas anterior y crea uno nuevo
-        if (charts[index]) charts[index].destroy();
-        const oldCanvas = torta.canvas;
-        const newCanvas = document.createElement('canvas');
-        oldCanvas.parentNode.replaceChild(newCanvas, oldCanvas);
-        torta.canvas = newCanvas;
-
-        const ctx = newCanvas.getContext('2d');
-        charts[index] = new Chart(ctx, {
+        const ctx = canvas.getContext('2d');
+        const newChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: ['Terminados', 'En Proceso'],
@@ -219,8 +165,7 @@ function renderTortas() {
                             label: function(context) {
                                 const label = context.label || '';
                                 const value = context.parsed || 0;
-                                const sum = context.dataset.data.reduce((a, b) => a + b, 0);
-                                const percent = sum > 0 ? ((value / sum) * 100).toFixed(1) : 0;
+                                const percent = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
                                 return `${label}: ${value} (${percent}%)`;
                             }
                         }
@@ -229,21 +174,12 @@ function renderTortas() {
             },
             plugins: [ChartDataLabels]
         });
+        charts.push(newChart);
     });
-    addTortaBtn.disabled = tortas.length >= opciones.length;
 }
 
-// Inicializar con dos tortas diferentes si hay suficientes líneas
-if (opciones.length > 0) {
-    crearTortaTec(opciones[0].value);
-    if(opciones.length > 1) {
-       crearTortaTec(opciones[1].value);
-    }
-}
-
-addTortaBtn.onclick = function() {
-    crearTortaTec();
-};
+// Inicializar las tortas
+renderTortas();
 </script>
 <style>
 .torta-card {
@@ -285,5 +221,8 @@ addTortaBtn.onclick = function() {
     font-size: 1em;
     margin-top: 0.5em;
 
+}
+#addTortaTec{
+    display: none;
 }
 </style>
