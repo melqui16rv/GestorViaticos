@@ -34,7 +34,6 @@ requireRole(['4', '5', '6']);
 
     <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/grafica.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
 </head>
 <body class="bg-gray-50 min-h-screen relative">
