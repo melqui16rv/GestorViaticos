@@ -20,19 +20,9 @@ requireRole(['4', '5', '6']);
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Heroicons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
-    
-<!-- inicio vista IndicadoresViaticos.php -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- <link rel="stylesheet" href="assets/css/presupuesto/index_presupuesto.css"> -->
-    <!-- inicio vista viaticosGravias.php -->
-
-    <!-- fin vista viaticosGravias.php -->
-
-<!-- fin vista IndicadoresViaticos.php -->
-
-    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
 </head>
@@ -93,169 +83,132 @@ requireRole(['4', '5', '6']);
             <div id="dashboardProyectosTecnologicos">
                 <?php require_once './ProyectosTec.php'; ?>
             </div>
-            <div id="dashboardAsesorarAsociaciones">
+            <div id="dashboardAsesorarAsociaciones" style="display:none;">
                 <?php require_once './AsesorarAso.php'; ?>
             </div>
-            <div id="dashboardAsesorarAprendices">
+            <div id="dashboardAsesorarAprendices" style="display:none;">
                 <?php require_once './AsesorarApre.php'; ?>
             </div>
-            <div id="dashboardExtensionismo">
+            <div id="dashboardExtensionismo" style="display:none;">
                 <?php require_once './ProyectosExt.php'; ?>
             </div>
-            <div id="dashboardVisitasAprendices">
+            <div id="dashboardVisitasAprendices" style="display:none;">
                 <?php require_once './VisitasApre.php'; ?>
             </div>
         </main>
     </div>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
     <script>
-        // Configurar la altura del nav para los estilos
-        document.addEventListener('DOMContentLoaded', function() {
-            // Intentar obtener la altura real del nav
-            const navElement = document.querySelector('nav'); // Ajusta este selector según tu estructura
+    // Utilidad para cookies
+    function setCookie(name, value, days = 30) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+    function getCookie(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length === 2) return parts.pop().split(";").shift();
+        return null;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dashboards y navegación
+        const dashboards = {
+            proyectosTecnologicos: document.getElementById('dashboardProyectosTecnologicos'),
+            asesorarAsociaciones: document.getElementById('dashboardAsesorarAsociaciones'),
+            asesorarAprendices: document.getElementById('dashboardAsesorarAprendices'),
+            extensionismo: document.getElementById('dashboardExtensionismo'),
+            visitasAprendices: document.getElementById('dashboardVisitasAprendices')
+        };
+        const navLinks = {
+            'navProyectosTecnologicos': 'proyectosTecnologicos',
+            'navAsesorarAsociaciones': 'asesorarAsociaciones',
+            'navAsesorarAprendices': 'asesorarAprendices',
+            'navExtensionismo': 'extensionismo',
+            'navVisitasAprendices': 'visitasAprendices'
+        };
+
+        // Ocultar todos los dashboards
+        function hideAllDashboards() {
+            Object.values(dashboards).forEach(dashboard => {
+                if (dashboard) dashboard.style.display = 'none';
+            });
+        }
+
+        // Mostrar dashboard específico y marcar activo
+        function showDashboard(id) {
+            hideAllDashboards();
+            const dashboard = dashboards[id];
+            if (dashboard) dashboard.style.display = 'block';
+
+            // Marcar activo en el lateral
+            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+            const navId = Object.entries(navLinks).find(([k, v]) => v === id)?.[0];
+            if (navId) {
+                const navElement = document.getElementById(navId);
+                if (navElement) navElement.classList.add('active');
+                // Guardar en cookie la vista actual
+                setCookie('tecnoparque_metas_vista', id, 30);
+            }
+        }
+
+        // Restaurar la vista desde cookie al cargar
+        let vista = getCookie('tecnoparque_metas_vista') || 'proyectosTecnologicos';
+        showDashboard(vista);
+
+        // Event listeners para la navegación
+        Object.entries(navLinks).forEach(([navId, dashboardId]) => {
+            const navElement = document.getElementById(navId);
             if (navElement) {
-                const navHeight = navElement.offsetHeight;
-                document.documentElement.style.setProperty('--nav-height', navHeight + 'px');
+                navElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showDashboard(dashboardId);
+                    if (window.innerWidth < 1024) {
+                        closeSidebar();
+                    }
+                });
             }
-            
-            // Inicializar la primera vista usando la cookie específica
-            const vista = getCookie('tecnoparque_metas_vista');
-            if (vista === 'graficas') {
-                showGraficas();
-            } else if (vista === 'indicadores') {
-                showIndicadores();
-            } else {
-                showDashboard();
-            }
-            
-            // Inicializar el estado del sidebar según el tamaño de pantalla
-            handleResize();
         });
-    
-        // Sidebar navegación
-        const dashboardView = document.getElementById('dashboardView');
-        const graficasView = document.getElementById('graficasView');
-        const indicadoresView = document.getElementById('indicadoresView');
-        const navDashboard = document.getElementById('navDashboard');
-        const navGraficas = document.getElementById('navGraficas');
-        const navIndicadores = document.getElementById('navIndicadores');
+
+        // Sidebar toggle y responsive
         const sidebar = document.getElementById('sidebarFilament');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const mainContent = document.getElementById('mainContentFilament');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
         const body = document.body;
-
-        // Función para establecer cookies
-        function setCookie(name, value, days = 30) {
-            let expires = "";
-            if (days) {
-                const date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
-
-        // Función para obtener cookies
-        function getCookie(name) {
-            const value = "; " + document.cookie;
-            const parts = value.split("; " + name + "=");
-            if (parts.length === 2) return parts.pop().split(";").shift();
-            return null;
-        }
-
-        // Modificar las funciones de vista para usar cookies específicas
-
-        function showDashboard() {
-            dashboardView.style.display = 'block';
-            graficasView.style.display = 'none';
-            indicadoresView.style.display = 'none';
-            navDashboard.classList.add('active');
-            navGraficas.classList.remove('active');
-            navIndicadores.classList.remove('active');
-            setCookie('tecnoparque_metas_vista', 'dashboard'); // Nombre específico de cookie
-        }
-
-        function showGraficas() {
-            dashboardView.style.display = 'none';
-            graficasView.style.display = 'block';
-            indicadoresView.style.display = 'none';
-            navDashboard.classList.remove('active');
-            navGraficas.classList.add('active');
-            navIndicadores.classList.remove('active');
-            setCookie('tecnoparque_metas_vista', 'graficas'); // Nombre específico de cookie
-        }
-
-        function showIndicadores() {
-            dashboardView.style.display = 'none';
-            graficasView.style.display = 'none';
-            indicadoresView.style.display = 'block';
-            navDashboard.classList.remove('active');
-            navGraficas.classList.remove('active');
-            navIndicadores.classList.add('active');
-            setCookie('tecnoparque_metas_vista', 'indicadores'); // Nombre específico de cookie
-        }
-
-        navDashboard.addEventListener('click', function(e) {
-            e.preventDefault();
-            showDashboard();
-            if (window.innerWidth < 1024) {
-                closeSidebar(); // En móvil, cerrar sidebar después de navegar
-            }
-        });
-        
-        navGraficas.addEventListener('click', function(e) {
-            e.preventDefault();
-            showGraficas();
-            if (window.innerWidth < 1024) {
-                closeSidebar(); // En móvil, cerrar sidebar después de navegar
-            }
-        });
-        navIndicadores.addEventListener('click', function(e) {
-            e.preventDefault();
-            showIndicadores();
-            if (window.innerWidth < 1024) {
-                closeSidebar();
-            }
-        });
-
-        // Sidebar toggle
         let sidebarOpen = window.innerWidth >= 1024;
-        
+
         function openSidebar() {
             sidebar.classList.remove('closed');
             mainContent.classList.add('sidebar-open');
             body.classList.remove('sidebar-closed');
-            
             if (window.innerWidth < 1024) {
                 sidebarOverlay.classList.add('active');
             }
-            
             sidebarOpen = true;
-            
-            // Cambiar el icono a un "×" (cerrar)
             sidebarToggle.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             `;
         }
-        
         function closeSidebar() {
             sidebar.classList.add('closed');
             mainContent.classList.remove('sidebar-open');
             body.classList.add('sidebar-closed');
             sidebarOverlay.classList.remove('active');
             sidebarOpen = false;
-            
-            // Cambiar el icono a "≡" (hamburguesa)
             sidebarToggle.innerHTML = `
                 <svg xmlns="http://www.w3.org/2000/svg" class="toggle-icon text-blue-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                 </svg>
             `;
         }
-        
         sidebarToggle.addEventListener('click', function() {
             if (sidebarOpen) {
                 closeSidebar();
@@ -263,12 +216,9 @@ requireRole(['4', '5', '6']);
                 openSidebar();
             }
         });
-        
         sidebarOverlay.addEventListener('click', function() {
             closeSidebar();
         });
-
-        // Responsive: cerrar sidebar por defecto en móvil
         function handleResize() {
             if (window.innerWidth < 1024) {
                 closeSidebar();
@@ -276,90 +226,20 @@ requireRole(['4', '5', '6']);
                 openSidebar();
             }
         }
-        
         window.addEventListener('resize', handleResize);
-    </script>
-    <script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Referencias a los elementos del DOM
-    const dashboards = {
-        proyectosTecnologicos: document.getElementById('dashboardProyectosTecnologicos'),
-        asesorarAsociaciones: document.getElementById('dashboardAsesorarAsociaciones'),
-        asesorarAprendices: document.getElementById('dashboardAsesorarAprendices'),
-        extensionismo: document.getElementById('dashboardExtensionismo'),
-        visitasAprendices: document.getElementById('dashboardVisitasAprendices')
-    };
-
-    // Ocultar todos los dashboards
-    function hideAllDashboards() {
-        Object.values(dashboards).forEach(dashboard => {
-            if (dashboard) dashboard.style.display = 'none';
-        });
-    }
-
-    // Mostrar dashboard específico
-    function showDashboard(id) {
-        hideAllDashboards();
-        const dashboard = dashboards[id];
-        if (dashboard) dashboard.style.display = 'block';
-    }
-
-    // Event listeners para la navegación
-    const navLinks = {
-        'navProyectosTecnologicos': 'proyectosTecnologicos',
-        'navAsesorarAsociaciones': 'asesorarAsociaciones',
-        'navAsesorarAprendices': 'asesorarAprendices',
-        'navExtensionismo': 'extensionismo',
-        'navVisitasAprendices': 'visitasAprendices'
-    };
-
-    Object.entries(navLinks).forEach(([navId, dashboardId]) => {
-        const navElement = document.getElementById(navId);
-        if (navElement) {
-            navElement.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remover clase activa de todos los enlaces
-                document.querySelectorAll('.sidebar-link').forEach(link => {
-                    link.classList.remove('active');
-                });
-                
-                // Agregar clase activa al enlace actual
-                this.classList.add('active');
-                
-                showDashboard(dashboardId);
-                
-                // En móvil, cerrar sidebar después de navegar
-                if (window.innerWidth < 1024) {
-                    closeSidebar();
-                }
-            });
-        }
     });
-
-    // Mostrar el dashboard inicial
-    showDashboard('proyectosTecnologicos');
-
-    // ... resto del código existente ...
-});
-
-// Agregar estilos para el enlace activo
-</script>
-
-<style>
+    </script>
+    <style>
 .sidebar-link.active {
     background-color: #f0f6ff;
     color: #2563eb;
     border-right: 3px solid #2563eb;
 }
-
 .dashboard-container {
     padding: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
-
-/* Estilos para las tarjetas de estadísticas */
 .stats-card {
     background: white;
     border-radius: 8px;
@@ -367,14 +247,12 @@ document.addEventListener('DOMContentLoaded', function() {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     margin-bottom: 1rem;
 }
-
-/* Responsive */
 @media (max-width: 768px) {
     .dashboard-container {
         padding: 1rem;
     }
 }
-</style>
+    </style>
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
-    <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/footer.php'; ?>
-</body></html>
+</body>
+</html>
