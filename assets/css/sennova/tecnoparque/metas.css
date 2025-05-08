@@ -5,7 +5,7 @@
 }
 
 h1 {
-    color: #222;
+    color: #2c3e50; /* Más oscuro, elegante */
     margin-bottom: 2rem;
     text-align: center;
     font-weight: 700;
@@ -24,20 +24,27 @@ h1 {
     background-color: #fff;
     padding: 1.5rem;
     border-radius: 0.75rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sutil */
     text-align: center;
     min-width: 150px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Transiciones suaves */
+}
+
+.stat-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .stat-value {
-    font-size: 2rem;
+    font-size: 2.25rem; /* Aumentado un poco */
     font-weight: 600;
     margin-bottom: 0.5rem;
+    color: #34495e; /* Más oscuro */
 }
 
 .stat-label {
     font-size: 1.1rem;
-    color: #666;
+    color: #7f8c8d; /* Gris más elegante */
 }
 
 .grafica-table-wrapper {
@@ -54,61 +61,64 @@ h1 {
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     overflow: hidden;
     font-size: 1.05rem;
+    border: 1px solid #eee; /* Añadido borde muy claro */
 }
 
 .styled-table thead th {
-    background: linear-gradient(90deg, #e0f7e9 0%, #fffbe6 100%);
-    color: #222;
+    background-color: #f9f9f9; /* Gris muy claro */
+    color: #34495e;
     text-align: center;
-    padding: 1.1rem;
-    font-weight: 700;
-    border-bottom: 2px solid #e0e0e0;
+    padding: 1.2rem;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
     letter-spacing: 0.5px;
 }
 
 .styled-table tbody td {
-    padding: 1.1rem;
+    padding: 1.2rem;
     text-align: center;
     border-bottom: 1px solid #f0f0f0;
     vertical-align: middle;
+    color: #555;
 }
 
 .styled-table tbody tr:nth-child(even) {
-    background-color: #f8fafc;
+    background-color: #f8f8f8;
 }
 
 .styled-table tbody tr:hover {
-    background-color: #f0f6f3;
+    background-color: #ecf0f1; /* Gris muy claro al pasar el mouse */
 }
 
 .styled-table .td-terminados {
-    color: #16a34a;
+    color: #27ae60; /* Verde más elegante */
     font-weight: bold;
-    background: #e0f7e9;
+    background-color: #f0fdf4;
     border-radius: 0.5rem;
 }
 
 .styled-table .td-enproceso {
-    color: #eab308;
+    color: #f39c12; /* Naranja más elegante */
     font-weight: bold;
-    background: #fffbe6;
+    background-color: #fffaf0;
     border-radius: 0.5rem;
 }
 
 .styled-table .td-proyeccion {
-    color: #0ea5e9;
+    color: #3498db; /* Azul más elegante */
     font-weight: bold;
-    background: #e0f2fe;
+    background-color: #f0f8ff;
     border-radius: 0.5rem;
 }
 
 .styled-table tfoot tr {
-    background: #f1f5f9;
+    background: #f9f9f9;
     font-weight: bold;
+    color: #2c3e50;
 }
 
 .styled-table tfoot td {
-    border-top: 2px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
 }
 
 .chart-wrapper {
@@ -116,19 +126,18 @@ h1 {
     background-color: #fff;
     border-radius: 0.75rem;
     padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sutil */
     height: auto;
 }
 
 .tortas-title {
-    font-size: 1.5rem;
-    color: #222;
+    font-size: 1.75rem; /* Aumentado un poco */
+    color: #2c3e50;
     margin-bottom: 1.5rem;
     text-align: center;
     font-weight: 600;
 }
 
-/* Aplica solo al canvas de la gráfica de barras */
 #graficaProyectosTec {
     width: 100% !important;
     height: auto !important;
@@ -136,11 +145,13 @@ h1 {
     display: block;
     margin: 0 auto;
 }
+
 .tortas-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     margin-top: 1rem;
+    gap: 2rem;
 }
 
 .torta-card {
@@ -148,14 +159,21 @@ h1 {
     border-radius: 0.75rem;
     padding: 1.5rem;
     margin-bottom: 1rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sutil */
     display: inline-block;
     min-width: 280px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Transiciones suaves */
 }
+
+.torta-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
 
 .torta-card canvas {
     width: 250px;
@@ -165,7 +183,7 @@ h1 {
 
 .torta-card .torta-title {
     font-size: 1.2rem;
-    color: #222;
+    color: #2c3e50;
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -177,12 +195,12 @@ h1 {
 }
 
 .terminados-label {
-    color: #2563eb;
+    color: #27ae60;
     font-weight: 600;
 }
 
 .en-proceso-label {
-    color: #fde047;
+    color: #f39c12;
     font-weight: 600;
 }
 
@@ -199,13 +217,16 @@ h1 {
         flex-direction: column;
         gap: 2rem;
     }
+
     .stat-item {
         min-width: 100%;
     }
+
     .tortas-container {
         flex-direction: column;
         align-items: center;
     }
+
     .torta-card {
         width: 95%;
         margin-right: 0;
@@ -216,20 +237,25 @@ h1 {
     .dashboard-container {
         padding: 1rem;
     }
+
     .styled-table thead th,
     .styled-table tbody td {
         padding: 0.75rem;
         font-size: 0.9rem;
     }
+
     h1 {
         font-size: 1.8rem;
     }
+
     .stat-value {
         font-size: 1.5rem;
     }
+
     .stat-label {
         font-size: 1rem;
     }
+
     .chart-wrapper {
         padding: 1rem;
     }
