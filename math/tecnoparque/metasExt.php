@@ -223,7 +223,7 @@ class metas_tecnoparqueExt extends Conexion{
         );
     }
 
-    public function obtenerSumaProyectosTecTerminadosPorTipo($tipo = 'Tecnológico') {
+    public function obtenerSumaProyectosTecTerminadosPorTipo($tipo = 'Extensionismo') {
         $sql = "SELECT SUM(terminados) as total_terminados FROM proyectos_tecnoparque WHERE tipo = :tipo";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
