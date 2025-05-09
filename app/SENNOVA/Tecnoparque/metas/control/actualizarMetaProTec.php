@@ -47,6 +47,55 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
     <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/formActualizarProTec.css">
+    <style>
+        .modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.7rem;
+}
+
+.modal-message {
+    color: #475569;
+    font-size: 1.07rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.modal-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+}
+
+.modal-btn-confirm {
+    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+    color: #fff;
+}
+
+.modal-btn-confirm:hover {
+    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
+}
+
+.modal-btn-cancel {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.modal-btn-cancel:hover {
+    background: #d1d5db;
+}
+    </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
     <button class="back-button" id="btn-regresar" onclick="return false;">
