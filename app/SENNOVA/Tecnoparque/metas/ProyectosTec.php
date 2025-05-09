@@ -18,6 +18,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 </head>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
+        <!-- Indicadores de metas -->
         <div class="stat-item">
             <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
             <div class="stat-label">Terminados</div>
@@ -35,8 +36,9 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
             <div class="stat-label">Proyección (%)</div>
         </div>
     </div>
-    <div class="grafica-table-wrapper mb-8">
-    <div class="dashboard-container" id="dashboardContent">
+
+    <!-- Tarjeta para botón y tabla -->
+    <div class="tabla-card mb-8">
         <div class="flex justify-end mb-4">
             <a href="#" id="actualizarTablaBtn" class="actualizar-tabla-link">
                 <button type="button" class="actualizar-tabla-btn">
@@ -47,45 +49,47 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
                 </button>
             </a>
         </div>
-        <table class="styled-table">
-            <thead>
-                <tr>
-                    <th>Línea</th>
-                    <th>Terminados</th>
-                    <th>En Proceso</th>
-                    <th>Proyección</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $total_terminados = 0;
-                $total_en_proceso = 0;
-                $total_proyeccion = 0;
-                foreach ($proyectos as $p):
-                    $proy = (int)$p['terminados'] + (int)$p['en_proceso'];
-                    $total_terminados += (int)$p['terminados'];
-                    $total_en_proceso += (int)$p['en_proceso'];
-                    $total_proyeccion += $proy;
-                ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
-                    <td class="td-terminados"><?php echo (int)$p['terminados']; ?></td>
-                    <td class="td-enproceso"><?php echo (int)$p['en_proceso']; ?></td>
-                    <td class="td-proyeccion">
-                        <?php echo $proy; ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td>Total</td>
-                    <td class="td-terminados"><?php echo $total_terminados; ?></td>
-                    <td class="td-enproceso"><?php echo $total_en_proceso; ?></td>
-                    <td class="td-proyeccion"><?php echo $total_proyeccion; ?></td>
-                </tr>
-            </tfoot>
-        </table>
+        <div class="grafica-table-wrapper">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Línea</th>
+                        <th>Terminados</th>
+                        <th>En Proceso</th>
+                        <th>Proyección</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $total_terminados = 0;
+                    $total_en_proceso = 0;
+                    $total_proyeccion = 0;
+                    foreach ($proyectos as $p):
+                        $proy = (int)$p['terminados'] + (int)$p['en_proceso'];
+                        $total_terminados += (int)$p['terminados'];
+                        $total_en_proceso += (int)$p['en_proceso'];
+                        $total_proyeccion += $proy;
+                    ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
+                        <td class="td-terminados"><?php echo (int)$p['terminados']; ?></td>
+                        <td class="td-enproceso"><?php echo (int)$p['en_proceso']; ?></td>
+                        <td class="td-proyeccion">
+                            <?php echo $proy; ?>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td>Total</td>
+                        <td class="td-terminados"><?php echo $total_terminados; ?></td>
+                        <td class="td-enproceso"><?php echo $total_en_proceso; ?></td>
+                        <td class="td-proyeccion"><?php echo $total_proyeccion; ?></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
     <div class="chart-wrapper mb-8">
         <canvas id="graficaProyectosTec"></canvas>
@@ -354,5 +358,13 @@ renderTortas();
     width: 1.3em;
     height: 1.3em;
     stroke-width: 2.2;
+}
+/* Tarjeta blanca para tabla y botón */
+.tabla-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2rem;
 }
 </style>
