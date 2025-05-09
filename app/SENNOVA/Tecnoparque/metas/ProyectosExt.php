@@ -207,23 +207,30 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($proyectos as $proyecto) : ?>
-                    <tr>
-                        <td><?php echo $proyecto['nombre_linea']; ?></td>
-                        <td><?php echo $proyecto['terminados']; ?></td>
-                        <td><?php echo $proyecto['en_proceso']; ?></td>
-                        <td class="td-proyeccion">
-                            <?php echo $proy; ?>
-                        </td>
-                    </tr>
+                <?php
+                $total_terminados = 0;
+                $total_en_proceso = 0;
+                $total_proyeccion = 0;
+                foreach ($proyectos as $p):
+                    $proy = (int)$p['terminados'] + (int)$p['en_proceso'];
+                    $total_terminados += (int)$p['terminados'];
+                    $total_en_proceso += (int)$p['en_proceso'];
+                    $total_proyeccion += $proy;
+                ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($p['nombre_linea']); ?></td>
+                    <td class="td-terminados"><?php echo (int)$p['terminados']; ?></td>
+                    <td class="td-enproceso"><?php echo (int)$p['en_proceso']; ?></td>
+                    <td class="td-proyeccion"><?php echo $proy; ?></td>
+                </tr>
                 <?php endforeach; ?>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="2">Total</td>
-                    <td><?php echo $resumen['total_terminados']; ?></td>
-                    <td><?php echo $resumen['total_en_proceso']; ?></td>
-                    <td></td>
+                    <td>Total</td>
+                    <td class="td-terminados"><?php echo $total_terminados; ?></td>
+                    <td class="td-enproceso"><?php echo $total_en_proceso; ?></td>
+                    <td class="td-proyeccion"><?php echo $total_proyeccion; ?></td>
                 </tr>
             </tfoot>
         </table>
