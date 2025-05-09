@@ -4,7 +4,11 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metasExt.php';
 
 $metas = new metas_tecnoparqueExt();
 $proyectos = $metas->obtenerProyectosTecPorTipo('Extensionismo');
+// Cambia aquí para obtener ambos valores:
 $resumen = $metas->obtenerSumaProyectosTecPorTipo('Extensionismo');
+
+// Debug temporal
+// echo '<pre>'; print_r($resumen); echo '</pre>';
 
 $meta_total = 5;
 
@@ -17,74 +21,8 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
-<style>
-.torta-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    display: inline-block;
-    margin-right: 1rem;
-    min-width: 220px;
-    vertical-align: top;
-    position: relative;
-}
-.torta-card .torta-title{
-    min-height: 1.5em;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 0.5em;
-    text-align: center;
-}
-.torta-card .torta-info{
-    font-size: 1em;
-    margin-top: 0.5em;
-}
-/* Botón de actualizar tabla */
-.actualizar-tabla-link {
-    text-decoration: none;
-}
-.actualizar-tabla-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.08rem;
-    padding: 0.65rem 1.4rem;
-    border: none;
-    border-radius: 0.7rem;
-    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
-    outline: none;
-}
-.actualizar-tabla-btn:hover, .actualizar-tabla-btn:focus {
-    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
-    box-shadow: 0 4px 16px rgba(52,211,153,0.13), 0 3px 12px rgba(96,165,250,0.13);
-    transform: translateY(-2px) scale(1.03);
-}
-.icon-refresh {
-    width: 1.3em;
-    height: 1.3em;
-    stroke-width: 2.2;
-}
-/* Tarjeta blanca para tabla y botón */
-.tabla-card {
-    background: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    padding: 2rem 1.5rem 1.5rem 1.5rem;
-    margin-bottom: 2rem;
-}
-</style>
-<!-- Mueve los scripts de Chart.js y ChartDataLabels al <head> para asegurar su carga antes de usarlos -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
-<div class="dashboard-container" id="dashboardContentExt">
+<div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
         <!-- Indicadores de metas -->
         <div class="stat-item">
@@ -160,192 +98,178 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
         </div>
     </div>
     <div class="chart-wrapper mb-8">
-        <canvas id="graficaProyectosExt"></canvas>
+        <canvas id="graficaProyectosTec"></canvas>
     </div>
     <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
     <div class="tortas-container" id="tortasTec"></div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
-// Paleta de colores suaves y agradables (variables únicas para Extensionismo)
-const verdeSuaveExt = 'rgba(34,197,94,0.75)';
-const verdeBordeExt = 'rgba(34,197,94,1)';
-const amarilloSuaveExt = 'rgba(253,224,71,0.65)';
-const amarilloBordeExt = 'rgba(253,224,71,1)';
+// Paleta de colores suaves y agradables
+const verdeSuave = 'rgba(34,197,94,0.75)';
+const verdeBorde = 'rgba(34,197,94,1)';
+const amarilloSuave = 'rgba(253,224,71,0.65)';
+const amarilloBorde = 'rgba(253,224,71,1)';
 
 // Usar los valores correctos del resumen
-const terminadosExt = <?php echo (int)$resumen['total_terminados']; ?>;
-const enProcesoExt = <?php echo (int)$resumen['total_en_proceso']; ?>;
-const metaExt = <?php echo (int)$meta_total; ?>;
+const terminados = <?php echo (int)$resumen['total_terminados']; ?>;
+const enProceso = <?php echo (int)$resumen['total_en_proceso']; ?>;
+const meta = <?php echo (int)$meta_total; ?>;
 
-// Exporta la función para inicializar los gráficos de Extensionismo
-window.initProyectosExtCharts = function() {
-    // Limpia el canvas de barras si ya existe un gráfico
-    if (window.proyectosExtBarChart && typeof window.proyectosExtBarChart.destroy === 'function') {
-        window.proyectosExtBarChart.destroy();
-    }
-    const canvasBarra = document.getElementById('graficaProyectosExt');
-    if (canvasBarra) {
-        const ctxExt = canvasBarra.getContext('2d');
-        window.proyectosExtBarChart = new Chart(ctxExt, {
-            type: 'bar',
-            data: {
-                labels: ['Meta Extensionismo'],
-                datasets: [
-                    {
-                        label: 'Terminados',
-                        data: [terminadosExt],
-                        backgroundColor: verdeSuaveExt,
-                        borderColor: verdeBordeExt,
-                        borderWidth: 2,
-                        borderRadius: 8,
-                        barPercentage: 0.7,
-                        categoryPercentage: 0.6
-                    },
-                    {
-                        label: 'En Proceso',
-                        data: [enProcesoExt],
-                        backgroundColor: amarilloSuaveExt,
-                        borderColor: amarilloBordeExt,
-                        borderWidth: 2,
-                        borderRadius: 8,
-                        barPercentage: 0.7,
-                        categoryPercentage: 0.6
-                    }
-                ]
+console.log('terminados:', terminados, 'enProceso:', enProceso, 'meta:', meta);
+
+// Gráfica de barra horizontal de avance sobre la meta
+const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Meta Extensionismo'],
+        datasets: [
+            {
+                label: 'Terminados',
+                data: [terminados],
+                backgroundColor: verdeSuave,
+                borderColor: verdeBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
             },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                scales: {
-                    x: {
-                        beginAtZero: true,
-                        max: metaExt,
-                        grid: { color: 'rgba(0,0,0,0.06)' },
-                        ticks: { color: '#64748b', font: { size: 14 } }
-                    },
-                    y: {
-                        grid: { color: 'rgba(0,0,0,0.04)' },
-                        ticks: { color: '#64748b', font: { size: 14 } }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
-                    }
-                }
+            {
+                label: 'En Proceso',
+                data: [enProceso],
+                backgroundColor: amarilloSuave,
+                borderColor: amarilloBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
             }
-        });
-    }
-
-    // Limpia el canvas de torta si ya existe un gráfico
-    if (window.proyectosExtPieChart && typeof window.proyectosExtPieChart.destroy === 'function') {
-        window.proyectosExtPieChart.destroy();
-    }
-    const tortasContainerExt = document.getElementById('tortasTec');
-    if (tortasContainerExt) {
-        tortasContainerExt.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
-        const canvasTorta = document.getElementById('tortaExtensionismo');
-        if (canvasTorta) {
-            const ctxTortaExt = canvasTorta.getContext('2d');
-            window.proyectosExtPieChart = new Chart(ctxTortaExt, {
-                type: 'pie',
-                data: {
-                    labels: ['Terminados', 'En Proceso'],
-                    datasets: [{
-                        data: [terminadosExt, enProcesoExt],
-                        backgroundColor: [verdeSuaveExt, amarilloSuaveExt],
-                        borderColor: [verdeBordeExt, amarilloBordeExt],
-                        borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
-                        },
-                        datalabels: {
-                            color: '#fff',
-                            font: { weight: 'bold', size: 14 },
-                            textStrokeColor: '#334155',
-                            textStrokeWidth: 1.2,
-                            formatter: function(value, context) {
-                                const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                if (sum === 0) return '';
-                                return ((value / sum) * 100).toFixed(1) + '%';
-                            }
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels]
-            });
-        }
-    }
-};
-// No ejecutes la función aquí automáticamente
-let proyectosExtBarChart = null;
-
-function initProyectosExtCharts() {
-    // Destruir gráfico previo si existe
-    if (proyectosExtBarChart) {
-        proyectosExtBarChart.destroy();
-    }
-
-    const ctx = document.getElementById('graficaProyectosExt').getContext('2d');
-    proyectosExtBarChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Meta Extensionismo'],
-            datasets: [
-                {
-                    label: 'Terminados',
-                    data: [terminadosExt],
-                    backgroundColor: verdeSuaveExt,
-                    borderColor: verdeBordeExt,
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    barPercentage: 0.7,
-                    categoryPercentage: 0.6
-                },
-                {
-                    label: 'En Proceso',
-                    data: [enProcesoExt],
-                    backgroundColor: amarilloSuaveExt,
-                    borderColor: amarilloBordeExt,
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    barPercentage: 0.7,
-                    categoryPercentage: 0.6
-                }
-            ]
+        ]
+    },
+    options: {
+        indexAxis: 'y',
+        responsive: true,
+        scales: {
+            x: {
+                beginAtZero: true,
+                max: meta,
+                grid: { color: 'rgba(0,0,0,0.06)' },
+                ticks: { color: '#64748b', font: { size: 14 } }
+            },
+            y: {
+                grid: { color: 'rgba(0,0,0,0.04)' },
+                ticks: { color: '#64748b', font: { size: 14 } }
+            }
         },
-        options: {
-            indexAxis: 'y',
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true,
-                    max: metaExt,
-                    grid: { color: 'rgba(0,0,0,0.06)' },
-                    ticks: { color: '#64748b', font: { size: 14 } }
-                },
-                y: {
-                    grid: { color: 'rgba(0,0,0,0.04)' },
-                    ticks: { color: '#64748b', font: { size: 14 } }
-                }
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
+            }
+        }
+    }
+});
+
+// Gráfica de torta: terminados vs en proceso
+const tortasContainer = document.getElementById('tortasTec');
+tortasContainer.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
+const ctxTorta = document.getElementById('tortaExtensionismo').getContext('2d');
+new Chart(ctxTorta, {
+    type: 'pie',
+    data: {
+        labels: ['Terminados', 'En Proceso'],
+        datasets: [{
+            data: [terminados, enProceso],
+            backgroundColor: [verdeSuave, amarilloSuave],
+            borderColor: [verdeBorde, amarilloBorde],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
             },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
+            datalabels: {
+                color: '#fff',
+                font: { weight: 'bold', size: 14 },
+                textStrokeColor: '#334155',
+                textStrokeWidth: 1.2,
+                formatter: function(value, context) {
+                    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                    if (sum === 0) return '';
+                    return ((value / sum) * 100).toFixed(1) + '%';
                 }
             }
         }
-    });
-}
-
-// Exporta la función para inicializar los gráficos
-window.initProyectosExtCharts = initProyectosExtCharts;
+    },
+    plugins: [ChartDataLabels]
+});
 </script>
+<style>
+.torta-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    display: inline-block;
+    margin-right: 1rem;
+    min-width: 220px;
+    vertical-align: top;
+    position: relative;
+}
+.torta-card .torta-title{
+    min-height: 1.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+.torta-card .torta-info{
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+/* Botón de actualizar tabla */
+.actualizar-tabla-link {
+    text-decoration: none;
+}
+.actualizar-tabla-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.08rem;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+}
+.actualizar-tabla-btn:hover, .actualizar-tabla-btn:focus {
+    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
+    box-shadow: 0 4px 16px rgba(52,211,153,0.13), 0 3px 12px rgba(96,165,250,0.13);
+    transform: translateY(-2px) scale(1.03);
+}
+.icon-refresh {
+    width: 1.3em;
+    height: 1.3em;
+    stroke-width: 2.2;
+}
+/* Tarjeta blanca para tabla y botón */
+.tabla-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2rem;
+}
+</style>

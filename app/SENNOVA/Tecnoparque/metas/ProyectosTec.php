@@ -16,7 +16,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 </head>
-<div class="dashboard-container" id="dashboardContentTec">
+<div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
         <!-- Indicadores de metas -->
         <div class="stat-item">
@@ -40,7 +40,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
     <!-- Tarjeta para botón y tabla -->
     <div class="tabla-card mb-8">
         <div class="flex justify-end mb-4">
-            <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProTec.php" id="actualizarTablaBtnTec" class="actualizar-tabla-link">
+            <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProTec.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
                 <button type="button" class="actualizar-tabla-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582M20 20v-5h-.581M5.582 9A7.003 7.003 0 0112 5c3.866 0 7 3.134 7 7 0 1.657-.573 3.182-1.535 4.382M18.418 15A7.003 7.003 0 0112 19c-3.866 0-7-3.134-7-7 0-1.657.573-3.182 1.535-4.382"/>
@@ -114,90 +114,78 @@ const azulSuave = 'rgba(59,130,246,0.60)';      // azul pastel
 const azulBorde = 'rgba(59,130,246,1)';
 
 // Gráfica de barras por línea (terminados y en proceso)
-let proyectosTecBarChart = null;
-
-function initProyectosTecCharts() {
-    // Destruir gráfico previo si existe
-    if (proyectosTecBarChart) {
-        proyectosTecBarChart.destroy();
-    }
-
-    const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
-    proyectosTecBarChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Terminados',
-                    data: terminados,
-                    backgroundColor: verdeSuave,
-                    borderColor: verdeBorde,
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    barPercentage: 0.7,
-                    categoryPercentage: 0.6
+const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Terminados',
+                data: terminados,
+                backgroundColor: verdeSuave,
+                borderColor: verdeBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
+            },
+            {
+                label: 'En Proceso',
+                data: enProceso,
+                backgroundColor: amarilloSuave,
+                borderColor: amarilloBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
+            },
+            {
+                label: 'Proyección',
+                data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
+                backgroundColor: azulSuave,
+                borderColor: azulBorde,
+                borderWidth: 2,
+                borderRadius: 8,
+                barPercentage: 0.7,
+                categoryPercentage: 0.6
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                grid: {
+                    color: 'rgba(0,0,0,0.06)'
                 },
-                {
-                    label: 'En Proceso',
-                    data: enProceso,
-                    backgroundColor: amarilloSuave,
-                    borderColor: amarilloBorde,
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    barPercentage: 0.7,
-                    categoryPercentage: 0.6
-                },
-                {
-                    label: 'Proyección',
-                    data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
-                    backgroundColor: azulSuave,
-                    borderColor: azulBorde,
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    barPercentage: 0.7,
-                    categoryPercentage: 0.6
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(0,0,0,0.06)'
-                    },
-                    ticks: {
-                        color: '#64748b',
-                        font: { size: 14 }
-                    }
-                },
-                x: {
-                    grid: {
-                        color: 'rgba(0,0,0,0.04)'
-                    },
-                    ticks: {
-                        color: '#64748b',
-                        font: { size: 14 }
-                    }
+                ticks: {
+                    color: '#64748b',
+                    font: { size: 14 }
                 }
             },
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        color: '#334155',
-                        font: { size: 15, weight: 'bold' }
-                    }
+            x: {
+                grid: {
+                    color: 'rgba(0,0,0,0.04)'
+                },
+                ticks: {
+                    color: '#64748b',
+                    font: { size: 14 }
+                }
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: {
+                    color: '#334155',
+                    font: { size: 15, weight: 'bold' }
                 }
             }
         }
-    });
-}
-
-// Llama a la función al cargar la vista
-document.addEventListener('DOMContentLoaded', initProyectosTecCharts);
+    }
+});
 
 // Tortas dinámicas por línea
 const tortasContainer = document.getElementById('tortasTec');
