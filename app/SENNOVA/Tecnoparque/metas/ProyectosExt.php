@@ -201,20 +201,20 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
             <thead>
                 <tr>
                     <th>Línea Estratégica</th>
-                    <th>Nombre del Proyecto</th>
                     <th>Terminados</th>
                     <th>En Proceso</th>
-                    <th>Estado</th>
+                    <th>Proyección</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($proyectos as $proyecto) : ?>
                     <tr>
                         <td><?php echo $proyecto['nombre_linea']; ?></td>
-                        <td><?php echo isset($proyecto['nombre_proyecto']) ? $proyecto['nombre_proyecto'] : 'N/A'; ?></td>
                         <td><?php echo $proyecto['terminados']; ?></td>
                         <td><?php echo $proyecto['en_proceso']; ?></td>
-                        <td><?php echo isset($proyecto['estado']) ? $proyecto['estado'] : 'N/A'; ?></td>
+                        <td class="td-proyeccion">
+                            <?php echo $proy; ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
