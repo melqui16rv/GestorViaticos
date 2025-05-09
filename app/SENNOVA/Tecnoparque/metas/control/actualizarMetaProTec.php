@@ -118,10 +118,26 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
     let salirPendiente = false;
     let destinoPendiente = null;
 
-    // Detectar cambios en los campos
+    function hayCambiosReales() {
+        const terminados = document.querySelectorAll('input[name="terminados[]"]');
+        const enProceso = document.querySelectorAll('input[name="en_proceso[]"]');
+        const originalesTerminados = document.querySelectorAll('input[name="original_terminados[]"]');
+        const originalesEnProceso = document.querySelectorAll('input[name="original_en_proceso[]"]');
+        for (let i = 0; i < terminados.length; i++) {
+            if (
+                terminados[i].value !== originalesTerminados[i].value ||
+                enProceso[i].value !== originalesEnProceso[i].value
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Detectar cambios en los campos y recalcular si hay cambios reales
     document.querySelectorAll('input[name="terminados[]"], input[name="en_proceso[]"]').forEach(input => {
         input.addEventListener('input', () => {
-            cambios = true;
+            cambios = hayCambiosReales();
         });
     });
 
