@@ -177,16 +177,19 @@ const terminadosExt = <?php echo (int)$resumen['total_terminados']; ?>;
 const enProcesoExt = <?php echo (int)$resumen['total_en_proceso']; ?>;
 const metaExt = <?php echo (int)$meta_total; ?>;
 
-// Espera a que el DOM esté listo antes de crear los gráficos
-document.addEventListener('DOMContentLoaded', function() {
-    // Gráfica de barra horizontal de avance sobre la meta
+// Exporta la función para inicializar los gráficos de Extensionismo
+window.initProyectosExtCharts = function() {
+    // Limpia el canvas de barras si ya existe un gráfico
+    if (window.proyectosExtBarChart && typeof window.proyectosExtBarChart.destroy === 'function') {
+        window.proyectosExtBarChart.destroy();
+    }
     const canvasBarra = document.getElementById('graficaProyectosTec');
     if (canvasBarra) {
         const ctxExt = canvasBarra.getContext('2d');
-        new Chart(ctxExt, {
+        window.proyectosExtBarChart = new Chart(ctxExt, {
             type: 'bar',
             data: {
-                labels: ['Meta Extensionismo'], // Cambia el nombre de la variable si tienes otra llamada 'labels'
+                labels: ['Meta Extensionismo'],
                 datasets: [
                     {
                         label: 'Terminados',
@@ -235,17 +238,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Gráfica de torta: terminados vs en proceso
+    // Limpia el canvas de torta si ya existe un gráfico
+    if (window.proyectosExtPieChart && typeof window.proyectosExtPieChart.destroy === 'function') {
+        window.proyectosExtPieChart.destroy();
+    }
     const tortasContainerExt = document.getElementById('tortasTec');
     if (tortasContainerExt) {
         tortasContainerExt.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
         const canvasTorta = document.getElementById('tortaExtensionismo');
         if (canvasTorta) {
             const ctxTortaExt = canvasTorta.getContext('2d');
-            new Chart(ctxTortaExt, {
+            window.proyectosExtPieChart = new Chart(ctxTortaExt, {
                 type: 'pie',
                 data: {
-                    labels: ['Terminados', 'En Proceso'], // Cambia el nombre de la variable si tienes otra llamada 'labels'
+                    labels: ['Terminados', 'En Proceso'],
                     datasets: [{
                         data: [terminadosExt, enProcesoExt],
                         backgroundColor: [verdeSuaveExt, amarilloSuaveExt],
@@ -277,5 +283,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-});
+};
+// No ejecutes la función aquí automáticamente
 </script>
