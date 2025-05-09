@@ -108,6 +108,93 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
     justify-content: center;
     transition: opacity 0.2s;
 }
+
+/* MODAL MEJORADO */
+.modal-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30, 41, 59, 0.45);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.modal-card {
+    background: #fff;
+    border-radius: 1.2rem;
+    box-shadow: 0 8px 32px rgba(30,41,59,0.18);
+    padding: 2.2rem 2rem 1.5rem 2rem;
+    max-width: 420px;
+    width: 95%;
+    text-align: center;
+    position: relative;
+    animation: modalIn 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@keyframes modalIn {
+    from { transform: translateY(40px) scale(0.96); opacity: 0; }
+    to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.7rem;
+}
+
+.modal-message {
+    color: #475569;
+    font-size: 1.09rem;
+    margin-bottom: 1.5rem;
+}
+
+.modal-btns {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+.modal-btn {
+    padding: 0.6rem 1.4rem;
+    border-radius: 0.5rem;
+    border: none;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s, transform 0.13s;
+    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
+}
+
+.modal-btn-confirm {
+    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+    color: #fff;
+}
+
+.modal-btn-confirm:hover {
+    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
+    transform: scale(1.05);
+}
+
+.modal-btn-cancel {
+    background: #e5e7eb;
+    color: #374151;
+}
+
+.modal-btn-cancel:hover {
+    background: #d1d5db;
+    transform: scale(1.05);
+}
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
