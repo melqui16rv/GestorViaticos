@@ -27,6 +27,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
             const labels = proyectos.map(p => p.nombre_linea);
             const terminados = proyectos.map(p => Number(p.terminados));
             const enProceso = proyectos.map(p => Number(p.en_proceso));
+            const proyeccion = proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)); // Nueva columna
 
             const verdeSuave = 'rgba(34,197,94,0.75)';
             const verdeBorde = 'rgba(34,197,94,1)';
@@ -50,6 +51,12 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                         data: enProceso,
                         backgroundColor: amarilloSuave,
                         borderColor: amarilloBorde,
+                        borderWidth: 1
+                    }, {
+                        label: 'Proyección', // Nueva columna
+                        data: proyeccion,
+                        backgroundColor: azulSuave,
+                        borderColor: azulBorde,
                         borderWidth: 1
                     }]
                 },
