@@ -106,29 +106,27 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
-const proyectos = <?php echo json_encode($proyectos); ?>;
-const labels = proyectos.map(p => p.nombre_linea);
-const terminados = proyectos.map(p => Number(p.terminados));
-const enProceso = proyectos.map(p => Number(p.en_proceso));
-
 // Paleta de colores suaves y agradables
-const verdeSuave = 'rgba(34,197,94,0.75)';      // verde pastel
+const verdeSuave = 'rgba(34,197,94,0.75)';
 const verdeBorde = 'rgba(34,197,94,1)';
-const amarilloSuave = 'rgba(253,224,71,0.65)';  // amarillo pastel
+const amarilloSuave = 'rgba(253,224,71,0.65)';
 const amarilloBorde = 'rgba(253,224,71,1)';
-const azulSuave = 'rgba(59,130,246,0.60)';      // azul pastel
-const azulBorde = 'rgba(59,130,246,1)';
 
-// Gráfica de barras por línea (terminados y en proceso)
+// Solo hay una línea, así que usamos los totales
+const terminados = <?php echo (int)$resumen['total_terminados']; ?>;
+const enProceso = <?php echo (int)($resumen['total_en_proceso'] ?? 0); ?>;
+const meta = <?php echo (int)$meta_total; ?>;
+
+// Gráfica de barra horizontal de avance sobre la meta
 const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
 new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: labels,
+        labels: ['Meta Extensionismo'],
         datasets: [
             {
                 label: 'Terminados',
-                data: terminados,
+                data: [terminados],
                 backgroundColor: verdeSuave,
                 borderColor: verdeBorde,
                 borderWidth: 2,
@@ -138,19 +136,9 @@ new Chart(ctx, {
             },
             {
                 label: 'En Proceso',
-                data: enProceso,
+                data: [enProceso],
                 backgroundColor: amarilloSuave,
                 borderColor: amarilloBorde,
-                borderWidth: 2,
-                borderRadius: 8,
-                barPercentage: 0.7,
-                categoryPercentage: 0.6
-            },
-            {
-                label: 'Proyección',
-                data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
-                backgroundColor: azulSuave,
-                borderColor: azulBorde,
                 borderWidth: 2,
                 borderRadius: 8,
                 barPercentage: 0.7,
@@ -159,157 +147,66 @@ new Chart(ctx, {
         ]
     },
     options: {
+        indexAxis: 'y',
         responsive: true,
         scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: 'rgba(0,0,0,0.06)'
-                },
-                ticks: {
-                    color: '#64748b',
-                    font: { size: 14 }
-                }
-            },
             x: {
-                grid: {
-                    color: 'rgba(0,0,0,0.04)'
-                },
-                ticks: {
-                    color: '#64748b',
-                    font: { size: 14 }
-                }
+                beginAtZero: true,
+                max: meta,
+                grid: { color: 'rgba(0,0,0,0.06)' },
+                ticks: { color: '#64748b', font: { size: 14 } }
+            },
+            y: {
+                grid: { color: 'rgba(0,0,0,0.04)' },
+                ticks: { color: '#64748b', font: { size: 14 } }
             }
         },
         plugins: {
             legend: {
                 position: 'bottom',
-                labels: {
-                    color: '#334155',
-                    font: { size: 15, weight: 'bold' }
-                }
+                labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
             }
         }
     }
 });
 
-// Tortas dinámicas por línea
+// Gráfica de torta: terminados vs en proceso
 const tortasContainer = document.getElementById('tortasTec');
-let charts = [];
-
-function crearTortaTec(linea) {
-    const card = document.createElement('div');
-    card.className = 'torta-card';
-
-    const title = document.createElement('div');
-    title.className = 'torta-title';
-    card.appendChild(title);
-
-    const canvas = document.createElement('canvas');
-    card.appendChild(canvas);
-
-    const infoDiv = document.createElement('div');
-    infoDiv.className = 'torta-info';
-    card.appendChild(infoDiv);
-
-    tortasContainer.appendChild(card);
-
-    return {
-        linea: linea,
-        canvas: canvas,
-        title: title,
-        infoDiv: infoDiv,
-        card: card
-    };
-}
-
-function renderTortas() {
-    tortasContainer.innerHTML = '';
-    charts.forEach(chart => chart.destroy());
-    charts = [];
-
-    proyectos.forEach((proyecto, index) => {
-        const torta = crearTortaTec(proyecto.nombre_linea);
-        const linea = torta.linea;
-        const canvas = torta.canvas;
-        const titleElement = torta.title;
-        const infoDivElement = torta.infoDiv;
-        const card = torta.card;
-
-        const nombre = proyecto.nombre_linea;
-        titleElement.innerHTML = `<strong>${nombre}</strong>`;
-
-        const terminadosVal = Number(proyecto.terminados);
-        const enProcesoVal = Number(proyecto.en_proceso);
-        const total = terminadosVal + enProcesoVal;
-        const dataPie = total > 0 ? [terminadosVal, enProcesoVal] : [0, 0];
-
-        infoDivElement.innerHTML = [
-            `<span class="terminados-label">Terminados: ${terminadosVal}</span>`,
-            `<span class="en-proceso-label">En Proceso: ${enProcesoVal}</span>`
-        ].join(' <span class="separator"> - </span> ');
-
-        const ctx = canvas.getContext('2d');
-        const newChart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['Terminados', 'En Proceso'],
-                datasets: [{
-                    data: dataPie,
-                    backgroundColor: [verdeSuave, amarilloSuave],
-                    borderColor: [verdeBorde, amarilloBorde],
-                    borderWidth: 2
-                }]
+tortasContainer.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
+const ctxTorta = document.getElementById('tortaExtensionismo').getContext('2d');
+new Chart(ctxTorta, {
+    type: 'pie',
+    data: {
+        labels: ['Terminados', 'En Proceso'],
+        datasets: [{
+            data: [terminados, enProceso],
+            backgroundColor: [verdeSuave, amarilloSuave],
+            borderColor: [verdeBorde, amarilloBorde],
+            borderWidth: 2
+        }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'bottom',
+                labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
             },
-            options: {
-                responsive: true,
-                plugins: {
-                    datalabels: {
-                        color: '#fff',
-                        font: {
-                            weight: 'bold',
-                            size: 14
-                        },
-                        textStrokeColor: '#334155',
-                        textStrokeWidth: 1.2,
-                        formatter: function(value, context) {
-                            const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                            if (sum === 0) return '';
-                            return ((value / sum) * 100).toFixed(1) + '%';
-                        }
-                    },
-                    tooltip: {
-                        backgroundColor: 'rgba(51,65,85,0.95)',
-                        titleColor: '#fff',
-                        bodyColor: '#fff',
-                        borderColor: '#64748b',
-                        borderWidth: 1,
-                        callbacks: {
-                            label: function(context) {
-                                const label = context.label || '';
-                                const value = context.parsed || 0;
-                                const sum = context.dataset.data.reduce((a, b) => a + b, 0);
-                                const percent = sum > 0 ? ((value / sum) * 100).toFixed(1) : 0;
-                                return `${label}: ${value} (${percent}%)`;
-                            }
-                        }
-                    }
-                },
-                layout: {
-                    padding: {
-                        top: 10,
-                        bottom: 10
-                    }
+            datalabels: {
+                color: '#fff',
+                font: { weight: 'bold', size: 14 },
+                textStrokeColor: '#334155',
+                textStrokeWidth: 1.2,
+                formatter: function(value, context) {
+                    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                    if (sum === 0) return '';
+                    return ((value / sum) * 100).toFixed(1) + '%';
                 }
-            },
-            plugins: [ChartDataLabels]
-        });
-        charts.push(newChart);
-    });
-}
-
-// Inicializar las tortas
-renderTortas();
+            }
+        }
+    },
+    plugins: [ChartDataLabels]
+});
 </script>
 <style>
 .torta-card {
