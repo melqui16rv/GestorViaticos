@@ -345,7 +345,7 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
-    <button class="back-button" onclick="window.history.back()">
+    <button class="back-button" onclick="window.location.href='<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php'">
         <i class="fas fa-arrow-left"></i> Regresar
     </button>
     <div class="form-card">
