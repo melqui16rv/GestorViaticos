@@ -49,7 +49,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
     <!-- Tarjeta para botón y tabla -->
     <div class="tabla-card mb-8">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">Tabla de Proyectos de Extensionismo</h2>
+            <h2 class="text-xl font-semibold">Tabla de Proyectos de Base Tecnológica</h2>
         </div>
         <div class="flex justify-end mb-4">
             <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProTec.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
@@ -104,11 +104,11 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
         </div>
     </div>
     <div class="chart-wrapper mb-8">
-    <h2 class="text-xl font-semibold mb-4">Proyectos de Base Tecnológica</h2>
+        <h2 class="text-xl font-semibold mb-4">Proyectos de Base Tecnológica</h2>
         <canvas id="graficaProyectosTec"></canvas>
+        <h2 class="tortas-paragraph">Detalle por Línea</h2>
+        <div class="tortas-container" id="tortasTec"></div>
     </div>
-    <h3 class="tortas-title">Detalle por Línea</h3>
-    <div class="tortas-container" id="tortasTec"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
