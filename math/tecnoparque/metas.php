@@ -237,4 +237,33 @@ class metas_tecnoparque extends Conexion{
         ];
     }
 
+    /**
+     * Obtener un proyecto por su ID (para comparar antes de actualizar)
+     */
+    public function obtenerProyectoPorId($id_PBT) {
+        $sql = "SELECT * FROM proyectos_tecnoparque WHERE id_PBT = :id_PBT";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id_PBT', $id_PBT, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Actualizar todos los campos editables de un proyecto (incluyendo fecha_actualizacion)
+     */
+    public function actualizarProyectoTecCompleto($id_PBT, $terminados, $en_proceso, $fecha_actualizacion) {
+        $sql = "UPDATE proyectos_tecnoparque 
+                SET terminados = :terminados, 
+                    en_proceso = :en_proceso, 
+                    fecha_actualizacion = :fecha_actualizacion
+                WHERE id_PBT = :id_PBT";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':terminados', $terminados, PDO::PARAM_INT);
+        $stmt->bindParam(':en_proceso', $en_proceso, PDO::PARAM_INT);
+        $stmt->bindParam(':fecha_actualizacion', $fecha_actualizacion, PDO::PARAM_STR);
+        $stmt->bindParam(':id_PBT', $id_PBT, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
+
 }
