@@ -194,6 +194,9 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
         </div>
     </div>
     <div class="tabla-card">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Tabla de Proyectos de Extensionismo</h2>
+        </div>
     <div class="flex justify-end mb-4">
             <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProTec.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
                 <button type="button" class="actualizar-tabla-btn">
@@ -204,9 +207,6 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                 </button>
             </a>
         </div>
-        <!-- <div class="flex justify-between items-center mb-4">
-            <h2 class="text-xl font-semibold">Tabla de Proyectos de Extensionismo</h2>
-        </div> -->
         <table class="styled-table">
             <thead>
                 <tr>
@@ -245,13 +245,13 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
             </tfoot>
         </table>
     </div>
+    <h2 class="text-xl font-semibold mb-4">Proyectos de Extensionismo Tecnológico</h2>
     <div class="chart-wrapper mb-6">
-        <h2 class="text-xl font-semibold mb-4">Proyectos de Extensionismo Tecnológico</h2>
         <canvas id="graficaProyectosExt" width="400" height="200"></canvas>
     </div>
 
+    <h2 class="text-xl font-semibold mb-4">Estado de Proyectos por Línea</h2>
     <div class="chart-wrapper mb-6">
-        <h2 class="text-xl font-semibold mb-4">Estado de Proyectos por Línea</h2>
         <div id="tortasExt" class="tortas-container">
             </div>
     </div>
