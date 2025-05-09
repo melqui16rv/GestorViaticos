@@ -7,6 +7,9 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Extensionismo');
 // Cambia aquí para obtener ambos valores:
 $resumen = $metas->obtenerSumaProyectosTecPorTipo('Extensionismo');
 
+// Debug temporal
+// echo '<pre>'; print_r($resumen); echo '</pre>';
+
 $meta_total = 5;
 
 $total_esperado = 0;
@@ -113,6 +116,8 @@ const amarilloBorde = 'rgba(253,224,71,1)';
 const terminados = <?php echo (int)$resumen['total_terminados']; ?>;
 const enProceso = <?php echo (int)$resumen['total_en_proceso']; ?>;
 const meta = <?php echo (int)$meta_total; ?>;
+
+console.log('terminados:', terminados, 'enProceso:', enProceso, 'meta:', meta);
 
 // Gráfica de barra horizontal de avance sobre la meta
 const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
