@@ -6,12 +6,18 @@ $metas = new metas_tecnoparqueExt();
 $proyectos = $metas->obtenerProyectosTecPorTipo('Extensionismo');
 $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Extensionismo');
 
+// Cambia la meta: 100% se cumple con 5 proyectos terminados
+$meta_total = 5;
+
 // Calcular el total esperado (terminados + en proceso)
 $total_esperado = 0;
 foreach ($proyectos as $p) {
     $total_esperado += (int)$p['terminados'] + (int)$p['en_proceso'];
 }
-$porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
+// Porcentaje de terminados respecto a la meta de 5
+$porcentaje_terminados = min(100, round(($resumen['total_terminados'] / $meta_total) * 100, 1));
+// Porcentaje de proyección respecto a la meta de 5
+$porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1));
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
@@ -24,7 +30,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
             <div class="stat-label">Terminados</div>
         </div>
         <div class="stat-item">
-            <div class="stat-value text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
+            <div class="stat-value text-green-700"><?php echo $porcentaje_terminados; ?>%</div>
             <div class="stat-label">Terminados (%)</div>
         </div>
         <div class="stat-item">
