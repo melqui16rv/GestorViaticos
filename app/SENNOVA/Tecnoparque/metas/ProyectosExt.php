@@ -106,31 +106,29 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
-// Paleta de colores suaves y agradables
-const verdeSuave = 'rgba(34,197,94,0.75)';
-const verdeBorde = 'rgba(34,197,94,1)';
-const amarilloSuave = 'rgba(253,224,71,0.65)';
-const amarilloBorde = 'rgba(253,224,71,1)';
+// Paleta de colores suaves y agradables (variables únicas para Extensionismo)
+const verdeSuaveExt = 'rgba(34,197,94,0.75)';
+const verdeBordeExt = 'rgba(34,197,94,1)';
+const amarilloSuaveExt = 'rgba(253,224,71,0.65)';
+const amarilloBordeExt = 'rgba(253,224,71,1)';
 
 // Usar los valores correctos del resumen
-const terminados = <?php echo (int)$resumen['total_terminados']; ?>;
-const enProceso = <?php echo (int)$resumen['total_en_proceso']; ?>;
-const meta = <?php echo (int)$meta_total; ?>;
-
-console.log('terminados:', terminados, 'enProceso:', enProceso, 'meta:', meta);
+const terminadosExt = <?php echo (int)$resumen['total_terminados']; ?>;
+const enProcesoExt = <?php echo (int)$resumen['total_en_proceso']; ?>;
+const metaExt = <?php echo (int)$meta_total; ?>;
 
 // Gráfica de barra horizontal de avance sobre la meta
-const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
-new Chart(ctx, {
+const ctxExt = document.getElementById('graficaProyectosTec').getContext('2d');
+new Chart(ctxExt, {
     type: 'bar',
     data: {
         labels: ['Meta Extensionismo'],
         datasets: [
             {
                 label: 'Terminados',
-                data: [terminados],
-                backgroundColor: verdeSuave,
-                borderColor: verdeBorde,
+                data: [terminadosExt],
+                backgroundColor: verdeSuaveExt,
+                borderColor: verdeBordeExt,
                 borderWidth: 2,
                 borderRadius: 8,
                 barPercentage: 0.7,
@@ -138,9 +136,9 @@ new Chart(ctx, {
             },
             {
                 label: 'En Proceso',
-                data: [enProceso],
-                backgroundColor: amarilloSuave,
-                borderColor: amarilloBorde,
+                data: [enProcesoExt],
+                backgroundColor: amarilloSuaveExt,
+                borderColor: amarilloBordeExt,
                 borderWidth: 2,
                 borderRadius: 8,
                 barPercentage: 0.7,
@@ -154,7 +152,7 @@ new Chart(ctx, {
         scales: {
             x: {
                 beginAtZero: true,
-                max: meta,
+                max: metaExt,
                 grid: { color: 'rgba(0,0,0,0.06)' },
                 ticks: { color: '#64748b', font: { size: 14 } }
             },
@@ -173,17 +171,17 @@ new Chart(ctx, {
 });
 
 // Gráfica de torta: terminados vs en proceso
-const tortasContainer = document.getElementById('tortasTec');
-tortasContainer.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
-const ctxTorta = document.getElementById('tortaExtensionismo').getContext('2d');
-new Chart(ctxTorta, {
+const tortasContainerExt = document.getElementById('tortasTec');
+tortasContainerExt.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
+const ctxTortaExt = document.getElementById('tortaExtensionismo').getContext('2d');
+new Chart(ctxTortaExt, {
     type: 'pie',
     data: {
         labels: ['Terminados', 'En Proceso'],
         datasets: [{
-            data: [terminados, enProceso],
-            backgroundColor: [verdeSuave, amarilloSuave],
-            borderColor: [verdeBorde, amarilloBorde],
+            data: [terminadosExt, enProcesoExt],
+            backgroundColor: [verdeSuaveExt, amarilloSuaveExt],
+            borderColor: [verdeBordeExt, amarilloBordeExt],
             borderWidth: 2
         }]
     },
