@@ -348,13 +348,6 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
     <button class="back-button" onclick="window.history.back()">
         <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    <div class="card">
-        <form action="" method="UPDATE" class="space-y-6" autocomplete="off">
-           
-
-            <input type="submit" value="Actualizar" name="Registrar" class="form-submit">
-        </form>
-    </div>
     <div class="form-card">
         <div class="form-title">Actualizar Proyectos Tecnoparque (Solo tipo "Tecnológico")</div>
         <?php if (!empty($mensaje)): ?>
