@@ -84,7 +84,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
-<div class="dashboard-container" id="dashboardContent">
+<div class="dashboard-container" id="dashboardContentExt">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
         <!-- Indicadores de metas -->
         <div class="stat-item">

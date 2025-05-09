@@ -149,15 +149,6 @@ requireRole(['4', '5', '6']);
             const dashboard = dashboards[id];
             if (dashboard) dashboard.style.display = 'block';
 
-            // Marcar activo en el lateral
-            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-            const navId = Object.entries(navLinks).find(([k, v]) => v === id)?.[0];
-            if (navId) {
-                const navElement = document.getElementById(navId);
-                if (navElement) navElement.classList.add('active');
-                setCookie('tecnoparque_metas_vista', id, 30);
-            }
-
             // Inicializa los gráficos según la vista
             if (id === 'proyectosTecnologicos' && typeof initProyectosTecCharts === 'function') {
                 initProyectosTecCharts();
