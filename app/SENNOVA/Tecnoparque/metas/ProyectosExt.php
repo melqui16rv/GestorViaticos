@@ -254,12 +254,12 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
             </tfoot>
         </table>
     </div>
-    <div class="chart-wrapper mb-8">
-        <h2 class="text-xl font-semibold mb-4">Proyectos de Extensionismo Tecnológico</h2>
-        <canvas id="graficaProyectosExt"></canvas>
-        <h2 class="text-paragraph">Estado de Proyectos Detallado</h2>
-        <div id="tortasExt" class="tortas-container"></div>
+    <h2 class="text-title font-semibold mb-4">Proyectos de Extensionismo Tecnológico</h2>
+    <div class="chart-wrapper mb-6">
+        <canvas id="graficaProyectosExt" width="400" height="200"></canvas>
     </div>
+    <h2 class="text-title font-semibold mb-4">Estado de Proyectos Detallado</h2>
+    <div id="tortasExt" class="tortas-container"></div>
 
 
 </div>
