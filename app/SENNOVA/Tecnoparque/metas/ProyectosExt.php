@@ -171,26 +171,28 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
     </script>
 </head>
 <div class="dashboard-container" id="dashboardContent">
-    <div class="stats-card flex flex-wrap gap-6 mb-6">
-        <div class="stat-item">
-            <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
-            <div class="stat-label">Terminados</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value text-yellow-700"><?php echo $resumen['total_en_proceso']; ?></div>
-            <div class="stat-label">En Proceso</div>
+    <div class="stats-card">
+        <div class="flex flex-wrap gap-6 mb-6">
+            <div class="stat-item">
+                <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
+                <div class="stat-label">Terminados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-yellow-700"><?php echo $resumen['total_en_proceso']; ?></div>
+                <div class="stat-label">En Proceso</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-green-700"><?php echo $porcentaje_terminados; ?>%</div>
+                <div class="stat-label">Porcentaje Terminado</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-yellow-700"><?php echo $porcentaje_esperado; ?>%</div>
+                <div class="stat-label">Porcentaje Esperado</div>
+            </div>
         </div>
         <div class="stat-item">
             <div class="stat-value text-blue-700"><?php echo $meta_total; ?></div>
             <div class="stat-label">Meta Proyectos</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value text-green-700"><?php echo $porcentaje_terminados; ?>%</div>
-            <div class="stat-label">Porcentaje Terminado</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value text-yellow-700"><?php echo $porcentaje_esperado; ?>%</div>
-            <div class="stat-label">Porcentaje Esperado</div>
         </div>
     </div>
     <div class="tabla-card">
