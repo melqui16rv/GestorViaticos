@@ -160,6 +160,8 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
     let cambios = false;
+    let salirPendiente = false;
+    let destinoPendiente = null;
 
     // Detectar cambios en los campos
     document.querySelectorAll('input[name="terminados[]"], input[name="en_proceso[]"]').forEach(input => {
@@ -192,22 +194,62 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
         cambios = false; // Se van a guardar los cambios
     });
 
-    // Alerta al intentar salir si hay cambios sin guardar
-    window.addEventListener('beforeunload', function (e) {
+    // Mostrar modal de confirmación
+    function mostrarModalConfirm(destino = null) {
+        document.getElementById('modal-confirm').style.display = 'flex';
+        salirPendiente = true;
+        destinoPendiente = destino;
+    }
+
+    // Ocultar modal
+    function ocultarModalConfirm() {
+        document.getElementById('modal-confirm').style.display = 'none';
+        salirPendiente = false;
+        destinoPendiente = null;
+    }
+
+    // Botón regresar
+    document.getElementById('btn-regresar').addEventListener('click', function(e) {
         if (cambios) {
-            e.preventDefault();
-            e.returnValue = '';
+            mostrarModalConfirm('<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php');
+        } else {
+            window.location.href = '<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php';
         }
     });
 
-    // Al hacer click en el botón regresar
-    document.getElementById('btn-regresar').addEventListener('click', function(e) {
-        if (cambios) {
-            if (confirm('Hay cambios sin guardar. ¿Seguro que deseas salir?')) {
-                window.location.href = '<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php';
-            }
+    // Modal botones
+    document.getElementById('modal-btn-si').addEventListener('click', function() {
+        ocultarModalConfirm();
+        cambios = false;
+        if (destinoPendiente) {
+            window.location.href = destinoPendiente;
         } else {
-            window.location.href = '<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php';
+            window.removeEventListener('beforeunload', beforeUnloadHandler);
+            window.history.back();
+        }
+    });
+    document.getElementById('modal-btn-no').addEventListener('click', function() {
+        ocultarModalConfirm();
+    });
+
+    // Handler para beforeunload
+    function beforeUnloadHandler(e) {
+        if (cambios && !salirPendiente) {
+            mostrarModalConfirm();
+            e.preventDefault();
+            e.returnValue = '';
+            return '';
+        }
+    }
+
+    // Interceptar navegación por navegador (back/refresh)
+    window.addEventListener('beforeunload', beforeUnloadHandler);
+
+    // Interceptar navegación por historial (botón atrás)
+    window.addEventListener('popstate', function(e) {
+        if (cambios && !salirPendiente) {
+            mostrarModalConfirm();
+            history.pushState(null, null, location.href); // Evita el retroceso inmediato
         }
     });
     </script>
