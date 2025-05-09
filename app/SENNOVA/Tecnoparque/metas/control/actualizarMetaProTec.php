@@ -270,7 +270,7 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
             text-align: center;
         }
         .proy-form-table th {
-            background: linear-gradient(90deg, #e0f7e9 0%, #fffbe6 100%);
+            background: linear-gradient(90deg, #e0f7e9 0%, #e0f7e9 100%);
             color: #222;
             font-weight: 700;
             border-bottom: 2px solid #e0e0e0;
