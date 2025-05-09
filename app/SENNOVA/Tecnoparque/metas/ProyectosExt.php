@@ -160,7 +160,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
         </div>
     </div>
     <div class="chart-wrapper mb-8">
-        <canvas id="graficaProyectosTec"></canvas>
+        <canvas id="graficaProyectosExt"></canvas>
     </div>
     <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
     <div class="tortas-container" id="tortasTec"></div>
@@ -183,7 +183,7 @@ window.initProyectosExtCharts = function() {
     if (window.proyectosExtBarChart && typeof window.proyectosExtBarChart.destroy === 'function') {
         window.proyectosExtBarChart.destroy();
     }
-    const canvasBarra = document.getElementById('graficaProyectosTec');
+    const canvasBarra = document.getElementById('graficaProyectosExt');
     if (canvasBarra) {
         const ctxExt = canvasBarra.getContext('2d');
         window.proyectosExtBarChart = new Chart(ctxExt, {
@@ -285,4 +285,67 @@ window.initProyectosExtCharts = function() {
     }
 };
 // No ejecutes la función aquí automáticamente
+let proyectosExtBarChart = null;
+
+function initProyectosExtCharts() {
+    // Destruir gráfico previo si existe
+    if (proyectosExtBarChart) {
+        proyectosExtBarChart.destroy();
+    }
+
+    const ctx = document.getElementById('graficaProyectosExt').getContext('2d');
+    proyectosExtBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['Meta Extensionismo'],
+            datasets: [
+                {
+                    label: 'Terminados',
+                    data: [terminadosExt],
+                    backgroundColor: verdeSuaveExt,
+                    borderColor: verdeBordeExt,
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.6
+                },
+                {
+                    label: 'En Proceso',
+                    data: [enProcesoExt],
+                    backgroundColor: amarilloSuaveExt,
+                    borderColor: amarilloBordeExt,
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.6
+                }
+            ]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    max: metaExt,
+                    grid: { color: 'rgba(0,0,0,0.06)' },
+                    ticks: { color: '#64748b', font: { size: 14 } }
+                },
+                y: {
+                    grid: { color: 'rgba(0,0,0,0.04)' },
+                    ticks: { color: '#64748b', font: { size: 14 } }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
+                }
+            }
+        }
+    });
+}
+
+// Exporta la función para inicializar los gráficos
+window.initProyectosExtCharts = initProyectosExtCharts;
 </script>

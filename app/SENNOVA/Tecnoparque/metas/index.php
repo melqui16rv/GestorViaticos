@@ -158,9 +158,11 @@ requireRole(['4', '5', '6']);
                 setCookie('tecnoparque_metas_vista', id, 30);
             }
 
-            // Inicializa los gráficos de Extensionismo si corresponde
-            if (id === 'extensionismo' && typeof window.initProyectosExtCharts === 'function') {
-                setTimeout(() => { window.initProyectosExtCharts(); }, 100); // Espera breve para asegurar que el DOM esté listo
+            // Inicializa los gráficos según la vista
+            if (id === 'proyectosTecnologicos' && typeof initProyectosTecCharts === 'function') {
+                initProyectosTecCharts();
+            } else if (id === 'extensionismo' && typeof initProyectosExtCharts === 'function') {
+                initProyectosExtCharts();
             }
         }
 

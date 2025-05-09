@@ -114,78 +114,90 @@ const azulSuave = 'rgba(59,130,246,0.60)';      // azul pastel
 const azulBorde = 'rgba(59,130,246,1)';
 
 // Gráfica de barras por línea (terminados y en proceso)
-const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: labels,
-        datasets: [
-            {
-                label: 'Terminados',
-                data: terminados,
-                backgroundColor: verdeSuave,
-                borderColor: verdeBorde,
-                borderWidth: 2,
-                borderRadius: 8,
-                barPercentage: 0.7,
-                categoryPercentage: 0.6
-            },
-            {
-                label: 'En Proceso',
-                data: enProceso,
-                backgroundColor: amarilloSuave,
-                borderColor: amarilloBorde,
-                borderWidth: 2,
-                borderRadius: 8,
-                barPercentage: 0.7,
-                categoryPercentage: 0.6
-            },
-            {
-                label: 'Proyección',
-                data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
-                backgroundColor: azulSuave,
-                borderColor: azulBorde,
-                borderWidth: 2,
-                borderRadius: 8,
-                barPercentage: 0.7,
-                categoryPercentage: 0.6
-            }
-        ]
-    },
-    options: {
-        responsive: true,
-        scales: {
-            y: {
-                beginAtZero: true,
-                grid: {
-                    color: 'rgba(0,0,0,0.06)'
+let proyectosTecBarChart = null;
+
+function initProyectosTecCharts() {
+    // Destruir gráfico previo si existe
+    if (proyectosTecBarChart) {
+        proyectosTecBarChart.destroy();
+    }
+
+    const ctx = document.getElementById('graficaProyectosTec').getContext('2d');
+    proyectosTecBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Terminados',
+                    data: terminados,
+                    backgroundColor: verdeSuave,
+                    borderColor: verdeBorde,
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.6
                 },
-                ticks: {
-                    color: '#64748b',
-                    font: { size: 14 }
-                }
-            },
-            x: {
-                grid: {
-                    color: 'rgba(0,0,0,0.04)'
+                {
+                    label: 'En Proceso',
+                    data: enProceso,
+                    backgroundColor: amarilloSuave,
+                    borderColor: amarilloBorde,
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.6
                 },
-                ticks: {
-                    color: '#64748b',
-                    font: { size: 14 }
+                {
+                    label: 'Proyección',
+                    data: proyectos.map(p => Number(p.terminados) + Number(p.en_proceso)),
+                    backgroundColor: azulSuave,
+                    borderColor: azulBorde,
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    barPercentage: 0.7,
+                    categoryPercentage: 0.6
                 }
-            }
+            ]
         },
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: {
-                    color: '#334155',
-                    font: { size: 15, weight: 'bold' }
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: {
+                        color: 'rgba(0,0,0,0.06)'
+                    },
+                    ticks: {
+                        color: '#64748b',
+                        font: { size: 14 }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(0,0,0,0.04)'
+                    },
+                    ticks: {
+                        color: '#64748b',
+                        font: { size: 14 }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                    labels: {
+                        color: '#334155',
+                        font: { size: 15, weight: 'bold' }
+                    }
                 }
             }
         }
-    }
-});
+    });
+}
+
+// Llama a la función al cargar la vista
+document.addEventListener('DOMContentLoaded', initProyectosTecCharts);
 
 // Tortas dinámicas por línea
 const tortasContainer = document.getElementById('tortasTec');
