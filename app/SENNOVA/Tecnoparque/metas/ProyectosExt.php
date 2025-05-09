@@ -4,19 +4,16 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metasExt.php';
 
 $metas = new metas_tecnoparqueExt();
 $proyectos = $metas->obtenerProyectosTecPorTipo('Extensionismo');
-$resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Extensionismo');
+// Cambia aquí para obtener ambos valores:
+$resumen = $metas->obtenerSumaProyectosTecPorTipo('Extensionismo');
 
-// Cambia la meta: 100% se cumple con 5 proyectos terminados
 $meta_total = 5;
 
-// Calcular el total esperado (terminados + en proceso)
 $total_esperado = 0;
 foreach ($proyectos as $p) {
     $total_esperado += (int)$p['terminados'] + (int)$p['en_proceso'];
 }
-// Porcentaje de terminados respecto a la meta de 5
 $porcentaje_terminados = min(100, round(($resumen['total_terminados'] / $meta_total) * 100, 1));
-// Porcentaje de proyección respecto a la meta de 5
 $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1));
 ?>
 <head>
@@ -112,9 +109,9 @@ const verdeBorde = 'rgba(34,197,94,1)';
 const amarilloSuave = 'rgba(253,224,71,0.65)';
 const amarilloBorde = 'rgba(253,224,71,1)';
 
-// Solo hay una línea, así que usamos los totales
+// Usar los valores correctos del resumen
 const terminados = <?php echo (int)$resumen['total_terminados']; ?>;
-const enProceso = <?php echo (int)($resumen['total_en_proceso'] ?? 0); ?>;
+const enProceso = <?php echo (int)$resumen['total_en_proceso']; ?>;
 const meta = <?php echo (int)$meta_total; ?>;
 
 // Gráfica de barra horizontal de avance sobre la meta
