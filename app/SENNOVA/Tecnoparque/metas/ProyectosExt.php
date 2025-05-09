@@ -40,7 +40,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
     <!-- Tarjeta para botón y tabla -->
     <div class="tabla-card mb-8">
         <div class="flex justify-end mb-4">
-            <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProTec.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
+            <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProExt.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
                 <button type="button" class="actualizar-tabla-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582M20 20v-5h-.581M5.582 9A7.003 7.003 0 0112 5c3.866 0 7 3.134 7 7 0 1.657-.573 3.182-1.535 4.382M18.418 15A7.003 7.003 0 0112 19c-3.866 0-7-3.134-7-7 0-1.657.573-3.182 1.535-4.382"/>
