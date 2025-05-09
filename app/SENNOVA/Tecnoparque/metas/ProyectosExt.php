@@ -178,12 +178,12 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                 <div class="stat-label">Terminados</div>
             </div>
             <div class="stat-item">
-                <div class="stat-value text-yellow-700"><?php echo $resumen['total_en_proceso']; ?></div>
-                <div class="stat-label">En Proceso</div>
-            </div>
-            <div class="stat-item">
                 <div class="stat-value text-green-700"><?php echo $porcentaje_terminados; ?>%</div>
                 <div class="stat-label">Porcentaje Terminado</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-yellow-700"><?php echo $resumen['total_en_proceso']; ?></div>
+                <div class="stat-label">En Proceso</div>
             </div>
             <div class="stat-item">
                 <div class="stat-value text-yellow-700"><?php echo $porcentaje_esperado; ?>%</div>
