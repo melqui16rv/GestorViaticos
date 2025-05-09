@@ -6,6 +6,7 @@ $metas = new metas_tecnoparque();
 $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
 $resumen = $metas->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
 
+$meta_total = 100;
 // Calcular el total esperado (terminados + en proceso)
 $total_esperado = 0;
 foreach ($proyectos as $p) {
@@ -17,28 +18,39 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 </head>
 <div class="dashboard-container" id="dashboardContent">
-    <div class="stats-card flex flex-wrap gap-6 mb-6">
-        <!-- Indicadores de metas -->
-        <div class="stat-item">
-            <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
-            <div class="stat-label">Terminados</div>
+    <div class="stats-card">
+        <div class="stats-card flex flex-wrap gap-6 mb-6">
+            <!-- Indicadores de metas -->
+            <div class="stat-item">
+                <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
+                <div class="stat-label">Terminados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
+                <div class="stat-label">Terminados (%)</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-yellow-700"><?php echo $total_esperado; ?></div>
+                <div class="stat-label">Proyección</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-yellow-700"><?php echo $porcentaje_esperado; ?>%</div>
+                <div class="stat-label">Proyección (%)</div>
+            </div>
         </div>
         <div class="stat-item">
-            <div class="stat-value text-green-700"><?php echo $resumen['avance_porcentaje']; ?>%</div>
-            <div class="stat-label">Terminados (%)</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value text-blue-500"><?php echo $total_esperado; ?></div>
-            <div class="stat-label">Proyección</div>
-        </div>
-        <div class="stat-item">
-            <div class="stat-value text-blue-500"><?php echo $porcentaje_esperado; ?>%</div>
-            <div class="stat-label">Proyección (%)</div>
+            <div class="stat-value text-blue-700"><?php echo $meta_total; ?></div>
+            <div class="stat-label">Meta Proyectos</div>
         </div>
     </div>
 
+    
+
     <!-- Tarjeta para botón y tabla -->
     <div class="tabla-card mb-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Tabla de Proyectos de Extensionismo</h2>
+        </div>
         <div class="flex justify-end mb-4">
             <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProTec.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
                 <button type="button" class="actualizar-tabla-btn">
@@ -92,9 +104,10 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
         </div>
     </div>
     <div class="chart-wrapper mb-8">
+    <h2 class="text-xl font-semibold mb-4">Proyectos de Base Tecnológica</h2>
         <canvas id="graficaProyectosTec"></canvas>
     </div>
-    <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
+    <h3 class="tortas-title">Detalle por Línea</h3>
     <div class="tortas-container" id="tortasTec"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
