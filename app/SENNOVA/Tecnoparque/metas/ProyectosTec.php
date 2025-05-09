@@ -103,15 +103,12 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
             </table>
         </div>
     </div>
+    <h2 class="text-xl font-semibold mb-4">Proyectos de Base Tecnológica</h2>
     <div class="chart-wrapper mb-8">
-        <div class="chart-wrapper">
-            <h2 class="text-xl font-semibold mb-4">Proyectos de Base Tecnológica</h2>
-            <canvas id="graficaProyectosTec"></canvas>
-        </div>
-        <h2 class="tortas-title">Detalle por Línea</h2>
-        <div class="tortas-container" id="tortasTec"></div>
+        <canvas id="graficaProyectosTec"></canvas>
     </div>
-
+    <h2 class="tortas-title">Detalle por Línea</h2>
+    <div class="tortas-container" id="tortasTec"></div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
