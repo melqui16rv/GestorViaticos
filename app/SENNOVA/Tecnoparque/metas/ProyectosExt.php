@@ -116,9 +116,9 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                 const tortaInfo = document.createElement('div');
                 tortaInfo.className = 'torta-info';
                 tortaInfo.textContent = `Total: ${totalLinea}`;
-                tortaCard.appendChild(tortaCard);
+                tortaCard.appendChild(tortaInfo); // Corregido: Agregar `tortaInfo` al `tortaCard`
 
-                container.appendChild(tortaCard);
+                container.appendChild(tortaCard); // Corregido: Agregar `tortaCard` al `container`
 
                 const ctx = document.getElementById(canvasId).getContext('2d');
                 new Chart(ctx, {
