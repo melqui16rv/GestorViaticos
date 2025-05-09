@@ -80,6 +80,9 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
     margin-bottom: 2rem;
 }
 </style>
+<!-- Mueve los scripts de Chart.js y ChartDataLabels al <head> para asegurar su carga antes de usarlos -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 </head>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
@@ -162,8 +165,6 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
     <h3 class="tortas-title">Detalle por Línea (Torta)</h3>
     <div class="tortas-container" id="tortasTec"></div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script>
 // Paleta de colores suaves y agradables (variables únicas para Extensionismo)
 const verdeSuaveExt = 'rgba(34,197,94,0.75)';
@@ -176,94 +177,105 @@ const terminadosExt = <?php echo (int)$resumen['total_terminados']; ?>;
 const enProcesoExt = <?php echo (int)$resumen['total_en_proceso']; ?>;
 const metaExt = <?php echo (int)$meta_total; ?>;
 
-// Gráfica de barra horizontal de avance sobre la meta
-const ctxExt = document.getElementById('graficaProyectosTec').getContext('2d');
-new Chart(ctxExt, {
-    type: 'bar',
-    data: {
-        labels: ['Meta Extensionismo'],
-        datasets: [
-            {
-                label: 'Terminados',
-                data: [terminadosExt],
-                backgroundColor: verdeSuaveExt,
-                borderColor: verdeBordeExt,
-                borderWidth: 2,
-                borderRadius: 8,
-                barPercentage: 0.7,
-                categoryPercentage: 0.6
+// Espera a que el DOM esté listo antes de crear los gráficos
+document.addEventListener('DOMContentLoaded', function() {
+    // Gráfica de barra horizontal de avance sobre la meta
+    const canvasBarra = document.getElementById('graficaProyectosTec');
+    if (canvasBarra) {
+        const ctxExt = canvasBarra.getContext('2d');
+        new Chart(ctxExt, {
+            type: 'bar',
+            data: {
+                labels: ['Meta Extensionismo'], // Cambia el nombre de la variable si tienes otra llamada 'labels'
+                datasets: [
+                    {
+                        label: 'Terminados',
+                        data: [terminadosExt],
+                        backgroundColor: verdeSuaveExt,
+                        borderColor: verdeBordeExt,
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6
+                    },
+                    {
+                        label: 'En Proceso',
+                        data: [enProcesoExt],
+                        backgroundColor: amarilloSuaveExt,
+                        borderColor: amarilloBordeExt,
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.6
+                    }
+                ]
             },
-            {
-                label: 'En Proceso',
-                data: [enProcesoExt],
-                backgroundColor: amarilloSuaveExt,
-                borderColor: amarilloBordeExt,
-                borderWidth: 2,
-                borderRadius: 8,
-                barPercentage: 0.7,
-                categoryPercentage: 0.6
-            }
-        ]
-    },
-    options: {
-        indexAxis: 'y',
-        responsive: true,
-        scales: {
-            x: {
-                beginAtZero: true,
-                max: metaExt,
-                grid: { color: 'rgba(0,0,0,0.06)' },
-                ticks: { color: '#64748b', font: { size: 14 } }
-            },
-            y: {
-                grid: { color: 'rgba(0,0,0,0.04)' },
-                ticks: { color: '#64748b', font: { size: 14 } }
-            }
-        },
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
-            }
-        }
-    }
-});
-
-// Gráfica de torta: terminados vs en proceso
-const tortasContainerExt = document.getElementById('tortasTec');
-tortasContainerExt.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
-const ctxTortaExt = document.getElementById('tortaExtensionismo').getContext('2d');
-new Chart(ctxTortaExt, {
-    type: 'pie',
-    data: {
-        labels: ['Terminados', 'En Proceso'],
-        datasets: [{
-            data: [terminadosExt, enProcesoExt],
-            backgroundColor: [verdeSuaveExt, amarilloSuaveExt],
-            borderColor: [verdeBordeExt, amarilloBordeExt],
-            borderWidth: 2
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            legend: {
-                position: 'bottom',
-                labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
-            },
-            datalabels: {
-                color: '#fff',
-                font: { weight: 'bold', size: 14 },
-                textStrokeColor: '#334155',
-                textStrokeWidth: 1.2,
-                formatter: function(value, context) {
-                    const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                    if (sum === 0) return '';
-                    return ((value / sum) * 100).toFixed(1) + '%';
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: metaExt,
+                        grid: { color: 'rgba(0,0,0,0.06)' },
+                        ticks: { color: '#64748b', font: { size: 14 } }
+                    },
+                    y: {
+                        grid: { color: 'rgba(0,0,0,0.04)' },
+                        ticks: { color: '#64748b', font: { size: 14 } }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
+                    }
                 }
             }
+        });
+    }
+
+    // Gráfica de torta: terminados vs en proceso
+    const tortasContainerExt = document.getElementById('tortasTec');
+    if (tortasContainerExt) {
+        tortasContainerExt.innerHTML = '<canvas id="tortaExtensionismo"></canvas>';
+        const canvasTorta = document.getElementById('tortaExtensionismo');
+        if (canvasTorta) {
+            const ctxTortaExt = canvasTorta.getContext('2d');
+            new Chart(ctxTortaExt, {
+                type: 'pie',
+                data: {
+                    labels: ['Terminados', 'En Proceso'], // Cambia el nombre de la variable si tienes otra llamada 'labels'
+                    datasets: [{
+                        data: [terminadosExt, enProcesoExt],
+                        backgroundColor: [verdeSuaveExt, amarilloSuaveExt],
+                        borderColor: [verdeBordeExt, amarilloBordeExt],
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#334155', font: { size: 15, weight: 'bold' } }
+                        },
+                        datalabels: {
+                            color: '#fff',
+                            font: { weight: 'bold', size: 14 },
+                            textStrokeColor: '#334155',
+                            textStrokeWidth: 1.2,
+                            formatter: function(value, context) {
+                                const sum = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                                if (sum === 0) return '';
+                                return ((value / sum) * 100).toFixed(1) + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
         }
-    },
-    plugins: [ChartDataLabels]
+    }
 });
 </script>
