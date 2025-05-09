@@ -116,7 +116,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                 const tortaInfo = document.createElement('div');
                 tortaInfo.className = 'torta-info';
                 tortaInfo.textContent = `Total: ${totalLinea}`;
-                tortaCard.appendChild(tortaInfo);
+                tortaCard.appendChild(tortaCard);
 
                 container.appendChild(tortaCard);
 
@@ -211,10 +211,10 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                 <?php foreach ($proyectos as $proyecto) : ?>
                     <tr>
                         <td><?php echo $proyecto['nombre_linea']; ?></td>
-                        <td><?php echo $proyecto['nombre_proyecto']; ?></td>
+                        <td><?php echo isset($proyecto['nombre_proyecto']) ? $proyecto['nombre_proyecto'] : 'N/A'; ?></td>
                         <td><?php echo $proyecto['terminados']; ?></td>
                         <td><?php echo $proyecto['en_proceso']; ?></td>
-                        <td><?php echo $proyecto['estado']; ?></td>
+                        <td><?php echo isset($proyecto['estado']) ? $proyecto['estado'] : 'N/A'; ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
@@ -242,13 +242,8 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
 </div>
 <script>
     $(document).ready(function() {
-
-
         const proyectos = <?php echo json_encode($metas->obtenerProyectosTecPorTipo('Extensionismo')); ?>;
         generarGraficaBarras('graficaProyectosExt', proyectos, 'Proyectos de Extensionismo');
         generarGraficaTorta('tortasExt', proyectos);
-
-
-
     });
 </script>
