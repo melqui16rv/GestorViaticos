@@ -4,11 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metasExt.php';
 
 $metas = new metas_tecnoparqueExt();
 $proyectos = $metas->obtenerProyectosTecPorTipo('Extensionismo');
-// Cambia aquí para obtener ambos valores:
 $resumen = $metas->obtenerSumaProyectosTecPorTipo('Extensionismo');
-
-// Debug temporal
-// echo '<pre>'; print_r($resumen); echo '</pre>';
 
 $meta_total = 5;
 
@@ -21,6 +17,69 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
+<style>
+.torta-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    display: inline-block;
+    margin-right: 1rem;
+    min-width: 220px;
+    vertical-align: top;
+    position: relative;
+}
+.torta-card .torta-title{
+    min-height: 1.5em;
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+.torta-card .torta-info{
+    font-size: 1em;
+    margin-top: 0.5em;
+}
+/* Botón de actualizar tabla */
+.actualizar-tabla-link {
+    text-decoration: none;
+}
+.actualizar-tabla-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.08rem;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+}
+.actualizar-tabla-btn:hover, .actualizar-tabla-btn:focus {
+    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
+    box-shadow: 0 4px 16px rgba(52,211,153,0.13), 0 3px 12px rgba(96,165,250,0.13);
+    transform: translateY(-2px) scale(1.03);
+}
+.icon-refresh {
+    width: 1.3em;
+    height: 1.3em;
+    stroke-width: 2.2;
+}
+/* Tarjeta blanca para tabla y botón */
+.tabla-card {
+    background: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    padding: 2rem 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 2rem;
+}
+</style>
 </head>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card flex flex-wrap gap-6 mb-6">
@@ -208,66 +267,3 @@ new Chart(ctxTortaExt, {
     plugins: [ChartDataLabels]
 });
 </script>
-<style>
-.torta-card {
-    background: #fff;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-    display: inline-block;
-    margin-right: 1rem;
-    min-width: 220px;
-    vertical-align: top;
-    position: relative;
-}
-.torta-card .torta-title{
-    min-height: 1.5em;
-    font-size: 1.1em;
-    font-weight: bold;
-    margin-bottom: 0.5em;
-    text-align: center;
-}
-.torta-card .torta-info{
-    font-size: 1em;
-    margin-top: 0.5em;
-}
-/* Botón de actualizar tabla */
-.actualizar-tabla-link {
-    text-decoration: none;
-}
-.actualizar-tabla-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
-    color: #fff;
-    font-weight: 600;
-    font-size: 1.08rem;
-    padding: 0.65rem 1.4rem;
-    border: none;
-    border-radius: 0.7rem;
-    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
-    cursor: pointer;
-    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
-    outline: none;
-}
-.actualizar-tabla-btn:hover, .actualizar-tabla-btn:focus {
-    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
-    box-shadow: 0 4px 16px rgba(52,211,153,0.13), 0 3px 12px rgba(96,165,250,0.13);
-    transform: translateY(-2px) scale(1.03);
-}
-.icon-refresh {
-    width: 1.3em;
-    height: 1.3em;
-    stroke-width: 2.2;
-}
-/* Tarjeta blanca para tabla y botón */
-.tabla-card {
-    background: #fff;
-    border-radius: 1rem;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
-    padding: 2rem 1.5rem 1.5rem 1.5rem;
-    margin-bottom: 2rem;
-}
-</style>
