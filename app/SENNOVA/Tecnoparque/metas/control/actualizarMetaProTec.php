@@ -95,6 +95,19 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
 .modal-btn-cancel:hover {
     background: #d1d5db;
 }
+
+.modal-bg {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(30, 41, 59, 0.35);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.2s;
+}
     </style>
 </head>
 <body class="bg-gray-100 flex justify-center items-center min-h-screen py-8">
@@ -145,8 +158,9 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
                 Actualizar
             </button>
         </form>
-    </div>
-    <!-- Modal de confirmación genérico -->
+    </div> <!-- Aquí termina tu contenido principal, si tienes un wrapper -->
+
+    <!-- Modal de confirmación genérico SIEMPRE fuera de otros divs -->
     <div id="modal-confirm" class="modal-bg" style="display:none;">
         <div class="modal-card">
             <div class="modal-title" id="modal-confirm-title">¿Estás seguro?</div>
