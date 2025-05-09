@@ -195,7 +195,7 @@ class metas_tecnoparqueExt extends Conexion{
         }
     }
 
-    public function obtenerProyectosTecPorTipo($tipo = 'Tecnológico') {
+    public function obtenerProyectosTecPorTipo($tipo = 'Extensionismo') {
         $sql = "SELECT * FROM proyectos_tecnoparque WHERE tipo = :tipo";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
@@ -203,7 +203,7 @@ class metas_tecnoparqueExt extends Conexion{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function obtenerSumaProyectosTecPorTipo($tipo = 'Tecnológico') {
+    public function obtenerSumaProyectosTecPorTipo($tipo = 'Extensionismo') {
         $sql = "SELECT 
             SUM(terminados) as total_terminados, 
             SUM(en_proceso) as total_en_proceso 
