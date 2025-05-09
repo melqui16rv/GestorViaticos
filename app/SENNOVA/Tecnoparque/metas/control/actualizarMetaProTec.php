@@ -97,6 +97,17 @@ $proyectos = $metas->obtenerProyectosTecPorTipo('Tecnológico');
             </button>
         </form>
     </div>
+    <!-- Modal de confirmación genérico -->
+    <div id="modal-confirm" class="modal-bg" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-title" id="modal-confirm-title">¿Estás seguro?</div>
+            <div class="modal-message" id="modal-confirm-message">Tienes cambios sin guardar. ¿Deseas salir?</div>
+            <div class="modal-btns">
+                <button class="modal-btn modal-btn-confirm" id="modal-btn-si">Sí</button>
+                <button class="modal-btn modal-btn-cancel" id="modal-btn-no">Cancelar</button>
+            </div>
+        </div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
     <script>
     let cambios = false;
