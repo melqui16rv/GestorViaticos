@@ -544,19 +544,22 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     max-height: 400px;
     overflow-y: auto;
     margin-top: 20px;
+    position: relative;
 }
 .table-container table {
     width: 100%;
     border-collapse: collapse;
 }
-.table-container thead th {
+.table-container thead tr {
     position: sticky;
     top: 0;
     background-color: #f0f0f0;
+    z-index: 10;
+}
+.table-container thead th {
     padding: 12px;
     text-align: left;
     border-bottom: 2px solid #ddd;
-    z-index: 1;
 }
 .table-container tbody td {
     padding: 12px;
