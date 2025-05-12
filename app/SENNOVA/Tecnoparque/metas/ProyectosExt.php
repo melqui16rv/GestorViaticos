@@ -176,6 +176,15 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
             });
         }
     </script>
+    <style>
+        /* Reutilización de estilos de ProyectosTec */
+        .stats-card,
+        .stat-item,
+        .styled-table,
+        .chart-wrapper {
+            /* Copiar estilos de ProyectosTec.php */
+        }
+    </style>
 </head>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card">

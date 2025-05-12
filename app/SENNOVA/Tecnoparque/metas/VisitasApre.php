@@ -196,23 +196,27 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     border-radius: 8px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 #formVisitasApre .form-group {
     margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
 }
 #formVisitasApre .form-group label {
-    display: block;
     font-weight: 600;
     margin-bottom: 5px;
     color: #374151;
 }
 #formVisitasApre .form-group input {
-    width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
     box-sizing: border-box;
+    width: 100%;
 }
 #formVisitasApre .form-buttons {
     display: flex;
@@ -318,6 +322,102 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     width: 1.3em;
     height: 1.3em;
     stroke-width: 2.2;
+}
+/* Adaptabilidad para pantallas pequeñas */
+@media (max-width: 768px) {
+    #formVisitasApre {
+        padding: 15px;
+        width: 90%;
+    }
+
+    #formVisitasApre .form-group {
+        margin-bottom: 10px;
+    }
+
+    #formVisitasApre .form-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #formVisitasApre .btn {
+        width: 100%;
+    }
+}
+/* Formulario */
+#formVisitasApre {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+#formVisitasApre .form-group label {
+    font-weight: bold;
+    color: #1e293b;
+}
+#formVisitasApre .form-group input {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+#formVisitasApre .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+#formVisitasApre .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#formVisitasApre .btn-primary:hover {
+    background: #1e40af;
+}
+#formVisitasApre .btn-secondary {
+    background: #e2e8f0;
+    color: #1e293b;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#formVisitasApre .btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* Tabla */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.tabla th,
+.tabla td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+.tabla th {
+    background: #2563eb;
+    color: #fff;
+    font-weight: bold;
+}
+.tabla tr:hover {
+    background: #f1f5f9;
 }
 </style>
 
