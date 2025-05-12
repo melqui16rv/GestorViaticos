@@ -103,48 +103,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
         </div>
     </form>
-
-    <div class="indicadores">
-        <div class="indicador">
-            <h3>Total de Asistentes</h3>
-            <p><?php echo $indicadores['total_asistentes']; ?></p>
-        </div>
-        <div class="indicador">
-            <h3>Total de Charlas</h3>
-            <p><?php echo $indicadores['total_charlas']; ?></p>
-        </div>
-        <div class="indicador">
-            <h3>Promedio de Asistentes por Charla</h3>
-            <p><?php echo $indicadores['promedio_asistentes']; ?></p>
-        </div>
-        <div class="indicador">
-            <h3>Visitas por Nodo</h3>
-            <p>
-                <?php 
-                    foreach($visitasPorNodo as $nodo => $cant){
-                        echo htmlspecialchars($nodo) . ": " . $cant . "<br>";
-                    }
-                ?>
-            </p>
-        </div>
-    </div>
-
-    <!-- Se elimina la gráfica de distribución de nodos -->
-    <!-- Se agrega la gráfica de Ranking de Encargados -->
-    <div class="chart-container" style="height: 400px;">
-        <h2>Ranking de Encargados</h2>
-        <canvas id="rankingChart"></canvas>
-    </div>
-    
-    <div class="chart-container" style="height: 400px;">
-        <h2>Visitas por Semana</h2>
-        <canvas id="semanalChart"></canvas>
-    </div>
-
-    <div style="text-align: center; margin: 20px 0;">
-        <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
-    </div>
-
     <table class="tabla">
         <thead>
             <tr>
@@ -174,7 +132,49 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <?php endforeach; ?>
         </tbody>
     </table>
+    
+    <div class="indicadores">
+        <div class="indicador">
+            <h3>Total de Asistentes</h3>
+            <p><?php echo $indicadores['total_asistentes']; ?></p>
+        </div>
+        <div class="indicador">
+            <h3>Total de Charlas</h3>
+            <p><?php echo $indicadores['total_charlas']; ?></p>
+        </div>
+        <div class="indicador">
+            <h3>Promedio de Asistentes por Charla</h3>
+            <p><?php echo $indicadores['promedio_asistentes']; ?></p>
+        </div>
+        <div class="indicador">
+            <h3>Visitas por Nodo</h3>
+            <p>
+                <?php 
+                    foreach($visitasPorNodo as $nodo => $cant){
+                        echo htmlspecialchars($nodo) . ": " . $cant . "<br>";
+                    }
+                    ?>
+            </p>
+        </div>
+    </div>
+    
+    <!-- Se elimina la gráfica de distribución de nodos -->
+    <!-- Se agrega la gráfica de Ranking de Encargados -->
+    <div class="chart-container" style="height: 400px;">
+        <h2>Ranking de Encargados</h2>
+        <canvas id="rankingChart"></canvas>
+    </div>
+    
+    <div class="chart-container" style="height: 400px;">
+        <h2>Visitas por Semana</h2>
+        <canvas id="semanalChart"></canvas>
+    </div>
+    
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
+    </div>
 </div>
+    
 
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -281,6 +281,11 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 .chart-container {
     margin: 20px 0;
     height: 400px;
+    overflow: hidden; // Se quita el scroll
+}
+.chart-container canvas {
+    height: 100% !important;
+    width: 100% !important;
 }
 #formVisitasApre {
     display: none;
