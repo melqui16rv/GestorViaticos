@@ -168,18 +168,26 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                             <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="">Todos</option>
                                 <?php 
+                                // Definir los nombres de los meses
+                                $meses = [
+                                    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+                                    5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+                                    9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+                                ];
                                 $mesesUnicos = $metas->obtenerMesesUnicos();
                                 $anioActual = null;
-                                
                                 foreach($mesesUnicos as $fecha) {
                                     if($anioActual !== $fecha['anio']) {
                                         if($anioActual !== null) echo "</optgroup>";
                                         echo "<optgroup label='" . $fecha['anio'] . "'>";
                                         $anioActual = $fecha['anio'];
                                     }
-                                    echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
-                                         . $meses[$fecha['mes']] 
-                                         . "</option>";
+                                    // Solo mostrar si el mes existe en el array de meses
+                                    if (isset($meses[$fecha['mes']])) {
+                                        echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
+                                             . $meses[$fecha['mes']] 
+                                             . "</option>";
+                                    }
                                 }
                                 if($anioActual !== null) echo "</optgroup>";
                                 ?>
