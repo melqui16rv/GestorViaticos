@@ -420,19 +420,33 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     // Función para actualizar la tabla según los filtros
     async function actualizarTabla() {
         try {
+            // Validar que los elementos existan antes de acceder a sus valores
+            const ordenSelect = document.getElementById('ordenRegistros');
+            const limiteSelect = document.getElementById('limiteRegistros');
+            const encargadoSelect = document.getElementById('filtroEncargado');
+            const mesSelect = document.getElementById('filtroMes');
+            const anioSelect = document.getElementById('filtroAnio');
+
+            // Verificar que todos los elementos necesarios existan
+            if (!ordenSelect || !limiteSelect || !encargadoSelect || !mesSelect) {
+                throw new Error('No se encontraron los elementos de filtro necesarios');
+            }
+
             const filtros = {
-                orden: document.getElementById('ordenRegistros').value,
-                limite: document.getElementById('limiteRegistros').value,
-                encargado: document.getElementById('filtroEncargado').value,
-                mes: document.getElementById('filtroMes').value,
-                anio: document.getElementById('filtroAnio').value
+                orden: ordenSelect.value,
+                limite: limiteSelect.value,
+                encargado: encargadoSelect.value,
+                mes: mesSelect.value,
+                anio: anioSelect ? anioSelect.value : ''
             };
 
             // Mostrar indicador de carga
             Swal.fire({
                 title: 'Cargando...',
+                text: 'Por favor espere',
                 allowOutsideClick: false,
-                didOpen: () => {
+                showConfirmButton: false,
+                willOpen: () => {
                     Swal.showLoading();
                 }
             });
@@ -520,29 +534,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         }
     }
 
-    // Función para limpiar filtros
-    function limpiarFiltros() {
-        document.getElementById('ordenRegistros').value = 'DESC';
-        document.getElementById('limiteRegistros').value = '30';
-        document.getElementById('filtroEncargado').value = '';
-        document.getElementById('filtroMes').value = '';
-        document.getElementById('filtroAnio').value = new Date().getFullYear().toString();
-        actualizarTabla();
-    }
-
-    // Event listeners
-    document.addEventListener('DOMContentLoaded', function() {
-        actualizarTabla();
-        
-        // Agregar event listeners para los filtros
-        document.querySelectorAll('.filtro-select').forEach(select => {
-            select.addEventListener('change', actualizarTabla);
-        });
-
-        // Event listener para el botón de limpiar
-        document.getElementById('limpiarFiltros').addEventListener('click', limpiarFiltros);
-    });
-
     // Modificar el event listener del filtro de mes
     document.getElementById('filtroMes').addEventListener('change', function() {
         const mesSelect = document.getElementById('filtroMes');
@@ -554,6 +545,65 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             anioSelect.value = anio;
         }
         
+        actualizarTabla();
+    });
+
+    // Función para limpiar filtros
+    function limpiarFiltros() {
+        // Verificar que los elementos existan antes de modificarlos
+        const elementos = {
+            'ordenRegistros': 'DESC',
+            'limiteRegistros': '30',
+            'filtroEncargado': '',
+            'filtroMes': ''
+        };
+
+        for (const [id, valor] of Object.entries(elementos)) {
+            const elemento = document.getElementById(id);
+            if (elemento) {
+                elemento.value = valor;
+            }
+        }
+
+        const anioSelect = document.getElementById('filtroAnio');
+        if (anioSelect) {
+            anioSelect.value = new Date().getFullYear().toString();
+        }
+
+        actualizarTabla();
+    }
+
+    // Event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+        // Verificar que los elementos existan antes de agregar los event listeners
+        const selects = document.querySelectorAll('.filtro-select');
+        if (selects) {
+            selects.forEach(select => {
+                select.addEventListener('change', actualizarTabla);
+            });
+        }
+
+        const btnLimpiar = document.getElementById('limpiarFiltros');
+        if (btnLimpiar) {
+            btnLimpiar.addEventListener('click', limpiarFiltros);
+        }
+
+        const mesSelect = document.getElementById('filtroMes');
+        if (mesSelect) {
+            mesSelect.addEventListener('change', function() {
+                const anioSelect = document.getElementById('filtroAnio');
+                if (mesSelect.value && anioSelect) {
+                    const selectedOption = mesSelect.options[mesSelect.selectedIndex];
+                    const anio = selectedOption.getAttribute('data-anio');
+                    if (anio) {
+                        anioSelect.value = anio;
+                    }
+                }
+                actualizarTabla();
+            });
+        }
+
+        // Inicializar tabla
         actualizarTabla();
     });
 
