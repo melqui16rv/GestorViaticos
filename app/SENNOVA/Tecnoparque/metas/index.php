@@ -35,7 +35,7 @@ requireRole(['4', '5', '6']);
 /* Contenedor principal */
 .dashboard-container {
     padding: 2rem;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
     background: #f8fafc;
     border-radius: 12px;
@@ -324,7 +324,7 @@ requireRole(['4', '5', '6']);
 }
 .dashboard-container {
     padding: 2rem;
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 .stats-card {
