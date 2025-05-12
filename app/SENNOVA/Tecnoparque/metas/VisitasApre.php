@@ -129,11 +129,13 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </div>
     </div>
 
+    <!-- Se elimina la gráfica de distribución de nodos -->
+    <!-- Se agrega la gráfica de Ranking de Encargados -->
     <div class="chart-container" style="height: 400px;">
-        <h2>Distribución de Visitas por Nodo</h2>
-        <canvas id="nodoChart"></canvas>
+        <h2>Ranking de Encargados</h2>
+        <canvas id="rankingChart"></canvas>
     </div>
-
+    
     <div class="chart-container" style="height: 400px;">
         <h2>Visitas por Semana</h2>
         <canvas id="semanalChart"></canvas>
@@ -208,35 +210,32 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         document.getElementById('toggleFormButtonText').textContent = 'Agregar Visita';
     }
 
-    // Gráfico: Distribución de Visitas por Nodo (Pie Chart)
-    const ctxNodo = document.getElementById('nodoChart').getContext('2d');
-    new Chart(ctxNodo, {
-        type: 'pie',
+    // Se elimina el bloque de código para la gráfica de nodos
+
+    // Nueva Gráfica: Ranking de Encargados (Bar Chart)
+    const ctxRanking = document.getElementById('rankingChart').getContext('2d');
+    new Chart(ctxRanking, {
+        type: 'bar',
         data: {
-            labels: <?php echo json_encode(array_keys($visitasPorNodo)); ?>,
+            labels: <?php echo json_encode($indicadores['encargados']); ?>,
             datasets: [{
-                data: <?php echo json_encode(array_values($visitasPorNodo)); ?>,
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
+                label: 'Número de Asistentes',
+                data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1
             }]
         },
-        options: { responsive: true, maintainAspectRatio: false }
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
     });
 
-    // Nueva Gráfica: Visitas por Semana (Line Chart)
+    // Gráfica: Visitas por Semana (Line Chart)
     const ctxSemanal = document.getElementById('semanalChart').getContext('2d');
     new Chart(ctxSemanal, {
         type: 'line',
