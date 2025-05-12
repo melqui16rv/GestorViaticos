@@ -13,7 +13,7 @@
 .chart-container {
     margin: 20px 0;
     height: 400px;
-    overflow: hidden; // Se quita el scroll
+    overflow: hidden;
 }
 .chart-container canvas {
     height: 100% !important;
@@ -102,11 +102,10 @@
 .tabla {
     width: 100%;
     border-collapse: collapse;
-    border: 1px solid #ddd;
     overflow: hidden;
 }
 .tabla thead th {
-    background-color: #f0f0f0;
+    background-color: #ffffff;
     padding: 12px;
     text-align: left;
     border-bottom: 2px solid #ddd;
@@ -229,7 +228,7 @@
     width: 100%;
     border-collapse: collapse;
     background: #fff;
-    border-radius: 12px;
+    border-top-left-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
@@ -377,7 +376,7 @@
 /* Ajustes para la tabla */
 .tabla th {
     background: #2563eb;
-    color: white;
+    color: #617992;
     padding: 1rem;
     font-weight: 600;
 }
