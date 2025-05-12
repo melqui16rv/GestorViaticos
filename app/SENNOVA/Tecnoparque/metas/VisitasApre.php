@@ -295,7 +295,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
     <!-- Nueva gráfica: Visitas por Encargado -->
     <div class="chart-container" style="height: 400px;">
-        <h2>Visitas realizadas por Encargado</h2>
+        <h2>Visitas realizadas X Encargado</h2>
         <canvas id="visitasPorEncargadoChart"></canvas>
     </div>
     
