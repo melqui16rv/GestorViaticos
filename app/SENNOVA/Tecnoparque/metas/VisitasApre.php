@@ -138,7 +138,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </div>
     </form>
     
-    <div class="container mx-auto px-4 py-8">
+    <div class="container mx-auto px-4" style="margin-top:20px;">
         <div class="bg-white rounded-lg shadow-md mb-6">
             <div class="p-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Filtros de Búsqueda</h2>
