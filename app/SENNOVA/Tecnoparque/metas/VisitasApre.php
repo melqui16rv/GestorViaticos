@@ -31,26 +31,27 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <h1 class="titulo">Gestión de Visitas de Aprendices</h1>
 
 <div class="dashboard-container">
-    <button id="toggleFormButton" class="btn btn-primary">
+    <button id="toggleFormButtonVisitas" class="btn btn-primary">
         <i class="fas fa-plus"></i> Agregar Visita
     </button>
 
-    <form id="formVisitas" method="POST" class="formulario" style="display: none;">
-        <input type="hidden" name="action" id="action" value="create">
-        <input type="hidden" name="id_visita" id="id_visita"> <div class="form-group">
-            <label for="encargado">Encargado:</label>
-            <input type="text" id="encargado" name="encargado" required>
+    <form id="formVisitasApre" method="POST" class="formulario" style="display: none;">
+        <input type="hidden" name="action" id="actionVisitas" value="create">
+        <input type="hidden" name="id_visita" id="id_visitaVisitas">
+        <div class="form-group">
+            <label for="encargadoVisitas">Encargado:</label>
+            <input type="text" id="encargadoVisitas" name="encargado" required>
         </div>
         <div class="form-group">
-            <label for="numAsistentes">Número de Asistentes:</label>
-            <input type="number" id="numAsistentes" name="numAsistentes" required>
+            <label for="numAsistentesVisitas">Número de Asistentes:</label>
+            <input type="number" id="numAsistentesVisitas" name="numAsistentes" required>
         </div>
         <div class="form-group">
-            <label for="fechaCharla">Fecha de la Charla:</label>
-            <input type="datetime-local" id="fechaCharla" name="fechaCharla" required>
+            <label for="fechaCharlaVisitas">Fecha de la Charla:</label>
+            <input type="datetime-local" id="fechaCharlaVisitas" name="fechaCharla" required>
         </div>
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <button type="reset" class="btn btn-secondary" onclick="resetForm()">Cancelar</button>
+        <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
     </form>
 
     <div class="indicadores">
@@ -70,7 +71,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
     <div class="chart-container">
         <h2>Impacto de las Charlas</h2>
-        <canvas id="impactoChart"></canvas>
+        <canvas id="impactoChartVisitas"></canvas>
     </div>
 
     <table class="tabla">
@@ -108,32 +109,31 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Mostrar/ocultar formulario
-    document.getElementById('toggleFormButton').addEventListener('click', function() {
-        const form = document.getElementById('formVisitas');
+    document.getElementById('toggleFormButtonVisitas').addEventListener('click', function() {
+        const form = document.getElementById('formVisitasApre');
         form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
     });
 
     // Editar visita
     function editVisita(visita) {
-        document.getElementById('id_visita').value = visita.id_visita;
-        document.getElementById('encargado').value = visita.encargado;
-        document.getElementById('numAsistentes').value = visita.numAsistentes;
-        document.getElementById('fechaCharla').value = visita.fechaCharla.replace(' ', 'T');
-        document.getElementById('action').value = 'update';
-        document.getElementById('formVisitas').style.display = 'block';
+        document.getElementById('id_visitaVisitas').value = visita.id_visita;
+        document.getElementById('encargadoVisitas').value = visita.encargado;
+        document.getElementById('numAsistentesVisitas').value = visita.numAsistentes;
+        document.getElementById('fechaCharlaVisitas').value = visita.fechaCharla.replace(' ', 'T');
+        document.getElementById('actionVisitas').value = 'update';
+        document.getElementById('formVisitasApre').style.display = 'block';
     }
 
-    function resetForm() {
-        document.getElementById('formVisitas').reset();
-        document.getElementById('id_visita').value = ''; // Asegurar que el ID se limpia
-        document.getElementById('action').value = 'create'; // Restablecer la acción a 'create'
-        document.getElementById('formVisitas').style.display = 'none'; // Ocultar el formulario después de resetear
+    function resetFormVisitas() {
+        document.getElementById('formVisitasApre').reset();
+        document.getElementById('id_visitaVisitas').value = '';
+        document.getElementById('actionVisitas').value = 'create';
+        document.getElementById('formVisitasApre').style.display = 'none';
     }
 
-    
     // Gráfico de impacto
-    const ctx = document.getElementById('impactoChart').getContext('2d');
-    new Chart(ctx, {
+    const ctxVisitas = document.getElementById('impactoChartVisitas').getContext('2d');
+    new Chart(ctxVisitas, {
         type: 'bar',
         data: {
             labels: <?php echo json_encode($indicadores['encargados']); ?>,
@@ -173,7 +173,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     margin: 20px 0;
     height: 400px;
 }
-#formVisitas {
+#formVisitasApre {
     display: none;
     margin-bottom: 20px;
     padding: 20px;
