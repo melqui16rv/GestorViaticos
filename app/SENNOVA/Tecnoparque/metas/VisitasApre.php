@@ -115,7 +115,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     // Mostrar/ocultar formulario
     document.getElementById('toggleFormButton').addEventListener('click', function() {
         const form = document.getElementById('formVisitas');
-        form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
     });
 
     // Editar visita
@@ -160,7 +160,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     });
 </script>
 <style>
-/* ...existing styles... */
 .indicadores {
     display: flex;
     justify-content: space-around;
