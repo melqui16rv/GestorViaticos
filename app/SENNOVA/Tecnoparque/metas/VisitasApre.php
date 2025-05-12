@@ -126,12 +126,18 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         <td style="width: 18%;"><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
                         <td style="width: 32%;"><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
                         <td style="width: 20%;">
-                            <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
-                            <form method="POST" style="display:inline;">
-                                <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
+                            <div class="action-buttons">
+                                <button class="btn-icon edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <form method="POST" style="display:inline;">
+                                    <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
+                                    <input type="hidden" name="action" value="delete">
+                                    <button type="submit" class="btn-icon delete" title="Eliminar">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                     <?php endforeach; ?>
@@ -504,7 +510,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 .tabla {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 2rem;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
@@ -572,44 +577,125 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 .tabla-outer {
     width: 100%;
     margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 .tabla-outer > table.tabla {
     table-layout: fixed;
     width: 100%;
     margin-bottom: 0;
     border-bottom: none;
 }
-.tabla-outer th {
-    position: sticky;
-    top: 0;
-    background: #2563eb;
-    color: ##7ca5be;
-    z-index: 2;
-    border-bottom: 2px solid #ddd;
-    font-weight: bold;
+
+.tabla-outer > table.tabla thead th:first-child {
+    border-top-left-radius: 12px;
 }
+
+.tabla-outer > table.tabla thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
 .tabla-scroll {
     max-height: 400px;
     overflow-y: auto;
     width: 100%;
 }
+
 .tabla-scroll table.tabla {
-    table-layout: fixed;
-    width: 100%;
     border-top: none;
 }
-.tabla-scroll td {
-    background: #fff;
-    border-bottom: 1px solid #eee;
+
+.tabla-scroll tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+.tabla-scroll tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+/* Estilos para los botones de acción */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+}
+
+.btn-icon.edit {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-icon.edit:hover {
+    background-color: #2563eb;
+}
+
+.btn-icon.delete {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-icon.delete:hover {
+    background-color: #dc2626;
+}
+
+/* Ajustes para la tabla */
+.tabla th {
+    background: #2563eb;
+    color: white;
     padding: 1rem;
-    text-align: left;
-    word-break: break-word;
+    font-weight: 600;
 }
-.tabla-scroll tr:nth-child(even) td {
-    background-color: #f9f9f9;
+
+.tabla td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
 }
-.tabla-scroll tr:hover td {
-    background-color: #f0f0f0;
+
+.tabla tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.tabla tbody tr {
+    transition: background-color 0.2s;
+}
+
+/* Ajuste del scroll */
+.tabla-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tabla-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 </style>
+
+<!-- Asegúrate de que Font Awesome esté cargado correctamente -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
