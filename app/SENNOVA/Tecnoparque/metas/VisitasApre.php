@@ -166,25 +166,83 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
                     9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
                 ];
-                foreach($meses as $num => $nombre) {
-                    echo "<option value='$num'>$nombre</option>";
+                $mesesUnicos = $metas->obtenerMesesUnicos();
+                $anioActual = null;
+                
+                foreach($mesesUnicos as $fecha) {
+                    if($anioActual !== $fecha['anio']) {
+                        if($anioActual !== null) {
+                            echo "</optgroup>";
+                        }
+                        echo "<optgroup label='" . $fecha['anio'] . "'>";
+                        $anioActual = $fecha['anio'];
+                    }
+                    echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
+                         . $meses[$fecha['mes']] 
+                         . "</option>";
+                }
+                if($anioActual !== null) {
+                    echo "</optgroup>";
                 }
                 ?>
             </select>
         </div>
         
-        <div class="filtro-grupo">
+        <div class="filtro-grupo" style="display: none;">
             <label for="filtroAnio">Año:</label>
             <select id="filtroAnio" class="filtro-select">
-                <?php 
-                $anioActual = date('Y');
-                for($i = $anioActual; $i >= $anioActual - 2; $i--) {
-                    echo "<option value='$i'>$i</option>";
-                }
-                ?>
+                <?php foreach(array_unique(array_column($mesesUnicos, 'anio')) as $anio): ?>
+                    <option value="<?php echo $anio; ?>"><?php echo $anio; ?></option>
+                <?php endforeach; ?>
             </select>
         </div>
+        
+        <button type="button" id="limpiarFiltros" class="btn-limpiar">
+            <i class="fas fa-undo"></i> Limpiar filtros
+        </button>
     </div>
+
+    <style>
+.filtros-container {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filtro-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+.btn-limpiar {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+}
+
+.btn-limpiar:hover {
+    background-color: #5a6268;
+}
+</style>
 
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
@@ -272,31 +330,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     
 </div>
     
-
-<style>
-.filtros-container {
-    display: flex;
-    gap: 20px;
-    margin: 20px 0;
-    flex-wrap: wrap;
-    background: #f5f5f5;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.filtro-grupo {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.filtro-select {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    min-width: 150px;
-}
-</style>
 
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -432,27 +465,39 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     });
 
     // Función para actualizar la tabla según los filtros
-    function actualizarTabla() {
-        const filtros = {
-            orden: document.getElementById('ordenRegistros').value,
-            limite: document.getElementById('limiteRegistros').value,
-            encargado: document.getElementById('filtroEncargado').value,
-            mes: document.getElementById('filtroMes').value,
-            anio: document.getElementById('filtroAnio').value
-        };
+    async function actualizarTabla() {
+        try {
+            const filtros = {
+                orden: document.getElementById('ordenRegistros').value,
+                limite: document.getElementById('limiteRegistros').value,
+                encargado: document.getElementById('filtroEncargado').value,
+                mes: document.getElementById('filtroMes').value,
+                anio: document.getElementById('filtroAnio').value
+            };
 
-        fetch('obtener_visitas.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(filtros)
-        })
-        .then(response => response.json())
-        .then(data => {
+            const response = await fetch('obtener_visitas.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filtros)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor');
+            }
+
+            const data = await response.json();
             const tbody = document.querySelector('.tabla tbody');
             tbody.innerHTML = '';
             
+            if (data.length === 0) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td colspan="5" style="text-align: center;">No se encontraron registros</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
             data.forEach(visita => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
@@ -477,16 +522,66 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 `;
                 tbody.appendChild(tr);
             });
-        });
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Ocurrió un error al actualizar la tabla');
+        }
     }
 
-    // Agregar event listeners para los filtros
-    document.querySelectorAll('.filtro-select').forEach(select => {
-        select.addEventListener('change', actualizarTabla);
-    });
+    // Función para limpiar filtros
+    function limpiarFiltros() {
+        document.getElementById('ordenRegistros').value = 'DESC';
+        document.getElementById('limiteRegistros').value = '30';
+        document.getElementById('filtroEncargado').value = '';
+        document.getElementById('filtroMes').value = '';
+        document.getElementById('filtroAnio').value = new Date().getFullYear().toString();
+        actualizarTabla();
+    }
 
-    // Inicializar tabla con valores por defecto
+    // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
         actualizarTabla();
+        
+        // Agregar event listeners para los filtros
+        document.querySelectorAll('.filtro-select').forEach(select => {
+            select.addEventListener('change', actualizarTabla);
+        });
+
+        // Event listener para el botón de limpiar
+        document.getElementById('limpiarFiltros').addEventListener('click', limpiarFiltros);
     });
+
+    // Modificar el event listener del filtro de mes
+    document.getElementById('filtroMes').addEventListener('change', function() {
+        const mesSelect = document.getElementById('filtroMes');
+        const anioSelect = document.getElementById('filtroAnio');
+        
+        if(mesSelect.value) {
+            const selectedOption = mesSelect.options[mesSelect.selectedIndex];
+            const anio = selectedOption.getAttribute('data-anio');
+            anioSelect.value = anio;
+        }
+        
+        actualizarTabla();
+    });
+
+    // Función auxiliar para formatear fecha
+    function formatearFecha(fecha) {
+        const meses = [
+            'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+            'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+        ];
+        
+        const date = new Date(fecha);
+        const dia = date.getDate();
+        const mes = meses[date.getMonth()];
+        const anio = date.getFullYear();
+        const hora = date.toLocaleTimeString('es-ES', {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        }).toLowerCase();
+        
+        return `${dia} de ${mes} ${anio}<br>${hora}`;
+    }
 </script>

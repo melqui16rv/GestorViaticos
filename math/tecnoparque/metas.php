@@ -40,8 +40,8 @@ class metas_tecnoparque extends Conexion{
         // Filtro por mes y año
         if (!empty($filtros['mes']) && !empty($filtros['anio'])) {
             $sql .= " AND MONTH(fechaCharla) = :mes AND YEAR(fechaCharla) = :anio";
-            $params[':mes'] = $filtros['mes'];
-            $params[':anio'] = $filtros['anio'];
+            $params[':mes'] = (int)$filtros['mes'];
+            $params[':anio'] = (int)$filtros['anio'];
         }
 
         // Ordenamiento
@@ -50,13 +50,24 @@ class metas_tecnoparque extends Conexion{
         // Límite de registros
         if (!empty($filtros['limite']) && is_numeric($filtros['limite'])) {
             $sql .= " LIMIT :limite";
-            $params[':limite'] = (int)$filtros['limite'];
         }
 
         $stmt = $this->conexion->prepare($sql);
+
+        // Bind params
         foreach ($params as $param => $value) {
-            $stmt->bindValue($param, $value);
+            if (is_int($value)) {
+                $stmt->bindValue($param, $value, PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue($param, $value, PDO::PARAM_STR);
+            }
         }
+
+        // Bind limit separately to avoid issues with LIMIT clause
+        if (!empty($filtros['limite']) && is_numeric($filtros['limite'])) {
+            $stmt->bindValue(':limite', (int)$filtros['limite'], PDO::PARAM_INT);
+        }
+
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -335,6 +346,17 @@ class metas_tecnoparque extends Conexion{
             'encargados' => array_column($encargadosData, 'encargado'),
             'asistentes_por_encargado' => array_column($encargadosData, 'total_asistentes')
         ];
+    }
+
+    public function obtenerMesesUnicos() {
+        $sql = "SELECT DISTINCT 
+                MONTH(fechaCharla) as mes, 
+                YEAR(fechaCharla) as anio 
+                FROM listadosvisitasApre 
+                ORDER BY anio DESC, mes DESC";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }
