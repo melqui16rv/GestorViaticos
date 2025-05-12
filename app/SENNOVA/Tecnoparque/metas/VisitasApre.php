@@ -4,6 +4,18 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
 $metas = new metas_tecnoparque();
 
+// Agregar esta función auxiliar después de los requires
+function formatearFecha($fecha) {
+    setlocale(LC_TIME, 'es_ES.UTF-8', 'Spanish_Spain.1252');
+    $timestamp = strtotime($fecha);
+    $dia = date('j', $timestamp);
+    $mes = strftime('%B', $timestamp);
+    $anio = date('Y', $timestamp);
+    $hora = date('g:i a', $timestamp);
+    
+    return $dia . ' de ' . $mes . ' ' . $anio . '<br>' . $hora;
+}
+
 // Calcular indicadores adicionales a partir de $visitas
 $visitas = $metas->obtenerVisitasApre();
 $indicadores = $metas->obtenerIndicadoresVisitas();
@@ -127,7 +139,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         <td style="width: 8%;"><?php echo htmlspecialchars($visita['id_visita']); ?></td>
                         <td style="width: 22%;"><?php echo htmlspecialchars($visita['encargado']); ?></td>
                         <td style="width: 18%;"><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
-                        <td style="width: 32%;"><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
+                        <td style="width: 32%;"><?php echo formatearFecha($visita['fechaCharla']); ?></td>
                         <td style="width: 20%;">
                             <div class="action-buttons">
                                 <button class="btn-icon edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)" title="Editar">
