@@ -31,15 +31,13 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <h1 class="titulo">Gestión de Visitas de Aprendices</h1>
 
 <div class="dashboard-container">
-    <!-- Botón para mostrar/ocultar formulario -->
     <button id="toggleFormButton" class="btn btn-primary">
         <i class="fas fa-plus"></i> Agregar Visita
     </button>
 
-    <!-- Formulario para agregar/editar visitas -->
     <form id="formVisitas" method="POST" class="formulario" style="display: none;">
         <input type="hidden" name="action" id="action" value="create">
-        <div class="form-group">
+        <input type="hidden" name="id_visita" id="id_visita"> <div class="form-group">
             <label for="encargado">Encargado:</label>
             <input type="text" id="encargado" name="encargado" required>
         </div>
@@ -55,7 +53,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         <button type="reset" class="btn btn-secondary" onclick="resetForm()">Cancelar</button>
     </form>
 
-    <!-- Indicadores -->
     <div class="indicadores">
         <div class="indicador">
             <h3>Total de Asistentes</h3>
@@ -71,13 +68,11 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </div>
     </div>
 
-    <!-- Gráfico -->
     <div class="chart-container">
         <h2>Impacto de las Charlas</h2>
         <canvas id="impactoChart"></canvas>
     </div>
 
-    <!-- Tabla para listar visitas -->
     <table class="tabla">
         <thead>
             <tr>
@@ -130,8 +125,9 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
     function resetForm() {
         document.getElementById('formVisitas').reset();
-        document.getElementById('id_visita').value = '';
-        document.getElementById('action').value = 'create';
+        document.getElementById('id_visita').value = ''; // Asegurar que el ID se limpia
+        document.getElementById('action').value = 'create'; // Restablecer la acción a 'create'
+        document.getElementById('formVisitas').style.display = 'none'; // Ocultar el formulario después de resetear
     }
 
     
@@ -177,4 +173,97 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     margin: 20px 0;
     height: 400px;
 }
+#formVisitas {
+    display: none;
+    margin-bottom: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+.form-group {
+    margin-bottom: 10px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+.btn-secondary {
+    background-color: #e9ecef;
+    color: #212529;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.btn-secondary:hover {
+    background-color: #d0d3d6;
+}
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+.btn-edit {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.btn-edit:hover {
+    background-color: #218838;
+}
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.tabla thead th {
+    background-color: #f0f0f0;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+.tabla tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+.tabla tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.tabla tbody tr:hover {
+    background-color: #f0f0f0;
+}
 </style>
+
