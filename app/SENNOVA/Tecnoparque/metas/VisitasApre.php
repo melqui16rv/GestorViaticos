@@ -210,53 +210,60 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         document.getElementById('toggleFormButtonText').textContent = 'Agregar Visita';
     }
 
-    // Se elimina el bloque de código para la gráfica de nodos
+    // Declarar variables globales para evitar re-instanciación múltiple de gráficos
+    let rankingChartInstance = null;
+    let semanalChartInstance = null;
 
-    // Nueva Gráfica: Ranking de Encargados (Bar Chart)
-    const ctxRanking = document.getElementById('rankingChart').getContext('2d');
-    new Chart(ctxRanking, {
-        type: 'bar',
-        data: {
-            labels: <?php echo json_encode($indicadores['encargados']); ?>,
-            datasets: [{
-                label: 'Número de Asistentes',
-                data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true }
+    function initCharts() {
+        // Ranking de Encargados
+        const ctxRanking = document.getElementById('rankingChart').getContext('2d');
+        if(rankingChartInstance){ rankingChartInstance.destroy(); }
+        rankingChartInstance = new Chart(ctxRanking, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($indicadores['encargados']); ?>,
+                datasets: [{
+                    label: 'Número de Asistentes',
+                    data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } }
             }
-        }
-    });
+        });
 
-    // Gráfica: Visitas por Semana (Line Chart)
-    const ctxSemanal = document.getElementById('semanalChart').getContext('2d');
-    new Chart(ctxSemanal, {
-        type: 'line',
-        data: {
-            labels: <?php echo json_encode($labelsSemanales); ?>,
-            datasets: [{
-                label: 'Visitas',
-                data: <?php echo json_encode($dataSemanales); ?>,
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                fill: true,
-                tension: 0.3,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: { y: { beginAtZero: true } }
-        }
-    });
+        // Visitas por Semana
+        const ctxSemanal = document.getElementById('semanalChart').getContext('2d');
+        if(semanalChartInstance){ semanalChartInstance.destroy(); }
+        semanalChartInstance = new Chart(ctxSemanal, {
+            type: 'line',
+            data: {
+                labels: <?php echo json_encode($labelsSemanales); ?>,
+                datasets: [{
+                    label: 'Visitas',
+                    data: <?php echo json_encode($dataSemanales); ?>,
+                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    fill: true,
+                    tension: 0.3,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+    }
+
+    // Inicializar los gráficos una sola vez cuando la ventana esté completamente cargada
+    window.addEventListener('load', initCharts);
 </script>
 <style>
 .indicadores {
