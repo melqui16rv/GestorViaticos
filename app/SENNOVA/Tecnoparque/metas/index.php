@@ -324,7 +324,7 @@ requireRole(['4', '5', '6']);
 }
 .dashboard-container {
     padding: 2rem;
-    max-width: 1200px;
+    max-width: 800px;
     margin: 0 auto;
 }
 .stats-card {
