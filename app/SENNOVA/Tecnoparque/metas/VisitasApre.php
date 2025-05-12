@@ -36,7 +36,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            Agregar Visita
+            <span id="toggleFormButtonText">Agregar Visita</span>
         </button>
     </a>
 
@@ -55,8 +55,10 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <label for="fechaCharlaVisitas">Fecha de la Charla:</label>
             <input type="datetime-local" id="fechaCharlaVisitas" name="fechaCharla" required>
         </div>
-        <button type="submit" class="btn btn-primary">Guardar</button>
-        <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
+        </div>
     </form>
 
     <div class="indicadores">
@@ -113,10 +115,16 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    // Mostrar/ocultar formulario
+    // Mostrar/ocultar formulario y cambiar texto del botón
     document.getElementById('toggleFormButtonVisitas').addEventListener('click', function() {
         const form = document.getElementById('formVisitasApre');
-        form.style.display = form.style.display === 'none' || form.style.display === '' ? 'block' : 'none';
+        const buttonText = document.getElementById('toggleFormButtonText');
+        if (form.style.display === 'none' || form.style.display === '') {
+            form.style.display = 'block';
+            buttonText.textContent = 'Agregar Visita';
+        } else {
+            resetFormVisitas();
+        }
     });
 
     // Editar visita
@@ -127,6 +135,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         document.getElementById('fechaCharlaVisitas').value = visita.fechaCharla.replace(' ', 'T');
         document.getElementById('actionVisitas').value = 'update';
         document.getElementById('formVisitasApre').style.display = 'block';
+        document.getElementById('toggleFormButtonText').textContent = 'Editar Visita';
     }
 
     function resetFormVisitas() {
@@ -134,6 +143,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         document.getElementById('id_visitaVisitas').value = '';
         document.getElementById('actionVisitas').value = 'create';
         document.getElementById('formVisitasApre').style.display = 'none';
+        document.getElementById('toggleFormButtonText').textContent = 'Agregar Visita';
     }
 
     // Gráfico de impacto
@@ -180,47 +190,55 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 }
 #formVisitasApre {
     display: none;
-    margin-bottom: 20px;
+    margin-top: 20px;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: #f5f5f5;
-}
-.form-group {
-    margin-bottom: 10px;
-}
-.form-group label {
-    display: block;
-    margin-bottom: 5px;
-}
-.form-group input {
-    width: 100%;
-    padding: 8px 10px;
     border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+#formVisitasApre .form-group {
+    margin-bottom: 15px;
+}
+#formVisitasApre .form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #374151;
+}
+#formVisitasApre .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
     border-radius: 4px;
+    font-size: 1rem;
     box-sizing: border-box;
 }
-.btn-primary {
+#formVisitasApre .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#formVisitasApre .btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#formVisitasApre .btn-primary {
     background-color: #007bff;
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
 }
-.btn-primary:hover {
+#formVisitasApre .btn-primary:hover {
     background-color: #0056b3;
 }
-.btn-secondary {
+#formVisitasApre .btn-secondary {
     background-color: #e9ecef;
     color: #212529;
-    padding: 10px 15px;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 10px;
 }
-.btn-secondary:hover {
+#formVisitasApre .btn-secondary:hover {
     background-color: #d0d3d6;
 }
 .btn-danger {
