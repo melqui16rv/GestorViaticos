@@ -108,8 +108,19 @@ class metas_tecnoparque extends Conexion{
     public function insertarProyectosExt() {
 
     }
-    public function insertarVisitasApre() {
-
+    public function insertarVisitasApre($encargado, $numAsistentes, $fechaCharla) {
+        $sql = "INSERT INTO listadosvisitasApre (encargado, numAsistentes, fechaCharla) 
+                VALUES (:encargado, :numAsistentes, :fechaCharla)";
+        try {
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+            $stmt->bindParam(':numAsistentes', $numAsistentes, PDO::PARAM_INT);
+            $stmt->bindParam(':fechaCharla', $fechaCharla, PDO::PARAM_STR);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            error_log("Error al insertar visita: " . $e->getMessage());
+            return false;
+        }
     }
 
     // delete
@@ -125,7 +136,7 @@ class metas_tecnoparque extends Conexion{
     public function eliminarProyectosExt() {
 
     }
-    public function eliminarVisitasApre() {
+    public function eliminarVisitasApre($id_visita) {
         $sql = "DELETE FROM listadosvisitasApre WHERE id_visita = :id_visita";
         
         try {
