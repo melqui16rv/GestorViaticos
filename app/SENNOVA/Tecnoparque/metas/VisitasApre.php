@@ -66,6 +66,18 @@ foreach($visitas as $v) {
 $labelsSemanales = array_keys($semanas);
 $dataSemanales = array_map(fn($d) => $d['count'], $semanas);
 
+// Calcular visitas por encargado para la nueva gráfica
+$visitasPorEncargado = [];
+foreach ($visitas as $v) {
+    $encargado = $v['encargado'];
+    if (!isset($visitasPorEncargado[$encargado])) {
+        $visitasPorEncargado[$encargado] = 0;
+    }
+    $visitasPorEncargado[$encargado]++;
+}
+$labelsVisitasEncargado = array_keys($visitasPorEncargado);
+$dataVisitasEncargado = array_values($visitasPorEncargado);
+
 // Manejo de acciones (crear, actualizar, eliminar)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
@@ -277,8 +289,14 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     
     <!-- Gráficas existentes -->
     <div class="chart-container" style="height: 400px;">
-        <h2>Ranking de Encargados</h2>
+        <h2>Nivel Impacto X Encargado</h2>
         <canvas id="rankingChart"></canvas>
+    </div>
+
+    <!-- Nueva gráfica: Visitas por Encargado -->
+    <div class="chart-container" style="height: 400px;">
+        <h2>Visitas realizadas por Encargado</h2>
+        <canvas id="visitasPorEncargadoChart"></canvas>
     </div>
     
     <div class="chart-container" style="height: 400px;">
@@ -331,6 +349,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     // Declarar variables globales para evitar re-instanciación múltiple de gráficos
     let rankingChartInstance = null;
     let semanalChartInstance = null;
+    let visitasPorEncargadoChartInstance = null; // Nueva variable para la gráfica
 
     function initCharts() {
         // Ranking de Encargados
@@ -345,6 +364,28 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
                     backgroundColor: 'rgba(75, 192, 192, 0.5)',
                     borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true } }
+            }
+        });
+
+        // Nueva gráfica: Visitas por Encargado
+        const ctxVisitasEncargado = document.getElementById('visitasPorEncargadoChart').getContext('2d');
+        if(visitasPorEncargadoChartInstance){ visitasPorEncargadoChartInstance.destroy(); }
+        visitasPorEncargadoChartInstance = new Chart(ctxVisitasEncargado, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($labelsVisitasEncargado); ?>,
+                datasets: [{
+                    label: 'Cantidad de Visitas',
+                    data: <?php echo json_encode($dataVisitasEncargado); ?>,
+                    backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                    borderColor: 'rgba(255, 159, 64, 1)',
                     borderWidth: 1
                 }]
             },
