@@ -124,125 +124,76 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </div>
     </form>
     
-    <div class="filtros-container">
-        <div class="filtro-grupo">
-            <label for="ordenRegistros">Orden:</label>
-            <select id="ordenRegistros" class="filtro-select">
-                <option value="DESC">Más recientes primero</option>
-                <option value="ASC">Más antiguos primero</option>
-            </select>
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-md mb-6">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Filtros de Búsqueda</h2>
+                <form id="filtroForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label for="ordenRegistros" class="block text-gray-700 text-sm font-bold mb-2">Orden</label>
+                            <select id="ordenRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="DESC">Más recientes primero</option>
+                                <option value="ASC">Más antiguos primero</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="limiteRegistros" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
+                            <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="30">30 registros</option>
+                                <option value="50">50 registros</option>
+                                <option value="70">70 registros</option>
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="filtroEncargado" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
+                            <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="">Todos</option>
+                                <?php 
+                                $encargados = $metas->obtenerEncargadosUnicos();
+                                foreach($encargados as $encargado) {
+                                    echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="filtroMes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
+                            <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                <option value="">Todos</option>
+                                <?php 
+                                $mesesUnicos = $metas->obtenerMesesUnicos();
+                                $anioActual = null;
+                                
+                                foreach($mesesUnicos as $fecha) {
+                                    if($anioActual !== $fecha['anio']) {
+                                        if($anioActual !== null) echo "</optgroup>";
+                                        echo "<optgroup label='" . $fecha['anio'] . "'>";
+                                        $anioActual = $fecha['anio'];
+                                    }
+                                    echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
+                                         . $meses[$fecha['mes']] 
+                                         . "</option>";
+                                }
+                                if($anioActual !== null) echo "</optgroup>";
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-2 mt-4">
+                        <button type="button" id="limpiarFiltros" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            <i class="fas fa-undo mr-2"></i>Limpiar filtros
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
-        
-        <div class="filtro-grupo">
-            <label for="limiteRegistros">Mostrar:</label>
-            <select id="limiteRegistros" class="filtro-select">
-                <option value="30">30 registros</option>
-                <option value="50">50 registros</option>
-                <option value="70">70 registros</option>
-                <option value="">Todos</option>
-            </select>
-        </div>
-        
-        <div class="filtro-grupo">
-            <label for="filtroEncargado">Encargado:</label>
-            <select id="filtroEncargado" class="filtro-select">
-                <option value="">Todos</option>
-                <?php 
-                $encargados = $metas->obtenerEncargadosUnicos();
-                foreach($encargados as $encargado) {
-                    echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
-                }
-                ?>
-            </select>
-        </div>
-        
-        <div class="filtro-grupo">
-            <label for="filtroMes">Mes:</label>
-            <select id="filtroMes" class="filtro-select">
-                <option value="">Todos</option>
-                <?php 
-                $meses = [
-                    1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
-                    5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
-                    9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
-                ];
-                $mesesUnicos = $metas->obtenerMesesUnicos();
-                $anioActual = null;
-                
-                foreach($mesesUnicos as $fecha) {
-                    if($anioActual !== $fecha['anio']) {
-                        if($anioActual !== null) {
-                            echo "</optgroup>";
-                        }
-                        echo "<optgroup label='" . $fecha['anio'] . "'>";
-                        $anioActual = $fecha['anio'];
-                    }
-                    echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
-                         . $meses[$fecha['mes']] 
-                         . "</option>";
-                }
-                if($anioActual !== null) {
-                    echo "</optgroup>";
-                }
-                ?>
-            </select>
-        </div>
-        
-        <div class="filtro-grupo" style="display: none;">
-            <label for="filtroAnio">Año:</label>
-            <select id="filtroAnio" class="filtro-select">
-                <?php foreach(array_unique(array_column($mesesUnicos, 'anio')) as $anio): ?>
-                    <option value="<?php echo $anio; ?>"><?php echo $anio; ?></option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-        
-        <button type="button" id="limpiarFiltros" class="btn-limpiar">
-            <i class="fas fa-undo"></i> Limpiar filtros
-        </button>
     </div>
-
-    <style>
-.filtros-container {
-    display: flex;
-    gap: 20px;
-    margin: 20px 0;
-    flex-wrap: wrap;
-    background: #f5f5f5;
-    padding: 15px;
-    border-radius: 8px;
-}
-
-.filtro-grupo {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.filtro-select {
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    min-width: 150px;
-}
-
-.btn-limpiar {
-    background-color: #6c757d;
-    color: white;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-left: auto;
-}
-
-.btn-limpiar:hover {
-    background-color: #5a6268;
-}
-</style>
 
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
