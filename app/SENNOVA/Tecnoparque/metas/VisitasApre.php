@@ -144,37 +144,41 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
     </div>
     
-    <!-- Se envuelve la tabla en un contenedor que ofrece scroll con encabezados fijos -->
-    <div class="table-container">
+    <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
+    <div class="tabla-outer">
         <table class="tabla">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Encargado</th>
-                    <th>Número de Asistentes</th>
-                    <th>Fecha de la Charla</th>
-                    <th>Acciones</th>
+                    <th style="width: 8%;">ID</th>
+                    <th style="width: 22%;">Encargado</th>
+                    <th style="width: 18%;">Número de Asistentes</th>
+                    <th style="width: 32%;">Fecha de la Charla</th>
+                    <th style="width: 20%;">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-                <?php foreach ($visitas as $visita): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($visita['id_visita']); ?></td>
-                    <td><?php echo htmlspecialchars($visita['encargado']); ?></td>
-                    <td><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
-                    <td><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
-                    <td>
-                        <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
-                        <form method="POST" style="display:inline;">
-                            <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
-                            <input type="hidden" name="action" value="delete">
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
         </table>
+        <div class="tabla-scroll">
+            <table class="tabla">
+                <tbody>
+                    <?php foreach ($visitas as $visita): ?>
+                    <tr>
+                        <td style="width: 8%;"><?php echo htmlspecialchars($visita['id_visita']); ?></td>
+                        <td style="width: 22%;"><?php echo htmlspecialchars($visita['encargado']); ?></td>
+                        <td style="width: 18%;"><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
+                        <td style="width: 32%;"><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
+                        <td style="width: 20%;">
+                            <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
     
 </div>
@@ -564,6 +568,50 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 .table-container tbody td {
     padding: 12px;
     border-bottom: 1px solid #eee;
+}
+
+/* Nuevos estilos para tabla con encabezados fijos y scroll en el cuerpo */
+.tabla-outer {
+    width: 100%;
+    margin-top: 20px;
+}
+.tabla-outer > table.tabla {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.tabla-outer th {
+    position: sticky;
+    top: 0;
+    background: #2563eb;
+    color: #fff;
+    z-index: 2;
+    border-bottom: 2px solid #ddd;
+    font-weight: bold;
+}
+.tabla-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+.tabla-scroll table.tabla {
+    table-layout: fixed;
+    width: 100%;
+    border-top: none;
+}
+.tabla-scroll td {
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    padding: 1rem;
+    text-align: left;
+    word-break: break-word;
+}
+.tabla-scroll tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+.tabla-scroll tr:hover td {
+    background-color: #f0f0f0;
 }
 </style>
 
