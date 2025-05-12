@@ -27,6 +27,28 @@ foreach($visitas as $v) {
 }
 ksort($visitasTemporal);
 
+// Nuevo cálculo: visitas por semana (últimas 5 semanas)
+$monday = new DateTime("monday this week");
+$semanas = [];
+for ($i = 4; $i >= 0; $i--) {
+    $weekStart = clone $monday;
+    $weekStart->modify("-$i week");
+    $weekEnd = clone $weekStart;
+    $weekEnd->modify("+6 days");
+    $label = $weekStart->format('d M') . " - " . $weekEnd->format('d M');
+    $semanas[$label] = ['start' => $weekStart, 'end' => $weekEnd, 'count' => 0];
+}
+foreach($visitas as $v) {
+    $fecha = new DateTime($v['fechaCharla']);
+    foreach ($semanas as $label => &$datos) {
+        if ($fecha >= $datos['start'] && $fecha <= $datos['end']) {
+            $datos['count']++;
+        }
+    }
+}
+$labelsSemanales = array_keys($semanas);
+$dataSemanales = array_map(fn($d) => $d['count'], $semanas);
+
 // Manejo de acciones (crear, actualizar, eliminar)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
@@ -107,24 +129,18 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </div>
     </div>
 
-    <div class="chart-container">
-        <h2>Impacto de las Charlas</h2>
-        <canvas id="impactoChartVisitas"></canvas>
-    </div>
-
-    <div class="chart-container" style="height: 400px;">
-        <h2>Ranking de Encargados</h2>
-        <canvas id="encargadosChart"></canvas>
-    </div>
-
     <div class="chart-container" style="height: 400px;">
         <h2>Distribución de Visitas por Nodo</h2>
         <canvas id="nodoChart"></canvas>
     </div>
 
     <div class="chart-container" style="height: 400px;">
-        <h2>Tendencia de Visitas por Mes</h2>
-        <canvas id="temporalChart"></canvas>
+        <h2>Visitas por Semana</h2>
+        <canvas id="semanalChart"></canvas>
+    </div>
+
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
     </div>
 
     <table class="tabla">
@@ -192,54 +208,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         document.getElementById('toggleFormButtonText').textContent = 'Agregar Visita';
     }
 
-    // Gráfico de impacto
-    const ctxVisitas = document.getElementById('impactoChartVisitas').getContext('2d');
-    new Chart(ctxVisitas, {
-        type: 'bar',
-        data: {
-            labels: <?php echo json_encode($indicadores['encargados']); ?>,
-            datasets: [{
-                label: 'Número de Asistentes',
-                data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-
-    // Gráfico: Ranking de Encargados
-    const ctxEncargados = document.getElementById('encargadosChart').getContext('2d');
-    new Chart(ctxEncargados, {
-        type: 'bar',
-        data: {
-            labels: <?php echo json_encode($indicadores['encargados']); ?>,
-            datasets: [{
-                label: 'Número de Asistentes',
-                data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
-                backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-
     // Gráfico: Distribución de Visitas por Nodo (Pie Chart)
     const ctxNodo = document.getElementById('nodoChart').getContext('2d');
     new Chart(ctxNodo, {
@@ -268,17 +236,17 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         options: { responsive: true, maintainAspectRatio: false }
     });
 
-    // Gráfico: Serie Temporal de Visitas (Line Chart)
-    const ctxTemporal = document.getElementById('temporalChart').getContext('2d');
-    new Chart(ctxTemporal, {
+    // Nueva Gráfica: Visitas por Semana (Line Chart)
+    const ctxSemanal = document.getElementById('semanalChart').getContext('2d');
+    new Chart(ctxSemanal, {
         type: 'line',
         data: {
-            labels: <?php echo json_encode(array_keys($visitasTemporal)); ?>,
+            labels: <?php echo json_encode($labelsSemanales); ?>,
             datasets: [{
-                label: 'Visitas por Mes',
-                data: <?php echo json_encode(array_values($visitasTemporal)); ?>,
-                backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                borderColor: 'rgba(255, 159, 64, 1)',
+                label: 'Visitas',
+                data: <?php echo json_encode($dataSemanales); ?>,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 fill: true,
                 tension: 0.3,
                 borderWidth: 2
