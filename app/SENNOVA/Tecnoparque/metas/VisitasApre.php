@@ -438,44 +438,81 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 throw new Error('Error en la respuesta del servidor');
             }
 
-            const data = await response.json();
-            const tbody = document.querySelector('.tabla tbody');
-            tbody.innerHTML = '';
+            const result = await response.json();
             
-            if (data.length === 0) {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `<td colspan="5" style="text-align: center;">No se encontraron registros</td>`;
-                tbody.appendChild(tr);
-                return;
+            if (!result.success) {
+                throw new Error(result.message);
             }
 
-            data.forEach(visita => {
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="width: 8%;">${visita.id_visita}</td>
-                    <td style="width: 22%;">${visita.encargado}</td>
-                    <td style="width: 18%;">${visita.numAsistentes}</td>
-                    <td style="width: 32%;">${formatearFecha(visita.fechaCharla)}</td>
-                    <td style="width: 20%;">
-                        <div class="action-buttons">
-                            <button class="btn-icon edit" onclick='editVisita(${JSON.stringify(visita)})' title="Editar">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <form method="POST" style="display:inline;">
-                                <input type="hidden" name="id_visita" value="${visita.id_visita}">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="btn-icon delete" title="Eliminar">
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                `;
-                tbody.appendChild(tr);
-            });
+            // Actualizar tabla
+            actualizarTablaConDatos(result.data);
+            
+            // Actualizar indicadores
+            actualizarIndicadores(result.indicadores);
+            
+            // Actualizar gráficos
+            actualizarGraficos(result.indicadores);
+
         } catch (error) {
             console.error('Error:', error);
-            alert('Ocurrió un error al actualizar la tabla');
+            // Mostrar mensaje de error más amigable
+            Swal.fire({
+                title: 'Error',
+                text: 'Ocurrió un error al actualizar los datos. Por favor, intente nuevamente.',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    }
+
+    function actualizarTablaConDatos(data) {
+        const tbody = document.querySelector('.tabla tbody');
+        tbody.innerHTML = '';
+        
+        if (data.length === 0) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `<td colspan="5" class="text-center py-4">No se encontraron registros</td>`;
+            tbody.appendChild(tr);
+            return;
+        }
+
+        data.forEach(visita => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td style="width: 8%;">${visita.id_visita}</td>
+                <td style="width: 22%;">${visita.encargado}</td>
+                <td style="width: 18%;">${visita.numAsistentes}</td>
+                <td style="width: 32%;">${formatearFecha(visita.fechaCharla)}</td>
+                <td style="width: 20%;">
+                    <div class="action-buttons">
+                        <button class="btn-icon edit" onclick='editVisita(${JSON.stringify(visita)})' title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="id_visita" value="${visita.id_visita}">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="btn-icon delete" title="Eliminar">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </div>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    function actualizarIndicadores(indicadores) {
+        document.querySelector('.indicador:nth-child(1) p').textContent = indicadores.total_asistentes;
+        document.querySelector('.indicador:nth-child(2) p').textContent = indicadores.total_charlas;
+        document.querySelector('.indicador:nth-child(3) p').textContent = indicadores.promedio_asistentes;
+    }
+
+    function actualizarGraficos(indicadores) {
+        if(rankingChartInstance) {
+            rankingChartInstance.data.labels = indicadores.encargados;
+            rankingChartInstance.data.datasets[0].data = indicadores.asistentes_por_encargado;
+            rankingChartInstance.update();
         }
     }
 
@@ -536,3 +573,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         return `${dia} de ${mes} ${anio}<br>${hora}`;
     }
 </script>
+
+<!-- Agregar SweetAlert2 para mensajes más amigables -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

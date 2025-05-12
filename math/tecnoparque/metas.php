@@ -348,6 +348,30 @@ class metas_tecnoparque extends Conexion{
         ];
     }
 
+    public function obtenerIndicadoresVisitasFiltradas($visitas) {
+        $total_charlas = count($visitas);
+        $total_asistentes = 0;
+        $asistentes_por_encargado = [];
+        
+        foreach ($visitas as $visita) {
+            $total_asistentes += $visita['numAsistentes'];
+            if (!isset($asistentes_por_encargado[$visita['encargado']])) {
+                $asistentes_por_encargado[$visita['encargado']] = 0;
+            }
+            $asistentes_por_encargado[$visita['encargado']] += $visita['numAsistentes'];
+        }
+        
+        $promedio_asistentes = $total_charlas > 0 ? round($total_asistentes / $total_charlas) : 0;
+        
+        return [
+            'total_charlas' => $total_charlas,
+            'total_asistentes' => $total_asistentes,
+            'promedio_asistentes' => $promedio_asistentes,
+            'encargados' => array_keys($asistentes_por_encargado),
+            'asistentes_por_encargado' => array_values($asistentes_por_encargado)
+        ];
+    }
+
     public function obtenerMesesUnicos() {
         $sql = "SELECT DISTINCT 
                 MONTH(fechaCharla) as mes, 
