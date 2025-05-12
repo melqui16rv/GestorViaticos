@@ -378,9 +378,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 .tabla {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
     border: 1px solid #ddd;
-    border-radius: 4px;
     overflow: hidden;
 }
 .tabla thead th {
@@ -585,7 +583,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     position: sticky;
     top: 0;
     background: #2563eb;
-    color: #fff;
+    color: ##7ca5be;
     z-index: 2;
     border-bottom: 2px solid #ddd;
     font-weight: bold;
