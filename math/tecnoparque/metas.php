@@ -64,21 +64,21 @@ class metas_tecnoparque extends Conexion{
 
             // Bind parameters
             foreach ($params as $param => $value) {
-                if (is_int($value)) {
-                    $stmt->bindValue($param, $value, PDO::PARAM_INT);
+                if ($param === ':mes' || $param === ':anio' || $param === ':limite') {
+                    $stmt->bindValue($param, (int)$value, PDO::PARAM_INT);
                 } else {
                     $stmt->bindValue($param, $value, PDO::PARAM_STR);
                 }
             }
 
-            // Bind limite separately
-            if (!empty($filtros['limite'])) {
+            // Bind limite separately (si no se incluyó en el foreach)
+            if (!empty($filtros['limite']) && !isset($params[':limite'])) {
                 $stmt->bindValue(':limite', (int)$filtros['limite'], PDO::PARAM_INT);
             }
 
             $stmt->execute();
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            
+
             error_log("Resultados obtenidos: " . count($result));
             return $result;
 

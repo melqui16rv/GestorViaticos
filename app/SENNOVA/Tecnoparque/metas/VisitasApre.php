@@ -134,7 +134,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
                             <label for="ordenRegistros" class="block text-gray-700 text-sm font-bold mb-2">Orden</label>
-                            <select id="ordenRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <select id="ordenRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="DESC">Más recientes primero</option>
                                 <option value="ASC">Más antiguos primero</option>
                             </select>
@@ -142,7 +142,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
                         <div>
                             <label for="limiteRegistros" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
-                            <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="30">30 registros</option>
                                 <option value="50">50 registros</option>
                                 <option value="70">70 registros</option>
@@ -152,7 +152,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
                         <div>
                             <label for="filtroEncargado" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
-                            <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="">Todos</option>
                                 <?php 
                                 $encargados = $metas->obtenerEncargadosUnicos();
@@ -165,7 +165,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
                         <div>
                             <label for="filtroMes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
-                            <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="">Todos</option>
                                 <?php 
                                 $mesesUnicos = $metas->obtenerMesesUnicos();
@@ -184,6 +184,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 if($anioActual !== null) echo "</optgroup>";
                                 ?>
                             </select>
+                            <!-- Campo oculto para el año -->
+                            <input type="hidden" id="filtroAnio" name="filtroAnio" value="">
                         </div>
                     </div>
 
@@ -533,17 +535,17 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         }
     }
 
-    // Modificar el event listener del filtro de mes
+    // Modificar el event listener del filtro de mes para actualizar el campo oculto de año
     document.getElementById('filtroMes').addEventListener('change', function() {
         const mesSelect = document.getElementById('filtroMes');
         const anioSelect = document.getElementById('filtroAnio');
-        
         if(mesSelect.value) {
             const selectedOption = mesSelect.options[mesSelect.selectedIndex];
             const anio = selectedOption.getAttribute('data-anio');
-            anioSelect.value = anio;
+            if(anioSelect) anioSelect.value = anio;
+        } else {
+            if(anioSelect) anioSelect.value = '';
         }
-        
         actualizarTabla();
     });
 

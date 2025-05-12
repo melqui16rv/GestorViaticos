@@ -15,13 +15,13 @@ try {
     }
 
     // Validar y limpiar filtros
-    $filtros = array_filter([
+    $filtros = [
         'orden' => isset($filtros['orden']) ? $filtros['orden'] : 'DESC',
         'limite' => !empty($filtros['limite']) ? intval($filtros['limite']) : null,
         'encargado' => !empty($filtros['encargado']) ? trim($filtros['encargado']) : null,
         'mes' => !empty($filtros['mes']) ? intval($filtros['mes']) : null,
         'anio' => !empty($filtros['anio']) ? intval($filtros['anio']) : null
-    ]);
+    ];
 
     error_log("Filtros procesados: " . print_r($filtros, true)); // Debug
 
