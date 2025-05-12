@@ -19,8 +19,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
 </head>
 <div class="dashboard-container" id="dashboardContent">
     <div class="stats-card">
-        <div class="stats-card flex flex-wrap gap-6 mb-6">
-            <!-- Indicadores de metas -->
+        <div class="flex flex-wrap gap-6 mb-6">
             <div class="stat-item">
                 <div class="stat-value text-green-700"><?php echo $resumen['total_terminados']; ?></div>
                 <div class="stat-label">Terminados</div>
@@ -43,8 +42,6 @@ $porcentaje_esperado = min(100, round(($total_esperado / 100) * 100, 1));
             <div class="stat-label">Meta Proyectos</div>
         </div>
     </div>
-
-    
 
     <!-- Tarjeta para botón y tabla -->
     <div class="tabla-card mb-8">
