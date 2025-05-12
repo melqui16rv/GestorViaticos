@@ -4,6 +4,29 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
 $metas = new metas_tecnoparque();
 
+// Calcular indicadores adicionales a partir de $visitas
+$visitas = $metas->obtenerVisitasApre();
+$indicadores = $metas->obtenerIndicadoresVisitas();
+
+// Nuevos cálculos: agrupación por nodo y series temporales
+$visitasPorNodo = [];
+$visitasTemporal = [];
+foreach($visitas as $v) {
+    $nodo = $v['nodo'] ?? 'Desconocido';
+    if (!isset($visitasPorNodo[$nodo])) {
+        $visitasPorNodo[$nodo] = 0;
+    }
+    $visitasPorNodo[$nodo]++;
+    
+    // Agrupar por año-mes
+    $mes = date('Y-m', strtotime($v['fechaCharla']));
+    if (!isset($visitasTemporal[$mes])) {
+        $visitasTemporal[$mes] = 0;
+    }
+    $visitasTemporal[$mes]++;
+}
+ksort($visitasTemporal);
+
 // Manejo de acciones (crear, actualizar, eliminar)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['action'])) {
@@ -72,11 +95,36 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <h3>Promedio de Asistentes por Charla</h3>
             <p><?php echo $indicadores['promedio_asistentes']; ?></p>
         </div>
+        <div class="indicador">
+            <h3>Visitas por Nodo</h3>
+            <p>
+                <?php 
+                    foreach($visitasPorNodo as $nodo => $cant){
+                        echo htmlspecialchars($nodo) . ": " . $cant . "<br>";
+                    }
+                ?>
+            </p>
+        </div>
     </div>
 
     <div class="chart-container">
         <h2>Impacto de las Charlas</h2>
         <canvas id="impactoChartVisitas"></canvas>
+    </div>
+
+    <div class="chart-container" style="height: 400px;">
+        <h2>Ranking de Encargados</h2>
+        <canvas id="encargadosChart"></canvas>
+    </div>
+
+    <div class="chart-container" style="height: 400px;">
+        <h2>Distribución de Visitas por Nodo</h2>
+        <canvas id="nodoChart"></canvas>
+    </div>
+
+    <div class="chart-container" style="height: 400px;">
+        <h2>Tendencia de Visitas por Mes</h2>
+        <canvas id="temporalChart"></canvas>
     </div>
 
     <table class="tabla">
@@ -166,6 +214,80 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     beginAtZero: true
                 }
             }
+        }
+    });
+
+    // Gráfico: Ranking de Encargados
+    const ctxEncargados = document.getElementById('encargadosChart').getContext('2d');
+    new Chart(ctxEncargados, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode($indicadores['encargados']); ?>,
+            datasets: [{
+                label: 'Número de Asistentes',
+                data: <?php echo json_encode($indicadores['asistentes_por_encargado']); ?>,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    // Gráfico: Distribución de Visitas por Nodo (Pie Chart)
+    const ctxNodo = document.getElementById('nodoChart').getContext('2d');
+    new Chart(ctxNodo, {
+        type: 'pie',
+        data: {
+            labels: <?php echo json_encode(array_keys($visitasPorNodo)); ?>,
+            datasets: [{
+                data: <?php echo json_encode(array_values($visitasPorNodo)); ?>,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+    });
+
+    // Gráfico: Serie Temporal de Visitas (Line Chart)
+    const ctxTemporal = document.getElementById('temporalChart').getContext('2d');
+    new Chart(ctxTemporal, {
+        type: 'line',
+        data: {
+            labels: <?php echo json_encode(array_keys($visitasTemporal)); ?>,
+            datasets: [{
+                label: 'Visitas por Mes',
+                data: <?php echo json_encode(array_values($visitasTemporal)); ?>,
+                backgroundColor: 'rgba(255, 159, 64, 0.5)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                fill: true,
+                tension: 0.3,
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: { y: { beginAtZero: true } }
         }
     });
 </script>
