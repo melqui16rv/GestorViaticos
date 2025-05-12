@@ -31,6 +31,87 @@ requireRole(['4', '5', '6']);
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <style>
+/* Contenedor principal */
+.dashboard-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background: #f8fafc;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Tarjetas de estadísticas */
+.stats-card {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #f1f5f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+.stat-item .stat-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+.stat-item .stat-label {
+    font-size: 1rem;
+    color: #64748b;
+}
+
+/* Tabla */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.styled-table th,
+.styled-table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+.styled-table th {
+    background: #2563eb;
+    color: #fff;
+    font-weight: bold;
+}
+.styled-table tr:hover {
+    background: #f1f5f9;
+}
+
+/* Gráficas */
+.chart-wrapper {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .stats-card {
+        flex-direction: column;
+    }
+    .dashboard-container {
+        padding: 1rem;
+    }
+}
+</style>
 </head>
 <body class="bg-gray-50 min-h-screen relative">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
