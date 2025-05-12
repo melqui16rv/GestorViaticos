@@ -103,38 +103,9 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
         </div>
     </form>
-    <table class="tabla">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Encargado</th>
-                <th>Número de Asistentes</th>
-                <th>Fecha de la Charla</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($visitas as $visita): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($visita['id_visita']); ?></td>
-                <td><?php echo htmlspecialchars($visita['encargado']); ?></td>
-                <td><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
-                <td><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
-                <td>
-                    <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
-                    <form method="POST" style="display:inline;">
-                        <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
-                        <input type="hidden" name="action" value="delete">
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
-                    </form>
-                </td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
     
     <div class="indicadores">
-        <div class="indicador">
+        <div class="indicador"> 
             <h3>Total de Asistentes</h3>
             <p><?php echo $indicadores['total_asistentes']; ?></p>
         </div>
@@ -153,13 +124,12 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     foreach($visitasPorNodo as $nodo => $cant){
                         echo htmlspecialchars($nodo) . ": " . $cant . "<br>";
                     }
-                    ?>
+                ?>
             </p>
         </div>
     </div>
     
-    <!-- Se elimina la gráfica de distribución de nodos -->
-    <!-- Se agrega la gráfica de Ranking de Encargados -->
+    <!-- Gráficas existentes -->
     <div class="chart-container" style="height: 400px;">
         <h2>Ranking de Encargados</h2>
         <canvas id="rankingChart"></canvas>
@@ -173,6 +143,40 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     <div style="text-align: center; margin: 20px 0;">
         <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
     </div>
+    
+    <!-- Se envuelve la tabla en un contenedor que ofrece scroll con encabezados fijos -->
+    <div class="table-container">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Encargado</th>
+                    <th>Número de Asistentes</th>
+                    <th>Fecha de la Charla</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($visitas as $visita): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($visita['id_visita']); ?></td>
+                    <td><?php echo htmlspecialchars($visita['encargado']); ?></td>
+                    <td><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
+                    <td><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
+                    <td>
+                        <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
+                        <form method="POST" style="display:inline;">
+                            <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    
 </div>
     
 
@@ -517,6 +521,46 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 }
 .tabla tr:hover {
     background: #f1f5f9;
+}
+/* Indicadores con colores personalizados */
+.indicadores {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+.indicador {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+/* Asignar colores distintos a cada indicador */
+.indicador:nth-child(1) { background-color: #fde2e2; }
+.indicador:nth-child(2) { background-color: #e2f0cb; }
+.indicador:nth-child(3) { background-color: #c9e4f5; }
+.indicador:nth-child(4) { background-color: #fce1a8; }
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table-container thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+    z-index: 1;
+}
+.table-container tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
 }
 </style>
 

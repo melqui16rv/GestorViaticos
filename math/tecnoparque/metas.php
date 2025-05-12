@@ -297,7 +297,8 @@ class metas_tecnoparque extends Conexion{
         return [
             'total_charlas' => $result['total_charlas'] ?? 0,
             'total_asistentes' => $result['total_asistentes'] ?? 0,
-            'promedio_asistentes' => round($result['promedio_asistentes'] ?? 0, 2),
+            // Se elimina el decimal convirtiendo el promedio a entero
+            'promedio_asistentes' => round($result['promedio_asistentes'] ?? 0),
             'encargados' => array_column($encargadosData, 'encargado'),
             'asistentes_por_encargado' => array_column($encargadosData, 'total_asistentes')
         ];
