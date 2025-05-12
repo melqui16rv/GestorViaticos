@@ -254,7 +254,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             }
         });
 
-        // Visitas por Semana
+        // Visitas por Semana con configuración mejorada
         const ctxSemanal = document.getElementById('semanalChart').getContext('2d');
         if(semanalChartInstance){ semanalChartInstance.destroy(); }
         semanalChartInstance = new Chart(ctxSemanal, {
@@ -268,17 +268,61 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     borderColor: 'rgba(54, 162, 235, 1)',
                     fill: true,
                     tension: 0.3,
-                    borderWidth: 2
+                    borderWidth: 2,
+                    pointRadius: 4,
+                    pointHoverRadius: 6
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                scales: { y: { beginAtZero: true } }
+                animation: {
+                    duration: 750,
+                    easing: 'easeInOutQuart'
+                },
+                elements: {
+                    line: {
+                        tension: 0.4
+                    }
+                },
+                scales: { 
+                    y: { 
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                }
             }
         });
     }
 
-    // Inicializar los gráficos una sola vez cuando la ventana esté completamente cargada
-    window.addEventListener('load', initCharts);
+    // Función para actualizar las gráficas cuando cambie el tamaño de la ventana
+    let resizeTimeout;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(function() {
+            initCharts();
+        }, 250);
+    });
+
+    // Inicializar los gráficos cuando la ventana esté completamente cargada
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(initCharts, 100);
+    });
 </script>
