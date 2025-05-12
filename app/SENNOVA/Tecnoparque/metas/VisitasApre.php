@@ -92,6 +92,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/visApreStyle.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<!-- Agregar SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <div class="dashboard-container">
     <a href="javascript:void(0);" id="toggleFormButtonVisitas" class="actualizar-tabla-link inline-block">
@@ -426,6 +428,15 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 anio: document.getElementById('filtroAnio').value
             };
 
+            // Mostrar indicador de carga
+            Swal.fire({
+                title: 'Cargando...',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
             const response = await fetch('obtener_visitas.php', {
                 method: 'POST',
                 headers: {
@@ -434,32 +445,25 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 body: JSON.stringify(filtros)
             });
 
-            if (!response.ok) {
-                throw new Error('Error en la respuesta del servidor');
-            }
-
             const result = await response.json();
             
+            // Cerrar indicador de carga
+            Swal.close();
+
             if (!result.success) {
-                throw new Error(result.message);
+                throw new Error(result.message || 'Error al cargar los datos');
             }
 
-            // Actualizar tabla
             actualizarTablaConDatos(result.data);
-            
-            // Actualizar indicadores
             actualizarIndicadores(result.indicadores);
-            
-            // Actualizar gráficos
             actualizarGraficos(result.indicadores);
 
         } catch (error) {
             console.error('Error:', error);
-            // Mostrar mensaje de error más amigable
             Swal.fire({
-                title: 'Error',
-                text: 'Ocurrió un error al actualizar los datos. Por favor, intente nuevamente.',
                 icon: 'error',
+                title: 'Error',
+                text: error.message || 'Error al cargar los datos',
                 confirmButtonText: 'Aceptar'
             });
         }

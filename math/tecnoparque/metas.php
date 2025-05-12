@@ -45,26 +45,20 @@ class metas_tecnoparque extends Conexion{
         }
 
         // Ordenamiento
-        $sql .= " ORDER BY fechaCharla " . (!empty($filtros['orden']) && $filtros['orden'] === 'ASC' ? 'ASC' : 'DESC');
+        $sql .= " ORDER BY fechaCharla " . (isset($filtros['orden']) && $filtros['orden'] === 'ASC' ? 'ASC' : 'DESC');
 
         // Límite de registros
-        if (!empty($filtros['limite']) && is_numeric($filtros['limite'])) {
+        if (!empty($filtros['limite'])) {
             $sql .= " LIMIT :limite";
         }
 
         $stmt = $this->conexion->prepare($sql);
 
-        // Bind params
         foreach ($params as $param => $value) {
-            if (is_int($value)) {
-                $stmt->bindValue($param, $value, PDO::PARAM_INT);
-            } else {
-                $stmt->bindValue($param, $value, PDO::PARAM_STR);
-            }
+            $stmt->bindValue($param, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
 
-        // Bind limit separately to avoid issues with LIMIT clause
-        if (!empty($filtros['limite']) && is_numeric($filtros['limite'])) {
+        if (!empty($filtros['limite'])) {
             $stmt->bindValue(':limite', (int)$filtros['limite'], PDO::PARAM_INT);
         }
 
