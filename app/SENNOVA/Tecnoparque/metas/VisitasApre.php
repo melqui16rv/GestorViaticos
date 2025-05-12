@@ -134,6 +134,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         document.getElementById('action').value = 'create';
     }
 
+    
     // Gráfico de impacto
     const ctx = document.getElementById('impactoChart').getContext('2d');
     new Chart(ctx, {
