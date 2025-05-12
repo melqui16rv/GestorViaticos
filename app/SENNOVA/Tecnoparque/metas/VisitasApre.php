@@ -420,36 +420,35 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     // Función para actualizar la tabla según los filtros
     async function actualizarTabla() {
         try {
-            // Validar que los elementos existan antes de acceder a sus valores
             const ordenSelect = document.getElementById('ordenRegistros');
             const limiteSelect = document.getElementById('limiteRegistros');
             const encargadoSelect = document.getElementById('filtroEncargado');
             const mesSelect = document.getElementById('filtroMes');
-            const anioSelect = document.getElementById('filtroAnio');
-
-            // Verificar que todos los elementos necesarios existan
+            
             if (!ordenSelect || !limiteSelect || !encargadoSelect || !mesSelect) {
-                throw new Error('No se encontraron los elementos de filtro necesarios');
+                console.error('Elementos de filtro no encontrados');
+                return;
             }
+
+            // Mostrar loading
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Por favor espere',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
 
             const filtros = {
                 orden: ordenSelect.value,
                 limite: limiteSelect.value,
                 encargado: encargadoSelect.value,
                 mes: mesSelect.value,
-                anio: anioSelect ? anioSelect.value : ''
+                anio: mesSelect.options[mesSelect.selectedIndex]?.dataset?.anio || ''
             };
 
-            // Mostrar indicador de carga
-            Swal.fire({
-                title: 'Cargando...',
-                text: 'Por favor espere',
-                allowOutsideClick: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading();
-                }
-            });
+            console.log('Enviando filtros:', filtros); // Debug
 
             const response = await fetch('obtener_visitas.php', {
                 method: 'POST',
@@ -460,12 +459,13 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             });
 
             const result = await response.json();
-            
-            // Cerrar indicador de carga
+            console.log('Respuesta recibida:', result); // Debug
+
+            // Cerrar loading
             Swal.close();
 
             if (!result.success) {
-                throw new Error(result.message || 'Error al cargar los datos');
+                throw new Error(result.message || 'Error desconocido');
             }
 
             actualizarTablaConDatos(result.data);
@@ -477,8 +477,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: error.message || 'Error al cargar los datos',
-                confirmButtonText: 'Aceptar'
+                text: error.message || 'Error al actualizar los datos'
             });
         }
     }

@@ -28,42 +28,64 @@ class metas_tecnoparque extends Conexion{
 
     }
     public function obtenerVisitasApre($filtros = []) {
-        $sql = "SELECT * FROM listadosvisitasApre WHERE 1=1";
-        $params = [];
+        try {
+            $sql = "SELECT id_visita, encargado, numAsistentes, fechaCharla FROM listadosvisitasApre WHERE 1=1";
+            $params = [];
 
-        // Filtro por encargado
-        if (!empty($filtros['encargado'])) {
-            $sql .= " AND encargado = :encargado";
-            $params[':encargado'] = $filtros['encargado'];
+            // Debug
+            error_log("Construyendo consulta SQL con filtros: " . print_r($filtros, true));
+
+            // Filtro por encargado
+            if (!empty($filtros['encargado'])) {
+                $sql .= " AND encargado = :encargado";
+                $params[':encargado'] = $filtros['encargado'];
+            }
+
+            // Filtro por mes y año
+            if (!empty($filtros['mes']) && !empty($filtros['anio'])) {
+                $sql .= " AND MONTH(fechaCharla) = :mes AND YEAR(fechaCharla) = :anio";
+                $params[':mes'] = $filtros['mes'];
+                $params[':anio'] = $filtros['anio'];
+            }
+
+            // Ordenamiento
+            $sql .= " ORDER BY fechaCharla " . 
+                    (isset($filtros['orden']) && $filtros['orden'] === 'ASC' ? 'ASC' : 'DESC');
+
+            // Límite
+            if (!empty($filtros['limite'])) {
+                $sql .= " LIMIT :limite";
+            }
+
+            error_log("SQL Query: " . $sql);
+            error_log("Params: " . print_r($params, true));
+
+            $stmt = $this->conexion->prepare($sql);
+
+            // Bind parameters
+            foreach ($params as $param => $value) {
+                if (is_int($value)) {
+                    $stmt->bindValue($param, $value, PDO::PARAM_INT);
+                } else {
+                    $stmt->bindValue($param, $value, PDO::PARAM_STR);
+                }
+            }
+
+            // Bind limite separately
+            if (!empty($filtros['limite'])) {
+                $stmt->bindValue(':limite', (int)$filtros['limite'], PDO::PARAM_INT);
+            }
+
+            $stmt->execute();
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            
+            error_log("Resultados obtenidos: " . count($result));
+            return $result;
+
+        } catch (PDOException $e) {
+            error_log("Error en obtenerVisitasApre: " . $e->getMessage());
+            throw new Exception("Error al obtener las visitas: " . $e->getMessage());
         }
-
-        // Filtro por mes y año
-        if (!empty($filtros['mes']) && !empty($filtros['anio'])) {
-            $sql .= " AND MONTH(fechaCharla) = :mes AND YEAR(fechaCharla) = :anio";
-            $params[':mes'] = (int)$filtros['mes'];
-            $params[':anio'] = (int)$filtros['anio'];
-        }
-
-        // Ordenamiento
-        $sql .= " ORDER BY fechaCharla " . (isset($filtros['orden']) && $filtros['orden'] === 'ASC' ? 'ASC' : 'DESC');
-
-        // Límite de registros
-        if (!empty($filtros['limite'])) {
-            $sql .= " LIMIT :limite";
-        }
-
-        $stmt = $this->conexion->prepare($sql);
-
-        foreach ($params as $param => $value) {
-            $stmt->bindValue($param, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
-        }
-
-        if (!empty($filtros['limite'])) {
-            $stmt->bindValue(':limite', (int)$filtros['limite'], PDO::PARAM_INT);
-        }
-
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function obtenerEncargadosUnicos() {
