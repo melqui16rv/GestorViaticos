@@ -125,69 +125,81 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     </form>
     
     <div class="filtros-container">
-        <h2 class="filtros-titulo">Filtros de Búsqueda</h2>
-        <div class="filtros-grid">
-            <div class="filtro-grupo">
-                <label for="ordenRegistros">Orden:</label>
-                <select id="ordenRegistros" class="filtro-select">
-                    <option value="DESC">Más recientes primero</option>
-                    <option value="ASC">Más antiguos primero</option>
-                </select>
-            </div>
-            
-            <div class="filtro-grupo">
-                <label for="limiteRegistros">Mostrar:</label>
-                <select id="limiteRegistros" class="filtro-select">
-                    <option value="30">30 registros</option>
-                    <option value="50">50 registros</option>
-                    <option value="70">70 registros</option>
-                    <option value="">Todos</option>
-                </select>
-            </div>
-            
-            <div class="filtro-grupo">
-                <label for="filtroEncargado">Encargado:</label>
-                <select id="filtroEncargado" class="filtro-select">
-                    <option value="">Todos</option>
-                    <?php 
-                    $encargados = $metas->obtenerEncargadosUnicos();
-                    foreach($encargados as $encargado) {
-                        echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
-                    }
-                    ?>
-                </select>
-            </div>
-            
-            <div class="filtro-grupo">
-                <label for="filtroMes">Mes:</label>
-                <select id="filtroMes" class="filtro-select">
-                    <option value="">Todos</option>
-                    <?php 
-                    $mesesUnicos = $metas->obtenerMesesUnicos();
-                    $anioActual = null;
-                    
-                    foreach($mesesUnicos as $fecha) {
-                        if($anioActual !== $fecha['anio']) {
-                            if($anioActual !== null) echo "</optgroup>";
-                            echo "<optgroup label='" . $fecha['anio'] . "'>";
-                            $anioActual = $fecha['anio'];
-                        }
-                        $nombreMes = $meses[$fecha['mes']];
-                        echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
-                             . $nombreMes . "</option>";
-                    }
-                    if($anioActual !== null) echo "</optgroup>";
-                    ?>
-                </select>
-            </div>
+        <div class="filtro-grupo">
+            <label for="ordenRegistros">Orden:</label>
+            <select id="ordenRegistros" class="filtro-select">
+                <option value="DESC">Más recientes primero</option>
+                <option value="ASC">Más antiguos primero</option>
+            </select>
         </div>
         
-        <div class="flex justify-end mt-4">
-            <button type="button" id="limpiarFiltros" class="btn-limpiar">
-                <i class="fas fa-times"></i>
-                Limpiar filtros
-            </button>
+        <div class="filtro-grupo">
+            <label for="limiteRegistros">Mostrar:</label>
+            <select id="limiteRegistros" class="filtro-select">
+                <option value="30">30 registros</option>
+                <option value="50">50 registros</option>
+                <option value="70">70 registros</option>
+                <option value="">Todos</option>
+            </select>
         </div>
+        
+        <div class="filtro-grupo">
+            <label for="filtroEncargado">Encargado:</label>
+            <select id="filtroEncargado" class="filtro-select">
+                <option value="">Todos</option>
+                <?php 
+                $encargados = $metas->obtenerEncargadosUnicos();
+                foreach($encargados as $encargado) {
+                    echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+        
+        <div class="filtro-grupo">
+            <label for="filtroMes">Mes:</label>
+            <select id="filtroMes" class="filtro-select">
+                <option value="">Todos</option>
+                <?php 
+                $meses = [
+                    1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+                    5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+                    9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+                ];
+                $mesesUnicos = $metas->obtenerMesesUnicos();
+                $anioActual = null;
+                
+                foreach($mesesUnicos as $fecha) {
+                    if($anioActual !== $fecha['anio']) {
+                        if($anioActual !== null) {
+                            echo "</optgroup>";
+                        }
+                        echo "<optgroup label='" . $fecha['anio'] . "'>";
+                        $anioActual = $fecha['anio'];
+                    }
+                    echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
+                         . $meses[$fecha['mes']] 
+                         . "</option>";
+                }
+                if($anioActual !== null) {
+                    echo "</optgroup>";
+                }
+                ?>
+            </select>
+        </div>
+        
+        <div class="filtro-grupo" style="display: none;">
+            <label for="filtroAnio">Año:</label>
+            <select id="filtroAnio" class="filtro-select">
+                <?php foreach(array_unique(array_column($mesesUnicos, 'anio')) as $anio): ?>
+                    <option value="<?php echo $anio; ?>"><?php echo $anio; ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        
+        <button type="button" id="limpiarFiltros" class="btn-limpiar">
+            <i class="fas fa-undo"></i> Limpiar filtros
+        </button>
     </div>
 
     <style>
