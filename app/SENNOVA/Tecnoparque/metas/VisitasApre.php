@@ -28,8 +28,6 @@ $visitas = $metas->obtenerVisitasApre();
 $indicadores = $metas->obtenerIndicadoresVisitas();
 ?>
 
-<h1 class="titulo">Gestión de Visitas de Aprendices</h1>
-
 <div class="dashboard-container">
     <a href="javascript:void(0);" id="toggleFormButtonVisitas" class="actualizar-tabla-link inline-block">
         <button type="button" class="actualizar-tabla-btn">
