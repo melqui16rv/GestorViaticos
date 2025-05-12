@@ -27,12 +27,45 @@ class metas_tecnoparque extends Conexion{
     public function obtenerProyectosExt() {
 
     }
-    public function obtenerVisitasApre() {
-        $sql = "SELECT * FROM listadosvisitasApre";
+    public function obtenerVisitasApre($filtros = []) {
+        $sql = "SELECT * FROM listadosvisitasApre WHERE 1=1";
+        $params = [];
+
+        // Filtro por encargado
+        if (!empty($filtros['encargado'])) {
+            $sql .= " AND encargado = :encargado";
+            $params[':encargado'] = $filtros['encargado'];
+        }
+
+        // Filtro por mes y año
+        if (!empty($filtros['mes']) && !empty($filtros['anio'])) {
+            $sql .= " AND MONTH(fechaCharla) = :mes AND YEAR(fechaCharla) = :anio";
+            $params[':mes'] = $filtros['mes'];
+            $params[':anio'] = $filtros['anio'];
+        }
+
+        // Ordenamiento
+        $sql .= " ORDER BY fechaCharla " . (!empty($filtros['orden']) && $filtros['orden'] === 'ASC' ? 'ASC' : 'DESC');
+
+        // Límite de registros
+        if (!empty($filtros['limite']) && is_numeric($filtros['limite'])) {
+            $sql .= " LIMIT :limite";
+            $params[':limite'] = (int)$filtros['limite'];
+        }
+
         $stmt = $this->conexion->prepare($sql);
+        foreach ($params as $param => $value) {
+            $stmt->bindValue($param, $value);
+        }
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
+    public function obtenerEncargadosUnicos() {
+        $sql = "SELECT DISTINCT encargado FROM listadosvisitasApre ORDER BY encargado";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
     }
 
     // uptade

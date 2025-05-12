@@ -123,6 +123,69 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
         </div>
     </form>
+    
+    <div class="filtros-container">
+        <div class="filtro-grupo">
+            <label for="ordenRegistros">Orden:</label>
+            <select id="ordenRegistros" class="filtro-select">
+                <option value="DESC">Más recientes primero</option>
+                <option value="ASC">Más antiguos primero</option>
+            </select>
+        </div>
+        
+        <div class="filtro-grupo">
+            <label for="limiteRegistros">Mostrar:</label>
+            <select id="limiteRegistros" class="filtro-select">
+                <option value="30">30 registros</option>
+                <option value="50">50 registros</option>
+                <option value="70">70 registros</option>
+                <option value="">Todos</option>
+            </select>
+        </div>
+        
+        <div class="filtro-grupo">
+            <label for="filtroEncargado">Encargado:</label>
+            <select id="filtroEncargado" class="filtro-select">
+                <option value="">Todos</option>
+                <?php 
+                $encargados = $metas->obtenerEncargadosUnicos();
+                foreach($encargados as $encargado) {
+                    echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
+                }
+                ?>
+            </select>
+        </div>
+        
+        <div class="filtro-grupo">
+            <label for="filtroMes">Mes:</label>
+            <select id="filtroMes" class="filtro-select">
+                <option value="">Todos</option>
+                <?php 
+                $meses = [
+                    1 => 'Enero', 2 => 'Febrero', 3 => 'Marzo', 4 => 'Abril',
+                    5 => 'Mayo', 6 => 'Junio', 7 => 'Julio', 8 => 'Agosto',
+                    9 => 'Septiembre', 10 => 'Octubre', 11 => 'Noviembre', 12 => 'Diciembre'
+                ];
+                foreach($meses as $num => $nombre) {
+                    echo "<option value='$num'>$nombre</option>";
+                }
+                ?>
+            </select>
+        </div>
+        
+        <div class="filtro-grupo">
+            <label for="filtroAnio">Año:</label>
+            <select id="filtroAnio" class="filtro-select">
+                <?php 
+                $anioActual = date('Y');
+                for($i = $anioActual; $i >= $anioActual - 2; $i--) {
+                    echo "<option value='$i'>$i</option>";
+                }
+                ?>
+            </select>
+        </div>
+    </div>
+
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
         <table class="tabla">
@@ -209,6 +272,31 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     
 </div>
     
+
+<style>
+.filtros-container {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.filtro-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.filtro-select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    min-width: 150px;
+}
+</style>
 
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -341,5 +429,64 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     // Inicializar los gráficos cuando la ventana esté completamente cargada
     document.addEventListener('DOMContentLoaded', function() {
         setTimeout(initCharts, 100);
+    });
+
+    // Función para actualizar la tabla según los filtros
+    function actualizarTabla() {
+        const filtros = {
+            orden: document.getElementById('ordenRegistros').value,
+            limite: document.getElementById('limiteRegistros').value,
+            encargado: document.getElementById('filtroEncargado').value,
+            mes: document.getElementById('filtroMes').value,
+            anio: document.getElementById('filtroAnio').value
+        };
+
+        fetch('obtener_visitas.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(filtros)
+        })
+        .then(response => response.json())
+        .then(data => {
+            const tbody = document.querySelector('.tabla tbody');
+            tbody.innerHTML = '';
+            
+            data.forEach(visita => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="width: 8%;">${visita.id_visita}</td>
+                    <td style="width: 22%;">${visita.encargado}</td>
+                    <td style="width: 18%;">${visita.numAsistentes}</td>
+                    <td style="width: 32%;">${formatearFecha(visita.fechaCharla)}</td>
+                    <td style="width: 20%;">
+                        <div class="action-buttons">
+                            <button class="btn-icon edit" onclick='editVisita(${JSON.stringify(visita)})' title="Editar">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="id_visita" value="${visita.id_visita}">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit" class="btn-icon delete" title="Eliminar">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    }
+
+    // Agregar event listeners para los filtros
+    document.querySelectorAll('.filtro-select').forEach(select => {
+        select.addEventListener('change', actualizarTabla);
+    });
+
+    // Inicializar tabla con valores por defecto
+    document.addEventListener('DOMContentLoaded', function() {
+        actualizarTabla();
     });
 </script>
