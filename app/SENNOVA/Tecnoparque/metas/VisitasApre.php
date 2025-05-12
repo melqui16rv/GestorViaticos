@@ -82,7 +82,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <span id="toggleFormButtonText">Agregar Visita</span>
         </button>
     </a>
-
+    
     <form id="formVisitasApre" method="POST" class="formulario" style="display: none;">
         <input type="hidden" name="action" id="actionVisitas" value="create">
         <input type="hidden" name="id_visita" id="id_visitaVisitas">
@@ -103,6 +103,42 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
         </div>
     </form>
+    <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
+    <div class="tabla-outer">
+        <table class="tabla">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">ID</th>
+                    <th style="width: 22%;">Encargado</th>
+                    <th style="width: 18%;">Número de Asistentes</th>
+                    <th style="width: 32%;">Fecha de la Charla</th>
+                    <th style="width: 20%;">Acciones</th>
+                </tr>
+            </thead>
+        </table>
+        <div class="tabla-scroll">
+            <table class="tabla">
+                <tbody>
+                    <?php foreach ($visitas as $visita): ?>
+                    <tr>
+                        <td style="width: 8%;"><?php echo htmlspecialchars($visita['id_visita']); ?></td>
+                        <td style="width: 22%;"><?php echo htmlspecialchars($visita['encargado']); ?></td>
+                        <td style="width: 18%;"><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
+                        <td style="width: 32%;"><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
+                        <td style="width: 20%;">
+                            <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
+                            <form method="POST" style="display:inline;">
+                                <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
+                                <input type="hidden" name="action" value="delete">
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
     
     <div class="indicadores">
         <div class="indicador"> 
@@ -144,42 +180,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
     </div>
     
-    <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
-    <div class="tabla-outer">
-        <table class="tabla">
-            <thead>
-                <tr>
-                    <th style="width: 8%;">ID</th>
-                    <th style="width: 22%;">Encargado</th>
-                    <th style="width: 18%;">Número de Asistentes</th>
-                    <th style="width: 32%;">Fecha de la Charla</th>
-                    <th style="width: 20%;">Acciones</th>
-                </tr>
-            </thead>
-        </table>
-        <div class="tabla-scroll">
-            <table class="tabla">
-                <tbody>
-                    <?php foreach ($visitas as $visita): ?>
-                    <tr>
-                        <td style="width: 8%;"><?php echo htmlspecialchars($visita['id_visita']); ?></td>
-                        <td style="width: 22%;"><?php echo htmlspecialchars($visita['encargado']); ?></td>
-                        <td style="width: 18%;"><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
-                        <td style="width: 32%;"><?php echo htmlspecialchars($visita['fechaCharla']); ?></td>
-                        <td style="width: 20%;">
-                            <button class="btn btn-edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)">Editar</button>
-                            <form method="POST" style="display:inline;">
-                                <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
-                                <input type="hidden" name="action" value="delete">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
     
 </div>
     
