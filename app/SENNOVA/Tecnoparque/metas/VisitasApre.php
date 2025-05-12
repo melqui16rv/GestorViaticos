@@ -22,7 +22,7 @@ function formatearFecha($fecha) {
 }
 
 // Calcular indicadores adicionales a partir de $visitas
-$visitas = $metas->obtenerVisitasApre();
+$visitas = $metas->obtenerVisitasApre(); // <-- ahora traerá el campo 'nodo' correctamente
 $indicadores = $metas->obtenerIndicadoresVisitas();
 
 // Nuevos cálculos: agrupación por nodo y series temporales

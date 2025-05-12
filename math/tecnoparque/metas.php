@@ -29,7 +29,8 @@ class metas_tecnoparque extends Conexion{
     }
     public function obtenerVisitasApre($filtros = []) {
         try {
-            $sql = "SELECT id_visita, encargado, numAsistentes, fechaCharla FROM listadosvisitasApre WHERE 1=1";
+            // Cambia el SELECT para incluir 'nodo'
+            $sql = "SELECT id_visita, nodo, encargado, numAsistentes, fechaCharla FROM listadosvisitasApre WHERE 1=1";
             $params = [];
 
             // Debug
