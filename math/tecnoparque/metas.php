@@ -277,4 +277,30 @@ class metas_tecnoparque extends Conexion{
         return $stmt->rowCount() > 0;
     }
 
+    public function obtenerIndicadoresVisitas() {
+        $sql = "SELECT 
+                    COUNT(*) AS total_charlas, 
+                    SUM(numAsistentes) AS total_asistentes, 
+                    AVG(numAsistentes) AS promedio_asistentes 
+                FROM listadosvisitasApre";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        $sqlEncargados = "SELECT encargado, SUM(numAsistentes) AS total_asistentes 
+                          FROM listadosvisitasApre 
+                          GROUP BY encargado";
+        $stmtEncargados = $this->conexion->prepare($sqlEncargados);
+        $stmtEncargados->execute();
+        $encargadosData = $stmtEncargados->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'total_charlas' => $result['total_charlas'] ?? 0,
+            'total_asistentes' => $result['total_asistentes'] ?? 0,
+            'promedio_asistentes' => round($result['promedio_asistentes'] ?? 0, 2),
+            'encargados' => array_column($encargadosData, 'encargado'),
+            'asistentes_por_encargado' => array_column($encargadosData, 'total_asistentes')
+        ];
+    }
+
 }
