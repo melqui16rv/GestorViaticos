@@ -192,6 +192,15 @@ CREATE TABLE `listadosvisitasApre` (
   PRIMARY KEY (`id_visita`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `asesoramiento` (
+  `id_asesoramiendo` INT NOT NULL AUTO_INCREMENT,
+  `tipo` ENUM('Asociaciones', 'Cooperativa') NOT NULL,
+  `encargadoAsesoramiento` VARCHAR(155) NOT NULL,
+  `nombreEntidadImpacto` VARCHAR(155) NOT NULL,
+  `fechaAsesoramiento` DATETIME NOT NULL,
+  `fecha_insert` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_asesoramiendo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 COMMIT;
 
@@ -215,3 +224,8 @@ INSERT INTO `listadosvisitasApre` (`encargado`, `numAsistentes`, `fechaCharla`) 
 ('Juan Pérez', 25, '2024-05-15 10:00:00'),
 ('María Rodríguez', 30, '2024-05-16 14:30:00'),
 ('Carlos Gómez', 15, '2024-05-17 09:00:00');
+
+INSERT INTO `asesoramiento` (`tipo`, `encargadoAsesoramiento`, `nombreEntidadImpacto`, `fechaAsesoramiento`) VALUES
+('Asociaciones','Melqui Romero', 'HolTecth', '2024-05-15 10:00:00'),
+('Asociaciones','Angely Patiño', 'Markect Medios', '2024-05-15 10:00:00'),
+('Cooperativa','Alan Patiño', 'Julio Cesar Turbay Ayala', '2024-05-15 10:00:00');
