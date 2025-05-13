@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($action === 'delete') {
         $metas->eliminarAsesoramiento($_POST['id']);
     }
+    // Setear cookie para que index.php muestre la vista de asesoramiento tras recargar
+    setcookie('tecnoparque_metas_vista', 'asesoramiento', time() + 60*60*24*30, '/');
     header('Location: ' . $_SERVER['PHP_SELF']);
     exit;
 }
@@ -166,7 +168,7 @@ function cargarAsesoramientosAso() {
                         <td>
                             <div class='aso-action-buttons'>
                                 <button class='aso-btn-icon edit' onclick='editAso(${JSON.stringify(a)})' title='Editar'><i class='fas fa-edit'></i></button>
-                                <form method='POST' style='display:inline;' onsubmit="return confirm('¿Está seguro de eliminar este asesoramiento?');">
+                                <form method='POST' style='display:inline;'>
                                     <input type='hidden' name='id' value='${a.id_asesoramiendo}'>
                                     <input type='hidden' name='action' value='delete'>
                                     <button type='submit' class='aso-btn-icon delete' title='Eliminar'><i class='fas fa-trash-alt'></i></button>
