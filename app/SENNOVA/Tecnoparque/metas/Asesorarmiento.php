@@ -125,8 +125,13 @@ function formatearFechaAso($fecha) {
             <div id="ultimaAsesoriaAso" style="font-size:1rem;"></div>
         </div>
         <div class="stat-item" style="flex:1;">
-            <div class="stat-label font-semibold">Encargado con más asesorías</div>
-            <div id="encargadoTopAso" style="font-size:1rem;"></div>
+            <div class="stat-label font-semibold">Avance de la meta total</div>
+            <div style="margin-top: 0.5rem;">
+                <div class="barra-meta-asesoramiento">
+                    <div id="barraProgresoAso" class="barra-progreso-aso"></div>
+                </div>
+                <div id="porcentajeMetaAso" style="margin-top: 0.5rem; font-size: 1rem; font-weight: 500;"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -203,9 +208,11 @@ function cargarAsesoramientosAso() {
                 $('#ultimaAsesoriaAso').text(
                     ultimaFecha ? formatearFechaAso(ultimaFecha).replace('<br>', ' ') : 'Sin registros'
                 );
-                $('#encargadoTopAso').text(
-                    encargadoTop ? `${encargadoTop} (${maxCount})` : 'Sin registros'
-                );
+
+                // Barra de progreso de la meta total (6 asesorías)
+                let porcentaje = Math.min(100, Math.round((tipo1 + tipo2) / 6 * 100));
+                $('#barraProgresoAso').css('width', porcentaje + '%');
+                $('#porcentajeMetaAso').text(`${porcentaje}% (${tipo1 + tipo2} de 6 asesorías)`);
             }
         }
     });
