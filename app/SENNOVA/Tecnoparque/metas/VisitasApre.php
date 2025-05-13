@@ -109,27 +109,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 </head>
 <div class="dashboard-container">
     
-    <form id="formVisitasApre" method="POST" class="formulario" style="display: none;">
-        <input type="hidden" name="action" id="actionVisitas" value="create">
-        <input type="hidden" name="id_visita" id="id_visitaVisitas">
-        <div class="form-group">
-            <label for="encargadoVisitas">Encargado:</label>
-            <input type="text" id="encargadoVisitas" name="encargado" required>
-        </div>
-        <div class="form-group">
-            <label for="numAsistentesVisitas">Número de Asistentes:</label>
-            <input type="number" id="numAsistentesVisitas" name="numAsistentes" required>
-        </div>
-        <div class="form-group">
-            <label for="fechaCharlaVisitas">Fecha de la Charla:</label>
-            <input type="datetime-local" id="fechaCharlaVisitas" name="fechaCharla" required>
-        </div>
-        <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
-        </div>
-    </form>
-    
     <div class="container mx-auto px-4" style="margin-top:20px;">
         <div class="bg-white rounded-lg shadow-md mb-6">
             <div class="p-6">
@@ -143,7 +122,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 <option value="ASC">Más antiguos primero</option>
                             </select>
                         </div>
-
+                        
                         <div>
                             <label for="limiteRegistros" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
                             <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
@@ -153,7 +132,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 <option value="">Todos</option>
                             </select>
                         </div>
-
+                        
                         <div>
                             <label for="filtroEncargado" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
                             <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
@@ -166,7 +145,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 ?>
                             </select>
                         </div>
-
+                        
                         <div>
                             <label for="filtroMes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
                             <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
@@ -189,8 +168,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                     // Solo mostrar si el mes existe en el array de meses
                                     if (isset($meses[$fecha['mes']])) {
                                         echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
-                                             . $meses[$fecha['mes']] 
-                                             . "</option>";
+                                        . $meses[$fecha['mes']] 
+                                        . "</option>";
                                     }
                                 }
                                 if($anioActual !== null) echo "</optgroup>";
@@ -200,7 +179,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                             <input type="hidden" id="filtroAnio" name="filtroAnio" value="">
                         </div>
                     </div>
-
+                    
                     <div class="flex justify-end space-x-2 mt-4">
                         <button type="button" id="limpiarFiltros" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             <i class="fas fa-undo mr-2"></i>Limpiar filtros
@@ -218,6 +197,27 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <span id="toggleFormButtonText">Agregar Visita</span>
         </button>
     </a>
+    
+    <form id="formVisitasApre" method="POST" class="formulario" style="display: none;">
+        <input type="hidden" name="action" id="actionVisitas" value="create">
+        <input type="hidden" name="id_visita" id="id_visitaVisitas">
+        <div class="form-group">
+            <label for="encargadoVisitas">Encargado:</label>
+            <input type="text" id="encargadoVisitas" name="encargado" required>
+        </div>
+        <div class="form-group">
+            <label for="numAsistentesVisitas">Número de Asistentes:</label>
+            <input type="number" id="numAsistentesVisitas" name="numAsistentes" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaCharlaVisitas">Fecha de la Charla:</label>
+            <input type="datetime-local" id="fechaCharlaVisitas" name="fechaCharla" required>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
+        </div>
+    </form>
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
         <table class="tabla">
