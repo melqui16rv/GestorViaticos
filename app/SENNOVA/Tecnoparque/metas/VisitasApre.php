@@ -577,10 +577,17 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     }
 
     function actualizarGraficos(indicadores) {
+        // Actualizar gráfica de asistentes por encargado
         if(rankingChartInstance) {
             rankingChartInstance.data.labels = indicadores.encargados;
             rankingChartInstance.data.datasets[0].data = indicadores.asistentes_por_encargado;
             rankingChartInstance.update();
+        }
+        // Actualizar gráfica de visitas por encargado (sincronizada con los filtros)
+        if(visitasPorEncargadoChartInstance && indicadores.visitas_por_encargado_labels && indicadores.visitas_por_encargado_data) {
+            visitasPorEncargadoChartInstance.data.labels = indicadores.visitas_por_encargado_labels;
+            visitasPorEncargadoChartInstance.data.datasets[0].data = indicadores.visitas_por_encargado_data;
+            visitasPorEncargadoChartInstance.update();
         }
     }
 
