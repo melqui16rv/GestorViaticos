@@ -108,87 +108,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <div class="dashboard-container">
-    
-    <div class="container mx-auto px-4" style="margin-top:20px;">
-        <div class="bg-white rounded-lg shadow-md mb-6">
-            <div class="p-6">
-                <h2 class="text-xl font-semibold text-gray-800 mb-4">Filtros de Búsqueda</h2>
-                <form id="filtroForm" class="space-y-4">
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
-                            <label for="ordenRegistros" class="block text-gray-700 text-sm font-bold mb-2">Orden</label>
-                            <select id="ordenRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
-                                <option value="DESC">Más recientes primero</option>
-                                <option value="ASC">Más antiguos primero</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label for="limiteRegistros" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
-                            <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
-                                <option value="30">30 registros</option>
-                                <option value="50">50 registros</option>
-                                <option value="70">70 registros</option>
-                                <option value="">Todos</option>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label for="filtroEncargado" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
-                            <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
-                                <option value="">Todos</option>
-                                <?php 
-                                $encargados = $metas->obtenerEncargadosUnicos();
-                                foreach($encargados as $encargado) {
-                                    echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                        
-                        <div>
-                            <label for="filtroMes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
-                            <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
-                                <option value="">Todos</option>
-                                <?php 
-                                // Definir los nombres de los meses
-                                $meses = [
-                                    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
-                                    5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
-                                    9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
-                                ];
-                                $mesesUnicos = $metas->obtenerMesesUnicos();
-                                $anioActual = null;
-                                foreach($mesesUnicos as $fecha) {
-                                    if($anioActual !== $fecha['anio']) {
-                                        if($anioActual !== null) echo "</optgroup>";
-                                        echo "<optgroup label='" . $fecha['anio'] . "'>";
-                                        $anioActual = $fecha['anio'];
-                                    }
-                                    // Solo mostrar si el mes existe en el array de meses
-                                    if (isset($meses[$fecha['mes']])) {
-                                        echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
-                                        . $meses[$fecha['mes']] 
-                                        . "</option>";
-                                    }
-                                }
-                                if($anioActual !== null) echo "</optgroup>";
-                                ?>
-                            </select>
-                            <!-- Campo oculto para el año -->
-                            <input type="hidden" id="filtroAnio" name="filtroAnio" value="">
-                        </div>
-                    </div>
-                    
-                    <div class="flex justify-end space-x-2 mt-4">
-                        <button type="button" id="limpiarFiltros" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                            <i class="fas fa-undo mr-2"></i>Limpiar filtros
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <a href="javascript:void(0);" id="toggleFormButtonVisitas" class="actualizar-tabla-link inline-block">
         <button type="button" class="actualizar-tabla-btn">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -218,6 +137,87 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
         </div>
     </form>
+    
+    <div class="container mx-auto px-4" style="margin-top:20px;">
+        <div class="bg-white rounded-lg shadow-md mb-6">
+            <div class="p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">Filtros de Búsqueda</h2>
+                <form id="filtroForm" class="space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label for="ordenRegistros" class="block text-gray-700 text-sm font-bold mb-2">Orden</label>
+                            <select id="ordenRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                                <option value="DESC">Más recientes primero</option>
+                                <option value="ASC">Más antiguos primero</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="limiteRegistros" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
+                            <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                                <option value="30">30 registros</option>
+                                <option value="50">50 registros</option>
+                                <option value="70">70 registros</option>
+                                <option value="">Todos</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="filtroEncargado" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
+                            <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                                <option value="">Todos</option>
+                                <?php 
+                                $encargados = $metas->obtenerEncargadosUnicos();
+                                foreach($encargados as $encargado) {
+                                    echo "<option value='" . htmlspecialchars($encargado) . "'>" . htmlspecialchars($encargado) . "</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="filtroMes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
+                            <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                                <option value="">Todos</option>
+                                <?php 
+                                // Definir los nombres de los meses
+                                $meses = [
+                                    1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
+                                    5 => 'mayo', 6 => 'junio', 7 => 'julio', 8 => 'agosto',
+                                    9 => 'septiembre', 10 => 'octubre', 11 => 'noviembre', 12 => 'diciembre'
+                                ];
+                                $mesesUnicos = $metas->obtenerMesesUnicos();
+                                $anioActual = null;
+                                foreach($mesesUnicos as $fecha) {
+                                    if($anioActual !== $fecha['anio']) {
+                                        if($anioActual !== null) echo "</optgroup>";
+                                        echo "<optgroup label='" . $fecha['anio'] . "'>";
+                                        $anioActual = $fecha['anio'];
+                                    }
+                                    // Solo mostrar si el mes existe en el array de meses
+                                    if (isset($meses[$fecha['mes']])) {
+                                        echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
+                                             . $meses[$fecha['mes']] 
+                                             . "</option>";
+                                    }
+                                }
+                                if($anioActual !== null) echo "</optgroup>";
+                                ?>
+                            </select>
+                            <!-- Campo oculto para el año -->
+                            <input type="hidden" id="filtroAnio" name="filtroAnio" value="">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end space-x-2 mt-4">
+                        <button type="button" id="limpiarFiltros" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                            <i class="fas fa-undo mr-2"></i>Limpiar filtros
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
         <table class="tabla">
