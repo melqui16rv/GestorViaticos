@@ -166,7 +166,7 @@ function cargarAsesoramientosAso() {
                         <td>
                             <div class='aso-action-buttons'>
                                 <button class='aso-btn-icon edit' onclick='editAso(${JSON.stringify(a)})' title='Editar'><i class='fas fa-edit'></i></button>
-                                <form method='POST' style='display:inline;'>
+                                <form method='POST' style='display:inline;' onsubmit="return confirm('¿Está seguro de eliminar este asesoramiento?');">
                                     <input type='hidden' name='id' value='${a.id_asesoramiendo}'>
                                     <input type='hidden' name='action' value='delete'>
                                     <button type='submit' class='aso-btn-icon delete' title='Eliminar'><i class='fas fa-trash-alt'></i></button>
