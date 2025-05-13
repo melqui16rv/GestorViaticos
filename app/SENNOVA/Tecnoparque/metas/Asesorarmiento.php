@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
 $metas = new metas_tecnoparque();
 
-// --- Manejo de acciones POST ---
+// CRUD exclusivo para asesoramiento
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     if ($action === 'create') {
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// --- Obtener datos para mostrar ---
+// Obtener datos solo de asesoramiento
 $asesoramientos = $metas->obtenerAsesoramientos();
 $indicadores = $metas->obtenerIndicadoresAsesoramiento();
 
@@ -43,6 +43,7 @@ function formatearFechaAso($fecha) {
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <div class="dashboard-container">
+    <h2 class="text-xl font-bold mb-4">Dashboard de Asesoramiento</h2>
     <a href="javascript:void(0);" id="toggleFormButtonAso" class="actualizar-tabla-link inline-block">
         <button type="button" class="actualizar-tabla-btn">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -181,7 +182,7 @@ function resetFormAso() {
     document.getElementById('toggleFormButtonTextAso').textContent = 'Agregar Asesoramiento';
 }
 
-// Gráficas
+// Gráficas exclusivas de asesoramiento
 document.addEventListener('DOMContentLoaded', function() {
     // Por Tipo
     const ctxTipo = document.getElementById('graficaAsoTipo').getContext('2d');

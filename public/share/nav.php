@@ -753,10 +753,16 @@ body::-webkit-scrollbar {
                             <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
-                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                Panel - SENNOVA
-                            </a>
-                        </li>
+                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
+                                    Panel - SENNOVA
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
+                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
+                                    Panel - Metas
+                                </a>
+                            </li>
                         <!-- Puedes agregar más opciones aquí para el rol 4 -->
                         <?php endif; ?>
                         <!-- ----- fin para rol 4--------- -->
