@@ -117,7 +117,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </button>
     </a>
     
-    <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
+    <form id="formVisitasApreUnique" method="POST" action="VisitasApre.php" class="formulario formulario-visitasapre" style="display: none;">
         <input type="hidden" name="action" id="actionVisitasApre" value="create">
         <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
         <div class="form-group">
@@ -245,7 +245,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 <button class="btn-icon edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <form method="POST" style="display:inline;">
+                                <form method="POST" action="VisitasApre.php" style="display:inline;">
                                     <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
                                     <input type="hidden" name="action" value="delete">
                                     <button type="submit" class="btn-icon delete" title="Eliminar">
@@ -621,7 +621,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         <button class="btn-icon edit" onclick='editVisita(${JSON.stringify(visita)})' title="Editar">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <form method="POST" style="display:inline;">
+                        <form method="POST" action="VisitasApre.php" style="display:inline;">
                             <input type="hidden" name="id_visita" value="${visita.id_visita}">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit" class="btn-icon delete" title="Eliminar">
