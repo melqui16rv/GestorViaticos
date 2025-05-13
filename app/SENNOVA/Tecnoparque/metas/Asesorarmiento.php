@@ -42,17 +42,17 @@ function formatearFechaAso($fecha) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="dashboard-container" id="dashboardContentAso">
-    <div class="aso-indicadores">
-        <div class="aso-indicador" style="background-color:#fde2e2;">
+    <div class="indicadores">
+        <div class="indicador" style="background-color:#fde2e2;">
             <h3>Meta Asociaciones</h3>
             <p id="aso-metaAsoAsociaciones">0 / 5</p>
         </div>
-        <div class="aso-indicador" style="background-color:#fce1a8;">
+        <div class="indicador" style="background-color:#fce1a8;">
             <h3>Meta Cooperativa</h3>
             <p id="aso-metaAsoCooperativa">0 / 1</p>
         </div>
     </div>
-    <div class="aso-tabla-card mb-8" id="aso-tablaCardAso">
+    <div class="tabla-card mb-8" id="aso-tablaCardAso">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Tabla de Asesoramientos</h2>
             <a href="javascript:void(0);" id="aso-toggleFormButtonAso" class="actualizar-tabla-link inline-block">
@@ -64,7 +64,7 @@ function formatearFechaAso($fecha) {
                 </button>
             </a>
         </div>
-        <form id="aso-formAso" method="POST" class="aso-formulario" style="display: none;">
+        <form id="aso-formAso" method="POST" class="formulario" style="display: none;">
             <input type="hidden" name="action" id="aso-actionAso" value="create">
             <input type="hidden" name="id" id="aso-idAso">
             <div class="form-group">
@@ -91,8 +91,8 @@ function formatearFechaAso($fecha) {
                 <button type="reset" class="btn btn-secondary" onclick="resetFormAso()">Cancelar</button>
             </div>
         </form>
-        <div class="aso-tabla-outer">
-            <table class="aso-tabla">
+        <div class="tabla-outer">
+            <table class="tabla">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -104,8 +104,8 @@ function formatearFechaAso($fecha) {
                     </tr>
                 </thead>
             </table>
-            <div class="aso-tabla-scroll">
-                <table class="aso-tabla">
+            <div class="tabla-scroll">
+                <table class="tabla">
                     <tbody id="aso-tbodyAsesoramientos">
                         <!-- AJAX -->
                     </tbody>
@@ -113,21 +113,21 @@ function formatearFechaAso($fecha) {
             </div>
         </div>
     </div>
-    <div class="aso-flex gap-6 mb-6">
-        <div class="aso-stat-item">
-            <div class="aso-stat-label font-semibold">Por Tipo</div>
+    <div class="flex gap-6 mb-6">
+        <div class="stat-item">
+            <div class="stat-label font-semibold">Por Tipo</div>
             <div id="aso-indicadorPorTipoAso"></div>
         </div>
-        <div class="aso-stat-item">
-            <div class="aso-stat-label font-semibold">Por Encargado</div>
+        <div class="stat-item">
+            <div class="stat-label font-semibold">Por Encargado</div>
             <div id="aso-indicadorPorEncargadoAso"></div>
         </div>
     </div>
-    <div class="aso-chart-wrapper mb-6">
+    <div class="chart-container mb-6">
         <h2 class="text-xl font-semibold mb-2">Asesoramientos por Tipo</h2>
         <canvas id="aso-graficaAsoTipo"></canvas>
     </div>
-    <div class="aso-chart-wrapper mb-6">
+    <div class="chart-container mb-6">
         <h2 class="text-xl font-semibold mb-2">Asesoramientos por Encargado</h2>
         <canvas id="aso-graficaAsoEncargado"></canvas>
     </div>
