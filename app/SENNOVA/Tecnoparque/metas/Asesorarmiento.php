@@ -53,6 +53,18 @@ function formatearFechaAso($fecha) {
             <h3>Meta Cooperativa</h3>
             <p id="aso-metaAsoCooperativa">0 / 1</p>
         </div>
+        <div class="indicador">
+            <h3>Total Asesoramientos</h3>
+            <p id="aso-indicadorTotalAso">0</p>
+        </div>
+        <div class="indicador">
+            <h3>Asociaciones</h3>
+            <p id="aso-indicadorTipoAso1">0</p>
+        </div>
+        <div class="indicador">
+            <h3>Cooperativa</h3>
+            <p id="aso-indicadorTipoAso2">0</p>
+        </div>
     </div>
     <div class="tabla-card mb-8" id="aso-tablaCardAso">
         <div class="flex justify-between items-center mb-4">
