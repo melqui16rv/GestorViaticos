@@ -91,6 +91,77 @@
     background-color: #cbd5e1;
 }
 
+/* Formulario asesoramiento adaptado de Visitas */
+#formAso,
+.formulario-asesoramiento {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#formAso .form-group,
+.formulario-asesoramiento .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+#formAso .form-group label,
+.formulario-asesoramiento .form-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #374151;
+}
+#formAso .form-group input,
+#formAso .form-group select,
+.formulario-asesoramiento .form-group input,
+.formulario-asesoramiento .form-group select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    width: 100%;
+}
+#formAso .form-buttons,
+.formulario-asesoramiento .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#formAso .btn,
+.formulario-asesoramiento .btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#formAso .btn-primary,
+.formulario-asesoramiento .btn-primary {
+    background-color: #2563eb;
+    color: white;
+    border: none;
+}
+#formAso .btn-primary:hover,
+.formulario-asesoramiento .btn-primary:hover {
+    background-color: #1e40af;
+}
+#formAso .btn-secondary,
+.formulario-asesoramiento .btn-secondary {
+    background-color: #e2e8f0;
+    color: #1e293b;
+    border: none;
+}
+#formAso .btn-secondary:hover,
+.formulario-asesoramiento .btn-secondary:hover {
+    background-color: #cbd5e1;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .formulario-asesoramiento {
@@ -104,6 +175,24 @@
         flex-direction: column;
         gap: 5px;
     }
+    .formulario-asesoramiento .btn {
+        width: 100%;
+    }
+    #formAso,
+    .formulario-asesoramiento {
+        padding: 15px;
+        width: 90%;
+    }
+    #formAso .form-group,
+    .formulario-asesoramiento .form-group {
+        margin-bottom: 10px;
+    }
+    #formAso .form-buttons,
+    .formulario-asesoramiento .form-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+    #formAso .btn,
     .formulario-asesoramiento .btn {
         width: 100%;
     }
