@@ -1,0 +1,140 @@
+/* Estilos exclusivos para Asesoramiento, basados en VisitasApre pero con prefijo .aso- para evitar conflictos */
+.aso-tabla-outer {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.aso-tabla-outer > table.aso-tabla {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+.aso-tabla-outer > table.aso-tabla thead th:first-child {
+    border-top-left-radius: 12px;
+}
+.aso-tabla-outer > table.aso-tabla thead th:last-child {
+    border-top-right-radius: 12px;
+}
+.aso-tabla-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+.aso-tabla-scroll table.aso-tabla {
+    border-top: none;
+}
+.aso-tabla-scroll tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+.aso-tabla-scroll tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+.aso-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.aso-tabla th,
+.aso-tabla td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+.aso-tabla th {
+    background: #2563eb;
+    color: #fff;
+    font-weight: bold;
+}
+.aso-tabla tr:hover {
+    background: #f1f5f9;
+}
+.aso-action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+.aso-btn-icon {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+.aso-btn-icon.edit {
+    background-color: #3b82f6;
+    color: white;
+}
+.aso-btn-icon.edit:hover {
+    background-color: #2563eb;
+}
+.aso-btn-icon.delete {
+    background-color: #ef4444;
+    color: white;
+}
+.aso-btn-icon.delete:hover {
+    background-color: #dc2626;
+}
+/* Formulario exclusivo asesoramiento */
+#formAso {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#formAso .form-group label {
+    font-weight: bold;
+    color: #1e293b;
+}
+#formAso .form-group input,
+#formAso .form-group select {
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    width: 100%;
+    margin-top: 0.5rem;
+}
+#formAso .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+#formAso .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#formAso .btn-primary:hover {
+    background: #1e40af;
+}
+#formAso .btn-secondary {
+    background: #e2e8f0;
+    color: #1e293b;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#formAso .btn-secondary:hover {
+    background: #cbd5e1;
+}

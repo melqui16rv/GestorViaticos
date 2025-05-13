@@ -35,13 +35,14 @@ function formatearFechaAso($fecha) {
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/sennova/tecnoparque/asesoramientoStyle.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="dashboard-container" id="dashboardContentAso">
-    <div class="stats-card" id="statsCardAso">
+    <div class="stats-card" id="statsCardAso"></div>
         <div class="flex flex-wrap gap-6 mb-6">
             <div class="stat-item">
                 <div class="stat-value text-blue-700" id="indicadorTotalAso">0</div>
@@ -55,6 +56,16 @@ function formatearFechaAso($fecha) {
                 <div class="stat-value text-yellow-700" id="indicadorTipoAso2">0</div>
                 <div class="stat-label">Cooperativa</div>
             </div>
+        </div>
+    </div>
+    <div class="indicadores">
+        <div class="indicador" style="background-color:#fde2e2;">
+            <h3>Meta Asociaciones</h3>
+            <p id="metaAsoAsociaciones">0 / 5</p>
+        </div>
+        <div class="indicador" style="background-color:#fce1a8;">
+            <h3>Meta Cooperativa</h3>
+            <p id="metaAsoCooperativa">0 / 1</p>
         </div>
     </div>
     <div class="tabla-card mb-8" id="tablaCardAso">
@@ -96,8 +107,8 @@ function formatearFechaAso($fecha) {
                 <button type="reset" class="btn btn-secondary" onclick="resetFormAso()">Cancelar</button>
             </div>
         </form>
-        <div class="grafica-table-wrapper">
-            <table class="styled-table" id="styledTableAso">
+        <div class="aso-tabla-outer">
+            <table class="aso-tabla">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -108,10 +119,14 @@ function formatearFechaAso($fecha) {
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody id="tbodyAsesoramientos">
-                    <!-- AJAX -->
-                </tbody>
             </table>
+            <div class="aso-tabla-scroll">
+                <table class="aso-tabla">
+                    <tbody id="tbodyAsesoramientos">
+                        <!-- AJAX -->
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="flex flex-wrap gap-6 mb-6">
@@ -165,12 +180,12 @@ function cargarAsesoramientosAso() {
                         <td>${a.nombreEntidadImpacto}</td>
                         <td>${formatearFechaAso(a.fechaAsesoramiento)}</td>
                         <td>
-                            <div class='action-buttons'>
-                                <button class='btn-icon edit' onclick='editAso(${JSON.stringify(a)})' title='Editar'><i class='fas fa-edit'></i></button>
+                            <div class='aso-action-buttons'>
+                                <button class='aso-btn-icon edit' onclick='editAso(${JSON.stringify(a)})' title='Editar'><i class='fas fa-edit'></i></button>
                                 <form method='POST' style='display:inline;'>
                                     <input type='hidden' name='id' value='${a.id_asesoramiendo}'>
                                     <input type='hidden' name='action' value='delete'>
-                                    <button type='submit' class='btn-icon delete' title='Eliminar'><i class='fas fa-trash-alt'></i></button>
+                                    <button type='submit' class='aso-btn-icon delete' title='Eliminar'><i class='fas fa-trash-alt'></i></button>
                                 </form>
                             </div>
                         </td>
@@ -181,6 +196,9 @@ function cargarAsesoramientosAso() {
                 $('#indicadorTotalAso').text(resp.indicadores.total);
                 $('#indicadorTipoAso1').text(tipo1);
                 $('#indicadorTipoAso2').text(tipo2);
+                // Indicadores de meta
+                $('#metaAsoAsociaciones').text(tipo1 + ' / 5');
+                $('#metaAsoCooperativa').text(tipo2 + ' / 1');
                 let porTipo = '';
                 Object.entries(resp.indicadores.por_tipo).forEach(([tipo, cant]) => {
                     porTipo += `${tipo}: ${cant}<br>`;
