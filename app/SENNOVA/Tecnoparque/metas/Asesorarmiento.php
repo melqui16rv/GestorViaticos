@@ -40,8 +40,8 @@ function formatearFechaAso($fecha) {
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<div class="dashboard-container" id="dashboardContent">
-    <div class="stats-card">
+<div class="dashboard-container" id="dashboardContentAso">
+    <div class="stats-card" id="statsCardAso">
         <div class="flex flex-wrap gap-6 mb-6">
             <div class="stat-item">
                 <div class="stat-value text-blue-700" id="indicadorTotalAso">0</div>
@@ -57,7 +57,7 @@ function formatearFechaAso($fecha) {
             </div>
         </div>
     </div>
-    <div class="tabla-card mb-8">
+    <div class="tabla-card mb-8" id="tablaCardAso">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Tabla de Asesoramientos</h2>
             <a href="javascript:void(0);" id="toggleFormButtonAso" class="actualizar-tabla-link inline-block">
@@ -83,7 +83,7 @@ function formatearFechaAso($fecha) {
                 <label for="encargadoAso">Encargado:</label>
                 <input type="text" id="encargadoAso" name="encargado" required>
             </div>
-            <div class="form-group"></div>
+            <div class="form-group">
                 <label for="entidadAso">Entidad Impactada:</label>
                 <input type="text" id="entidadAso" name="entidad" required>
             </div>
@@ -97,7 +97,7 @@ function formatearFechaAso($fecha) {
             </div>
         </form>
         <div class="grafica-table-wrapper">
-            <table class="styled-table">
+            <table class="styled-table" id="styledTableAso">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -144,7 +144,7 @@ function formatearFechaAso(fecha) {
     return `${dia} de ${mes} ${anio}<br>${hora}`;
 }
 
-function cargarAsesoramientos() {
+function cargarAsesoramientosAso() {
     $.ajax({
         url: 'obtener_asesoramientos.php',
         method: 'POST',
@@ -286,6 +286,6 @@ function resetFormAso() {
 
 // Inicializar tabla e indicadores al cargar
 $(document).ready(function() {
-    cargarAsesoramientos();
+    cargarAsesoramientosAso();
 });
 </script>
