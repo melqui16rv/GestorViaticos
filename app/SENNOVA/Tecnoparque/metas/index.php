@@ -173,8 +173,8 @@ requireRole(['4', '5', '6']);
             <div id="dashboardAsesorarAsociaciones" style="display:none;">
                 <?php require_once './AsesorarAso.php'; ?>
             </div>
-            <div id="dashboardAsesorarAprendices" style="display:none;">
-                <?php require_once './AsesorarApre.php'; ?>
+            <div id="dashboardAsesorar" style="display:none;">
+                <?php require_once './Asesoramiento.php'; ?>
             </div>
             <div id="dashboardExtensionismo" style="display:none;">
                 <?php require_once './ProyectosExt.php'; ?>
@@ -211,7 +211,7 @@ requireRole(['4', '5', '6']);
         const dashboards = {
             proyectosTecnologicos: document.getElementById('dashboardProyectosTecnologicos'),
             asesorarAsociaciones: document.getElementById('dashboardAsesorarAsociaciones'),
-            asesorarAprendices: document.getElementById('dashboardAsesorarAprendices'),
+            asesorarAprendices: document.getElementById('dashboardAsesorar'),
             extensionismo: document.getElementById('dashboardExtensionismo'),
             visitasAprendices: document.getElementById('dashboardVisitasAprendices')
         };
