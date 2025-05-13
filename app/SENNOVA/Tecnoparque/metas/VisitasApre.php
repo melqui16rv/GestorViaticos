@@ -117,7 +117,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </button>
     </a>
     
-    <form id="formVisitasApreUnique" method="POST" action="VisitasApre.php" class="formulario formulario-visitasapre" style="display: none;">
+    <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
         <input type="hidden" name="action" id="actionVisitasApre" value="create">
         <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
         <div class="form-group">
@@ -245,7 +245,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 <button class="btn-icon edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)" title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <form method="POST" action="VisitasApre.php" style="display:inline;">
+                                <form class="form-delete-visita" method="POST" style="display:inline;">
                                     <input type="hidden" name="id_visita" value="<?php echo $visita['id_visita']; ?>">
                                     <input type="hidden" name="action" value="delete">
                                     <button type="submit" class="btn-icon delete" title="Eliminar">
@@ -752,6 +752,41 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         
         return `${dia} de ${mes} ${anio}<br>${hora}`;
     }
+
+    // Interceptar submit del formulario para AJAX
+    document.getElementById('formVisitasApreUnique').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+        $.ajax({
+            url: 'VisitasApre.php',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function() {
+                resetFormVisitasApre();
+                actualizarTabla();
+            }
+        });
+    });
+
+    // Interceptar submit de eliminar para AJAX
+    $(document).on('submit', '.form-delete-visita', function(e) {
+        e.preventDefault();
+        const form = this;
+        const formData = new FormData(form);
+        $.ajax({
+            url: 'VisitasApre.php',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function() {
+                actualizarTabla();
+            }
+        });
+    });
 </script>
 
 <!-- Agregar SweetAlert2 para mensajes más amigables -->
