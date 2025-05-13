@@ -34,73 +34,57 @@ function formatearFechaAso($fecha) {
 }
 ?>
 <head>
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
-<link rel="stylesheet" href="<?php echo BASE_URL; ?>/assets/css/sennova/tecnoparque/asesoramientoStyle.css">
+<link rel="stylesheet" href="/assets/css/sennova/tecnoparque/metas.css">
+<link rel="stylesheet" href="/assets/css/sennova/tecnoparque/asesoramientoStyle.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="dashboard-container" id="dashboardContentAso">
-    <div class="stats-card" id="statsCardAso"></div>
-        <div class="flex flex-wrap gap-6 mb-6">
-            <div class="stat-item">
-                <div class="stat-value text-blue-700" id="indicadorTotalAso">0</div>
-                <div class="stat-label">Total Asesoramientos</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value text-green-700" id="indicadorTipoAso1">0</div>
-                <div class="stat-label">Asociaciones</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value text-yellow-700" id="indicadorTipoAso2">0</div>
-                <div class="stat-label">Cooperativa</div>
-            </div>
-        </div>
-    </div>
-    <div class="indicadores">
-        <div class="indicador" style="background-color:#fde2e2;">
+    <div class="aso-indicadores">
+        <div class="aso-indicador" style="background-color:#fde2e2;">
             <h3>Meta Asociaciones</h3>
-            <p id="metaAsoAsociaciones">0 / 5</p>
+            <p id="aso-metaAsoAsociaciones">0 / 5</p>
         </div>
-        <div class="indicador" style="background-color:#fce1a8;">
+        <div class="aso-indicador" style="background-color:#fce1a8;">
             <h3>Meta Cooperativa</h3>
-            <p id="metaAsoCooperativa">0 / 1</p>
+            <p id="aso-metaAsoCooperativa">0 / 1</p>
         </div>
     </div>
-    <div class="tabla-card mb-8" id="tablaCardAso">
+    <div class="aso-tabla-card mb-8" id="aso-tablaCardAso">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Tabla de Asesoramientos</h2>
-            <a href="javascript:void(0);" id="toggleFormButtonAso" class="actualizar-tabla-link inline-block">
+            <a href="javascript:void(0);" id="aso-toggleFormButtonAso" class="actualizar-tabla-link inline-block">
                 <button type="button" class="actualizar-tabla-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
                     </svg>
-                    <span id="toggleFormButtonTextAso">Agregar Asesoramiento</span>
+                    <span id="aso-toggleFormButtonTextAso">Agregar Asesoramiento</span>
                 </button>
             </a>
         </div>
-        <form id="formAso" method="POST" class="formulario" style="display: none;">
-            <input type="hidden" name="action" id="actionAso" value="create">
-            <input type="hidden" name="id" id="idAso">
+        <form id="aso-formAso" method="POST" class="aso-formulario" style="display: none;">
+            <input type="hidden" name="action" id="aso-actionAso" value="create">
+            <input type="hidden" name="id" id="aso-idAso">
             <div class="form-group">
-                <label for="tipoAso">Tipo:</label>
-                <select id="tipoAso" name="tipo" required>
+                <label for="aso-tipoAso">Tipo:</label>
+                <select id="aso-tipoAso" name="tipo" required>
                     <option value="Asociaciones">Asociaciones</option>
                     <option value="Cooperativa">Cooperativa</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="encargadoAso">Encargado:</label>
-                <input type="text" id="encargadoAso" name="encargado" required>
+                <label for="aso-encargadoAso">Encargado:</label>
+                <input type="text" id="aso-encargadoAso" name="encargado" required>
             </div>
             <div class="form-group">
-                <label for="entidadAso">Entidad Impactada:</label>
-                <input type="text" id="entidadAso" name="entidad" required>
+                <label for="aso-entidadAso">Entidad Impactada:</label>
+                <input type="text" id="aso-entidadAso" name="entidad" required>
             </div>
             <div class="form-group">
-                <label for="fechaAso">Fecha de Asesoramiento:</label>
-                <input type="datetime-local" id="fechaAso" name="fecha" required>
+                <label for="aso-fechaAso">Fecha de Asesoramiento:</label>
+                <input type="datetime-local" id="aso-fechaAso" name="fecha" required>
             </div>
             <div class="form-buttons">
                 <button type="submit" class="btn btn-primary">Guardar</button>
@@ -122,30 +106,30 @@ function formatearFechaAso($fecha) {
             </table>
             <div class="aso-tabla-scroll">
                 <table class="aso-tabla">
-                    <tbody id="tbodyAsesoramientos">
+                    <tbody id="aso-tbodyAsesoramientos">
                         <!-- AJAX -->
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <div class="flex flex-wrap gap-6 mb-6">
-        <div class="stat-item">
-            <div class="stat-label font-semibold">Por Tipo</div>
-            <div id="indicadorPorTipoAso"></div>
+    <div class="aso-flex gap-6 mb-6">
+        <div class="aso-stat-item">
+            <div class="aso-stat-label font-semibold">Por Tipo</div>
+            <div id="aso-indicadorPorTipoAso"></div>
         </div>
-        <div class="stat-item">
-            <div class="stat-label font-semibold">Por Encargado</div>
-            <div id="indicadorPorEncargadoAso"></div>
+        <div class="aso-stat-item">
+            <div class="aso-stat-label font-semibold">Por Encargado</div>
+            <div id="aso-indicadorPorEncargadoAso"></div>
         </div>
     </div>
-    <div class="chart-wrapper mb-6">
+    <div class="aso-chart-wrapper mb-6">
         <h2 class="text-xl font-semibold mb-2">Asesoramientos por Tipo</h2>
-        <canvas id="graficaAsoTipo"></canvas>
+        <canvas id="aso-graficaAsoTipo"></canvas>
     </div>
-    <div class="chart-wrapper mb-6">
+    <div class="aso-chart-wrapper mb-6">
         <h2 class="text-xl font-semibold mb-2">Asesoramientos por Encargado</h2>
-        <canvas id="graficaAsoEncargado"></canvas>
+        <canvas id="aso-graficaAsoEncargado"></canvas>
     </div>
 </div>
 <script>
@@ -191,24 +175,24 @@ function cargarAsesoramientosAso() {
                         </td>
                     </tr>`;
                 });
-                $('#tbodyAsesoramientos').html(html);
+                $('#aso-tbodyAsesoramientos').html(html);
                 // Indicadores
-                $('#indicadorTotalAso').text(resp.indicadores.total);
-                $('#indicadorTipoAso1').text(tipo1);
-                $('#indicadorTipoAso2').text(tipo2);
+                $('#aso-indicadorTotalAso').text(resp.indicadores.total);
+                $('#aso-indicadorTipoAso1').text(tipo1);
+                $('#aso-indicadorTipoAso2').text(tipo2);
                 // Indicadores de meta
-                $('#metaAsoAsociaciones').text(tipo1 + ' / 5');
-                $('#metaAsoCooperativa').text(tipo2 + ' / 1');
+                $('#aso-metaAsoAsociaciones').text(tipo1 + ' / 5');
+                $('#aso-metaAsoCooperativa').text(tipo2 + ' / 1');
                 let porTipo = '';
                 Object.entries(resp.indicadores.por_tipo).forEach(([tipo, cant]) => {
                     porTipo += `${tipo}: ${cant}<br>`;
                 });
-                $('#indicadorPorTipoAso').html(porTipo);
+                $('#aso-indicadorPorTipoAso').html(porTipo);
                 let porEnc = '';
                 Object.entries(resp.indicadores.por_encargado).forEach(([enc, cant]) => {
                     porEnc += `${enc}: ${cant}<br>`;
                 });
-                $('#indicadorPorEncargadoAso').html(porEnc);
+                $('#aso-indicadorPorEncargadoAso').html(porEnc);
                 // Gráficas
                 renderGraficasAso(resp.indicadores);
             }
@@ -228,7 +212,7 @@ function renderGraficasAso(indicadores) {
     const verdeBorde = 'rgba(34,197,94,1)';
     // Por Tipo
     if (graficaAsoTipo) graficaAsoTipo.destroy();
-    const ctxTipo = document.getElementById('graficaAsoTipo').getContext('2d');
+    const ctxTipo = document.getElementById('aso-graficaAsoTipo').getContext('2d');
     graficaAsoTipo = new Chart(ctxTipo, {
         type: 'pie',
         data: {
@@ -249,7 +233,7 @@ function renderGraficasAso(indicadores) {
     });
     // Por Encargado
     if (graficaAsoEncargado) graficaAsoEncargado.destroy();
-    const ctxEnc = document.getElementById('graficaAsoEncargado').getContext('2d');
+    const ctxEnc = document.getElementById('aso-graficaAsoEncargado').getContext('2d');
     graficaAsoEncargado = new Chart(ctxEnc, {
         type: 'bar',
         data: {
@@ -274,9 +258,9 @@ function renderGraficasAso(indicadores) {
     });
 }
 
-document.getElementById('toggleFormButtonAso').addEventListener('click', function() {
-    const form = document.getElementById('formAso');
-    const buttonText = document.getElementById('toggleFormButtonTextAso');
+document.getElementById('aso-toggleFormButtonAso').addEventListener('click', function() {
+    const form = document.getElementById('aso-formAso');
+    const buttonText = document.getElementById('aso-toggleFormButtonTextAso');
     if (form.style.display === 'none' || form.style.display === '') {
         form.style.display = 'block';
         buttonText.textContent = 'Agregar Asesoramiento';
@@ -285,21 +269,21 @@ document.getElementById('toggleFormButtonAso').addEventListener('click', functio
     }
 });
 function editAso(a) {
-    document.getElementById('idAso').value = a.id_asesoramiendo;
-    document.getElementById('tipoAso').value = a.tipo;
-    document.getElementById('encargadoAso').value = a.encargadoAsesoramiento;
-    document.getElementById('entidadAso').value = a.nombreEntidadImpacto;
-    document.getElementById('fechaAso').value = a.fechaAsesoramiento.replace(' ', 'T');
-    document.getElementById('actionAso').value = 'update';
-    document.getElementById('formAso').style.display = 'block';
-    document.getElementById('toggleFormButtonTextAso').textContent = 'Editar Asesoramiento';
+    document.getElementById('aso-idAso').value = a.id_asesoramiendo;
+    document.getElementById('aso-tipoAso').value = a.tipo;
+    document.getElementById('aso-encargadoAso').value = a.encargadoAsesoramiento;
+    document.getElementById('aso-entidadAso').value = a.nombreEntidadImpacto;
+    document.getElementById('aso-fechaAso').value = a.fechaAsesoramiento.replace(' ', 'T');
+    document.getElementById('aso-actionAso').value = 'update';
+    document.getElementById('aso-formAso').style.display = 'block';
+    document.getElementById('aso-toggleFormButtonTextAso').textContent = 'Editar Asesoramiento';
 }
 function resetFormAso() {
-    document.getElementById('formAso').reset();
-    document.getElementById('idAso').value = '';
-    document.getElementById('actionAso').value = 'create';
-    document.getElementById('formAso').style.display = 'none';
-    document.getElementById('toggleFormButtonTextAso').textContent = 'Agregar Asesoramiento';
+    document.getElementById('aso-formAso').reset();
+    document.getElementById('aso-idAso').value = '';
+    document.getElementById('aso-actionAso').value = 'create';
+    document.getElementById('aso-formAso').style.display = 'none';
+    document.getElementById('aso-toggleFormButtonTextAso').textContent = 'Agregar Asesoramiento';
 }
 
 // Inicializar tabla e indicadores al cargar
