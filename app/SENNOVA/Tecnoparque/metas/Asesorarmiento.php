@@ -153,7 +153,7 @@ function cargarAsesoramientosAso() {
         data: JSON.stringify({}),
         success: function(resp) {
             if (resp.success) {
-                // Tabla
+                // Solo manipular el tbody de asesoramiento
                 let html = '';
                 let tipo1 = 0, tipo2 = 0;
                 resp.data.forEach(a => {
@@ -177,6 +177,7 @@ function cargarAsesoramientosAso() {
                         </td>
                     </tr>`;
                 });
+                // Refuerzo: solo este tbody
                 $('#aso-tbodyAsesoramientos').html(html);
                 // Indicadores
                 $('#aso-indicadorTotalAso').text(resp.indicadores.total);
@@ -291,5 +292,9 @@ function resetFormAso() {
 // Inicializar tabla e indicadores al cargar
 $(document).ready(function() {
     cargarAsesoramientosAso();
+    // Refuerzo: forzar cookie al enviar el formulario
+    $('#aso-formAso').on('submit', function(e) {
+        document.cookie = 'tecnoparque_metas_vista=asesoramiento; path=/; max-age=' + (60*60*24*30);
+    });
 });
 </script>
