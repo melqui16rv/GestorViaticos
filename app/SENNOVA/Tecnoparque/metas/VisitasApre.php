@@ -108,14 +108,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <div class="dashboard-container">
-    <a href="javascript:void(0);" id="toggleFormButtonVisitas" class="actualizar-tabla-link inline-block">
-        <button type="button" class="actualizar-tabla-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            <span id="toggleFormButtonText">Agregar Visita</span>
-        </button>
-    </a>
     
     <form id="formVisitasApre" method="POST" class="formulario" style="display: none;">
         <input type="hidden" name="action" id="actionVisitas" value="create">
