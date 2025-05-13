@@ -107,34 +107,34 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <!-- Agregar SweetAlert2 -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<div class="dashboard-container">
-    <a href="javascript:void(0);" id="toggleFormButtonVisitas" class="actualizar-tabla-link inline-block">
+<div class="dashboard-container" id="dashboardVisitasApre">
+    <a href="javascript:void(0);" id="toggleFormButtonVisitasApre" class="actualizar-tabla-link inline-block">
         <button type="button" class="actualizar-tabla-btn">
             <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
-            <span id="toggleFormButtonText">Agregar Visita</span>
+            <span id="toggleFormButtonTextVisitasApre">Agregar Visita</span>
         </button>
     </a>
     
-    <form id="formVisitasApre" method="POST" class="formulario" style="display: none;">
-        <input type="hidden" name="action" id="actionVisitas" value="create">
-        <input type="hidden" name="id_visita" id="id_visitaVisitas">
+    <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
+        <input type="hidden" name="action" id="actionVisitasApre" value="create">
+        <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
         <div class="form-group">
-            <label for="encargadoVisitas">Encargado:</label>
-            <input type="text" id="encargadoVisitas" name="encargado" required>
+            <label for="encargadoVisitasApre">Encargado:</label>
+            <input type="text" id="encargadoVisitasApre" name="encargado" required>
         </div>
         <div class="form-group">
-            <label for="numAsistentesVisitas">Número de Asistentes:</label>
-            <input type="number" id="numAsistentesVisitas" name="numAsistentes" required>
+            <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
+            <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
         </div>
         <div class="form-group">
-            <label for="fechaCharlaVisitas">Fecha de la Charla:</label>
-            <input type="datetime-local" id="fechaCharlaVisitas" name="fechaCharla" required>
+            <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
+            <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
         </div>
         <div class="form-buttons">
             <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-secondary" onclick="resetFormVisitas()">Cancelar</button>
+            <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
         </div>
     </form>
     
@@ -142,19 +142,19 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         <div class="bg-white rounded-lg shadow-md mb-6">
             <div class="p-6">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Filtros de Búsqueda</h2>
-                <form id="filtroForm" class="space-y-4">
+                <form id="filtroFormVisitasApre" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <div>
-                            <label for="ordenRegistros" class="block text-gray-700 text-sm font-bold mb-2">Orden</label>
-                            <select id="ordenRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                            <label for="ordenRegistrosVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Orden</label>
+                            <select id="ordenRegistrosVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="DESC">Más recientes primero</option>
                                 <option value="ASC">Más antiguos primero</option>
                             </select>
                         </div>
 
                         <div>
-                            <label for="limiteRegistros" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
-                            <select id="limiteRegistros" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                            <label for="limiteRegistrosVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
+                            <select id="limiteRegistrosVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="30">30 registros</option>
                                 <option value="50">50 registros</option>
                                 <option value="70">70 registros</option>
@@ -163,8 +163,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         </div>
 
                         <div>
-                            <label for="filtroEncargado" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
-                            <select id="filtroEncargado" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                            <label for="filtroEncargadoVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
+                            <select id="filtroEncargadoVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="">Todos</option>
                                 <?php 
                                 $encargados = $metas->obtenerEncargadosUnicos();
@@ -176,8 +176,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         </div>
 
                         <div>
-                            <label for="filtroMes" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
-                            <select id="filtroMes" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
+                            <label for="filtroMesVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
+                            <select id="filtroMesVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
                                 <option value="">Todos</option>
                                 <?php 
                                 // Definir los nombres de los meses
@@ -205,12 +205,12 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 ?>
                             </select>
                             <!-- Campo oculto para el año -->
-                            <input type="hidden" id="filtroAnio" name="filtroAnio" value="">
+                            <input type="hidden" id="filtroAnioVisitasApre" name="filtroAnio" value="">
                         </div>
                     </div>
 
                     <div class="flex justify-end space-x-2 mt-4">
-                        <button type="button" id="limpiarFiltros" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                        <button type="button" id="limpiarFiltrosVisitasApre" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             <i class="fas fa-undo mr-2"></i>Limpiar filtros
                         </button>
                     </div>
@@ -233,7 +233,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         </table>
         <div class="tabla-scroll">
             <table class="tabla">
-                <tbody>
+                <tbody id="tbodyVisitasApre">
                     <?php foreach ($visitas as $visita): ?>
                     <tr>
                         <td style="width: 8%;"><?php echo htmlspecialchars($visita['id_visita']); ?></td>
@@ -289,18 +289,18 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     <!-- Gráficas existentes -->
     <div class="chart-container" style="height: 400px;">
         <h2>Nivel Impacto X Encargado</h2>
-        <canvas id="rankingChart"></canvas>
+        <canvas id="rankingChartVisitasApre"></canvas>
     </div>
 
     <!-- Nueva gráfica: Visitas por Encargado -->
     <div class="chart-container" style="height: 400px;">
         <h2>Visitas realizadas X Encargado</h2>
-        <canvas id="visitasPorEncargadoChart"></canvas>
+        <canvas id="visitasPorEncargadoChartVisitasApre"></canvas>
     </div>
     
     <div class="chart-container" style="height: 400px;">
         <h2>Visitas por Semana</h2>
-        <canvas id="semanalChart"></canvas>
+        <canvas id="semanalChartVisitasApre"></canvas>
     </div>
     
     <div style="text-align: center; margin: 20px 0;">
@@ -336,11 +336,11 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
     // --- IDs reales de los filtros ---
     const filtroIds = [
-        { id: 'ordenRegistros', cookie: 'tecnoparque_visitasapre_orden' },
-        { id: 'limiteRegistros', cookie: 'tecnoparque_visitasapre_limite' },
-        { id: 'filtroEncargado', cookie: 'tecnoparque_visitasapre_encargado' },
-        { id: 'filtroMes', cookie: 'tecnoparque_visitasapre_mes' },
-        { id: 'filtroAnio', cookie: 'tecnoparque_visitasapre_anio' }
+        { id: 'ordenRegistrosVisitasApre', cookie: 'tecnoparque_visitasapre_orden' },
+        { id: 'limiteRegistrosVisitasApre', cookie: 'tecnoparque_visitasapre_limite' },
+        { id: 'filtroEncargadoVisitasApre', cookie: 'tecnoparque_visitasapre_encargado' },
+        { id: 'filtroMesVisitasApre', cookie: 'tecnoparque_visitasapre_mes' },
+        { id: 'filtroAnioVisitasApre', cookie: 'tecnoparque_visitasapre_anio' }
     ];
 
     // --- Guardar cookies al cambiar filtros ---
@@ -364,10 +364,10 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 if (val !== null && val !== undefined && val !== "") {
                     el.value = val;
                     // Si es filtroMes, también actualiza filtroAnio si corresponde
-                    if (f.id === 'filtroMes') {
+                    if (f.id === 'filtroMesVisitasApre') {
                         const selectedOption = el.querySelector(`option[value="${val}"]`);
-                        if (selectedOption && document.getElementById('filtroAnio')) {
-                            document.getElementById('filtroAnio').value = selectedOption.getAttribute('data-anio') || '';
+                        if (selectedOption && document.getElementById('filtroAnioVisitasApre')) {
+                            document.getElementById('filtroAnioVisitasApre').value = selectedOption.getAttribute('data-anio') || '';
                         }
                     }
                 }
@@ -381,34 +381,34 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     }
 
     // Mostrar/ocultar formulario y cambiar texto del botón
-    document.getElementById('toggleFormButtonVisitas').addEventListener('click', function() {
-        const form = document.getElementById('formVisitasApre');
-        const buttonText = document.getElementById('toggleFormButtonText');
+    document.getElementById('toggleFormButtonVisitasApre').addEventListener('click', function() {
+        const form = document.getElementById('formVisitasApreUnique');
+        const buttonText = document.getElementById('toggleFormButtonTextVisitasApre');
         if (form.style.display === 'none' || form.style.display === '') {
             form.style.display = 'block';
             buttonText.textContent = 'Agregar Visita';
         } else {
-            resetFormVisitas();
+            resetFormVisitasApre();
         }
     });
 
     // Editar visita
     function editVisita(visita) {
-        document.getElementById('id_visitaVisitas').value = visita.id_visita;
-        document.getElementById('encargadoVisitas').value = visita.encargado;
-        document.getElementById('numAsistentesVisitas').value = visita.numAsistentes;
-        document.getElementById('fechaCharlaVisitas').value = visita.fechaCharla.replace(' ', 'T');
-        document.getElementById('actionVisitas').value = 'update';
-        document.getElementById('formVisitasApre').style.display = 'block';
-        document.getElementById('toggleFormButtonText').textContent = 'Editar Visita';
+        document.getElementById('id_visitaVisitasApre').value = visita.id_visita;
+        document.getElementById('encargadoVisitasApre').value = visita.encargado;
+        document.getElementById('numAsistentesVisitasApre').value = visita.numAsistentes;
+        document.getElementById('fechaCharlaVisitasApre').value = visita.fechaCharla.replace(' ', 'T');
+        document.getElementById('actionVisitasApre').value = 'update';
+        document.getElementById('formVisitasApreUnique').style.display = 'block';
+        document.getElementById('toggleFormButtonTextVisitasApre').textContent = 'Editar Visita';
     }
 
-    function resetFormVisitas() {
-        document.getElementById('formVisitasApre').reset();
-        document.getElementById('id_visitaVisitas').value = '';
-        document.getElementById('actionVisitas').value = 'create';
-        document.getElementById('formVisitasApre').style.display = 'none';
-        document.getElementById('toggleFormButtonText').textContent = 'Agregar Visita';
+    function resetFormVisitasApre() {
+        document.getElementById('formVisitasApreUnique').reset();
+        document.getElementById('id_visitaVisitasApre').value = '';
+        document.getElementById('actionVisitasApre').value = 'create';
+        document.getElementById('formVisitasApreUnique').style.display = 'none';
+        document.getElementById('toggleFormButtonTextVisitasApre').textContent = 'Agregar Visita';
     }
 
     // Declarar variables globales para evitar re-instanciación múltiple de gráficos
@@ -418,7 +418,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
     function initCharts() {
         // Ranking de Encargados
-        const ctxRanking = document.getElementById('rankingChart').getContext('2d');
+        const ctxRanking = document.getElementById('rankingChartVisitasApre').getContext('2d');
         if(rankingChartInstance){ rankingChartInstance.destroy(); }
         rankingChartInstance = new Chart(ctxRanking, {
             type: 'bar',
@@ -440,7 +440,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         });
 
         // Nueva gráfica: Visitas por Encargado
-        const ctxVisitasEncargado = document.getElementById('visitasPorEncargadoChart').getContext('2d');
+        const ctxVisitasEncargado = document.getElementById('visitasPorEncargadoChartVisitasApre').getContext('2d');
         if(visitasPorEncargadoChartInstance){ visitasPorEncargadoChartInstance.destroy(); }
         visitasPorEncargadoChartInstance = new Chart(ctxVisitasEncargado, {
             type: 'bar',
@@ -462,7 +462,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         });
 
         // Visitas por Semana con configuración mejorada
-        const ctxSemanal = document.getElementById('semanalChart').getContext('2d');
+        const ctxSemanal = document.getElementById('semanalChartVisitasApre').getContext('2d');
         if(semanalChartInstance){ semanalChartInstance.destroy(); }
         semanalChartInstance = new Chart(ctxSemanal, {
             type: 'line',
@@ -536,10 +536,10 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     // Función para actualizar la tabla según los filtros
     async function actualizarTabla() {
         try {
-            const ordenSelect = document.getElementById('ordenRegistros');
-            const limiteSelect = document.getElementById('limiteRegistros');
-            const encargadoSelect = document.getElementById('filtroEncargado');
-            const mesSelect = document.getElementById('filtroMes');
+            const ordenSelect = document.getElementById('ordenRegistrosVisitasApre');
+            const limiteSelect = document.getElementById('limiteRegistrosVisitasApre');
+            const encargadoSelect = document.getElementById('filtroEncargadoVisitasApre');
+            const mesSelect = document.getElementById('filtroMesVisitasApre');
             
             if (!ordenSelect || !limiteSelect || !encargadoSelect || !mesSelect) {
                 console.error('Elementos de filtro no encontrados');
@@ -599,7 +599,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     }
 
     function actualizarTablaConDatos(data) {
-        const tbody = document.querySelector('.tabla tbody');
+        const tbody = document.getElementById('tbodyVisitasApre');
         tbody.innerHTML = '';
         
         if (data.length === 0) {
@@ -657,9 +657,9 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     }
 
     // Modificar el event listener del filtro de mes para actualizar el campo oculto de año
-    document.getElementById('filtroMes').addEventListener('change', function() {
-        const mesSelect = document.getElementById('filtroMes');
-        const anioSelect = document.getElementById('filtroAnio');
+    document.getElementById('filtroMesVisitasApre').addEventListener('change', function() {
+        const mesSelect = document.getElementById('filtroMesVisitasApre');
+        const anioSelect = document.getElementById('filtroAnioVisitasApre');
         if(mesSelect.value) {
             const selectedOption = mesSelect.options[mesSelect.selectedIndex];
             const anio = selectedOption.getAttribute('data-anio');
@@ -674,10 +674,10 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     function limpiarFiltros() {
         // Verificar que los elementos existan antes de modificarlos
         const elementos = {
-            'ordenRegistros': 'DESC',
-            'limiteRegistros': '30',
-            'filtroEncargado': '',
-            'filtroMes': ''
+            'ordenRegistrosVisitasApre': 'DESC',
+            'limiteRegistrosVisitasApre': '30',
+            'filtroEncargadoVisitasApre': '',
+            'filtroMesVisitasApre': ''
         };
 
         for (const [id, valor] of Object.entries(elementos)) {
@@ -687,7 +687,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             }
         }
 
-        const anioSelect = document.getElementById('filtroAnio');
+        const anioSelect = document.getElementById('filtroAnioVisitasApre');
         if (anioSelect) {
             anioSelect.value = new Date().getFullYear().toString();
         }
@@ -708,15 +708,15 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             });
         }
 
-        const btnLimpiar = document.getElementById('limpiarFiltros');
+        const btnLimpiar = document.getElementById('limpiarFiltrosVisitasApre');
         if (btnLimpiar) {
             btnLimpiar.addEventListener('click', limpiarFiltros);
         }
 
-        const mesSelect = document.getElementById('filtroMes');
+        const mesSelect = document.getElementById('filtroMesVisitasApre');
         if (mesSelect) {
             mesSelect.addEventListener('change', function() {
-                const anioSelect = document.getElementById('filtroAnio');
+                const anioSelect = document.getElementById('filtroAnioVisitasApre');
                 if (mesSelect.value && anioSelect) {
                     const selectedOption = mesSelect.options[mesSelect.selectedIndex];
                     const anio = selectedOption.getAttribute('data-anio');

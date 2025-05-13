@@ -19,7 +19,8 @@
     height: 100% !important;
     width: 100% !important;
 }
-#formVisitasApre {
+#formVisitasApreUnique,
+.formulario-visitasapre {
     display: none;
     margin-top: 20px;
     padding: 20px;
@@ -31,17 +32,20 @@
     margin-left: auto;
     margin-right: auto;
 }
-#formVisitasApre .form-group {
+#formVisitasApreUnique .form-group,
+.formulario-visitasapre .form-group {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
 }
-#formVisitasApre .form-group label {
+#formVisitasApreUnique .form-group label,
+.formulario-visitasapre .form-group label {
     font-weight: 600;
     margin-bottom: 5px;
     color: #374151;
 }
-#formVisitasApre .form-group input {
+#formVisitasApreUnique .form-group input,
+.formulario-visitasapre .form-group input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -49,31 +53,37 @@
     box-sizing: border-box;
     width: 100%;
 }
-#formVisitasApre .form-buttons {
+#formVisitasApreUnique .form-buttons,
+.formulario-visitasapre .form-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
 }
-#formVisitasApre .btn {
+#formVisitasApreUnique .btn,
+.formulario-visitasapre .btn {
     padding: 10px 15px;
     font-size: 1rem;
     border-radius: 4px;
     cursor: pointer;
 }
-#formVisitasApre .btn-primary {
+#formVisitasApreUnique .btn-primary,
+.formulario-visitasapre .btn-primary {
     background-color: #007bff;
     color: white;
     border: none;
 }
-#formVisitasApre .btn-primary:hover {
+#formVisitasApreUnique .btn-primary:hover,
+.formulario-visitasapre .btn-primary:hover {
     background-color: #0056b3;
 }
-#formVisitasApre .btn-secondary {
+#formVisitasApreUnique .btn-secondary,
+.formulario-visitasapre .btn-secondary {
     background-color: #e9ecef;
     color: #212529;
     border: none;
 }
-#formVisitasApre .btn-secondary:hover {
+#formVisitasApreUnique .btn-secondary:hover,
+.formulario-visitasapre .btn-secondary:hover {
     background-color: #d0d3d6;
 }
 .btn-danger {
@@ -153,37 +163,44 @@
 }
 /* Adaptabilidad para pantallas pequeñas */
 @media (max-width: 768px) {
-    #formVisitasApre {
+    #formVisitasApreUnique,
+    .formulario-visitasapre {
         padding: 15px;
         width: 90%;
     }
 
-    #formVisitasApre .form-group {
+    #formVisitasApreUnique .form-group,
+    .formulario-visitasapre .form-group {
         margin-bottom: 10px;
     }
 
-    #formVisitasApre .form-buttons {
+    #formVisitasApreUnique .form-buttons,
+    .formulario-visitasapre .form-buttons {
         flex-direction: column;
         gap: 5px;
     }
 
-    #formVisitasApre .btn {
+    #formVisitasApreUnique .btn,
+    .formulario-visitasapre .btn {
         width: 100%;
     }
 }
 /* Formulario */
-#formVisitasApre {
+#formVisitasApreUnique,
+.formulario-visitasapre {
     background: #fff;
     border-radius: 12px;
     padding: 2rem;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     margin-top: 2rem;
 }
-#formVisitasApre .form-group label {
+#formVisitasApreUnique .form-group label,
+.formulario-visitasapre .form-group label {
     font-weight: bold;
     color: #1e293b;
 }
-#formVisitasApre .form-group input {
+#formVisitasApreUnique .form-group input,
+.formulario-visitasapre .form-group input {
     border: 1px solid #cbd5e1;
     border-radius: 8px;
     padding: 0.75rem;
@@ -191,12 +208,14 @@
     width: 100%;
     margin-top: 0.5rem;
 }
-#formVisitasApre .form-buttons {
+#formVisitasApreUnique .form-buttons,
+.formulario-visitasapre .form-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 1rem;
 }
-#formVisitasApre .btn-primary {
+#formVisitasApreUnique .btn-primary,
+.formulario-visitasapre .btn-primary {
     background: #2563eb;
     color: #fff;
     border: none;
@@ -206,10 +225,12 @@
     cursor: pointer;
     transition: background 0.3s;
 }
-#formVisitasApre .btn-primary:hover {
+#formVisitasApreUnique .btn-primary:hover,
+.formulario-visitasapre .btn-primary:hover {
     background: #1e40af;
 }
-#formVisitasApre .btn-secondary {
+#formVisitasApreUnique .btn-secondary,
+.formulario-visitasapre .btn-secondary {
     background: #e2e8f0;
     color: #1e293b;
     border: none;
@@ -219,7 +240,8 @@
     cursor: pointer;
     transition: background 0.3s;
 }
-#formVisitasApre .btn-secondary:hover {
+#formVisitasApreUnique .btn-secondary:hover,
+.formulario-visitasapre .btn-secondary:hover {
     background: #cbd5e1;
 }
 
