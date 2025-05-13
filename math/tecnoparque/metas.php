@@ -400,4 +400,77 @@ class metas_tecnoparque extends Conexion{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // --- CRUD para asesoramiento ---
+    public function obtenerAsesoramientos($filtros = []) {
+        $sql = "SELECT * FROM asesoramiento WHERE 1=1";
+        $params = [];
+        if (!empty($filtros['tipo'])) {
+            $sql .= " AND tipo = :tipo";
+            $params[':tipo'] = $filtros['tipo'];
+        }
+        if (!empty($filtros['encargado'])) {
+            $sql .= " AND encargadoAsesoramiento = :encargado";
+            $params[':encargado'] = $filtros['encargado'];
+        }
+        $sql .= " ORDER BY fechaAsesoramiento DESC";
+        $stmt = $this->conexion->prepare($sql);
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v, PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function insertarAsesoramiento($tipo, $encargado, $entidad, $fecha) {
+        $sql = "INSERT INTO asesoramiento (tipo, encargadoAsesoramiento, nombreEntidadImpacto, fechaAsesoramiento)
+                VALUES (:tipo, :encargado, :entidad, :fecha)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':entidad', $entidad, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    public function actualizarAsesoramiento($id, $tipo, $encargado, $entidad, $fecha) {
+        $sql = "UPDATE asesoramiento SET tipo = :tipo, encargadoAsesoramiento = :encargado, nombreEntidadImpacto = :entidad, fechaAsesoramiento = :fecha WHERE id_asesoramiendo = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':entidad', $entidad, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function eliminarAsesoramiento($id) {
+        $sql = "DELETE FROM asesoramiento WHERE id_asesoramiendo = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    public function obtenerIndicadoresAsesoramiento() {
+        $sql = "SELECT tipo, COUNT(*) as cantidad FROM asesoramiento GROUP BY tipo";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute();
+        $tipos = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+
+        $sql2 = "SELECT encargadoAsesoramiento, COUNT(*) as cantidad FROM asesoramiento GROUP BY encargadoAsesoramiento";
+        $stmt2 = $this->conexion->prepare($sql2);
+        $stmt2->execute();
+        $encargados = $stmt2->fetchAll(PDO::FETCH_KEY_PAIR);
+
+        $sql3 = "SELECT COUNT(*) as total FROM asesoramiento";
+        $stmt3 = $this->conexion->prepare($sql3);
+        $stmt3->execute();
+        $total = $stmt3->fetch(PDO::FETCH_ASSOC)['total'] ?? 0;
+
+        return [
+            'por_tipo' => $tipos,
+            'por_encargado' => $encargados,
+            'total' => $total
+        ];
+    }
+
 }
