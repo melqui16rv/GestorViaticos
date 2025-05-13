@@ -38,7 +38,9 @@ try {
                 'total_asistentes' => 0,
                 'promedio_asistentes' => 0,
                 'encargados' => [],
-                'asistentes_por_encargado' => []
+                'asistentes_por_encargado' => [],
+                'visitas_por_encargado_labels' => [],
+                'visitas_por_encargado_data' => []
             ]
         ]);
         exit;
@@ -63,6 +65,18 @@ try {
 
     $indicadores['encargados'] = array_keys($asistentes_por_encargado);
     $indicadores['asistentes_por_encargado'] = array_values($asistentes_por_encargado);
+
+    // $visitasFiltradas contiene solo los registros filtrados
+    $visitasPorEncargado = [];
+    foreach ($visitas as $v) {
+        $encargado = $v['encargado'];
+        if (!isset($visitasPorEncargado[$encargado])) {
+            $visitasPorEncargado[$encargado] = 0;
+        }
+        $visitasPorEncargado[$encargado]++;
+    }
+    $indicadores['visitas_por_encargado_labels'] = array_keys($visitasPorEncargado);
+    $indicadores['visitas_por_encargado_data'] = array_values($visitasPorEncargado);
 
     // Preparar respuesta
     $response = [
