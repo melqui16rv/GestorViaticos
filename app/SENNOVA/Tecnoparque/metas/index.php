@@ -236,8 +236,6 @@ requireRole(['4', '5']);
             vista = 'proyectosTecnologicos';
             setCookie('tecnoparque_metas_vista', vista, 30);
         }
-        // Refuerzo: ocultar todos los dashboards antes de mostrar el correcto
-        hideAllDashboards();
         showDashboard(vista);
 
         // Event listeners para la navegación
@@ -246,7 +244,6 @@ requireRole(['4', '5']);
             if (navElement) {
                 navElement.addEventListener('click', function(e) {
                     e.preventDefault();
-                    hideAllDashboards(); // Refuerzo: ocultar todos antes de mostrar
                     showDashboard(dashboardId);
                     if (window.innerWidth < 1024) {
                         closeSidebar();
