@@ -50,10 +50,12 @@ function formatearFechaAso($fecha) {
             <div class="stat-item">
                 <div class="stat-value text-green-700" id="indicadorTipoAso1">0</div>
                 <div class="stat-label">Asociaciones</div>
+                <div class="stat-meta" id="metaAsociaciones" style="font-size:0.95rem;color:#2563eb;"></div>
             </div>
             <div class="stat-item">
                 <div class="stat-value text-yellow-700" id="indicadorTipoAso2">0</div>
                 <div class="stat-label">Cooperativa</div>
+                <div class="stat-meta" id="metaCooperativa" style="font-size:0.95rem;color:#b59f00;"></div>
             </div>
         </div>
     </div>
@@ -114,27 +116,17 @@ function formatearFechaAso($fecha) {
             </table>
         </div>
     </div>
-    <div class="flex flex-wrap gap-6 mb-6">
-        <div class="stat-item">
-            <div class="stat-label font-semibold">Por Tipo</div>
-            <div id="indicadorPorTipoAso"></div>
+    <!-- Sección de información relevante -->
+    <div class="info-extra mb-6" id="infoExtraAso" style="display: flex; gap: 2rem;">
+        <div class="stat-item" style="flex:1;">
+            <div class="stat-label font-semibold">Última asesoría registrada</div>
+            <div id="ultimaAsesoriaAso" style="font-size:1rem;"></div>
         </div>
-        <div class="stat-item">
-            <div class="stat-label font-semibold">Por Encargado</div>
-            <div id="indicadorPorEncargadoAso"></div>
+        <div class="stat-item" style="flex:1;">
+            <div class="stat-label font-semibold">Encargado con más asesorías</div>
+            <div id="encargadoTopAso" style="font-size:1rem;"></div>
         </div>
     </div>
-    <!-- Se eliminaron las gráficas de barras y de torta -->
-    <!--
-    <div class="chart-wrapper mb-6">
-        <h2 class="text-xl font-semibold mb-2">Asesoramientos por Tipo</h2>
-        <canvas id="graficaAsoTipo"></canvas>
-    </div>
-    <div class="chart-wrapper mb-6">
-        <h2 class="text-xl font-semibold mb-2">Asesoramientos por Encargado</h2>
-        <canvas id="graficaAsoEncargado"></canvas>
-    </div>
-    -->
 </div>
 <script>
 function formatearFechaAso(fecha) {
@@ -158,9 +150,23 @@ function cargarAsesoramientosAso() {
                 // Tabla
                 let html = '';
                 let tipo1 = 0, tipo2 = 0;
+                let ultimaFecha = null;
+                let encargadoCount = {};
+                let encargadoTop = '';
+                let maxCount = 0;
                 resp.data.forEach(a => {
                     if(a.tipo === 'Asociaciones') tipo1++;
                     if(a.tipo === 'Cooperativa') tipo2++;
+                    // Calcular última fecha
+                    if (!ultimaFecha || new Date(a.fechaAsesoramiento) > new Date(ultimaFecha)) {
+                        ultimaFecha = a.fechaAsesoramiento;
+                    }
+                    // Contar por encargado
+                    encargadoCount[a.encargadoAsesoramiento] = (encargadoCount[a.encargadoAsesoramiento] || 0) + 1;
+                    if (encargadoCount[a.encargadoAsesoramiento] > maxCount) {
+                        maxCount = encargadoCount[a.encargadoAsesoramiento];
+                        encargadoTop = a.encargadoAsesoramiento;
+                    }
                     html += `<tr>
                         <td>${a.id_asesoramiendo}</td>
                         <td>${a.tipo}</td>
@@ -184,26 +190,25 @@ function cargarAsesoramientosAso() {
                 $('#indicadorTotalAso').text(resp.indicadores.total);
                 $('#indicadorTipoAso1').text(tipo1);
                 $('#indicadorTipoAso2').text(tipo2);
-                let porTipo = '';
-                Object.entries(resp.indicadores.por_tipo).forEach(([tipo, cant]) => {
-                    porTipo += `${tipo}: ${cant}<br>`;
-                });
-                $('#indicadorPorTipoAso').html(porTipo);
-                let porEnc = '';
-                Object.entries(resp.indicadores.por_encargado).forEach(([enc, cant]) => {
-                    porEnc += `${enc}: ${cant}<br>`;
-                });
-                $('#indicadorPorEncargadoAso').html(porEnc);
-                // Se eliminó la llamada a renderGraficasAso
+
+                // Indicadores de meta
+                let metaAsocRestante = Math.max(0, 5 - tipo1);
+                let metaCoopRestante = Math.max(0, 1 - tipo2);
+                $('#metaAsociaciones').text(metaAsocRestante === 0 ? 'Meta alcanzada' : `Faltan ${metaAsocRestante} para la meta (5)`);
+                $('#metaCooperativa').text(metaCoopRestante === 0 ? 'Meta alcanzada' : `Falta ${metaCoopRestante} para la meta (1)`);
+
+                // Información relevante
+                $('#ultimaAsesoriaAso').text(
+                    ultimaFecha ? formatearFechaAso(ultimaFecha).replace('<br>', ' ') : 'Sin registros'
+                );
+                $('#encargadoTopAso').text(
+                    encargadoTop ? `${encargadoTop} (${maxCount})` : 'Sin registros'
+                );
             }
         }
     });
 }
 
-// Se eliminaron las variables y función de gráficas
-// let graficaAsoTipo = null;
-// let graficaAsoEncargado = null;
-// function renderGraficasAso(indicadores) { ... }
 
 document.getElementById('toggleFormButtonAso').addEventListener('click', function() {
     const form = document.getElementById('formAso');
