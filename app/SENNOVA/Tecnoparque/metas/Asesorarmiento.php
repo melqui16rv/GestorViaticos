@@ -35,24 +35,25 @@ function formatearFechaAso($fecha) {
 ?>
 <head>
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
+<link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/asesoramientoStyle.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="dashboard-container" id="dashboardContentAso">
-    <div class="stats-card" id="statsCardAso">
+    <div class="stats-card indicadores-asesoramiento" id="statsCardAso">
         <div class="flex flex-wrap gap-6 mb-6">
-            <div class="stat-item">
+            <div class="stat-item indicador-asesoramiento">
                 <div class="stat-value text-blue-700" id="indicadorTotalAso">0</div>
                 <div class="stat-label">Total Asesoramientos</div>
             </div>
-            <div class="stat-item">
+            <div class="stat-item indicador-asesoramiento">
                 <div class="stat-value text-green-700" id="indicadorTipoAso1">0</div>
                 <div class="stat-label">Asociaciones</div>
                 <div class="stat-meta" id="metaAsociaciones" style="font-size:0.95rem;color:#2563eb;"></div>
             </div>
-            <div class="stat-item">
+            <div class="stat-item indicador-asesoramiento">
                 <div class="stat-value text-yellow-700" id="indicadorTipoAso2">0</div>
                 <div class="stat-label">Cooperativa</div>
                 <div class="stat-meta" id="metaCooperativa" style="font-size:0.95rem;color:#b59f00;"></div>
@@ -71,7 +72,8 @@ function formatearFechaAso($fecha) {
                 </button>
             </a>
         </div>
-        <form id="formAso" method="POST" class="formulario" style="display: none;">
+        <!-- Nuevo formulario con estructura y clases similares al ejemplo -->
+        <form id="formAso" method="POST" class="formulario formulario-asesoramiento" style="display: none;">
             <input type="hidden" name="action" id="actionAso" value="create">
             <input type="hidden" name="id" id="idAso">
             <div class="form-group">
