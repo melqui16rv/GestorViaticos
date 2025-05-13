@@ -124,6 +124,8 @@ function formatearFechaAso($fecha) {
             <div id="indicadorPorEncargadoAso"></div>
         </div>
     </div>
+    <!-- Se eliminaron las gráficas de barras y de torta -->
+    <!--
     <div class="chart-wrapper mb-6">
         <h2 class="text-xl font-semibold mb-2">Asesoramientos por Tipo</h2>
         <canvas id="graficaAsoTipo"></canvas>
@@ -132,6 +134,7 @@ function formatearFechaAso($fecha) {
         <h2 class="text-xl font-semibold mb-2">Asesoramientos por Encargado</h2>
         <canvas id="graficaAsoEncargado"></canvas>
     </div>
+    -->
 </div>
 <script>
 function formatearFechaAso(fecha) {
@@ -191,70 +194,16 @@ function cargarAsesoramientosAso() {
                     porEnc += `${enc}: ${cant}<br>`;
                 });
                 $('#indicadorPorEncargadoAso').html(porEnc);
-                // Gráficas
-                renderGraficasAso(resp.indicadores);
+                // Se eliminó la llamada a renderGraficasAso
             }
         }
     });
 }
 
-let graficaAsoTipo = null;
-let graficaAsoEncargado = null;
-function renderGraficasAso(indicadores) {
-    // Colores igual que ProyectosExt
-    const azulSuave = 'rgba(59,130,246,0.60)';
-    const azulBorde = 'rgba(59,130,246,1)';
-    const amarilloSuave = 'rgba(253,224,71,0.65)';
-    const amarilloBorde = 'rgba(253,224,71,1)';
-    const verdeSuave = 'rgba(34,197,94,0.75)';
-    const verdeBorde = 'rgba(34,197,94,1)';
-    // Por Tipo
-    if (graficaAsoTipo) graficaAsoTipo.destroy();
-    const ctxTipo = document.getElementById('graficaAsoTipo').getContext('2d');
-    graficaAsoTipo = new Chart(ctxTipo, {
-        type: 'pie',
-        data: {
-            labels: Object.keys(indicadores.por_tipo),
-            datasets: [{
-                data: Object.values(indicadores.por_tipo),
-                backgroundColor: [azulSuave, amarilloSuave],
-                borderColor: [azulBorde, amarilloBorde],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            }
-        }
-    });
-    // Por Encargado
-    if (graficaAsoEncargado) graficaAsoEncargado.destroy();
-    const ctxEnc = document.getElementById('graficaAsoEncargado').getContext('2d');
-    graficaAsoEncargado = new Chart(ctxEnc, {
-        type: 'bar',
-        data: {
-            labels: Object.keys(indicadores.por_encargado),
-            datasets: [{
-                label: 'Cantidad',
-                data: Object.values(indicadores.por_encargado),
-                backgroundColor: verdeSuave,
-                borderColor: verdeBorde,
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-}
+// Se eliminaron las variables y función de gráficas
+// let graficaAsoTipo = null;
+// let graficaAsoEncargado = null;
+// function renderGraficasAso(indicadores) { ... }
 
 document.getElementById('toggleFormButtonAso').addEventListener('click', function() {
     const form = document.getElementById('formAso');
