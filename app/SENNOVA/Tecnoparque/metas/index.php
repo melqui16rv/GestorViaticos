@@ -8,7 +8,7 @@ error_reporting(E_ALL);
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 
-requireRole(['4', '5', '6']);
+requireRole(['4', '5']);
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -4,7 +4,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
 $metas = new metas_tecnoparque();
 
-// CRUD exclusivo para asesoramiento
+// CRUD exclusivo para asesoramiento (solo para crear/editar/eliminar, la tabla se llena por AJAX)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
     if ($action === 'create') {
@@ -18,11 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// Obtener datos solo de asesoramiento
-$asesoramientos = $metas->obtenerAsesoramientos();
-$indicadores = $metas->obtenerIndicadoresAsesoramiento();
-
-// Función para formatear fecha
+// Función para formatear fecha en JS (se usará en el frontend)
 function formatearFechaAso($fecha) {
     $meses = [
         1 => 'enero', 2 => 'febrero', 3 => 'marzo', 4 => 'abril',
@@ -41,6 +37,7 @@ function formatearFechaAso($fecha) {
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <div class="dashboard-container">
     <h2 class="text-xl font-bold mb-4">Dashboard de Asesoramiento</h2>
@@ -91,57 +88,23 @@ function formatearFechaAso($fecha) {
                     <th>Acciones</th>
                 </tr>
             </thead>
+            <tbody id="tbodyAsesoramientos">
+                <!-- AJAX -->
+            </tbody>
         </table>
-        <div class="tabla-scroll">
-            <table class="tabla">
-                <tbody>
-                    <?php foreach ($asesoramientos as $a): ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($a['id_asesoramiendo']); ?></td>
-                        <td><?php echo htmlspecialchars($a['tipo']); ?></td>
-                        <td><?php echo htmlspecialchars($a['encargadoAsesoramiento']); ?></td>
-                        <td><?php echo htmlspecialchars($a['nombreEntidadImpacto']); ?></td>
-                        <td><?php echo formatearFechaAso($a['fechaAsesoramiento']); ?></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon edit" onclick="editAso(<?php echo htmlspecialchars(json_encode($a)); ?>)" title="Editar">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <form method="POST" style="display:inline;">
-                                    <input type="hidden" name="id" value="<?php echo $a['id_asesoramiendo']; ?>">
-                                    <input type="hidden" name="action" value="delete">
-                                    <button type="submit" class="btn-icon delete" title="Eliminar">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-        </div>
     </div>
     <div class="indicadores">
         <div class="indicador">
             <h3>Total Asesoramientos</h3>
-            <p><?php echo $indicadores['total']; ?></p>
+            <p id="indicadorTotalAso">0</p>
         </div>
         <div class="indicador">
             <h3>Por Tipo</h3>
-            <p>
-                <?php foreach($indicadores['por_tipo'] as $tipo => $cant) {
-                    echo htmlspecialchars($tipo) . ": " . $cant . "<br>";
-                } ?>
-            </p>
+            <p id="indicadorPorTipoAso"></p>
         </div>
         <div class="indicador">
             <h3>Por Encargado</h3>
-            <p>
-                <?php foreach($indicadores['por_encargado'] as $enc => $cant) {
-                    echo htmlspecialchars($enc) . ": " . $cant . "<br>";
-                } ?>
-            </p>
+            <p id="indicadorPorEncargadoAso"></p>
         </div>
     </div>
     <div class="chart-container" style="height: 350px;">
@@ -154,6 +117,110 @@ function formatearFechaAso($fecha) {
     </div>
 </div>
 <script>
+function formatearFechaAso(fecha) {
+    const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+    const d = new Date(fecha.replace(' ', 'T'));
+    const dia = d.getDate();
+    const mes = meses[d.getMonth()];
+    const anio = d.getFullYear();
+    let hora = d.toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
+    return `${dia} de ${mes} ${anio}<br>${hora}`;
+}
+
+function cargarAsesoramientos() {
+    $.ajax({
+        url: 'obtener_asesoramientos.php',
+        method: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({}),
+        success: function(resp) {
+            if (resp.success) {
+                // Tabla
+                let html = '';
+                resp.data.forEach(a => {
+                    html += `<tr>
+                        <td>${a.id_asesoramiendo}</td>
+                        <td>${a.tipo}</td>
+                        <td>${a.encargadoAsesoramiento}</td>
+                        <td>${a.nombreEntidadImpacto}</td>
+                        <td>${formatearFechaAso(a.fechaAsesoramiento)}</td>
+                        <td>
+                            <div class='action-buttons'>
+                                <button class='btn-icon edit' onclick='editAso(${JSON.stringify(a)})' title='Editar'><i class='fas fa-edit'></i></button>
+                                <form method='POST' style='display:inline;'>
+                                    <input type='hidden' name='id' value='${a.id_asesoramiendo}'>
+                                    <input type='hidden' name='action' value='delete'>
+                                    <button type='submit' class='btn-icon delete' title='Eliminar'><i class='fas fa-trash-alt'></i></button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>`;
+                });
+                $('#tbodyAsesoramientos').html(html);
+                // Indicadores
+                $('#indicadorTotalAso').text(resp.indicadores.total);
+                let porTipo = '';
+                Object.entries(resp.indicadores.por_tipo).forEach(([tipo, cant]) => {
+                    porTipo += `${tipo}: ${cant}<br>`;
+                });
+                $('#indicadorPorTipoAso').html(porTipo);
+                let porEnc = '';
+                Object.entries(resp.indicadores.por_encargado).forEach(([enc, cant]) => {
+                    porEnc += `${enc}: ${cant}<br>`;
+                });
+                $('#indicadorPorEncargadoAso').html(porEnc);
+                // Gráficas
+                renderGraficasAso(resp.indicadores);
+            }
+        }
+    });
+}
+
+let graficaAsoTipo = null;
+let graficaAsoEncargado = null;
+function renderGraficasAso(indicadores) {
+    // Por Tipo
+    if (graficaAsoTipo) graficaAsoTipo.destroy();
+    const ctxTipo = document.getElementById('graficaAsoTipo').getContext('2d');
+    graficaAsoTipo = new Chart(ctxTipo, {
+        type: 'pie',
+        data: {
+            labels: Object.keys(indicadores.por_tipo),
+            datasets: [{
+                data: Object.values(indicadores.por_tipo),
+                backgroundColor: ['#60a5fa', '#fbbf24'],
+                borderColor: ['#2563eb', '#b45309'],
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { position: 'bottom' } }
+        }
+    });
+    // Por Encargado
+    if (graficaAsoEncargado) graficaAsoEncargado.destroy();
+    const ctxEnc = document.getElementById('graficaAsoEncargado').getContext('2d');
+    graficaAsoEncargado = new Chart(ctxEnc, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(indicadores.por_encargado),
+            datasets: [{
+                label: 'Cantidad',
+                data: Object.values(indicadores.por_encargado),
+                backgroundColor: '#34d399',
+                borderColor: '#059669',
+                borderWidth: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: true } }
+        }
+    });
+}
+
 document.getElementById('toggleFormButtonAso').addEventListener('click', function() {
     const form = document.getElementById('formAso');
     const buttonText = document.getElementById('toggleFormButtonTextAso');
@@ -182,51 +249,8 @@ function resetFormAso() {
     document.getElementById('toggleFormButtonTextAso').textContent = 'Agregar Asesoramiento';
 }
 
-// Gráficas exclusivas de asesoramiento
-document.addEventListener('DOMContentLoaded', function() {
-    // Por Tipo
-    const ctxTipo = document.getElementById('graficaAsoTipo').getContext('2d');
-    new Chart(ctxTipo, {
-        type: 'pie',
-        data: {
-            labels: <?php echo json_encode(array_keys($indicadores['por_tipo'])); ?>,
-            datasets: [{
-                data: <?php echo json_encode(array_values($indicadores['por_tipo'])); ?>,
-                backgroundColor: ['#60a5fa', '#fbbf24'],
-                borderColor: ['#2563eb', '#b45309'],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { position: 'bottom' }
-            }
-        }
-    });
-    // Por Encargado
-    const ctxEnc = document.getElementById('graficaAsoEncargado').getContext('2d');
-    new Chart(ctxEnc, {
-        type: 'bar',
-        data: {
-            labels: <?php echo json_encode(array_keys($indicadores['por_encargado'])); ?>,
-            datasets: [{
-                label: 'Cantidad',
-                data: <?php echo json_encode(array_values($indicadores['por_encargado'])); ?>,
-                backgroundColor: '#34d399',
-                borderColor: '#059669',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: { display: false }
-            },
-            scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
+// Inicializar tabla e indicadores al cargar
+$(document).ready(function() {
+    cargarAsesoramientos();
 });
 </script>
