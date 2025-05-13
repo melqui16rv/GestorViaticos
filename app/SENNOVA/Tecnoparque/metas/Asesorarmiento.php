@@ -37,82 +37,99 @@ function formatearFechaAso($fecha) {
 <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
-<div class="dashboard-container">
-    <h2 class="text-xl font-bold mb-4">Dashboard de Asesoramiento</h2>
-    <a href="javascript:void(0);" id="toggleFormButtonAso" class="actualizar-tabla-link inline-block">
-        <button type="button" class="actualizar-tabla-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            <span id="toggleFormButtonTextAso">Agregar Asesoramiento</span>
-        </button>
-    </a>
-    <form id="formAso" method="POST" class="formulario" style="display: none;">
-        <input type="hidden" name="action" id="actionAso" value="create">
-        <input type="hidden" name="id" id="idAso">
-        <div class="form-group">
-            <label for="tipoAso">Tipo:</label>
-            <select id="tipoAso" name="tipo" required>
-                <option value="Asociaciones">Asociaciones</option>
-                <option value="Cooperativa">Cooperativa</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="encargadoAso">Encargado:</label>
-            <input type="text" id="encargadoAso" name="encargado" required>
-        </div>
-        <div class="form-group">
-            <label for="entidadAso">Entidad Impactada:</label>
-            <input type="text" id="entidadAso" name="entidad" required>
-        </div>
-        <div class="form-group">
-            <label for="fechaAso">Fecha de Asesoramiento:</label>
-            <input type="datetime-local" id="fechaAso" name="fecha" required>
-        </div>
-        <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-secondary" onclick="resetFormAso()">Cancelar</button>
-        </div>
-    </form>
-    <div class="tabla-outer" style="margin-top: 20px;">
-        <table class="tabla">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Tipo</th>
-                    <th>Encargado</th>
-                    <th>Entidad Impactada</th>
-                    <th>Fecha</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="tbodyAsesoramientos">
-                <!-- AJAX -->
-            </tbody>
-        </table>
-    </div>
-    <div class="indicadores">
-        <div class="indicador">
-            <h3>Total Asesoramientos</h3>
-            <p id="indicadorTotalAso">0</p>
-        </div>
-        <div class="indicador">
-            <h3>Por Tipo</h3>
-            <p id="indicadorPorTipoAso"></p>
-        </div>
-        <div class="indicador">
-            <h3>Por Encargado</h3>
-            <p id="indicadorPorEncargadoAso"></p>
+<div class="dashboard-container" id="dashboardContent">
+    <div class="stats-card">
+        <div class="flex flex-wrap gap-6 mb-6">
+            <div class="stat-item">
+                <div class="stat-value text-blue-700" id="indicadorTotalAso">0</div>
+                <div class="stat-label">Total Asesoramientos</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-green-700" id="indicadorTipoAso1">0</div>
+                <div class="stat-label">Asociaciones</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value text-yellow-700" id="indicadorTipoAso2">0</div>
+                <div class="stat-label">Cooperativa</div>
+            </div>
         </div>
     </div>
-    <div class="chart-container" style="height: 350px;">
-        <h2>Asesoramientos por Tipo</h2>
+    <div class="tabla-card mb-8">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold">Tabla de Asesoramientos</h2>
+            <a href="javascript:void(0);" id="toggleFormButtonAso" class="actualizar-tabla-link inline-block">
+                <button type="button" class="actualizar-tabla-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span id="toggleFormButtonTextAso">Agregar Asesoramiento</span>
+                </button>
+            </a>
+        </div>
+        <form id="formAso" method="POST" class="formulario" style="display: none;">
+            <input type="hidden" name="action" id="actionAso" value="create">
+            <input type="hidden" name="id" id="idAso">
+            <div class="form-group">
+                <label for="tipoAso">Tipo:</label>
+                <select id="tipoAso" name="tipo" required>
+                    <option value="Asociaciones">Asociaciones</option>
+                    <option value="Cooperativa">Cooperativa</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="encargadoAso">Encargado:</label>
+                <input type="text" id="encargadoAso" name="encargado" required>
+            </div>
+            <div class="form-group"></div>
+                <label for="entidadAso">Entidad Impactada:</label>
+                <input type="text" id="entidadAso" name="entidad" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaAso">Fecha de Asesoramiento:</label>
+                <input type="datetime-local" id="fechaAso" name="fecha" required>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-secondary" onclick="resetFormAso()">Cancelar</button>
+            </div>
+        </form>
+        <div class="grafica-table-wrapper">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tipo</th>
+                        <th>Encargado</th>
+                        <th>Entidad Impactada</th>
+                        <th>Fecha</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyAsesoramientos">
+                    <!-- AJAX -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="flex flex-wrap gap-6 mb-6">
+        <div class="stat-item">
+            <div class="stat-label font-semibold">Por Tipo</div>
+            <div id="indicadorPorTipoAso"></div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label font-semibold">Por Encargado</div>
+            <div id="indicadorPorEncargadoAso"></div>
+        </div>
+    </div>
+    <div class="chart-wrapper mb-6">
+        <h2 class="text-xl font-semibold mb-2">Asesoramientos por Tipo</h2>
         <canvas id="graficaAsoTipo"></canvas>
     </div>
-    <div class="chart-container" style="height: 350px;">
-        <h2>Asesoramientos por Encargado</h2>
+    <div class="chart-wrapper mb-6">
+        <h2 class="text-xl font-semibold mb-2">Asesoramientos por Encargado</h2>
         <canvas id="graficaAsoEncargado"></canvas>
     </div>
 </div>
@@ -137,7 +154,10 @@ function cargarAsesoramientos() {
             if (resp.success) {
                 // Tabla
                 let html = '';
+                let tipo1 = 0, tipo2 = 0;
                 resp.data.forEach(a => {
+                    if(a.tipo === 'Asociaciones') tipo1++;
+                    if(a.tipo === 'Cooperativa') tipo2++;
                     html += `<tr>
                         <td>${a.id_asesoramiendo}</td>
                         <td>${a.tipo}</td>
@@ -159,6 +179,8 @@ function cargarAsesoramientos() {
                 $('#tbodyAsesoramientos').html(html);
                 // Indicadores
                 $('#indicadorTotalAso').text(resp.indicadores.total);
+                $('#indicadorTipoAso1').text(tipo1);
+                $('#indicadorTipoAso2').text(tipo2);
                 let porTipo = '';
                 Object.entries(resp.indicadores.por_tipo).forEach(([tipo, cant]) => {
                     porTipo += `${tipo}: ${cant}<br>`;
@@ -179,6 +201,13 @@ function cargarAsesoramientos() {
 let graficaAsoTipo = null;
 let graficaAsoEncargado = null;
 function renderGraficasAso(indicadores) {
+    // Colores igual que ProyectosExt
+    const azulSuave = 'rgba(59,130,246,0.60)';
+    const azulBorde = 'rgba(59,130,246,1)';
+    const amarilloSuave = 'rgba(253,224,71,0.65)';
+    const amarilloBorde = 'rgba(253,224,71,1)';
+    const verdeSuave = 'rgba(34,197,94,0.75)';
+    const verdeBorde = 'rgba(34,197,94,1)';
     // Por Tipo
     if (graficaAsoTipo) graficaAsoTipo.destroy();
     const ctxTipo = document.getElementById('graficaAsoTipo').getContext('2d');
@@ -188,14 +217,16 @@ function renderGraficasAso(indicadores) {
             labels: Object.keys(indicadores.por_tipo),
             datasets: [{
                 data: Object.values(indicadores.por_tipo),
-                backgroundColor: ['#60a5fa', '#fbbf24'],
-                borderColor: ['#2563eb', '#b45309'],
+                backgroundColor: [azulSuave, amarilloSuave],
+                borderColor: [azulBorde, amarilloBorde],
                 borderWidth: 2
             }]
         },
         options: {
             responsive: true,
-            plugins: { legend: { position: 'bottom' } }
+            plugins: {
+                legend: { position: 'bottom' }
+            }
         }
     });
     // Por Encargado
@@ -208,15 +239,19 @@ function renderGraficasAso(indicadores) {
             datasets: [{
                 label: 'Cantidad',
                 data: Object.values(indicadores.por_encargado),
-                backgroundColor: '#34d399',
-                borderColor: '#059669',
+                backgroundColor: verdeSuave,
+                borderColor: verdeBorde,
                 borderWidth: 2
             }]
         },
         options: {
             responsive: true,
-            plugins: { legend: { display: false } },
-            scales: { y: { beginAtZero: true } }
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                y: { beginAtZero: true }
+            }
         }
     });
 }
