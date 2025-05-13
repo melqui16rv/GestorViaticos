@@ -315,6 +315,72 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+    // --- FUNCIONES DE COOKIES ---
+    function setCookieFiltro(name, value, days = 30) {
+        let expires = "";
+        if (days) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + encodeURIComponent(value || "") + expires + "; path=/";
+    }
+    function getCookieFiltro(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length === 2) return decodeURIComponent(parts.pop().split(";").shift());
+        return null;
+    }
+    function deleteCookieFiltro(name) {
+        document.cookie = name + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+    // --- IDs reales de los filtros ---
+    const filtroIds = [
+        { id: 'ordenRegistros', cookie: 'tecnoparque_visitasapre_orden' },
+        { id: 'limiteRegistros', cookie: 'tecnoparque_visitasapre_limite' },
+        { id: 'filtroEncargado', cookie: 'tecnoparque_visitasapre_encargado' },
+        { id: 'filtroMes', cookie: 'tecnoparque_visitasapre_mes' },
+        { id: 'filtroAnio', cookie: 'tecnoparque_visitasapre_anio' }
+    ];
+
+    // --- Guardar cookies al cambiar filtros ---
+    function setupFiltroCookies() {
+        filtroIds.forEach(f => {
+            const el = document.getElementById(f.id);
+            if (el) {
+                el.addEventListener('change', function() {
+                    setCookieFiltro(f.cookie, el.value, 30);
+                });
+            }
+        });
+    }
+
+    // --- Aplicar cookies a los filtros al cargar ---
+    function aplicarCookiesAFiltros() {
+        filtroIds.forEach(f => {
+            const el = document.getElementById(f.id);
+            if (el) {
+                const val = getCookieFiltro(f.cookie);
+                if (val !== null && val !== undefined && val !== "") {
+                    el.value = val;
+                    // Si es filtroMes, también actualiza filtroAnio si corresponde
+                    if (f.id === 'filtroMes') {
+                        const selectedOption = el.querySelector(`option[value="${val}"]`);
+                        if (selectedOption && document.getElementById('filtroAnio')) {
+                            document.getElementById('filtroAnio').value = selectedOption.getAttribute('data-anio') || '';
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // --- Limpiar cookies de filtros ---
+    function limpiarCookiesFiltros() {
+        filtroIds.forEach(f => deleteCookieFiltro(f.cookie));
+    }
+
     // Mostrar/ocultar formulario y cambiar texto del botón
     document.getElementById('toggleFormButtonVisitas').addEventListener('click', function() {
         const form = document.getElementById('formVisitasApre');
@@ -628,10 +694,13 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         }
 
         actualizarTabla();
+        limpiarCookiesFiltros();
     }
 
     // Event listeners
     document.addEventListener('DOMContentLoaded', function() {
+        // --- Aplicar cookies a los filtros antes de inicializar la tabla ---
+        aplicarCookiesAFiltros();
         // Verificar que los elementos existan antes de agregar los event listeners
         const selects = document.querySelectorAll('.filtro-select');
         if (selects) {
@@ -662,6 +731,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 
         // Inicializar tabla
         actualizarTabla();
+        setupFiltroCookies();
     });
 
     // Función auxiliar para formatear fecha
