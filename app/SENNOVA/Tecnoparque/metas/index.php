@@ -139,13 +139,8 @@ requireRole(['4', '5', '6']);
                         </a>
                     </li>
                     <li>
-                        <a href="#" id="navAsesorarAsociaciones" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-users-group mr-3"></i> Asesorar a 20 Asociaciones
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="navAsesorarAprendices" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-school mr-3"></i> Asesorar a 1 Cooperativa de Aprendices
+                        <a href="#" id="navAsesoramiento" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                            <i class="ti ti-users-group mr-3"></i> Asesoramiento
                         </a>
                     </li>
                     <li>
@@ -170,11 +165,8 @@ requireRole(['4', '5', '6']);
             <div id="dashboardProyectosTecnologicos">
                 <?php require_once './ProyectosTec.php'; ?>
             </div>
-            <div id="dashboardAsesorarAsociaciones" style="display:none;">
-                <?php require_once './AsesorarAso.php'; ?>
-            </div>
-            <div id="dashboardAsesorar" style="display:none;">
-                <?php require_once './Asesoramiento.php'; ?>
+            <div id="dashboardAsesoramiento" style="display:none;">
+                <?php require_once './Asesorarmiento.php'; ?>
             </div>
             <div id="dashboardExtensionismo" style="display:none;">
                 <?php require_once './ProyectosExt.php'; ?>
@@ -202,23 +194,17 @@ requireRole(['4', '5', '6']);
         return null;
     }
 
-    // Hacer utilidades globales para otros scripts
-    window.setCookie = setCookie;
-    window.getCookie = getCookie;
-
     document.addEventListener('DOMContentLoaded', function() {
         // Dashboards y navegación
         const dashboards = {
             proyectosTecnologicos: document.getElementById('dashboardProyectosTecnologicos'),
-            asesorarAsociaciones: document.getElementById('dashboardAsesorarAsociaciones'),
-            asesorarAprendices: document.getElementById('dashboardAsesorar'),
+            asesoramiento: document.getElementById('dashboardAsesoramiento'),
             extensionismo: document.getElementById('dashboardExtensionismo'),
             visitasAprendices: document.getElementById('dashboardVisitasAprendices')
         };
         const navLinks = {
             'navProyectosTecnologicos': 'proyectosTecnologicos',
-            'navAsesorarAsociaciones': 'asesorarAsociaciones',
-            'navAsesorarAprendices': 'asesorarAprendices',
+            'navAsesoramiento': 'asesoramiento',
             'navExtensionismo': 'extensionismo',
             'navVisitasAprendices': 'visitasAprendices'
         };
@@ -318,63 +304,6 @@ requireRole(['4', '5', '6']);
             }
         }
         window.addEventListener('resize', handleResize);
-
-        // --- SISTEMA DE COOKIES PARA FILTROS DE VISITAS APRENDICES ---
-        // Espera a que el dashboard de visitas esté visible
-        function applyVisitasApreFiltersFromCookies() {
-            const dashboard = document.getElementById('dashboardVisitasAprendices');
-            if (!dashboard) return;
-            // Espera a que existan los inputs de filtro (ajusta los IDs/names según tu HTML)
-            const filtroIds = ['filtro-orden', 'filtro-limite', 'filtro-encargado', 'filtro-mes', 'filtro-anio'];
-            filtroIds.forEach(id => {
-                const input = dashboard.querySelector(`#${id}`);
-                if (input) {
-                    const cookieVal = getCookie('tecnoparque_visitasapre_' + id);
-                    if (cookieVal !== null && cookieVal !== undefined && cookieVal !== '') {
-                        input.value = cookieVal;
-                    }
-                }
-            });
-            // Si tienes función para recargar datos, llámala aquí (ejemplo):
-            if (typeof window.recargarVisitasApre === 'function') {
-                window.recargarVisitasApre();
-            }
-        }
-
-        // Guardar filtros en cookies al cambiar
-        function setupVisitasApreFilterListeners() {
-            const dashboard = document.getElementById('dashboardVisitasAprendices');
-            if (!dashboard) return;
-            const filtroIds = ['filtro-orden', 'filtro-limite', 'filtro-encargado', 'filtro-mes', 'filtro-anio'];
-            filtroIds.forEach(id => {
-                const input = dashboard.querySelector(`#${id}`);
-                if (input) {
-                    input.addEventListener('change', function() {
-                        setCookie('tecnoparque_visitasapre_' + id, input.value, 30);
-                    });
-                }
-            });
-        }
-
-        // Cuando se muestra el dashboard de visitas, aplica filtros desde cookies y configura listeners
-        function onShowVisitasApreDashboard() {
-            applyVisitasApreFiltersFromCookies();
-            setupVisitasApreFilterListeners();
-        }
-
-        // Modifica showDashboard para ejecutar lógica de filtros cuando corresponda
-        const originalShowDashboard = showDashboard;
-        showDashboard = function(id) {
-            originalShowDashboard(id);
-            if (id === 'visitasAprendices') {
-                setTimeout(onShowVisitasApreDashboard, 100); // Espera a que se renderice el contenido
-            }
-        };
-
-        // Si la vista inicial es visitas, aplica filtros
-        if (vista === 'visitasAprendices') {
-            setTimeout(onShowVisitasApreDashboard, 100);
-        }
     });
     </script>
     <style>
