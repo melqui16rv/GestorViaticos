@@ -621,7 +621,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         <button class="btn-icon edit" onclick='editVisita(${JSON.stringify(visita)})' title="Editar">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <form method="POST" action="VisitasApre.php" style="display:inline;">
+                        <form class="form-delete-visita" method="POST" style="display:inline;">
                             <input type="hidden" name="id_visita" value="${visita.id_visita}">
                             <input type="hidden" name="action" value="delete">
                             <button type="submit" class="btn-icon delete" title="Eliminar">
