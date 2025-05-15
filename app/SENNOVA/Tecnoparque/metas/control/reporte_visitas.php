@@ -31,7 +31,7 @@ ob_start();
             border-radius: 14px;
             max-width: 950px;
             min-width: 650px;
-            /* Reducir márgenes superior e inferior */
+            /* Márgenes reducidos arriba y abajo */
             padding: 1rem 2.5rem 1rem 2.5rem;
             box-shadow: 0 4px 24px rgba(37,99,235,0.10);
         }
@@ -100,7 +100,7 @@ ob_start();
             font-weight: 600;
         }
         .section-break {
-            page-break-before: always;
+            /* page-break-before: always; */
             margin-top: 2em;
         }
         .styled-table {
@@ -266,6 +266,8 @@ $html = ob_get_clean();
 $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '', $html);
 // Quitar links de estilos externos
 $html = preg_replace('/<link[^>]+rel=["\']stylesheet["\'][^>]*>/i', '', $html);
+// Eliminar saltos de página forzados en el HTML generado
+$html = preg_replace('/page-break-before\s*:\s*always;?/i', '', $html);
 if (ob_get_length()) ob_end_clean();
 
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'Letter']);
