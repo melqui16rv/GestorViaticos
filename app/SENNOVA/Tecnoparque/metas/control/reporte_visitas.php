@@ -5,9 +5,11 @@ error_reporting(E_ALL);
 
 // /app/SENNOVA/Tecnoparque/metas/control/reporte_visitas.php
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'; // Asegúrate de tener mpdf instalado
-session_start();
 
 // Capturar el HTML de las vistas SIN navbar ni sidebar
 ob_start();
@@ -63,7 +65,9 @@ $html = ob_get_clean();
 // Quitar scripts JS y recursos innecesarios para el PDF
 $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '', $html);
 
-// Generar el PDF
+// Limpiar cualquier salida previa antes de enviar headers y PDF
+if (ob_get_length()) ob_end_clean();
+
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
 $mpdf->WriteHTML($html);
 header('Content-Type: application/pdf');
