@@ -10,20 +10,6 @@ foreach ($asesoramientos as $a) {
     if (!isset($tiposAso[$tipo])) $tiposAso[$tipo] = 0;
     $tiposAso[$tipo]++;
 }
-?>
-<div class="indicadores">
-    <div class="indicador">
-        <h3>Total Asesoramientos</h3>
-        <p class="highlight"><?php echo count($asesoramientos); ?></p>
-    </div>
-    <?php foreach ($tiposAso as $tipo => $cantidad): ?>
-    <div class="indicador">
-        <h3><?php echo htmlspecialchars($tipo); ?></h3>
-        <p class="highlight-blue"><?php echo $cantidad; ?></p>
-    </div>
-    <?php endforeach; ?>
-</div>
-<?php
 $labels = array_keys($tiposAso);
 $data = array_values($tiposAso);
 $chartConfig = [
@@ -57,28 +43,39 @@ function formatearFechaAsoPDF($fecha) {
     return $dia . ' de ' . $mes . ' ' . $anio . ' ' . $hora;
 }
 ?>
-<img src="<?php echo $chartUrl; ?>" alt="Gráfica Asesoramiento por tipo" class="grafica-img">
-<div class="tabla-card">
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Encargado</th>
-                <th>Entidad Impactada</th>
-                <th>Fecha</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($asesoramientos as $a): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($a['id_asesoramiendo'] ?? $a['id']); ?></td>
-                <td><?php echo htmlspecialchars($a['tipo']); ?></td>
-                <td><?php echo htmlspecialchars($a['encargadoAsesoramiento'] ?? $a['encargado']); ?></td>
-                <td><?php echo htmlspecialchars($a['nombreEntidadImpacto'] ?? $a['entidad']); ?></td>
-                <td><?php echo formatearFechaAsoPDF($a['fechaAsesoramiento'] ?? $a['fecha']); ?></td>
-            </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+<!-- Título formal -->
+<div style="margin-bottom: 1.5em;">
+    <h3 style="font-size:1.15em; color:#1e293b; font-weight:600; margin-bottom:0.2em;">Resumen de Asesoramientos</h3>
+    <p style="font-size:1em; color:#334155; margin:0;">
+        <strong>Total:</strong> <?php echo count($asesoramientos); ?>
+        <?php foreach ($tiposAso as $tipo => $cantidad): ?>
+            &nbsp;|&nbsp; <strong><?php echo htmlspecialchars($tipo); ?>:</strong> <?php echo $cantidad; ?>
+        <?php endforeach; ?>
+    </p>
 </div>
+
+<img src="<?php echo $chartUrl; ?>" alt="Gráfica Asesoramiento por tipo" class="grafica-img">
+
+<!-- Tabla formal -->
+<table class="styled-table" style="margin-top:1.5em;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Tipo</th>
+            <th>Encargado</th>
+            <th>Entidad Impactada</th>
+            <th>Fecha</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($asesoramientos as $a): ?>
+        <tr>
+            <td><?php echo htmlspecialchars($a['id_asesoramiendo'] ?? $a['id']); ?></td>
+            <td><?php echo htmlspecialchars($a['tipo']); ?></td>
+            <td><?php echo htmlspecialchars($a['encargadoAsesoramiento'] ?? $a['encargado']); ?></td>
+            <td><?php echo htmlspecialchars($a['nombreEntidadImpacto'] ?? $a['entidad']); ?></td>
+            <td><?php echo formatearFechaAsoPDF($a['fechaAsesoramiento'] ?? $a['fecha']); ?></td>
+        </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
