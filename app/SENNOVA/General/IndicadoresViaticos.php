@@ -47,6 +47,16 @@ $filtrosIniciales = [
 // Obtener los primeros registros según los filtros
 $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
 
+// Filtrar dependencias permitidas
+$dependenciasPermitidas = ['62', '66', '69', '70'];
+$initialData = array_values(array_filter($initialData, function($row) use ($dependenciasPermitidas) {
+    if (!isset($row['Dependencia'])) return false;
+    if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($row['Dependencia']), $matches)) {
+        return in_array($matches[1], $dependenciasPermitidas);
+    }
+    return false;
+}));
+
 ?>
 <!DOCTYPE html>
 <html lang="es">

@@ -311,53 +311,46 @@ class graficas_general_sennova extends Conexion{
         return array_values($conteo);
     }
 
-    // Totales de viáticos CDP solo para dependencias permitidas y filtradas por rol
+    // Totales de viáticos CDP solo para dependencias permitidas
     public function obtenerTotalesViaticosPorDependencias() {
         $dependencias = $this->getFiltroDependenciaPorRol();
-        $sql = "SELECT Valor_Actual, Saldo_por_Comprometer, Dependencia FROM cdp WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%')";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $valor_actual = 0;
-        $saldo_por_comprometer = 0;
-        foreach ($rows as $row) {
-            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($row['Dependencia']), $matches)) {
-                $codigo = $matches[1];
-                if (in_array($codigo, $dependencias)) {
-                    $valor_actual += floatval($row['Valor_Actual']);
-                    $saldo_por_comprometer += floatval($row['Saldo_por_Comprometer']);
-                }
-            }
+        $sql = "SELECT SUM(Valor_Actual) as valor_actual, SUM(Saldo_por_Comprometer) as saldo_por_comprometer
+                FROM cdp
+                WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%')
+                  AND (";
+        $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
+        $sql .= ")";
+        $params = [];
+        foreach ($dependencias as $dep) {
+            $params[] = "%$dep";
         }
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return [
-            'valor_actual' => $valor_actual,
-            'saldo_por_comprometer' => $saldo_por_comprometer
+            'valor_actual' => floatval($row['valor_actual']),
+            'saldo_por_comprometer' => floatval($row['saldo_por_comprometer'])
         ];
     }
 
-    // Totales de viáticos OP solo para dependencias permitidas y filtradas por rol
+    // Totales de viáticos OP solo para dependencias permitidas
     public function obtenerTotalesViaticosOPPorDependencias() {
         $dependencias = $this->getFiltroDependenciaPorRol();
-        $sql = "SELECT Valor_Neto, Dependencia FROM op WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')";
-        $stmt = $this->conexion->prepare($sql);
-        $stmt->execute();
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $valor_op = 0;
-        foreach ($rows as $row) {
-            if (preg_match('/(\d{1,2}(?:\.\d)?$)/', trim($row['Dependencia']), $matches)) {
-                $codigo = $matches[1];
-                // Normalizar: si termina en .0, quitar el decimal
-                if (preg_match('/^(\d{1,2})\.0$/', $codigo, $m)) {
-                    $codigo = $m[1];
-                }
-                // Solo aceptar coincidencias exactas
-                if (in_array($codigo, $dependencias, true)) {
-                    $valor_op += floatval($row['Valor_Neto']);
-                }
-            }
+        $sql = "SELECT SUM(Valor_Neto) as valor_op
+                FROM op
+                WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')
+                  AND (";
+        $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
+        $sql .= ")";
+        $params = [];
+        foreach ($dependencias as $dep) {
+            $params[] = "%$dep";
         }
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->execute($params);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
         return [
-            'valor_op' => $valor_op
+            'valor_op' => floatval($row['valor_op'])
         ];
     }
 }
