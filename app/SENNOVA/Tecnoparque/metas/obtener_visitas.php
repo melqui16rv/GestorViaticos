@@ -28,6 +28,17 @@ try {
         'anio' => !empty($filtros['anio']) ? intval($filtros['anio']) : null
     ];
 
+    // Si el usuario es rol 4, ignorar todos los filtros y devolver todos los datos
+    if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == 4) {
+        $filtros = [
+            'orden' => 'DESC',
+            'limite' => null,
+            'encargado' => null,
+            'mes' => null,
+            'anio' => null
+        ];
+    }
+
     error_log("Filtros procesados: " . print_r($filtros, true)); // Debug
 
     $metas = new metas_tecnoparque();
