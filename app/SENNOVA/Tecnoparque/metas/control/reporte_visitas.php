@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 // /app/SENNOVA/Tecnoparque/metas/control/reporte_visitas.php
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'; // Asegúrate de tener mpdf instalado
@@ -62,5 +66,7 @@ $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '',
 // Generar el PDF
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
 $mpdf->WriteHTML($html);
+header('Content-Type: application/pdf');
+header('Content-Disposition: attachment; filename="reporte_metas_tecnoparque.pdf"');
 $mpdf->Output('reporte_metas_tecnoparque.pdf', 'D'); // Forzar descarga
 exit;

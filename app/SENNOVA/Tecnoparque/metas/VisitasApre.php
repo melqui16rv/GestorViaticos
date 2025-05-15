@@ -808,23 +808,15 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 didOpen: () => { Swal.showLoading(); }
             });
         }
-        fetch('control/reporte_visitas.php', {
-            method: 'GET'
-        })
+        fetch('control/reporte_visitas.php', { method: 'GET' })
         .then(response => {
-            if (!response.ok) throw new Error('No se pudo generar el PDF');
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text || 'No se pudo generar el PDF'); });
+            }
             return response.blob();
         })
         .then(blob => {
-            if (window.Swal) Swal.close();
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'reporte_metas_tecnoparque.pdf';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            window.URL.revokeObjectURL(url);
+            // ...descarga como antes...
         })
         .catch(error => {
             if (window.Swal) Swal.close();
