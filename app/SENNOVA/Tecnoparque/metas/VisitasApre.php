@@ -312,7 +312,9 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     </div>
     
     <div style="text-align: center; margin: 20px 0;">
-        <a href="reporte_visitas.php" target="_blank" class="btn btn-primary">Descargar Reporte Completo en PDF</a>
+        <button id="btnDescargarReportePDF" class="btn btn-primary">
+            Descargar Reporte Completo en PDF
+        </button>
     </div>
     
     
@@ -793,6 +795,40 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             success: function() {
                 actualizarTabla();
             }
+        });
+    });
+
+    document.getElementById('btnDescargarReportePDF').addEventListener('click', function() {
+        // Mostrar mensaje de carga
+        if (window.Swal) {
+            Swal.fire({
+                title: 'Generando PDF...',
+                text: 'Por favor espere unos segundos',
+                allowOutsideClick: false,
+                didOpen: () => { Swal.showLoading(); }
+            });
+        }
+        fetch('control/reporte_visitas.php', {
+            method: 'GET'
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('No se pudo generar el PDF');
+            return response.blob();
+        })
+        .then(blob => {
+            if (window.Swal) Swal.close();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reporte_metas_tecnoparque.pdf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => {
+            if (window.Swal) Swal.close();
+            alert('Error al generar el PDF: ' + error.message);
         });
     });
 </script>
