@@ -754,7 +754,7 @@ body::-webkit-scrollbar {
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                    Panel - SENNOVA
+                                    Presupuesto - SENNOVA
                                 </a>
                             </li>
                             <li>
@@ -773,13 +773,13 @@ body::-webkit-scrollbar {
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                    Panel - Presupuestal
+                                    Presupuesto - Tecnoparque
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
-                                    Panel - Metas
+                                    Metas - Tecnoparque
                                 </a>
                             </li>
 
@@ -791,10 +791,10 @@ body::-webkit-scrollbar {
                             <!-- Bloque exclusivo para usuarios con rol 6 (Tecnoacademia) -->
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
-                                class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                Panel - SENNOVA
-                            </a>
-                        </li>
+                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
+                                    Presupuesto - Tecnoacademia
+                                </a>
+                            </li>
                         <!-- Puedes agregar más opciones aquí para el rol 6 -->
                     <?php endif; ?>
                 <!-- ----- fin para rol 6--------- -->
