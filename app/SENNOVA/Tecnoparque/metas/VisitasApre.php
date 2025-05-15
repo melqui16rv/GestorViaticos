@@ -191,7 +191,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     </div>
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-card">
-        <div class="flex justify-end mb-4"></div>
+        <div class="flex justify-end mb-4">
             <a href="javascript:void(0);" id="toggleFormButtonVisitasApre" class="actualizar-tabla-link inline-block">
                 <button type="button" class="actualizar-tabla-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
