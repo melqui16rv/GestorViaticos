@@ -760,7 +760,7 @@ body::-webkit-scrollbar {
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
-                                    Panel - Metas
+                                    Metas - Tecnoparque
                                 </a>
                             </li>
                         <!-- Puedes agregar más opciones aquí para el rol 4 -->
