@@ -338,15 +338,18 @@ class graficas_general_sennova extends Conexion{
     // Totales de viáticos OP solo para dependencias permitidas y filtradas por rol
     public function obtenerTotalesViaticosOPPorDependencias() {
         $dependencias = $this->getFiltroDependenciaPorRol();
+        // Normalizar dependencias permitidas a enteros para comparación robusta
+        $dependenciasInt = array_map(function($d) { return intval($d); }, $dependencias);
         $sql = "SELECT Valor_Neto, Dependencia FROM op WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $valor_op = 0;
         foreach ($rows as $row) {
-            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($row['Dependencia']), $matches)) {
+            if (preg_match('/(\d{1,2}(?:\.\d)?$)/', trim($row['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (in_array($codigo, $dependencias)) {
+                // Normalizar ambos lados a int para comparar '69', '69.0', '069', etc.
+                if (in_array(intval($codigo), $dependenciasInt, true)) {
                     $valor_op += floatval($row['Valor_Neto']);
                 }
             }
