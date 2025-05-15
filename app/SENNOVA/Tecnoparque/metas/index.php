@@ -8,7 +8,12 @@ error_reporting(E_ALL);
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 
-requireRole(['4', '5']);
+// Cambia esta línea para permitir acceso a ambos roles (4 y 5) correctamente
+if (!isset($_SESSION['id_rol']) || !in_array($_SESSION['id_rol'], ['4', '5'])) {
+    // Si no tiene el rol adecuado, redirige o muestra error
+    header('Location: ' . BASE_URL . 'login.php');
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
