@@ -29,38 +29,178 @@ ob_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body { font-family: Arial, sans-serif; font-size: 11px; margin: 0; padding: 0; }
-        .dashboard-container { padding: 0.5rem 1rem; margin: 0 auto 1.5rem auto; background: #f8fafc; border-radius: 8px; max-width: 1000px; }
-        .stats-card, .tabla-card, .chart-wrapper { margin-bottom: 0.8rem; }
+        h1, h2, h3 { color: #2b3b4f; }
+        h1 { text-align: center; font-size: 1.7em; margin-bottom: 0.2em; }
+        h2 { font-size: 1.2em; margin-top: 1.5em; }
+        .section-break { page-break-before: always; }
+        .dashboard-container { margin: 0 auto 1.5rem auto; background: #f8fafc; border-radius: 8px; max-width: 900px; padding: 1rem; }
+        .stats-card, .tabla-card { margin-bottom: 1rem; }
         .stat-item { display: inline-block; min-width: 100px; margin-right: 0.5rem; }
         .styled-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 10.5px; }
         .styled-table th, .styled-table td { border: 1px solid #bbb; padding: 4px 6px; }
         .styled-table th { background: #2563eb; color: #fff; }
-        h1 { color: #2b3b4f; font-size: 1.5em; margin-bottom: 0.5em; }
-        h2 { color: #2563eb; margin-top: 1.2em; font-size: 1.15em; }
+        .indicadores { margin: 1em 0; }
+        .indicador { display: inline-block; margin-right: 2em; }
         .torta-title { font-weight: bold; margin-top: 0.5em; }
         .torta-info { font-size: 0.95em; color: #555; }
-        .section-break { page-break-before: always; }
+        .no-grafica { color: #b91c1c; font-size: 0.95em; margin: 1em 0; }
         /* Ocultar botones, formularios y elementos interactivos que no tienen sentido en PDF */
         button, .actualizar-tabla-link, form, .sidebar-filament, .sidebar-link, .sidebar-toggle-btn, .sidebar-overlay { display: none !important; }
     </style>
 </head>
 <body>
-    <h1 style="text-align:center;">Reporte de Metas Tecnoparque</h1>
+    <h1>Reporte de Metas Tecnoparque</h1>
     <hr>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosTec.php'; ?>
+        <h2>Proyectos de Base Tecnológica</h2>
+        <?php
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosTec.php';
+        // --- Gráfica de barras para Proyectos de Base Tecnológica ---
+        $metasTec = new metas_tecnoparque();
+        $proyectosTec = $metasTec->obtenerProyectosTecPorTipo('Tecnológico');
+        $labelsTec = array_map(fn($p) => $p['nombre_linea'], $proyectosTec);
+        $terminadosTec = array_map(fn($p) => (int)$p['terminados'], $proyectosTec);
+        $enProcesoTec = array_map(fn($p) => (int)$p['en_proceso'], $proyectosTec);
+        $chartConfigTec = [
+            "type" => "bar",
+            "data" => [
+                "labels" => $labelsTec,
+                "datasets" => [
+                    [
+                        "label" => "Terminados",
+                        "backgroundColor" => "rgba(34,197,94,0.75)",
+                        "data" => $terminadosTec
+                    ],
+                    [
+                        "label" => "En Proceso",
+                        "backgroundColor" => "rgba(253,224,71,0.65)",
+                        "data" => $enProcesoTec
+                    ]
+                ]
+            ],
+            "options" => [
+                "plugins" => ["legend" => ["position" => "top"]],
+                "responsive" => true,
+                "scales" => ["y" => ["beginAtZero" => true]]
+            ]
+        ];
+        $chartUrlTec = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigTec));
+        ?>
+        <div style="text-align:center;margin:1em 0;">
+            <img src="<?php echo $chartUrlTec; ?>" alt="Gráfica Proyectos de Base Tecnológica" style="width:100%;max-width:700px;">
+        </div>
     </section>
     <div class="section-break"></div>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/Asesorarmiento.php'; ?>
+        <h2>Asesoramiento</h2>
+        <?php
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/Asesorarmiento.php';
+        // --- Gráfica de barras para Asesoramiento (por tipo) ---
+        $asesoramientos = $metasTec->obtenerAsesoramientos([]);
+        $tiposAso = [];
+        foreach ($asesoramientos as $a) {
+            $tipo = $a['tipo'];
+            if (!isset($tiposAso[$tipo])) $tiposAso[$tipo] = 0;
+            $tiposAso[$tipo]++;
+        }
+        $labelsAso = array_keys($tiposAso);
+        $dataAso = array_values($tiposAso);
+        $chartConfigAso = [
+            "type" => "bar",
+            "data" => [
+                "labels" => $labelsAso,
+                "datasets" => [[
+                    "label" => "Cantidad",
+                    "backgroundColor" => "rgba(59,130,246,0.60)",
+                    "data" => $dataAso
+                ]]
+            ],
+            "options" => [
+                "plugins" => ["legend" => ["display" => false]],
+                "responsive" => true,
+                "scales" => ["y" => ["beginAtZero" => true]]
+            ]
+        ];
+        $chartUrlAso = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigAso));
+        ?>
+        <div style="text-align:center;margin:1em 0;">
+            <img src="<?php echo $chartUrlAso; ?>" alt="Gráfica Asesoramiento por tipo" style="width:100%;max-width:700px;">
+        </div>
     </section>
     <div class="section-break"></div>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosExt.php'; ?>
+        <h2>Proyectos de Extensionismo</h2>
+        <?php
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosExt.php';
+        $metasExt = new metas_tecnoparqueExt();
+        $proyectosExt = $metasExt->obtenerProyectosTecPorTipo('Extensionismo');
+        $labelsExt = array_map(fn($p) => $p['nombre_linea'], $proyectosExt);
+        $terminadosExt = array_map(fn($p) => (int)$p['terminados'], $proyectosExt);
+        $enProcesoExt = array_map(fn($p) => (int)$p['en_proceso'], $proyectosExt);
+        $chartConfigExt = [
+            "type" => "bar",
+            "data" => [
+                "labels" => $labelsExt,
+                "datasets" => [
+                    [
+                        "label" => "Terminados",
+                        "backgroundColor" => "rgba(34,197,94,0.75)",
+                        "data" => $terminadosExt
+                    ],
+                    [
+                        "label" => "En Proceso",
+                        "backgroundColor" => "rgba(253,224,71,0.65)",
+                        "data" => $enProcesoExt
+                    ]
+                ]
+            ],
+            "options" => [
+                "plugins" => ["legend" => ["position" => "top"]],
+                "responsive" => true,
+                "scales" => ["y" => ["beginAtZero" => true]]
+            ]
+        ];
+        $chartUrlExt = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigExt));
+        ?>
+        <div style="text-align:center;margin:1em 0;">
+            <img src="<?php echo $chartUrlExt; ?>" alt="Gráfica Proyectos de Extensionismo" style="width:100%;max-width:700px;">
+        </div>
     </section>
     <div class="section-break"></div>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/VisitasApre.php'; ?>
+        <h2>Visitas de Aprendices</h2>
+        <?php
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/VisitasApre.php';
+        $visitas = $metasTec->obtenerVisitasApre();
+        $encargados = [];
+        foreach ($visitas as $v) {
+            $enc = $v['encargado'];
+            if (!isset($encargados[$enc])) $encargados[$enc] = 0;
+            $encargados[$enc]++;
+        }
+        $labelsVis = array_keys($encargados);
+        $dataVis = array_values($encargados);
+        $chartConfigVis = [
+            "type" => "bar",
+            "data" => [
+                "labels" => $labelsVis,
+                "datasets" => [[
+                    "label" => "Visitas",
+                    "backgroundColor" => "rgba(59,130,246,0.60)",
+                    "data" => $dataVis
+                ]]
+            ],
+            "options" => [
+                "plugins" => ["legend" => ["display" => false]],
+                "responsive" => true,
+                "scales" => ["y" => ["beginAtZero" => true]]
+            ]
+        ];
+        $chartUrlVis = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigVis));
+        ?>
+        <div style="text-align:center;margin:1em 0;">
+            <img src="<?php echo $chartUrlVis; ?>" alt="Gráfica Visitas por Encargado" style="width:100%;max-width:700px;">
+        </div>
     </section>
 </body>
 </html>
