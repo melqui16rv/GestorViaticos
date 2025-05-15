@@ -112,8 +112,23 @@ class sennova_general_presuspuestal extends Conexion {
         return $stmt->fetchColumn();
     }
 
+    public function getFiltroDependenciaPorRol() {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
+        if ($rol == '5') {
+            return ['69']; // Tecnoparque
+        } elseif ($rol == '6') {
+            return ['70']; // Tecnoacademia
+        } elseif ($rol == '4') {
+            return ['62', '66', '69', '70']; // General
+        }
+        return ['62', '66', '69', '70']; // Por defecto
+    }
+
     public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
-        $dependenciasPermitidas = ['62', '66', '69', '70'];
+        $dependenciasPermitidas = $this->getFiltroDependenciaPorRol();
         $query = "SELECT 
                   op.Numero_Documento,
                   op.Fecha_de_Registro,
@@ -133,12 +148,12 @@ class sennova_general_presuspuestal extends Conexion {
 
         $params = [];
 
-        // Filtro por dependencias permitidas
+        // Filtro por dependencias permitidas (regex exacto al final)
         $query .= " AND (";
         $depConds = [];
         foreach ($dependenciasPermitidas as $dep) {
-            $depConds[] = "op.Dependencia LIKE ?";
-            $params[] = "%$dep";
+            $depConds[] = "op.Dependencia REGEXP ?";
+            $params[] = "(^|[^0-9])" . $dep . "($|[^0-9])";
         }
         $query .= implode(' OR ', $depConds) . ")";
 
