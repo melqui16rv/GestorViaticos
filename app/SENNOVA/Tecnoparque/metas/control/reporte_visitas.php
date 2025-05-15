@@ -44,16 +44,16 @@ ob_start();
     <h1 style="text-align:center;">Reporte de Metas Tecnoparque</h1>
     <hr>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosTec.php'; ?>
+        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sennova/tecnoparque/metas/ProyectosTec.php'; ?>
     </section>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/Asesorarmiento.php'; ?>
+        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sennova/tecnoparque/metas/Asesorarmiento.php'; ?>
     </section>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosExt.php'; ?>
+        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sennova/tecnoparque/metas/ProyectosExt.php'; ?>
     </section>
     <section>
-        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/VisitasApre.php'; ?>
+        <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/sennova/tecnoparque/metas/VisitasApre.php'; ?>
     </section>
 </body>
 </html>
