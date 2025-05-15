@@ -187,36 +187,36 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     </div>
                 </form>
             </div>
+            <a href="javascript:void(0);" id="toggleFormButtonVisitasApre" class="actualizar-tabla-link inline-block">
+                <button type="button" class="actualizar-tabla-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span id="toggleFormButtonTextVisitasApre">Agregar Visita</span>
+                </button>
+            </a>
+            
+            <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
+                <input type="hidden" name="action" id="actionVisitasApre" value="create">
+                <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
+                <div class="form-group">
+                    <label for="encargadoVisitasApre">Encargado:</label>
+                    <input type="text" id="encargadoVisitasApre" name="encargado" required>
+                </div>
+                <div class="form-group">
+                    <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
+                    <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
+                    <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
+                </div>
+            </form>
         </div>
-        <a href="javascript:void(0);" id="toggleFormButtonVisitasApre" class="actualizar-tabla-link inline-block">
-            <button type="button" class="actualizar-tabla-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                </svg>
-                <span id="toggleFormButtonTextVisitasApre">Agregar Visita</span>
-            </button>
-        </a>
-        
-        <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
-            <input type="hidden" name="action" id="actionVisitasApre" value="create">
-            <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
-            <div class="form-group">
-                <label for="encargadoVisitasApre">Encargado:</label>
-                <input type="text" id="encargadoVisitasApre" name="encargado" required>
-            </div>
-            <div class="form-group">
-                <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
-                <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
-            </div>
-            <div class="form-group">
-                <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
-                <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
-            </div>
-            <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
-            </div>
-        </form>
     </div>
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
