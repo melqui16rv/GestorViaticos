@@ -36,10 +36,26 @@ class graficas_general_sennova extends Conexion{
         return 'Otro';
     }
 
+    // Método para obtener el filtro de dependencia según el rol
+    private function getFiltroDependenciaPorRol() {
+        if (!isset($_SESSION)) {
+            session_start();
+        }
+        $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
+        if ($rol == '5') {
+            return ['69']; // Tecnoparque
+        } elseif ($rol == '6') {
+            return ['70']; // Tecnoacademia
+        } elseif ($rol == '4') {
+            return $this->dependencias_permitidas; // General
+        }
+        return $this->dependencias_permitidas; // Por defecto
+    }
+
     // Puedes agregar aquí los métodos para obtener los datos agrupados por dependencia
     // Ejemplo de disparador para consulta (solo la estructura, la consulta real la defines después)
     public function obtenerConsumoPorDependenciaCDP() {
-        // Ejemplo de consulta, ajusta el campo de valor según corresponda
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT Dependencia, SUM(Valor_Actual) as total_consumido FROM cdp GROUP BY Dependencia";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -49,7 +65,7 @@ class graficas_general_sennova extends Conexion{
         foreach ($resultados as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (in_array($codigo, $this->dependencias_permitidas)) {
+                if (in_array($codigo, $filtroDependencias)) {
                     $fila['dependencia_traducida'] = $this->traducirDependencia($fila['Dependencia']);
                     $filtrados[] = $fila;
                 }
@@ -60,6 +76,7 @@ class graficas_general_sennova extends Conexion{
 
     // Gráfica 1: CDP - Consumo por dependencia (agrupando por código)
     public function obtenerGraficaCDP() {
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT Dependencia, Valor_Actual, Saldo_por_Comprometer FROM cdp";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -69,14 +86,14 @@ class graficas_general_sennova extends Conexion{
         foreach ($resultados as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
             if (!isset($agrupados[$codigo])) {
                 $agrupados[$codigo] = [
+                    'nombre_dependencia' => $this->traducirDependencia($fila['Dependencia']),
                     'codigo_dependencia' => $codigo,
-                    'nombre_dependencia' => $this->dependencias[$codigo],
                     'valor_actual' => 0,
                     'saldo_por_comprometer' => 0
                 ];
@@ -89,8 +106,8 @@ class graficas_general_sennova extends Conexion{
         foreach ($agrupados as $codigo => $info) {
             $valor_consumido = $info['valor_actual'] - $info['saldo_por_comprometer'];
             $datos[] = [
-                'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $info['nombre_dependencia'],
+                'codigo_dependencia' => $info['codigo_dependencia'],
                 'valor_actual' => $info['valor_actual'],
                 'saldo_por_comprometer' => $info['saldo_por_comprometer'],
                 'valor_consumido' => $valor_consumido
@@ -101,14 +118,13 @@ class graficas_general_sennova extends Conexion{
 
     // Gráfica 2: CRP - Utilización por dependencia (agrupando por código)
     public function obtenerGraficaCRP() {
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT Dependencia, Valor_Actual, Saldo_por_Utilizar FROM crp";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         $resultados = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         $agrupados = [];
-        $otrosDebug = []; // Para depuración
-
         foreach ($resultados as $fila) {
             $dependencia = trim($fila['Dependencia']);
             if ($dependencia === '' || $dependencia === null) {
@@ -116,31 +132,28 @@ class graficas_general_sennova extends Conexion{
             }
             if (preg_match('/(\d{1,2}(\.\d)?$)/', $dependencia, $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
             if (!isset($agrupados[$codigo])) {
                 $agrupados[$codigo] = [
+                    'nombre_dependencia' => $this->traducirDependencia($fila['Dependencia']),
                     'codigo_dependencia' => $codigo,
-                    'nombre_dependencia' => $this->dependencias[$codigo],
                     'valor_actual' => 0,
                     'saldo_por_utilizar' => 0
                 ];
             }
-            $agrupados[$codigo]['valor_actual'] += is_numeric($fila['Valor_Actual']) ? floatval($fila['Valor_Actual']) : 0;
-            $agrupados[$codigo]['saldo_por_utilizar'] += is_numeric($fila['Saldo_por_Utilizar']) ? floatval($fila['Saldo_por_Utilizar']) : 0;
+            $agrupados[$codigo]['valor_actual'] += floatval($fila['Valor_Actual']);
+            $agrupados[$codigo]['saldo_por_utilizar'] += floatval($fila['Saldo_por_Utilizar']);
         }
-
-        // Si quieres depurar, puedes descomentar la siguiente línea temporalmente:
-        file_put_contents('/tmp/otros_dependencias.txt', print_r($otrosDebug, true));
 
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
             $saldo_utilizado = $info['valor_actual'] - $info['saldo_por_utilizar'];
             $datos[] = [
-                'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $info['nombre_dependencia'],
+                'codigo_dependencia' => $info['codigo_dependencia'],
                 'valor_actual' => $info['valor_actual'],
                 'saldo_por_utilizar' => $info['saldo_por_utilizar'],
                 'saldo_utilizado' => $saldo_utilizado
@@ -151,6 +164,7 @@ class graficas_general_sennova extends Conexion{
 
     // Gráfica 3: OP - Pagos por dependencia (agrupando por código)
     public function obtenerGraficaOP() {
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         // CRP
         $sqlCRP = "SELECT Dependencia, Valor_Actual FROM crp";
         $stmtCRP = $this->conexion->prepare($sqlCRP);
@@ -161,7 +175,7 @@ class graficas_general_sennova extends Conexion{
         foreach ($crpData as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
@@ -181,7 +195,7 @@ class graficas_general_sennova extends Conexion{
         foreach ($opData as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
@@ -198,11 +212,11 @@ class graficas_general_sennova extends Conexion{
             $suma_crp = isset($crpAgrupados[$codigo]) ? $crpAgrupados[$codigo] : 0;
             $suma_op = isset($opAgrupados[$codigo]) ? $opAgrupados[$codigo] : 0;
             $valor_restante = $suma_crp - $suma_op;
-            $nombre = $this->dependencias[$codigo];
+            $nombre = isset($this->dependencias[$codigo]) ? $this->dependencias[$codigo] : 'Otro';
             $datos[] = [
-                'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $nombre,
-                'suma_crp' => $suma_crp, // <-- Este es el valor correcto de CRP/RP
+                'codigo_dependencia' => $codigo,
+                'suma_crp' => $suma_crp,
                 'suma_op' => $suma_op,
                 'valor_restante' => $valor_restante
             ];
@@ -212,6 +226,7 @@ class graficas_general_sennova extends Conexion{
 
     // Conteo de registros por dependencia en CDP
     public function contarRegistrosPorDependenciaCDP() {
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT Dependencia FROM cdp";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -221,14 +236,14 @@ class graficas_general_sennova extends Conexion{
         foreach ($resultados as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
             if (!isset($conteo[$codigo])) {
                 $conteo[$codigo] = [
                     'codigo_dependencia' => $codigo,
-                    'nombre_dependencia' => $this->dependencias[$codigo],
+                    'nombre_dependencia' => $this->traducirDependencia($fila['Dependencia']),
                     'total' => 0
                 ];
             }
@@ -240,6 +255,7 @@ class graficas_general_sennova extends Conexion{
 
     // Conteo de registros por dependencia en CRP
     public function contarRegistrosPorDependenciaCRP() {
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT Dependencia FROM crp";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -249,14 +265,14 @@ class graficas_general_sennova extends Conexion{
         foreach ($resultados as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
             if (!isset($conteo[$codigo])) {
                 $conteo[$codigo] = [
                     'codigo_dependencia' => $codigo,
-                    'nombre_dependencia' => $this->dependencias[$codigo],
+                    'nombre_dependencia' => $this->traducirDependencia($fila['Dependencia']),
                     'total' => 0
                 ];
             }
@@ -268,6 +284,7 @@ class graficas_general_sennova extends Conexion{
 
     // Conteo de registros por dependencia en OP
     public function contarRegistrosPorDependenciaOP() {
+        $filtroDependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT Dependencia FROM op";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
@@ -277,14 +294,14 @@ class graficas_general_sennova extends Conexion{
         foreach ($resultados as $fila) {
             if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($fila['Dependencia']), $matches)) {
                 $codigo = $matches[1];
-                if (!in_array($codigo, $this->dependencias_permitidas)) continue;
+                if (!in_array($codigo, $filtroDependencias)) continue;
             } else {
                 continue;
             }
             if (!isset($conteo[$codigo])) {
                 $conteo[$codigo] = [
                     'codigo_dependencia' => $codigo,
-                    'nombre_dependencia' => $this->dependencias[$codigo],
+                    'nombre_dependencia' => $this->traducirDependencia($fila['Dependencia']),
                     'total' => 0
                 ];
             }
@@ -296,8 +313,7 @@ class graficas_general_sennova extends Conexion{
 
     // Totales de viáticos CDP solo para dependencias permitidas
     public function obtenerTotalesViaticosPorDependencias() {
-        $dependencias = $this->dependencias_permitidas;
-        $placeholders = implode(',', array_fill(0, count($dependencias), '?'));
+        $dependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT SUM(Valor_Actual) as valor_actual, SUM(Saldo_por_Comprometer) as saldo_por_comprometer
                 FROM cdp
                 WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%')
@@ -319,7 +335,7 @@ class graficas_general_sennova extends Conexion{
 
     // Totales de viáticos OP solo para dependencias permitidas
     public function obtenerTotalesViaticosOPPorDependencias() {
-        $dependencias = $this->dependencias_permitidas;
+        $dependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT SUM(Valor_Neto) as valor_op
                 FROM op
                 WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')
