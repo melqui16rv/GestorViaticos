@@ -108,35 +108,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <div class="dashboard-container" id="dashboardVisitasApre">
-    <a href="javascript:void(0);" id="toggleFormButtonVisitasApre" class="actualizar-tabla-link inline-block">
-        <button type="button" class="actualizar-tabla-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            <span id="toggleFormButtonTextVisitasApre">Agregar Visita</span>
-        </button>
-    </a>
-    
-    <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
-        <input type="hidden" name="action" id="actionVisitasApre" value="create">
-        <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
-        <div class="form-group">
-            <label for="encargadoVisitasApre">Encargado:</label>
-            <input type="text" id="encargadoVisitasApre" name="encargado" required>
-        </div>
-        <div class="form-group">
-            <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
-            <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
-        </div>
-        <div class="form-group">
-            <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
-            <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
-        </div>
-        <div class="form-buttons">
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
-        </div>
-    </form>
     
     <div class="container mx-auto px-4" style="margin-top:20px;">
         <div class="bg-white rounded-lg shadow-md mb-6">
@@ -151,7 +122,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 <option value="ASC">Más antiguos primero</option>
                             </select>
                         </div>
-
+                        
                         <div>
                             <label for="limiteRegistrosVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Mostrar</label>
                             <select id="limiteRegistrosVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
@@ -161,7 +132,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 <option value="">Todos</option>
                             </select>
                         </div>
-
+                        
                         <div>
                             <label for="filtroEncargadoVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Encargado</label>
                             <select id="filtroEncargadoVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
@@ -174,7 +145,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 ?>
                             </select>
                         </div>
-
+                        
                         <div>
                             <label for="filtroMesVisitasApre" class="block text-gray-700 text-sm font-bold mb-2">Mes</label>
                             <select id="filtroMesVisitasApre" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline filtro-select">
@@ -197,8 +168,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                     // Solo mostrar si el mes existe en el array de meses
                                     if (isset($meses[$fecha['mes']])) {
                                         echo "<option value='" . $fecha['mes'] . "' data-anio='" . $fecha['anio'] . "'>" 
-                                             . $meses[$fecha['mes']] 
-                                             . "</option>";
+                                        . $meses[$fecha['mes']] 
+                                        . "</option>";
                                     }
                                 }
                                 if($anioActual !== null) echo "</optgroup>";
@@ -208,7 +179,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                             <input type="hidden" id="filtroAnioVisitasApre" name="filtroAnio" value="">
                         </div>
                     </div>
-
+                    
                     <div class="flex justify-end space-x-2 mt-4">
                         <button type="button" id="limpiarFiltrosVisitasApre" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                             <i class="fas fa-undo mr-2"></i>Limpiar filtros
@@ -217,6 +188,35 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 </form>
             </div>
         </div>
+        <a href="javascript:void(0);" id="toggleFormButtonVisitasApre" class="actualizar-tabla-link inline-block">
+            <button type="button" class="actualizar-tabla-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span id="toggleFormButtonTextVisitasApre">Agregar Visita</span>
+            </button>
+        </a>
+        
+        <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
+            <input type="hidden" name="action" id="actionVisitasApre" value="create">
+            <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
+            <div class="form-group">
+                <label for="encargadoVisitasApre">Encargado:</label>
+                <input type="text" id="encargadoVisitasApre" name="encargado" required>
+            </div>
+            <div class="form-group">
+                <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
+                <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
+            </div>
+            <div class="form-group">
+                <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
+                <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
+            </div>
+            <div class="form-buttons">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
+            </div>
+        </form>
     </div>
     <!-- Tabla con encabezados fijos y scroll solo en el cuerpo -->
     <div class="tabla-outer">
