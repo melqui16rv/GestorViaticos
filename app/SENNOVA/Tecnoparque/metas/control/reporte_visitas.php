@@ -5,8 +5,8 @@ error_reporting(E_ALL);
 
 // /app/SENNOVA/Tecnoparque/metas/control/reporte_visitas.php
 
-require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'; // Asegúrate de tener mpdf instalado
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/vendor/autoload.php'; // Asegúrate de tener mpdf instalado
 session_start();
 
 // Capturar el HTML de las vistas SIN navbar ni sidebar
