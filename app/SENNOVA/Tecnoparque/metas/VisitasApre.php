@@ -201,27 +201,28 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 </button>
             </a>
         </div>
-        
-        <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
-            <input type="hidden" name="action" id="actionVisitasApre" value="create">
-            <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
-            <div class="form-group">
-                <label for="encargadoVisitasApre">Encargado:</label>
-                <input type="text" id="encargadoVisitasApre" name="encargado" required>
-            </div>
-            <div class="form-group">
-                <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
-                <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
-            </div>
-            <div class="form-group">
-                <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
-                <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
-            </div>
-            <div class="form-buttons">
-                <button type="submit" class="btn btn-primary">Guardar</button>
-                <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
-            </div>
-        </form>
+        <div class="flex justify-center mb-4">
+            <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
+                <input type="hidden" name="action" id="actionVisitasApre" value="create">
+                <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
+                <div class="form-group">
+                    <label for="encargadoVisitasApre">Encargado:</label>
+                    <input type="text" id="encargadoVisitasApre" name="encargado" required>
+                </div>
+                <div class="form-group">
+                    <label for="numAsistentesVisitasApre">Número de Asistentes:</label>
+                    <input type="number" id="numAsistentesVisitasApre" name="numAsistentes" required>
+                </div>
+                <div class="form-group">
+                    <label for="fechaCharlaVisitasApre">Fecha de la Charla:</label>
+                    <input type="datetime-local" id="fechaCharlaVisitasApre" name="fechaCharla" required>
+                </div>
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="reset" class="btn btn-secondary" onclick="resetFormVisitasApre()">Cancelar</button>
+                </div>
+            </form>
+        </div>
 
         <table class="tabla">
             <thead>
