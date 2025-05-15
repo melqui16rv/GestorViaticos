@@ -97,7 +97,7 @@ class graficas extends Conexion{
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
             if ($codigo === 'Otro') continue; // Excluir "Otro"
-            $valor_consumido = $info['valor_actual'] - $info['saldo_por_comprometer'];
+            $valor_consumido = $info['saldo_por_comprometer'] - $info['valor_actual']; // Corregido: invertir la resta
             $datos[] = [
                 'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $info['nombre_dependencia'],
@@ -148,7 +148,7 @@ class graficas extends Conexion{
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
             if ($codigo === 'Otro') continue; // Excluir "Otro"
-            $saldo_utilizado = $info['valor_actual'] - $info['saldo_por_utilizar'];
+            $saldo_utilizado = $info['saldo_por_utilizar'] - $info['valor_actual']; // Corregido: invertir la resta
             $datos[] = [
                 'codigo_dependencia' => $codigo,
                 'nombre_dependencia' => $info['nombre_dependencia'],
