@@ -57,8 +57,10 @@ try {
     // Agrupar por encargado para el gráfico
     $asistentes_por_encargado = [];
     foreach ($visitas as $visita) {
-        $encargado = $visita['encargado'] ?? '';
-        $asistentes_por_encargado[$encargado] = ($asistentes_por_encargado[$encargado] ?? 0) + intval($visita['numAsistentes']);
+        if (!isset($asistentes_por_encargado[$visita['encargado']])) {
+            $asistentes_por_encargado[$visita['encargado']] = 0;
+        }
+        $asistentes_por_encargado[$visita['encargado']] += intval($visita['numAsistentes']);
     }
 
     $indicadores['encargados'] = array_keys($asistentes_por_encargado);
@@ -67,8 +69,11 @@ try {
     // $visitasFiltradas contiene solo los registros filtrados
     $visitasPorEncargado = [];
     foreach ($visitas as $v) {
-        $encargado = $v['encargado'] ?? '';
-        $visitasPorEncargado[$encargado] = ($visitasPorEncargado[$encargado] ?? 0) + 1;
+        $encargado = $v['encargado'];
+        if (!isset($visitasPorEncargado[$encargado])) {
+            $visitasPorEncargado[$encargado] = 0;
+        }
+        $visitasPorEncargado[$encargado]++;
     }
     $indicadores['visitas_por_encargado_labels'] = array_keys($visitasPorEncargado);
     $indicadores['visitas_por_encargado_data'] = array_values($visitasPorEncargado);

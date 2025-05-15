@@ -30,7 +30,7 @@ try {
     ];
     foreach ($asesoramientos as $a) {
         $tipo = $a['tipo'];
-        $encargado = $a['encargadoAsesoramiento'] ?? $a['encargado'] ?? '';
+        $encargado = $a['encargadoAsesoramiento'];
         $indicadores['por_tipo'][$tipo] = ($indicadores['por_tipo'][$tipo] ?? 0) + 1;
         $indicadores['por_encargado'][$encargado] = ($indicadores['por_encargado'][$encargado] ?? 0) + 1;
     }
@@ -39,11 +39,11 @@ try {
         'success' => true,
         'data' => array_map(function($a) {
             return [
-                'id_asesoramiendo' => $a['id_asesoramiendo'] ?? $a['id'],
+                'id_asesoramiendo' => $a['id_asesoramiendo'],
                 'tipo' => $a['tipo'],
-                'encargadoAsesoramiento' => $a['encargadoAsesoramiento'] ?? $a['encargado'],
-                'nombreEntidadImpacto' => $a['nombreEntidadImpacto'] ?? $a['entidad'],
-                'fechaAsesoramiento' => $a['fechaAsesoramiento'] ?? $a['fecha']
+                'encargadoAsesoramiento' => $a['encargadoAsesoramiento'],
+                'nombreEntidadImpacto' => $a['nombreEntidadImpacto'],
+                'fechaAsesoramiento' => $a['fechaAsesoramiento']
             ];
         }, $asesoramientos),
         'indicadores' => $indicadores
