@@ -97,8 +97,9 @@ class graficas extends Conexion{
         $datos = [];
         foreach ($agrupados as $codigo => $info) {
             if ($codigo === 'Otro') continue; // Excluir "Otro"
+            // DEBUG: Mostrar valores para la dependencia 10
             if ($codigo === '10') {
-                // Para la dependencia 10, invertir la resta
+                error_log("[DEBUG CDP] Dependencia 10: valor_actual={$info['valor_actual']}, saldo_por_comprometer={$info['saldo_por_comprometer']}");
                 $valor_consumido = $info['saldo_por_comprometer'] - $info['valor_actual'];
             } else {
                 $valor_consumido = $info['valor_actual'] - $info['saldo_por_comprometer'];
