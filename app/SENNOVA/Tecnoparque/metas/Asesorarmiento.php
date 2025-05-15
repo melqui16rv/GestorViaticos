@@ -112,7 +112,9 @@ function formatearFechaAso($fecha) {
                         <th>Encargado</th>
                         <th>Entidad Impactada</th>
                         <th>Fecha</th>
+                        <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
                         <th>Acciones</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody id="tbodyAsesoramientos">
@@ -157,7 +159,6 @@ function cargarAsesoramientosAso() {
         data: JSON.stringify({}),
         success: function(resp) {
             if (resp.success) {
-                // Tabla
                 let html = '';
                 let tipo1 = 0, tipo2 = 0;
                 let ultimaFecha = null;
@@ -167,11 +168,9 @@ function cargarAsesoramientosAso() {
                 resp.data.forEach(a => {
                     if(a.tipo === 'Asociaciones') tipo1++;
                     if(a.tipo === 'Cooperativa') tipo2++;
-                    // Calcular última fecha
                     if (!ultimaFecha || new Date(a.fechaAsesoramiento) > new Date(ultimaFecha)) {
                         ultimaFecha = a.fechaAsesoramiento;
                     }
-                    // Contar por encargado
                     encargadoCount[a.encargadoAsesoramiento] = (encargadoCount[a.encargadoAsesoramiento] || 0) + 1;
                     if (encargadoCount[a.encargadoAsesoramiento] > maxCount) {
                         maxCount = encargadoCount[a.encargadoAsesoramiento];
@@ -182,8 +181,9 @@ function cargarAsesoramientosAso() {
                         <td>${a.tipo}</td>
                         <td>${a.encargadoAsesoramiento}</td>
                         <td>${a.nombreEntidadImpacto}</td>
-                        <td>${formatearFechaAso(a.fechaAsesoramiento)}</td>
-                        <td>
+                        <td>${formatearFechaAso(a.fechaAsesoramiento)}</td>`;
+                    <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
+                    html += `<td>
                             <div class='action-buttons'>
                                 <button class='btn-icon edit' onclick='editAso(${JSON.stringify(a)})' title='Editar'><i class='fas fa-edit'></i></button>
                                 <form method='POST' style='display:inline;'>
@@ -192,8 +192,9 @@ function cargarAsesoramientosAso() {
                                     <button type='submit' class='btn-icon delete' title='Eliminar'><i class='fas fa-trash-alt'></i></button>
                                 </form>
                             </div>
-                        </td>
-                    </tr>`;
+                        </td>`;
+                    <?php endif; ?>
+                    html += `</tr>`;
                 });
                 $('#tbodyAsesoramientos').html(html);
                 // Indicadores

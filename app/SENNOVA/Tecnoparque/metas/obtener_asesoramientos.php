@@ -1,4 +1,8 @@
 <?php
+// Asegurar que la sesión esté iniciada para que $_SESSION['id_rol'] esté disponible
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 

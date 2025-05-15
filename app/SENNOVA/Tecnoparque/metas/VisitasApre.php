@@ -235,7 +235,9 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                     <th style="width: 22%;">Encargado</th>
                     <th style="width: 18%;">Número de Asistentes</th>
                     <th style="width: 32%;">Fecha de la Charla</th>
+                    <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
                     <th style="width: 20%;">Acciones</th>
+                    <?php endif; ?>
                 </tr>
             </thead>
         </table>
@@ -248,6 +250,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                         <td style="width: 22%;"><?php echo htmlspecialchars($visita['encargado']); ?></td>
                         <td style="width: 18%;"><?php echo htmlspecialchars($visita['numAsistentes']); ?></td>
                         <td style="width: 32%;"><?php echo formatearFecha($visita['fechaCharla']); ?></td>
+                        <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
                         <td style="width: 20%;">
                             <div class="action-buttons">
                                 <button class="btn-icon edit" onclick="editVisita(<?php echo htmlspecialchars(json_encode($visita)); ?>)" title="Editar">
@@ -262,6 +265,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                                 </form>
                             </div>
                         </td>
+                        <?php endif; ?>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -614,7 +618,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
         
         if (data.length === 0) {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan="5" class="text-center py-4">No se encontraron registros</td>`;
+            tr.innerHTML = `<td colspan="${<?php echo (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4') ? '5' : '4'; ?>}" class="text-center py-4">No se encontraron registros</td>`;
             tbody.appendChild(tr);
             return;
         }
@@ -625,8 +629,9 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 <td style="width: 8%;">${visita.id_visita}</td>
                 <td style="width: 22%;">${visita.encargado}</td>
                 <td style="width: 18%;">${visita.numAsistentes}</td>
-                <td style="width: 32%;">${formatearFecha(visita.fechaCharla)}</td>
-                <td style="width: 20%;">
+                <td style="width: 32%;">${formatearFecha(visita.fechaCharla)}</td>`;
+            <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
+            tr.innerHTML += `<td style="width: 20%;">
                     <div class="action-buttons">
                         <button class="btn-icon edit" onclick='editVisita(${JSON.stringify(visita)})' title="Editar">
                             <i class="fas fa-edit"></i>
@@ -639,8 +644,8 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                             </button>
                         </form>
                     </div>
-                </td>
-            `;
+                </td>`;
+            <?php endif; ?>
             tbody.appendChild(tr);
         });
     }
