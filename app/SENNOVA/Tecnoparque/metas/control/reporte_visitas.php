@@ -31,7 +31,8 @@ ob_start();
             border-radius: 14px;
             max-width: 950px;
             min-width: 650px;
-            padding: 2.5rem 2.5rem 2.5rem 2.5rem;
+            /* Reducir márgenes superior e inferior */
+            padding: 1rem 2.5rem 1rem 2.5rem;
             box-shadow: 0 4px 24px rgba(37,99,235,0.10);
         }
         h1, h2, h3 {
