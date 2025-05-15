@@ -63,7 +63,7 @@ function formatearFechaAso($fecha) {
     <div class="tabla-card mb-8" id="tablaCardAso">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-xl font-semibold">Tabla de Asesoramientos</h2>
-            <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
+            
             <a href="javascript:void(0);" id="toggleFormButtonAso" class="actualizar-tabla-link inline-block">
                 <button type="button" class="actualizar-tabla-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -72,9 +72,9 @@ function formatearFechaAso($fecha) {
                     <span id="toggleFormButtonTextAso">Agregar Asesoramiento</span>
                 </button>
             </a>
-            <?php endif; ?>
+
         </div>
-        <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
+        
         <form id="formAso" method="POST" class="formulario formulario-asesoramiento" style="display: none;">
             <input type="hidden" name="action" id="actionAso" value="create">
             <input type="hidden" name="id" id="idAso">
@@ -102,7 +102,7 @@ function formatearFechaAso($fecha) {
                 <button type="reset" class="btn btn-secondary" onclick="resetFormAso()">Cancelar</button>
             </div>
         </form>
-        <?php endif; ?>
+
         <div class="grafica-table-wrapper">
             <table class="styled-table" id="styledTableAso">
                 <thead>
