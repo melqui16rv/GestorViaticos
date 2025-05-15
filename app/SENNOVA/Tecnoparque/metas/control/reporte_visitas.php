@@ -175,6 +175,8 @@ ob_start();
             <h2>Proyectos de Base Tecnológica</h2>
             <?php
             require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosTec.php';
+            // Eliminar links de estilos que puedan venir de la vista incluida
+            ob_start();
             $metasTec = new metas_tecnoparque();
             $proyectosTec = $metasTec->obtenerProyectosTecPorTipo('Tecnológico');
             $resumenTec = $metasTec->obtenerSumaProyectosTecTerminadosPorTipo('Tecnológico');
@@ -211,6 +213,10 @@ ob_start();
                 ]
             ];
             $chartUrlTec = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigTec));
+            $section_html = ob_get_clean();
+            // Quitar links de estilos
+            $section_html = preg_replace('/<link[^>]+rel=["\']stylesheet["\'][^>]*>/i', '', $section_html);
+            echo $section_html;
             ?>
             <div class="indicadores">
                 <div class="indicador">
@@ -283,6 +289,7 @@ ob_start();
             <h2>Asesoramiento</h2>
             <?php
             require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/Asesorarmiento.php';
+            ob_start();
             $asesoramientos = $metasTec->obtenerAsesoramientos([]);
             $tiposAso = [];
             foreach ($asesoramientos as $a) {
@@ -309,6 +316,9 @@ ob_start();
                 ]
             ];
             $chartUrlAso = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigAso));
+            $section_html = ob_get_clean();
+            $section_html = preg_replace('/<link[^>]+rel=["\']stylesheet["\'][^>]*>/i', '', $section_html);
+            echo $section_html;
             ?>
             <div class="indicadores">
                 <div class="indicador">
@@ -370,6 +380,7 @@ ob_start();
             <h2>Proyectos de Extensionismo</h2>
             <?php
             require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosExt.php';
+            ob_start();
             $metasExt = new metas_tecnoparqueExt();
             $proyectosExt = $metasExt->obtenerProyectosTecPorTipo('Extensionismo');
             $resumenExt = $metasExt->obtenerSumaProyectosTecPorTipo('Extensionismo');
@@ -407,6 +418,9 @@ ob_start();
                 ]
             ];
             $chartUrlExt = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigExt));
+            $section_html = ob_get_clean();
+            $section_html = preg_replace('/<link[^>]+rel=["\']stylesheet["\'][^>]*>/i', '', $section_html);
+            echo $section_html;
             ?>
             <div class="indicadores">
                 <div class="indicador">
@@ -479,6 +493,7 @@ ob_start();
             <h2>Visitas de Aprendices</h2>
             <?php
             require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/VisitasApre.php';
+            ob_start();
             $visitas = $metasTec->obtenerVisitasApre();
             $indicadoresVis = $metasTec->obtenerIndicadoresVisitas();
             $encargados = [];
@@ -506,6 +521,9 @@ ob_start();
                 ]
             ];
             $chartUrlVis = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigVis));
+            $section_html = ob_get_clean();
+            $section_html = preg_replace('/<link[^>]+rel=["\']stylesheet["\'][^>]*>/i', '', $section_html);
+            echo $section_html;
             ?>
             <div class="indicadores">
                 <div class="indicador">
@@ -581,6 +599,7 @@ ob_start();
 <?php
 $html = ob_get_clean();
 $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '', $html);
+$html = preg_replace('/<link[^>]+rel=["\']stylesheet["\'][^>]*>/i', '', $html);
 if (ob_get_length()) ob_end_clean();
 
 $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'Letter']);
