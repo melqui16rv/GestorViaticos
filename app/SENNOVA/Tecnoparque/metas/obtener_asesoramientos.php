@@ -1,8 +1,4 @@
 <?php
-// Asegurar que la sesión esté iniciada para que $_SESSION['id_rol'] esté disponible
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
@@ -22,16 +18,6 @@ try {
         'orden' => isset($filtros['orden']) ? $filtros['orden'] : 'DESC',
         'limite' => !empty($filtros['limite']) ? intval($filtros['limite']) : null
     ];
-
-    // Si el usuario es rol 4, ignorar todos los filtros y devolver todos los datos
-    if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == 4) {
-        $filtros = [
-            'tipo' => null,
-            'encargado' => null,
-            'orden' => 'DESC',
-            'limite' => null
-        ];
-    }
 
     $metas = new metas_tecnoparque();
     $asesoramientos = $metas->obtenerAsesoramientos($filtros);

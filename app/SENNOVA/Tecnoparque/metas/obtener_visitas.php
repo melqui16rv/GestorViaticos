@@ -1,9 +1,4 @@
 <?php
-// Asegurar que la sesión esté iniciada para que $_SESSION['id_rol'] esté disponible
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/tecnoparque/metas.php';
 
@@ -27,17 +22,6 @@ try {
         'mes' => !empty($filtros['mes']) ? intval($filtros['mes']) : null,
         'anio' => !empty($filtros['anio']) ? intval($filtros['anio']) : null
     ];
-
-    // Si el usuario es rol 4, ignorar todos los filtros y devolver todos los datos
-    if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == 4) {
-        $filtros = [
-            'orden' => 'DESC',
-            'limite' => null,
-            'encargado' => null,
-            'mes' => null,
-            'anio' => null
-        ];
-    }
 
     error_log("Filtros procesados: " . print_r($filtros, true)); // Debug
 
