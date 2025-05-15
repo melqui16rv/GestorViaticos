@@ -18,15 +18,6 @@ class metas_tecnoparque extends Conexion{
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function obtenerAsesorarAso() {
-
-    }
-    public function obtenerAsesorarApre() {
-
-    }
-    public function obtenerProyectosExt() {
-
-    }
     public function obtenerVisitasApre($filtros = []) {
         try {
             // Cambia el SELECT para incluir 'nodo'
@@ -122,15 +113,6 @@ class metas_tecnoparque extends Conexion{
             return false;
         }
     }
-    public function actualizarAsesorarAso() {
-
-    }
-    public function actualizarAsesorarApre() {
-
-    }
-    public function actualizarProyectosExt() {
-
-    }
     public function actualizarVisitasApre($id_visita, $encargado, $numAsistentes, $fechaCharla) {
         $sql = "UPDATE listadosvisitasApre 
                 SET encargado = :encargado, 
@@ -160,15 +142,6 @@ class metas_tecnoparque extends Conexion{
     }
 
     // insert
-    public function insertarAsesorarAso() {
-
-    }
-    public function insertarAsesorarApre() {
-
-    }
-    public function insertarProyectosExt() {
-
-    }
     public function insertarVisitasApre($encargado, $numAsistentes, $fechaCharla) {
         $sql = "INSERT INTO listadosvisitasApre (encargado, numAsistentes, fechaCharla) 
                 VALUES (:encargado, :numAsistentes, :fechaCharla)";
@@ -185,18 +158,6 @@ class metas_tecnoparque extends Conexion{
     }
 
     // delete
-    public function eliminarProyectosTec() {
-
-    }
-    public function eliminarAsesorarAso() {
-
-    }
-    public function eliminarAsesorarApre() {
-
-    }
-    public function eliminarProyectosExt() {
-
-    }
     public function eliminarVisitasApre($id_visita) {
         $sql = "DELETE FROM listadosvisitasApre WHERE id_visita = :id_visita";
         
@@ -471,6 +432,151 @@ class metas_tecnoparque extends Conexion{
             'por_encargado' => $encargados,
             'total' => $total
         ];
+    }
+
+    // --- Métodos para asesorar_aprendiz y asesorar_asociado ---
+    // Obtener asesoramientos a aprendices
+    public function obtenerAsesorarApre($filtros = []) {
+        $sql = "SELECT * FROM asesorar_aprendiz WHERE 1=1";
+        $params = [];
+        if (!empty($filtros['encargado'])) {
+            $sql .= " AND encargado = :encargado";
+            $params[':encargado'] = $filtros['encargado'];
+        }
+        if (!empty($filtros['mes']) && !empty($filtros['anio'])) {
+            $sql .= " AND MONTH(fecha) = :mes AND YEAR(fecha) = :anio";
+            $params[':mes'] = $filtros['mes'];
+            $params[':anio'] = $filtros['anio'];
+        }
+        $sql .= " ORDER BY fecha DESC";
+        $stmt = $this->conexion->prepare($sql);
+        foreach ($params as $k => $v) {
+            if ($k === ':mes' || $k === ':anio') {
+                $stmt->bindValue($k, (int)$v, PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue($k, $v, PDO::PARAM_STR);
+            }
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Obtener asesoramientos a asociados
+    public function obtenerAsesorarAso($filtros = []) {
+        $sql = "SELECT * FROM asesorar_asociado WHERE 1=1";
+        $params = [];
+        if (!empty($filtros['encargado'])) {
+            $sql .= " AND encargado = :encargado";
+            $params[':encargado'] = $filtros['encargado'];
+        }
+        if (!empty($filtros['mes']) && !empty($filtros['anio'])) {
+            $sql .= " AND MONTH(fecha) = :mes AND YEAR(fecha) = :anio";
+            $params[':mes'] = $filtros['mes'];
+            $params[':anio'] = $filtros['anio'];
+        }
+        $sql .= " ORDER BY fecha DESC";
+        $stmt = $this->conexion->prepare($sql);
+        foreach ($params as $k => $v) {
+            if ($k === ':mes' || $k === ':anio') {
+                $stmt->bindValue($k, (int)$v, PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue($k, $v, PDO::PARAM_STR);
+            }
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Métodos de inserción para asesorar_aprendiz y asesorar_asociado
+    public function insertarAsesorarApre($encargado, $entidad, $fecha) {
+        $sql = "INSERT INTO asesorar_aprendiz (encargado, entidad, fecha) VALUES (:encargado, :entidad, :fecha)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':entidad', $entidad, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+    public function insertarAsesorarAso($encargado, $entidad, $fecha) {
+        $sql = "INSERT INTO asesorar_asociado (encargado, entidad, fecha) VALUES (:encargado, :entidad, :fecha)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':entidad', $entidad, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+
+    // Métodos de actualización para asesorar_aprendiz y asesorar_asociado
+    public function actualizarAsesorarApre($id, $encargado, $entidad, $fecha) {
+        $sql = "UPDATE asesorar_aprendiz SET encargado = :encargado, entidad = :entidad, fecha = :fecha WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':entidad', $entidad, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function actualizarAsesorarAso($id, $encargado, $entidad, $fecha) {
+        $sql = "UPDATE asesorar_asociado SET encargado = :encargado, entidad = :entidad, fecha = :fecha WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':entidad', $entidad, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    // Métodos de eliminación para asesorar_aprendiz y asesorar_asociado
+    public function eliminarAsesorarApre($id) {
+        $sql = "DELETE FROM asesorar_aprendiz WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function eliminarAsesorarAso($id) {
+        $sql = "DELETE FROM asesorar_asociado WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+
+    // Métodos para proyectos externos (proyectos_ext)
+    public function obtenerProyectosExt($filtros = []) {
+        $sql = "SELECT * FROM proyectos_ext WHERE 1=1";
+        $params = [];
+        if (!empty($filtros['encargado'])) {
+            $sql .= " AND encargado = :encargado";
+            $params[':encargado'] = $filtros['encargado'];
+        }
+        $sql .= " ORDER BY fecha DESC";
+        $stmt = $this->conexion->prepare($sql);
+        foreach ($params as $k => $v) {
+            $stmt->bindValue($k, $v, PDO::PARAM_STR);
+        }
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function insertarProyectosExt($encargado, $nombre, $fecha) {
+        $sql = "INSERT INTO proyectos_ext (encargado, nombre, fecha) VALUES (:encargado, :nombre, :fecha)";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        return $stmt->execute();
+    }
+    public function actualizarProyectosExt($id, $encargado, $nombre, $fecha) {
+        $sql = "UPDATE proyectos_ext SET encargado = :encargado, nombre = :nombre, fecha = :fecha WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':encargado', $encargado, PDO::PARAM_STR);
+        $stmt->bindParam(':nombre', $nombre, PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $fecha, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
+    public function eliminarProyectosExt($id) {
+        $sql = "DELETE FROM proyectos_ext WHERE id = :id";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
     }
 
 }
