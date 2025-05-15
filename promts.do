@@ -15,3 +15,21 @@ se oculatara de la grafica lo mismo al seleccionar esto mostrarara la el dato en
 3. en la vista dashboard_content.php quiero que se mantengan de igual manera los label y tambien la selección que se le hace al total para que muestre de forma disgregada la cantidad por dependencia.
 
 vamos a resolver dime que necesitas..
+
+
+
+si te fijas en el nav.php los roles 4,5 y 6 los lleva a "/viaticosapp/app/sennova/general/index.php" lo cual esta bien pero tenemos que modificar algunas cosas 
+ya que no todos pueden ver toda esa información para el rol 4 esta bien ya que es el rol que engloba las demas areas pero pero para el rol 5 y 6 queiro que al rol 5 
+solo le muestre la información correspondiente a la dependecia "69" que hace referencia a Tecnoparque entonces en todas las vistas que te proporcione y que estan 
+enlazadas al index.php que son dirigidos en el nav pues deben ser acorde a la dependencia "62" y para el caso del rol 6 debe ser relacionado con la dependencia "70" 
+que hace referencia a Tecnoacademia.
+
+la idea es que no se requieran hacer mas archivos, puedes modificar los metodos y vistas todo lo que sea necesario
+-----------
+
+y para la parte de de los viaticos tambien se aplico que solo trajera los viaticos para las dependencias como hisimos en las otras vistas? es que de momento solo hay 
+un viatico registrado y me aparece en los 3 roles lo cual esta mal ya que debe ser de alguno pero no de los 3...
+
+En la tabla de viaticos aun me aprece el registro de la orden de pago del viatico lo cual esta mal ya que estoy desde el rol 6 y el registro hace referencia a el 5 
+por lo que no es bueno que tenga información del otro
+

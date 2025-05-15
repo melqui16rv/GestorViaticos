@@ -113,7 +113,16 @@ class sennova_general_presuspuestal extends Conexion {
     }
 
     public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
-        $dependenciasPermitidas = ['62', '66', '69', '70'];
+        if (!isset($_SESSION)) session_start();
+        $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
+        // Definir dependencias permitidas según el rol
+        if ($rol == '5') {
+            $dependenciasPermitidas = ['69'];
+        } elseif ($rol == '6') {
+            $dependenciasPermitidas = ['70'];
+        } else {
+            $dependenciasPermitidas = ['62', '66', '69', '70'];
+        }
         $query = "SELECT 
                   op.Numero_Documento,
                   op.Fecha_de_Registro,
