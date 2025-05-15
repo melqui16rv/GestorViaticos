@@ -30,24 +30,7 @@ try {
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
 
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
-
-        $dependenciasPermitidas = ['62', '66', '69', '70'];
-        $resultado = array_values(array_filter($resultado, function($row) use ($dependenciasPermitidas) {
-            $dep = null;
-            if (isset($row['Dependencia'])) {
-                $dep = $row['Dependencia'];
-            } elseif (isset($row['dependencia'])) {
-                $dep = $row['dependencia'];
-            } else {
-                return false;
-            }
-            if (preg_match('/(\d{1,2}(\.\d)?$)/', trim($dep), $matches)) {
-                return in_array($matches[1], $dependenciasPermitidas);
-            }
-            return false;
-        }));
-
-        // --- Siempre retornar JSON válido ---
+        // Eliminar filtro redundante sobre dependencias
         echo json_encode($resultado);
         exit;
     } else {
