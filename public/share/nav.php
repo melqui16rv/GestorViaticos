@@ -38,7 +38,7 @@ if (isset($_SESSION['numero_documento'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/nav.css.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/nav.css">
     <title>Viaticos</title>
 </head>
 <body>
