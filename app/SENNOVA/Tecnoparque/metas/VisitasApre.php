@@ -201,7 +201,7 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
                 </button>
             </a>
         </div>
-        <div class="flex justify-center mb-4">
+        <div class="p-6">
             <form id="formVisitasApreUnique" method="POST" class="formulario formulario-visitasapre" style="display: none;">
                 <input type="hidden" name="action" id="actionVisitasApre" value="create">
                 <input type="hidden" name="id_visita" id="id_visitaVisitasApre">
