@@ -216,6 +216,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
             <h2 class="text-xl font-semibold">Tabla de Proyectos de Extensionismo</h2>
         </div>
         <div class="flex justify-end mb-4">
+            <?php if (!isset($_SESSION['id_rol']) || $_SESSION['id_rol'] != '4'): ?>
             <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/control/actualizarMetaProExt.php" id="actualizarTablaBtn" class="actualizar-tabla-link">
                 <button type="button" class="actualizar-tabla-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" class="icon-refresh" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -224,6 +225,7 @@ $porcentaje_esperado = min(100, round(($total_esperado / $meta_total) * 100, 1))
                     Actualizar tabla
                 </button>
             </a>
+            <?php endif; ?>
         </div>
         <table class="styled-table">
             <thead>
