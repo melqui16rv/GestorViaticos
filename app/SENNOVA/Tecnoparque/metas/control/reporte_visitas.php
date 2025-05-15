@@ -19,21 +19,21 @@ ob_start();
 <head>
     <meta charset="UTF-8">
     <title>Reporte de Metas Tecnoparque</title>
-    <!-- CSS principales para que las vistas se vean bien en el PDF -->
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/metas.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/proyecTecStyle.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/asesoramientoStyle.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/visApreStyle.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; font-size: 11px; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; font-size: 11px; margin: 0; padding: 0; background: #f8fafc; }
         h1, h2, h3 { color: #2b3b4f; }
         h1 { text-align: center; font-size: 1.7em; margin-bottom: 0.2em; }
         h2 { font-size: 1.2em; margin-top: 1.5em; }
         .section-break { page-break-before: always; }
-        .dashboard-container { margin: 0 auto 1.5rem auto; background: #f8fafc; border-radius: 8px; max-width: 900px; padding: 1rem; }
+        .pdf-container {
+            margin: 0 auto 1.5rem auto;
+            background: #fff;
+            border-radius: 8px;
+            max-width: 900px;
+            min-width: 650px;
+            padding: 1.5rem 2.5rem 2rem 2.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
         .stats-card, .tabla-card { margin-bottom: 1rem; }
         .stat-item { display: inline-block; min-width: 100px; margin-right: 0.5rem; }
         .styled-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 10.5px; }
@@ -46,9 +46,25 @@ ob_start();
         .no-grafica { color: #b91c1c; font-size: 0.95em; margin: 1em 0; }
         /* Ocultar botones, formularios y elementos interactivos que no tienen sentido en PDF */
         button, .actualizar-tabla-link, form, .sidebar-filament, .sidebar-link, .sidebar-toggle-btn, .sidebar-overlay { display: none !important; }
+        /* Ajuste de imágenes de gráficas */
+        .grafica-img {
+            display: block;
+            margin: 0 auto 1.5em auto;
+            width: 100%;
+            max-width: 700px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            background: #fff;
+            padding: 0.5em;
+        }
+        @media print {
+            body { background: #fff; }
+            .pdf-container { box-shadow: none; }
+        }
     </style>
 </head>
 <body>
+    <div class="pdf-container">
     <h1>Reporte de Metas Tecnoparque</h1>
     <hr>
     <section>
@@ -87,7 +103,7 @@ ob_start();
         $chartUrlTec = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigTec));
         ?>
         <div style="text-align:center;margin:1em 0;">
-            <img src="<?php echo $chartUrlTec; ?>" alt="Gráfica Proyectos de Base Tecnológica" style="width:100%;max-width:700px;">
+            <img src="<?php echo $chartUrlTec; ?>" alt="Gráfica Proyectos de Base Tecnológica" class="grafica-img">
         </div>
     </section>
     <div class="section-break"></div>
@@ -124,7 +140,7 @@ ob_start();
         $chartUrlAso = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigAso));
         ?>
         <div style="text-align:center;margin:1em 0;">
-            <img src="<?php echo $chartUrlAso; ?>" alt="Gráfica Asesoramiento por tipo" style="width:100%;max-width:700px;">
+            <img src="<?php echo $chartUrlAso; ?>" alt="Gráfica Asesoramiento por tipo" class="grafica-img">
         </div>
     </section>
     <div class="section-break"></div>
@@ -163,7 +179,7 @@ ob_start();
         $chartUrlExt = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigExt));
         ?>
         <div style="text-align:center;margin:1em 0;">
-            <img src="<?php echo $chartUrlExt; ?>" alt="Gráfica Proyectos de Extensionismo" style="width:100%;max-width:700px;">
+            <img src="<?php echo $chartUrlExt; ?>" alt="Gráfica Proyectos de Extensionismo" class="grafica-img">
         </div>
     </section>
     <div class="section-break"></div>
@@ -199,9 +215,10 @@ ob_start();
         $chartUrlVis = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartConfigVis));
         ?>
         <div style="text-align:center;margin:1em 0;">
-            <img src="<?php echo $chartUrlVis; ?>" alt="Gráfica Visitas por Encargado" style="width:100%;max-width:700px;">
+            <img src="<?php echo $chartUrlVis; ?>" alt="Gráfica Visitas por Encargado" class="grafica-img">
         </div>
     </section>
+    </div>
 </body>
 </html>
 <?php
@@ -213,7 +230,7 @@ $html = preg_replace('/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/i', '',
 // Limpiar cualquier salida previa antes de enviar headers y PDF
 if (ob_get_length()) ob_end_clean();
 
-$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4-L']);
+$mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'Letter']);
 $mpdf->WriteHTML($html);
 header('Content-Type: application/pdf');
 header('Content-Disposition: attachment; filename="reporte_metas_tecnoparque.pdf"');
