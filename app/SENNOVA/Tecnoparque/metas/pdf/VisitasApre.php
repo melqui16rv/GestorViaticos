@@ -47,57 +47,26 @@ foreach ($visitas as $v) {
 $labelsVisitasEnc = array_keys($visitasPorEncargado);
 $dataVisitasEnc = array_values($visitasPorEncargado);
 
-// Gráfica: Visitas por semana (últimas 5 semanas)
-$fechas = array_column($visitas, 'fechaCharla');
-if (!empty($fechas)) {
-    $minFecha = min(array_map(fn($f) => strtotime($f), $fechas));
-    $maxFecha = max(array_map(fn($f) => strtotime($f), $fechas));
-    $start = new DateTime();
-    $start->setTimestamp($minFecha);
-    $start->modify('monday this week');
-    $end = new DateTime();
-    $end->setTimestamp($maxFecha);
-    $end->modify('sunday this week');
-    $semanas = [];
-    $current = clone $end;
-    for ($i = 0; $i < 5; $i++) {
-        $weekStart = clone $current;
-        $weekStart->modify('monday this week');
-        $weekEnd = clone $weekStart;
-        $weekEnd->modify('+6 days');
-        $label = $weekStart->format('d M') . " - " . $weekEnd->format('d M');
-        $semanas[$label] = ['start' => clone $weekStart, 'end' => clone $weekEnd, 'count' => 0];
-        $current->modify('-1 week');
-    }
-    $semanas = array_reverse($semanas, true);
-    foreach($visitas as $v) {
-        $fecha = new DateTime($v['fechaCharla']);
-        foreach ($semanas as $label => &$datos) {
-            if ($fecha >= $datos['start'] && $fecha <= $datos['end']) {
-                $datos['count']++;
-            }
-        }
-    }
-    $labelsSemanales = array_keys($semanas);
-    $dataSemanales = array_map(fn($d) => $d['count'], $semanas);
-} else {
-    $labelsSemanales = [];
-    $dataSemanales = [];
-}
-
 // Gráficas con quickchart.io
 $chartAsistentesEnc = [
     "type" => "bar",
     "data" => [
         "labels" => $labelsAsistentesEnc,
         "datasets" => [[
-            "label" => "Asistentes",
+            "label" => "Asistentes por Encargado",
             "backgroundColor" => "rgba(59,130,246,0.60)",
             "data" => $dataAsistentesEnc
         ]]
     ],
     "options" => [
-        "plugins" => ["legend" => ["display" => false]],
+        "plugins" => [
+            "legend" => ["display" => false],
+            "title" => [
+                "display" => true,
+                "text" => "Nivel Impacto X Encargado",
+                "font" => ["size" => 18]
+            ]
+        ],
         "responsive" => true,
         "scales" => ["y" => ["beginAtZero" => true]]
     ]
@@ -109,41 +78,28 @@ $chartVisitasEnc = [
     "data" => [
         "labels" => $labelsVisitasEnc,
         "datasets" => [[
-            "label" => "Visitas",
+            "label" => "Visitas realizadas por Encargado",
             "backgroundColor" => "rgba(255,159,64,0.60)",
             "data" => $dataVisitasEnc
         ]]
     ],
     "options" => [
-        "plugins" => ["legend" => ["display" => false]],
+        "plugins" => [
+            "legend" => ["display" => false],
+            "title" => [
+                "display" => true,
+                "text" => "Visitas realizadas X Encargado",
+                "font" => ["size" => 18]
+            ]
+        ],
         "responsive" => true,
         "scales" => ["y" => ["beginAtZero" => true]]
     ]
 ];
 $chartUrlVisitasEnc = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartVisitasEnc));
-
-$chartSemanal = [
-    "type" => "line",
-    "data" => [
-        "labels" => $labelsSemanales,
-        "datasets" => [[
-            "label" => "Visitas por semana",
-            "backgroundColor" => "rgba(54,162,235,0.25)",
-            "borderColor" => "rgba(54,162,235,1)",
-            "fill" => true,
-            "data" => $dataSemanales
-        ]]
-    ],
-    "options" => [
-        "plugins" => ["legend" => ["display" => true, "position" => "top"]],
-        "responsive" => true,
-        "scales" => ["y" => ["beginAtZero" => true]]
-    ]
-];
-$chartUrlSemanal = "https://quickchart.io/chart?c=" . urlencode(json_encode($chartSemanal));
 ?>
 <!-- Título formal -->
-<div style="margin-bottom: 1.5em;">
+<div style="margin-bottom: 1em; margin-top: 1em;">
     <h3 style="font-size:1.15em; color:#1e293b; font-weight:600; margin-bottom:0.2em;">Resumen de Visitas de Aprendices</h3>
     <p style="font-size:1em; color:#334155; margin:0;">
         <strong>Visitas por Nodo:</strong>
@@ -153,12 +109,11 @@ $chartUrlSemanal = "https://quickchart.io/chart?c=" . urlencode(json_encode($cha
     </p>
 </div>
 
-<img src="<?php echo $chartUrlAsistentesEnc; ?>" alt="Asistentes por Encargado" class="grafica-img">
-<img src="<?php echo $chartUrlVisitasEnc; ?>" alt="Visitas por Encargado" class="grafica-img">
-<img src="<?php echo $chartUrlSemanal; ?>" alt="Visitas por Semana" class="grafica-img">
+<img src="<?php echo $chartUrlAsistentesEnc; ?>" alt="Nivel Impacto X Encargado" class="grafica-img">
+<img src="<?php echo $chartUrlVisitasEnc; ?>" alt="Visitas realizadas X Encargado" class="grafica-img">
 
 <!-- Tabla formal -->
-<table class="styled-table" style="margin-top:1.5em;">
+<table class="styled-table" style="margin-top:1em;">
     <thead>
         <tr>
             <th>ID</th>
