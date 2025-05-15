@@ -799,7 +799,6 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
     });
 
     document.getElementById('btnDescargarReportePDF').addEventListener('click', function() {
-        // Mostrar mensaje de carga
         if (window.Swal) {
             Swal.fire({
                 title: 'Generando PDF...',
@@ -816,11 +815,34 @@ $indicadores = $metas->obtenerIndicadoresVisitas();
             return response.blob();
         })
         .then(blob => {
-            // ...descarga como antes...
+            if (window.Swal) Swal.close();
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'reporte_metas_tecnoparque.pdf';
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+                window.URL.revokeObjectURL(url);
+                a.remove();
+            }, 1000);
+            if (window.Swal) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Descarga iniciada',
+                    text: 'El PDF se está descargando.',
+                    timer: 1500,
+                    showConfirmButton: false
+                });
+            }
         })
         .catch(error => {
             if (window.Swal) Swal.close();
-            alert('Error al generar el PDF: ' + error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: error.message || 'Error al generar el PDF'
+            });
         });
     });
 </script>

@@ -28,16 +28,18 @@ ob_start();
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/sennova/tecnoparque/visApreStyle.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; font-size: 12px; }
-        .dashboard-container { padding: 1rem; margin-bottom: 2rem; background: #f8fafc; border-radius: 12px; }
-        .stats-card, .tabla-card, .chart-wrapper { margin-bottom: 1rem; }
-        .stat-item { display: inline-block; min-width: 120px; margin-right: 1rem; }
-        .styled-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        .styled-table th, .styled-table td { border: 1px solid #ccc; padding: 6px; }
+        body { font-family: Arial, sans-serif; font-size: 11px; margin: 0; padding: 0; }
+        .dashboard-container { padding: 0.5rem 1rem; margin: 0 auto 1.5rem auto; background: #f8fafc; border-radius: 8px; max-width: 1000px; }
+        .stats-card, .tabla-card, .chart-wrapper { margin-bottom: 0.8rem; }
+        .stat-item { display: inline-block; min-width: 100px; margin-right: 0.5rem; }
+        .styled-table { width: 100%; border-collapse: collapse; margin-top: 0.5rem; font-size: 10.5px; }
+        .styled-table th, .styled-table td { border: 1px solid #bbb; padding: 4px 6px; }
         .styled-table th { background: #2563eb; color: #fff; }
-        h2 { color: #2563eb; margin-top: 2rem; }
-        .torta-title { font-weight: bold; margin-top: 1rem; }
+        h1 { color: #2b3b4f; font-size: 1.5em; margin-bottom: 0.5em; }
+        h2 { color: #2563eb; margin-top: 1.2em; font-size: 1.15em; }
+        .torta-title { font-weight: bold; margin-top: 0.5em; }
         .torta-info { font-size: 0.95em; color: #555; }
+        .section-break { page-break-before: always; }
         /* Ocultar botones, formularios y elementos interactivos que no tienen sentido en PDF */
         button, .actualizar-tabla-link, form, .sidebar-filament, .sidebar-link, .sidebar-toggle-btn, .sidebar-overlay { display: none !important; }
     </style>
@@ -48,12 +50,15 @@ ob_start();
     <section>
         <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosTec.php'; ?>
     </section>
+    <div class="section-break"></div>
     <section>
         <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/Asesorarmiento.php'; ?>
     </section>
+    <div class="section-break"></div>
     <section>
         <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/ProyectosExt.php'; ?>
     </section>
+    <div class="section-break"></div>
     <section>
         <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/app/SENNOVA/Tecnoparque/metas/VisitasApre.php'; ?>
     </section>
