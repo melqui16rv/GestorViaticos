@@ -773,13 +773,13 @@ body::-webkit-scrollbar {
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                    Presupuesto - Tecnoparque
+                                    Presupuesto
                                 </a>
                             </li>
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
-                                    Metas - Tecnoparque
+                                    Metas
                                 </a>
                             </li>
 
@@ -792,7 +792,7 @@ body::-webkit-scrollbar {
                             <li>
                                 <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                    Presupuesto - Tecnoacademia
+                                    Presupuesto
                                 </a>
                             </li>
                         <!-- Puedes agregar más opciones aquí para el rol 6 -->
