@@ -39,36 +39,55 @@ foreach ($visitas as $v) {
 $labelsAsistentesEnc = array_keys($asistentesPorEncargado);
 $dataAsistentesEnc = array_values($asistentesPorEncargado);
 
-// Gráfica: Visitas por encargado
+// Gráfica: Visitas por encargado (corregido el error)
 $visitasPorEncargado = [];
 foreach ($visitas as $v) {
     $enc = $v['encargado'];
-    if (!isset($visitasPorEncargado[$enc])) $visitasPorEncargado[$enc]++;
+    $visitasPorEncargado[$enc] = ($visitasPorEncargado[$enc] ?? 0) + 1;
 }
 $labelsVisitasEnc = array_keys($visitasPorEncargado);
 $dataVisitasEnc = array_values($visitasPorEncargado);
 
-// Gráfica: Visitas por semana (últimas 5 semanas)
-$monday = new DateTime("monday this week");
-$semanas = [];
-for ($i = 4; $i >= 0; $i--) {
-    $weekStart = clone $monday;
-    $weekStart->modify("-$i week");
-    $weekEnd = clone $weekStart;
-    $weekEnd->modify("+6 days");
-    $label = $weekStart->format('d M') . " - " . $weekEnd->format('d M');
-    $semanas[$label] = ['start' => $weekStart, 'end' => $weekEnd, 'count' => 0];
-}
-foreach($visitas as $v) {
-    $fecha = new DateTime($v['fechaCharla']);
-    foreach ($semanas as $label => &$datos) {
-        if ($fecha >= $datos['start'] && $fecha <= $datos['end']) {
-            $datos['count']++;
+// Gráfica: Visitas por semana (corregido para cubrir el rango real de fechas)
+$fechas = array_column($visitas, 'fechaCharla');
+if (!empty($fechas)) {
+    $minFecha = min(array_map(fn($f) => strtotime($f), $fechas));
+    $maxFecha = max(array_map(fn($f) => strtotime($f), $fechas));
+    // Ajustar al lunes de la semana de la fecha mínima
+    $start = new DateTime();
+    $start->setTimestamp($minFecha);
+    $start->modify('monday this week');
+    // Ajustar al domingo de la semana de la fecha máxima
+    $end = new DateTime();
+    $end->setTimestamp($maxFecha);
+    $end->modify('sunday this week');
+    // Generar semanas desde $start hasta $end (máximo 5)
+    $semanas = [];
+    $current = clone $end;
+    for ($i = 0; $i < 5; $i++) {
+        $weekStart = clone $current;
+        $weekStart->modify('monday this week');
+        $weekEnd = clone $weekStart;
+        $weekEnd->modify('+6 days');
+        $label = $weekStart->format('d M') . " - " . $weekEnd->format('d M');
+        $semanas[$label] = ['start' => clone $weekStart, 'end' => clone $weekEnd, 'count' => 0];
+        $current->modify('-1 week');
+    }
+    $semanas = array_reverse($semanas, true);
+    foreach($visitas as $v) {
+        $fecha = new DateTime($v['fechaCharla']);
+        foreach ($semanas as $label => &$datos) {
+            if ($fecha >= $datos['start'] && $fecha <= $datos['end']) {
+                $datos['count']++;
+            }
         }
     }
+    $labelsSemanales = array_keys($semanas);
+    $dataSemanales = array_map(fn($d) => $d['count'], $semanas);
+} else {
+    $labelsSemanales = [];
+    $dataSemanales = [];
 }
-$labelsSemanales = array_keys($semanas);
-$dataSemanales = array_map(fn($d) => $d['count'], $semanas);
 
 // Gráficas con quickchart.io
 $chartAsistentesEnc = [
