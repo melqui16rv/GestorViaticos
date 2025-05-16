@@ -114,8 +114,8 @@ CREATE TABLE `op` (
   `Ordenes_de_Pago` TEXT DEFAULT NULL,
   `Reintegros` DECIMAL(15,2) DEFAULT NULL,
   `Fecha_Doc_Soporte_Compromiso` DATE DEFAULT NULL,
-  `Tipo_Doc_Soporte_Compromiso` VARCHAR(50) DEFAULT NULL,
-  `Num_Doc_Soporte_Compromiso` VARCHAR(50) DEFAULT NULL,
+  `Tipo_Doc_Soporte_Compromiso` VARCHAR(100) DEFAULT NULL,
+  `Num_Doc_Soporte_Compromiso` VARCHAR(100) DEFAULT NULL,
   `Objeto_del_Compromiso` TEXT DEFAULT NULL,
 
   PRIMARY KEY (`CODIGO_OP`)
@@ -132,13 +132,100 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`numero_documento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE `saldos_asignados` (
+  `ID_SALDO` INT NOT NULL AUTO_INCREMENT,
+  `NOMBRE_PERSONA` VARCHAR(255) NOT NULL,
+  `DOCUMENTO_PERSONA` VARCHAR(55) NOT NULL,
+  `FECHA_REGISTRO` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `FECHA_INICIO` DATE NOT NULL,
+  `FECHA_FIN` DATE NOT NULL,
+  `FECHA_PAGO` DATE DEFAULT NULL,
+  `SALDO_ASIGNADO` DECIMAL(15,2) NOT NULL,
+  `CODIGO_CRP` VARCHAR(55) NOT NULL,
+  `CODIGO_CDP` VARCHAR(55) NOT NULL,
+
+  PRIMARY KEY (`ID_SALDO`),
+  CONSTRAINT `fk_saldos_crp` FOREIGN KEY (`CODIGO_CRP`) REFERENCES `crp` (`CODIGO_CRP`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_saldos_cdp` FOREIGN KEY (`CODIGO_CDP`) REFERENCES `cdp` (`CODIGO_CDP`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `imagenes_saldos_asignados` (
+  `ID_IMAGEN` INT NOT NULL AUTO_INCREMENT,
+  `ID_SALDO` INT NOT NULL,
+  `NOMBRE_ORIGINAL` VARCHAR(255) NOT NULL,
+  `RUTA_IMAGEN` VARCHAR(255) NOT NULL,
+  `FECHA_SUBIDA` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (`ID_IMAGEN`),
+  CONSTRAINT `fk_imagen_saldo` FOREIGN KEY (`ID_SALDO`) REFERENCES `saldos_asignados` (`ID_SALDO`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `registros_actualizaciones` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `tipo_tabla` ENUM('CDP', 'CRP', 'OP') NOT NULL,
+  `nombre_archivo` VARCHAR(255) NOT NULL,
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `registros_actualizados` INT NOT NULL DEFAULT 0,
+  `registros_nuevos` INT NOT NULL DEFAULT 0,
+  `usuario_id` VARCHAR(79) NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_registros_usuario` FOREIGN KEY (`usuario_id`) REFERENCES `usuario` (`numero_documento`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `proyectos_tecnoparque` (
+  `id_PBT` INT NOT NULL AUTO_INCREMENT,
+  `tipo` ENUM('Tecnológico', 'Extensionismo') NOT NULL,
+  `nombre_linea` varchar(55) NOT NULL,
+  `terminados` int,
+  `en_proceso` int,
+  `fecha_actualizacion` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_PBT`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `listadosvisitasApre` (
+  `id_visita` INT NOT NULL AUTO_INCREMENT,
+  `nodo` VARCHAR(100) DEFAULT 'Cundinamarca',
+  `encargado` VARCHAR(155) NOT NULL,
+  `numAsistentes` INT NOT NULL,
+  `fechaCharla` DATETIME NOT NULL,
+  `fecha_insert` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_visita`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE `asesoramiento` (
+  `id_asesoramiendo` INT NOT NULL AUTO_INCREMENT,
+  `tipo` ENUM('Asociaciones', 'Cooperativa') NOT NULL,
+  `encargadoAsesoramiento` VARCHAR(155) NOT NULL,
+  `nombreEntidadImpacto` VARCHAR(155) NOT NULL,
+  `fechaAsesoramiento` DATETIME NOT NULL,
+  `fecha_insert` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id_asesoramiendo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 COMMIT;
 
 -- Datos para la tabla `usuario`
 INSERT INTO `usuario` (`numero_documento`, `tipo_doc`, `nombre_completo`, `contraseña`, `email`, `telefono`, `id_rol`) VALUES
-('1007695451', 'Cédula de ciudadanía', 'Julian Camilo Piñeros Zubieta', 'a706dd0e51e05aef936f18a09eea26d247bf57388a8b065265bd775d99474282', 'jcpinerosz@sena.edu.co', '3015325123', '3'),
-('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '92b908219a61e23981d568b0a3208f57dee6166f49d1c58d7953f1468c810050', 'juliancamilo290700@gmail.com', '3015325123', '1'),
-('1073672380', 'Cédula de ciudadanía', 'Melqui Alexander Romero', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'melquiveru@gmail.com', '3026074008', '1'),
-('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '0f21fd791cea14dc5af4d236541a0be4961ab82132821b3399b84b210f4a7c8e', 'medinab@sena.edu.co', '123445', '2');
+('1007695451', 'Cédula de ciudadanía', 'Julian Camilo Piñeros Zubieta', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'jcpinerosz@sena.edu.co', '3015325123', '3'),
+('1010244141', 'Cédula de ciudadanía', 'Laura Lopez Rodriguez', '$2y$10$pDbPQMkUEjzzkfTd4yPi5O812xUQyLyhZuXyH040eijTQ98oS2jte', 'laulopezr@sena.edu.co', '3164101647', '3'),
+('1073672380', 'Cédula de ciudadanía', 'Melqui Alexander Romero', '$2y$10$u2iloUCRe9Bahko.YETDz.vHr/kOfdRWEZ6iIO5t/4923X8/r0fH6', 'melquiveru@gmail.com', '3026074008', '1'),
+('259232', 'Cédula de ciudadanía', 'JCentro Industrial Y De Desarrollo Empresarial de Soacha', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'juliancamilo290700@gmail.com', '3015325123', '1'),
+('80062448', 'Cédula de ciudadanía', 'Fabian Medina', '03ac674216f3e15c761ee1a5e255f067953623c8b388b4459e13f978d7c846f4', 'medinab@sena.edu.co', '123445', '2');
 
+INSERT INTO `proyectos_tecnoparque` (`tipo`, `nombre_linea`, `terminados`, `en_proceso`) VALUES
+('Tecnológico','Diseño', 4, 21),
+('Tecnológico','Producción',3, 14),
+('Tecnológico','TI', 5, 4),
+('Tecnológico','UCL', 0, 0),
+('Extensionismo','Extensionismo', 0, 0);
 
+-- Datos para la tabla listadosvisitasApre
+INSERT INTO `listadosvisitasApre` (`encargado`, `numAsistentes`, `fechaCharla`) VALUES
+('Juan Pérez', 25, '2024-05-15 10:00:00'),
+('María Rodríguez', 30, '2024-05-16 14:30:00'),
+('Carlos Gómez', 15, '2024-05-17 09:00:00');
+
+INSERT INTO `asesoramiento` (`tipo`, `encargadoAsesoramiento`, `nombreEntidadImpacto`, `fechaAsesoramiento`) VALUES
+('Asociaciones','Melqui Romero', 'HolTecth', '2024-05-15 10:00:00'),
+('Asociaciones','Angely Patiño', 'Markect Medios', '2024-05-15 10:00:00'),
+('Cooperativa','Alan Patiño', 'Julio Cesar Turbay Ayala', '2024-05-15 10:00:00');

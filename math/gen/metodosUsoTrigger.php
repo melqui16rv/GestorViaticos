@@ -16,7 +16,7 @@ class consultaObejtos extends Conexion{
     public function obtenerObjetos() {
         $sql = "SELECT 
                     CODIGO_CDP,
-                    Objeto,
+                    SUM(Valor_Actual) AS Valor_Actual_Sum,
                     CASE
                         WHEN REPLACE(Objeto, '\"', '') LIKE 'INSTRUCTOR.%' THEN 'INSTRUCTOR'
                         WHEN REPLACE(Objeto, '\"', '') LIKE 'MATERIALES FORMACION.%' THEN 'MATERIALES FORMACION'
@@ -49,7 +49,8 @@ class consultaObejtos extends Conexion{
                         WHEN REPLACE(Objeto, '\"', '') LIKE 'BIENESTAR EMPLEADOS.%' THEN 'BIENESTAR EMPLEADOS'
                         ELSE 'OTRO'
                     END AS Clasificacion_Objeto
-                FROM cdp;";
+                FROM cdp
+                GROUP BY CODIGO_CDP, Clasificacion_Objeto;";
         $stmt = $this->conexion->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
