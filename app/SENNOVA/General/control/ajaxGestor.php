@@ -3,7 +3,7 @@ session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/general_sennova/metodosGestor.php';
 
-requireRole(['4']);
+requireRole(['4', '5', '6']);
 header('Content-Type: application/json');
 
 // --- Quitar ob_clean y ob_end_clean para evitar problemas de buffer ---
