@@ -17,7 +17,7 @@ class graficas extends Conexion{
     private $dependencias = [
         '09' => 'SST',
         '10' => 'Administrativos / Victimas',
-        '11' => 'Victimas',
+        '11' => 'Articulación con la Media',
         '14' => 'ENI',
         '18' => 'FIC',
         '20' => 'Administrativo (DC)',
