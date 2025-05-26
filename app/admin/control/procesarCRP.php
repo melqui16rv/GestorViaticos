@@ -70,57 +70,48 @@ function depurar_datos_crp($archivo) {
     $datosDepurados = [];
 
     foreach ($lineas as $numeroLinea => $linea) {
-        // Limpiar la línea de espacios y caracteres especiales
         $linea = trim($linea);
         if (empty($linea)) continue;
-
-        // Separar por punto y coma
         $datos = explode(';', $linea);
-        
-        // Si faltan campos, rellenar con nulls hasta tener 34 campos
-        $datos = array_pad($datos, 34, null);
-
-        try {
-            $datosDepurados[] = [
-                'CODIGO_CRP'           => !empty($datos[0]) ? trim($datos[0]) : null,
-                'CODIGO_CDP'           => !empty($datos[1]) ? trim($datos[1]) : null,
-                'Numero_Documento'     => !empty($datos[2]) ? trim($datos[2]) : null,
-                'Fecha_de_Registro'    => !empty($datos[3]) ? parseDateOrExcel(trim($datos[3])) : null,
-                'Fecha_de_Creacion'    => !empty($datos[4]) ? parseDateOrExcel(trim($datos[4])) : null,
-                'Estado'               => !empty($datos[5]) ? trim($datos[5]) : null,
-                'Dependencia'          => !empty($datos[6]) ? trim($datos[6]) : null,
-                'Rubro'                => !empty($datos[7]) ? trim($datos[7]) : null,
-                'Descripcion'          => !empty($datos[8]) ? trim($datos[8]) : null,
-                'Fuente'               => !empty($datos[9]) ? trim($datos[9]) : null,
-                'Valor_Inicial'        => !empty($datos[10]) ? floatval(limpiarValorNumerico($datos[10])) : null,
-                'Valor_Operaciones'    => !empty($datos[11]) ? floatval(limpiarValorNumerico($datos[11])) : null,
-                'Valor_Actual'         => !empty($datos[12]) ? floatval(limpiarValorNumerico($datos[12])) : null,
-                'Saldo_por_Utilizar'   => !empty($datos[13]) ? floatval(limpiarValorNumerico($datos[13])) : null,
-                'Tipo_Identificacion'  => !empty($datos[14]) ? trim($datos[14]) : null,
-                'Identificacion'       => !empty($datos[15]) ? trim($datos[15]) : null,
-                'Nombre_Razon_Social'  => !empty($datos[16]) ? trim($datos[16]) : null,
-                'Medio_de_Pago'        => !empty($datos[17]) ? trim($datos[17]) : null,
-                'Tipo_Cuenta'          => !empty($datos[18]) ? trim($datos[18]) : null,
-                'Numero_Cuenta'        => !empty($datos[19]) ? trim($datos[19]) : null,
-                'Estado_Cuenta'        => !empty($datos[20]) ? trim($datos[20]) : null,
-                'Entidad_Nit'          => !empty($datos[21]) ? trim($datos[21]) : null,
-                'Entidad_Descripcion'  => !empty($datos[22]) ? trim($datos[22]) : null,
-                'Solicitud_CDP'        => !empty($datos[23]) ? trim($datos[23]) : null,
-                'CDP'                  => !empty($datos[24]) ? trim($datos[24]) : null,
-                'Compromisos'          => !empty($datos[25]) ? trim($datos[25]) : null,
-                'Cuentas_por_Pagar'    => !empty($datos[26]) ? trim($datos[26]) : null,
-                'Obligaciones'         => !empty($datos[27]) ? trim($datos[27]) : null,
-                'Ordenes_de_Pago'      => !empty($datos[28]) ? trim($datos[28]) : null,
-                'Reintegros'           => !empty($datos[29]) ? floatval(limpiarValorNumerico($datos[29])) : null,
-                'Fecha_Documento_Soporte'    => !empty($datos[30]) ? parseDateOrExcel(trim($datos[30])) : null,
-                'Tipo_Documento_Soporte'     => !empty($datos[31]) ? trim($datos[31]) : null,
-                'Numero_Documento_Soporte'   => !empty($datos[32]) ? trim($datos[32]) : null,
-                'Observaciones'              => !empty($datos[33]) ? trim($datos[33]) : null,
-            ];
-        } catch (Exception $e) {
-            error_log("Error procesando línea $numeroLinea: " . $e->getMessage());
-            continue;
-        }
+        // Mapear los campos según la nueva estructura
+        $datosDepurados[] = [
+            'rp_id' => isset($datos[0]) ? trim($datos[0]) : null,
+            'cdp_id' => isset($datos[1]) ? trim($datos[1]) : null,
+            'CODIGO_CRP' => isset($datos[2]) ? trim($datos[2]) : null,
+            'CODIGO_CDP' => isset($datos[3]) ? trim($datos[3]) : null,
+            'Numero_Documento' => isset($datos[4]) ? trim($datos[4]) : null,
+            'Fecha_de_Registro' => isset($datos[5]) ? parseDateOrExcel(trim($datos[5])) : null,
+            'Fecha_de_Creacion' => isset($datos[6]) ? parseDateOrExcel(trim($datos[6])) : null,
+            'Estado' => isset($datos[7]) ? trim($datos[7]) : null,
+            'Dependencia' => isset($datos[8]) ? trim($datos[8]) : null,
+            'Rubro' => isset($datos[9]) ? trim($datos[9]) : null,
+            'Descripcion' => isset($datos[10]) ? trim($datos[10]) : null,
+            'Fuente' => isset($datos[11]) ? trim($datos[11]) : null,
+            'Valor_Inicial' => isset($datos[12]) ? floatval(limpiarValorNumerico($datos[12])) : null,
+            'Valor_Operaciones' => isset($datos[13]) ? floatval(limpiarValorNumerico($datos[13])) : null,
+            'Valor_Actual' => isset($datos[14]) ? floatval(limpiarValorNumerico($datos[14])) : null,
+            'Saldo_por_Utilizar' => isset($datos[15]) ? floatval(limpiarValorNumerico($datos[15])) : null,
+            'Tipo_Identificacion' => isset($datos[16]) ? trim($datos[16]) : null,
+            'Identificacion' => isset($datos[17]) ? trim($datos[17]) : null,
+            'Nombre_Razon_Social' => isset($datos[18]) ? trim($datos[18]) : null,
+            'Medio_de_Pago' => isset($datos[19]) ? trim($datos[19]) : null,
+            'Tipo_Cuenta' => isset($datos[20]) ? trim($datos[20]) : null,
+            'Numero_Cuenta' => isset($datos[21]) ? trim($datos[21]) : null,
+            'Estado_Cuenta' => isset($datos[22]) ? trim($datos[22]) : null,
+            'Entidad_Nit' => isset($datos[23]) ? trim($datos[23]) : null,
+            'Entidad_Descripcion' => isset($datos[24]) ? trim($datos[24]) : null,
+            'Solicitud_CDP' => isset($datos[25]) ? trim($datos[25]) : null,
+            'CDP' => isset($datos[26]) ? trim($datos[26]) : null,
+            'Compromisos' => isset($datos[27]) ? trim($datos[27]) : null,
+            'Cuentas_por_Pagar' => isset($datos[28]) ? trim($datos[28]) : null,
+            'Obligaciones' => isset($datos[29]) ? trim($datos[29]) : null,
+            'Ordenes_de_Pago' => isset($datos[30]) ? trim($datos[30]) : null,
+            'Reintegros' => isset($datos[31]) ? floatval(limpiarValorNumerico($datos[31])) : null,
+            'Fecha_Documento_Soporte' => isset($datos[32]) ? parseDateOrExcel(trim($datos[32])) : null,
+            'Tipo_Documento_Soporte' => isset($datos[33]) ? trim($datos[33]) : null,
+            'Numero_Documento_Soporte' => isset($datos[34]) ? trim($datos[34]) : null,
+            'Observaciones' => isset($datos[35]) ? trim($datos[35]) : null
+        ];
     }
 
     if (empty($datosDepurados)) {

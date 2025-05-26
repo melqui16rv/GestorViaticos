@@ -20,15 +20,16 @@ class admin extends Conexion {
             try {
                 $stmt = $this->conexion->prepare("
                     INSERT INTO cdp (
-                        CODIGO_CDP, Numero_Documento, Fecha_de_Registro, Fecha_de_Creacion, Estado, Dependencia, Rubro, Fuente, Recurso, 
+                        cdp_id, CODIGO_CDP, Numero_Documento, Fecha_de_Registro, Fecha_de_Creacion, Estado, Dependencia, Rubro, Fuente, Recurso, 
                         Valor_Inicial, Valor_Operaciones, Valor_Actual, Saldo_por_Comprometer, Objeto, Compromisos, Cuentas_por_Pagar, 
                         Obligaciones, Ordenes_de_Pago, Reintegros
                     ) VALUES (
-                        :CODIGO_CDP, :Numero_Documento, :Fecha_de_Registro, :Fecha_de_Creacion, :Estado, :Dependencia, :Rubro, :Fuente, :Recurso, 
+                        :cdp_id, :CODIGO_CDP, :Numero_Documento, :Fecha_de_Registro, :Fecha_de_Creacion, :Estado, :Dependencia, :Rubro, :Fuente, :Recurso, 
                         :Valor_Inicial, :Valor_Operaciones, :Valor_Actual, :Saldo_por_Comprometer, :Objeto, :Compromisos, :Cuentas_por_Pagar, 
                         :Obligaciones, :Ordenes_de_Pago, :Reintegros
                     )
                     ON DUPLICATE KEY UPDATE
+                        CODIGO_CDP = VALUES(CODIGO_CDP),
                         Numero_Documento = VALUES(Numero_Documento),
                         Fecha_de_Registro = VALUES(Fecha_de_Registro),
                         Fecha_de_Creacion = VALUES(Fecha_de_Creacion),

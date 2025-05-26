@@ -1,18 +1,40 @@
 <?php
 function processCSV($filePath, $conn) {
     if (($handle = fopen($filePath, "r")) !== FALSE) {
-        fgetcsv($handle, 1000, ";"); // Saltar la primera línea (cabeceras)
+        // No saltar cabecera si no existe, pero si existe, saltar
+        // fgetcsv($handle, 1000, ";");
         while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-            $sql = "INSERT INTO cdp_data (CODIGO_CDP, Numero_Documento, Fecha_de_Registro, Fecha_de_Creacion, Estado, Dependencia, Rubro, Fuente, Recurso, Valor_Inicial, Valor_Operaciones, Valor_Actual, Saldo_por_Comprometer, Objeto, Compromisos, Cuentas_por_Pagar, Obligaciones, Ordenes_de_Pago, Reintegros) 
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO cdp (
+                cdp_id, CODIGO_CDP, Numero_Documento, Fecha_de_Registro, Fecha_de_Creacion, Estado, Dependencia, Rubro, Fuente, Recurso, Valor_Inicial, Valor_Operaciones, Valor_Actual, Saldo_por_Comprometer, Objeto, Compromisos, Cuentas_por_Pagar, Obligaciones, Ordenes_de_Pago, Reintegros
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ON DUPLICATE KEY UPDATE
+                CODIGO_CDP = VALUES(CODIGO_CDP),
+                Numero_Documento = VALUES(Numero_Documento),
+                Fecha_de_Registro = VALUES(Fecha_de_Registro),
+                Fecha_de_Creacion = VALUES(Fecha_de_Creacion),
+                Estado = VALUES(Estado),
+                Dependencia = VALUES(Dependencia),
+                Rubro = VALUES(Rubro),
+                Fuente = VALUES(Fuente),
+                Recurso = VALUES(Recurso),
+                Valor_Inicial = VALUES(Valor_Inicial),
+                Valor_Operaciones = VALUES(Valor_Operaciones),
+                Valor_Actual = VALUES(Valor_Actual),
+                Saldo_por_Comprometer = VALUES(Saldo_por_Comprometer),
+                Objeto = VALUES(Objeto),
+                Compromisos = VALUES(Compromisos),
+                Cuentas_por_Pagar = VALUES(Cuentas_por_Pagar),
+                Obligaciones = VALUES(Obligaciones),
+                Ordenes_de_Pago = VALUES(Ordenes_de_Pago),
+                Reintegros = VALUES(Reintegros)";
             $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sississsssddddsiiii",
-                $data[0], intval($data[1]), parseDateOrExcel($data[2]), parseDateOrExcel($data[3]), 
-                $data[4], intval($data[5]), $data[6], $data[7], $data[8], 
-                floatval(limpiarValorNumerico($data[9])), floatval(limpiarValorNumerico($data[10])), 
-                floatval(limpiarValorNumerico($data[11])), floatval(limpiarValorNumerico($data[12])), 
-                $data[13], intval($data[14]), intval($data[15]), intval($data[16]), 
-                intval($data[17]), floatval(limpiarValorNumerico($data[18]))
+            $stmt->bind_param(
+                "ssssssssssddddsssssd",
+                $data[0], $data[1], $data[2], parseDateOrExcel($data[3]), parseDateOrExcel($data[4]),
+                $data[5], $data[6], $data[7], $data[8], $data[9],
+                floatval(limpiarValorNumerico($data[10])), floatval(limpiarValorNumerico($data[11])), floatval(limpiarValorNumerico($data[12])), floatval(limpiarValorNumerico($data[13])),
+                $data[14], $data[15], $data[16], $data[17], $data[18],
+                isset($data[19]) ? floatval(limpiarValorNumerico($data[19])) : null
             );
             $stmt->execute();
         }

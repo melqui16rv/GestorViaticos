@@ -52,29 +52,28 @@ function depurar_datos_cdp($archivo) {
 
     foreach ($lineas as $linea) {
         $datos = explode(';', $linea);
-        
-        $fechaCreacion = excelDateTimeToDateTime(trim($datos[3]));
-        
+        // Mapear los campos según la nueva estructura
         $datosDepurados[] = [
-            'CODIGO_CDP' => trim($datos[0]),
-            'Numero_Documento' => trim($datos[1]),
-            'Fecha_de_Registro' => parseDateOrExcel(trim($datos[2])),
-            'Fecha_de_Creacion' => $fechaCreacion,
-            'Estado' => trim($datos[4]),
-            'Dependencia' => trim($datos[5]),
-            'Rubro' => trim($datos[6]),
-            'Fuente' => trim($datos[7]),
-            'Recurso' => trim($datos[8]),
-            'Valor_Inicial' => is_numeric(limpiarValorNumerico($datos[9])) ? floatval(limpiarValorNumerico($datos[9])) : null,
-            'Valor_Operaciones' => is_numeric(limpiarValorNumerico($datos[10])) ? floatval(limpiarValorNumerico($datos[10])) : null,
-            'Valor_Actual' => is_numeric(limpiarValorNumerico($datos[11])) ? floatval(limpiarValorNumerico($datos[11])) : null,
-            'Saldo_por_Comprometer' => is_numeric(limpiarValorNumerico($datos[12])) ? floatval(limpiarValorNumerico($datos[12])) : null,
-            'Objeto' => trim($datos[13]),
-            'Compromisos' => trim($datos[14]),
-            'Cuentas_por_Pagar' => trim($datos[15]),
-            'Obligaciones' => trim($datos[16]),
-            'Ordenes_de_Pago' => trim($datos[17]),
-            'Reintegros' => is_numeric(limpiarValorNumerico($datos[18])) ? floatval(limpiarValorNumerico($datos[18])) : null
+            'cdp_id' => trim($datos[0]),
+            'CODIGO_CDP' => trim($datos[1]),
+            'Numero_Documento' => trim($datos[2]),
+            'Fecha_de_Registro' => parseDateOrExcel(trim($datos[3])),
+            'Fecha_de_Creacion' => parseDateOrExcel(trim($datos[4])),
+            'Estado' => trim($datos[5]),
+            'Dependencia' => trim($datos[6]),
+            'Rubro' => trim($datos[7]),
+            'Fuente' => trim($datos[8]),
+            'Recurso' => trim($datos[9]),
+            'Valor_Inicial' => is_numeric(limpiarValorNumerico($datos[10])) ? floatval(limpiarValorNumerico($datos[10])) : null,
+            'Valor_Operaciones' => is_numeric(limpiarValorNumerico($datos[11])) ? floatval(limpiarValorNumerico($datos[11])) : null,
+            'Valor_Actual' => is_numeric(limpiarValorNumerico($datos[12])) ? floatval(limpiarValorNumerico($datos[12])) : null,
+            'Saldo_por_Comprometer' => is_numeric(limpiarValorNumerico($datos[13])) ? floatval(limpiarValorNumerico($datos[13])) : null,
+            'Objeto' => trim($datos[14]),
+            'Compromisos' => trim($datos[15]),
+            'Cuentas_por_Pagar' => trim($datos[16]),
+            'Obligaciones' => trim($datos[17]),
+            'Ordenes_de_Pago' => trim($datos[18]),
+            'Reintegros' => isset($datos[19]) && is_numeric(limpiarValorNumerico($datos[19])) ? floatval(limpiarValorNumerico($datos[19])) : null
         ];
     }
 

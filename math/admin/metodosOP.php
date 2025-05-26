@@ -17,6 +17,9 @@ class admin3 extends Conexion {
 
         $sql = "
             INSERT INTO op (
+                op_id,
+                rp_id,
+                cdp_id,
                 CODIGO_OP,
                 CODIGO_CRP,
                 CODIGO_CDP,
@@ -71,6 +74,9 @@ class admin3 extends Conexion {
                 Num_Doc_Soporte_Compromiso,
                 Objeto_del_Compromiso
             ) VALUES (
+                :op_id,
+                :rp_id,
+                :cdp_id,
                 :CODIGO_OP,
                 :CODIGO_CRP,
                 :CODIGO_CDP,
@@ -125,6 +131,9 @@ class admin3 extends Conexion {
                 :Num_Doc_Soporte_Compromiso,
                 :Objeto_del_Compromiso
             ) ON DUPLICATE KEY UPDATE
+                rp_id = VALUES(rp_id),
+                cdp_id = VALUES(cdp_id),
+                CODIGO_OP = VALUES(CODIGO_OP),
                 CODIGO_CRP = VALUES(CODIGO_CRP),
                 CODIGO_CDP = VALUES(CODIGO_CDP),
                 Numero_Documento = VALUES(Numero_Documento),
@@ -184,12 +193,8 @@ class admin3 extends Conexion {
         foreach ($datosDepurados as $dato) {
             try {
                 $stmt->execute($dato);
-                $rowCount = $stmt->rowCount();
-
-                if ($rowCount === 1) {
+                if ($stmt->rowCount() == 1) {
                     $inserted++;
-                } elseif ($rowCount >= 2) {
-                    $updated++;
                 } else {
                     $updated++;
                 }

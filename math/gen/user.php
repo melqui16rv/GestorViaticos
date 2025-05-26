@@ -314,7 +314,7 @@ class user extends Conexion{
                     SUM(registros_nuevos) as nuevos
                 FROM registros_actualizaciones
                 WHERE fecha_actualizacion BETWEEN :fecha_inicio AND :fecha_fin
-                GROUP BY DATE(fecha_actualizacion), tipo_tabla
+                GROUP BY DATE(fecha_actualizacion), tipo_tabla, fecha_actualizacion
                 ORDER BY fecha_actualizacion";
 
         $stmt = $this->conexion->prepare($sql);
