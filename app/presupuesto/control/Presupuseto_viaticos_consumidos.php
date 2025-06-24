@@ -105,11 +105,12 @@ class Presupuesto_viaticos_consumidos extends Conexion {
             $consumoCDP = $valorActual - $saldoPorComprometer;
 
             // 2) Obtenemos lo efectivamente gastado con OP
-            $queryConsumo = "SELECT COALESCE(SUM(Valor_Neto), 0) as total_consumido 
-                             FROM op 
-                             WHERE UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%'
+            $queryConsumo = "SELECT Objeto_del_Compromiso, Valor_Neto
+                              FROM op
+                              WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%'
                                 OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%'
-                                OR UPPER(Objeto_del_Compromiso) LIKE '%TRANSPO%'";
+                                OR UPPER(Objeto_del_Compromiso) LIKE '%TRANSPO%')
+                                AND UPPER(Estado) LIKE '%PAGADA%';";
             
             $stmtConsumo = $this->conexion->prepare($queryConsumo);
             $stmtConsumo->execute();
