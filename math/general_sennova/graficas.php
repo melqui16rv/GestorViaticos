@@ -316,7 +316,7 @@ class graficas_general_sennova extends Conexion{
         $dependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT SUM(Valor_Actual) as valor_actual, SUM(Saldo_por_Comprometer) as saldo_por_comprometer
                 FROM cdp
-                WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%' OR UPPER(Objeto) LIKE '%TRANSPO%')
+                WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%')
                   AND (";
         $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
         $sql .= ")";
