@@ -127,38 +127,38 @@ requireRole(['4', '5']);
 
     <div class="flex min-h-screen">
         <!-- Sidebar tipo Filament -->
-        <aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0">
-            <div class="flex items-center border-b border-gray-200 relative h-16">
-                <span class="text-xl font-bold text-blue-700 mx-auto" style="color: #2b3b4f;">Panel de Metas</span>
-            </div>
-            <nav class="flex-1 py-4">
-                <ul>
-                    <li>
-                        <a href="#" id="navProyectosTecnologicos" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-device-laptop mr-3"></i> 100 Proyectos de Base Tecnológica
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="navAsesoramiento" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-users-group mr-3"></i> Asesoramiento
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="navExtensionismo" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-rocket mr-3"></i> 5 Proyectos de Extensionismo Tecnológico
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" id="navVisitasAprendices" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
-                            <i class="ti ti-route mr-3"></i> Visitas de Aprendices
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <div class="p-4 border-t border-gray-200 text-xs text-gray-500">
-                &copy; <?php echo date('Y'); ?> Gestor Tecnoparque
-            </div>
-        </aside>
+<aside id="sidebarFilament" class="sidebar-filament bg-white border-r border-gray-200 flex flex-col h-screen fixed lg:static left-0 top-0">
+    <div class="flex items-center border-b border-gray-200 relative h-16">
+        <span class="text-xl font-bold text-blue-700 mx-auto" style="color: #2b3b4f;">Panel de Metas</span>
+    </div>
+    <nav class="flex-1 py-4">
+        <ul>
+            <li>
+                <a href="#" id="navProyectosTecnologicos" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                    <i class="ti ti-device-laptop mr-3"></i> 100 Proyectos de Base Tecnológica
+                </a>
+            </li>
+            <li>
+                <a href="#" id="navAsesoramiento" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                    <i class="ti ti-users-group mr-3"></i> Asesoramiento
+                </a>
+            </li>
+            <li>
+                <a href="#" id="navExtensionismo" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                    <i class="ti ti-rocket mr-3"></i> 5 Proyectos de Extensionismo Tecnológico
+                </a>
+            </li>
+            <li>
+                <a href="#" id="navVisitasAprendices" class="sidebar-link flex items-center px-6 py-3 text-gray-700 font-medium cursor-pointer">
+                    <i class="ti ti-route mr-3"></i> Visitas de Aprendices
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="p-4 border-t border-gray-200 text-xs text-gray-500">
+        &copy; <?php echo date('Y'); ?> Gestor Tecnoparque
+    </div>
+</aside>
 
         <!-- Contenido principal -->
         <main id="mainContentFilament" class="main-content-filament flex-1 min-h-screen transition-all duration-200" style="overflow: scroll;height: 100vh;display: flex;justify-content: center;align-items: flex-start;margin: 0;">

@@ -127,7 +127,9 @@ class planeacion extends Conexion {
                   op.CODIGO_CRP,
                   op.Objeto_del_Compromiso
                   FROM op 
-                  WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'";
+                  WHERE UPPER(op.Objeto_del_Compromiso) LIKE '%VIATICOS%'
+                     OR UPPER(op.Objeto_del_Compromiso) LIKE '%VIATI%'
+                     OR UPPER(op.Objeto_del_Compromiso) LIKE '%TRANSPO%'";
         
         $params = [];
 

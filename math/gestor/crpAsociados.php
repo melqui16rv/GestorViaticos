@@ -94,7 +94,9 @@ class gestor1 extends Conexion {
             $sql = "SELECT DISTINCT c.* 
                     FROM crp r
                     INNER JOIN cdp c ON r.CODIGO_CDP = c.CODIGO_CDP 
-                    WHERE c.Objeto LIKE '%VIATICOS%'
+                    WHERE UPPER(c.Objeto) LIKE '%VIATICOS%'
+                       OR UPPER(c.Objeto) LIKE '%VIATI%'
+                       OR UPPER(c.Objeto) LIKE '%TRANSPO%'
                     AND r.Saldo_por_Utilizar > 0";
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();

@@ -15,7 +15,9 @@ class Presupuesto_viaticos extends Conexion {
             $queryValorActual = "SELECT COALESCE(SUM(Valor_Actual), 0) as total_valor_actual, 
                                        COALESCE(SUM(Saldo_por_Comprometer), 0) as total_saldo 
                                 FROM cdp 
-                                WHERE Objeto LIKE '%VIATICOS%'";
+                                WHERE UPPER(Objeto) LIKE '%VIATICOS%'
+                                   OR UPPER(Objeto) LIKE '%VIATI%'
+                                   OR UPPER(Objeto) LIKE '%TRANSPO%'";
             
             $stmt = $this->conexion->prepare($queryValorActual);
             $stmt->execute();

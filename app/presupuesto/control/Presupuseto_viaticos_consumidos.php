@@ -19,7 +19,8 @@ class Presupuesto_viaticos_2 extends Conexion {
                                        COALESCE(SUM(Saldo_por_Comprometer), 0) as total_saldo 
                                 FROM cdp 
                                 WHERE UPPER(Objeto) LIKE '%VIATICOS%'
-                                   OR UPPER(Objeto) LIKE '%VIATI%'";
+                                   OR UPPER(Objeto) LIKE '%VIATI%'
+                                   OR UPPER(Objeto) LIKE '%TRANSPO%'";
 
             $stmt = $this->conexion->prepare($queryValorActual);
             $stmt->execute();
@@ -84,7 +85,8 @@ class Presupuesto_viaticos_consumidos extends Conexion {
                                        COALESCE(SUM(Saldo_por_Comprometer), 0) as total_saldo 
                                 FROM cdp 
                                 WHERE UPPER(Objeto) LIKE '%VIATICOS%'
-                                   OR UPPER(Objeto) LIKE '%VIATI%'";
+                                   OR UPPER(Objeto) LIKE '%VIATI%'
+                                   OR UPPER(Objeto) LIKE '%TRANSPO%'";
                                    
             $stmt = $this->conexion->prepare($queryValorActual);
             $stmt->execute();
@@ -108,7 +110,8 @@ class Presupuesto_viaticos_consumidos extends Conexion {
             $queryConsumo = "SELECT COALESCE(SUM(Valor_Neto), 0) as total_consumido 
                              FROM op 
                              WHERE UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%'
-                                OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%'";
+                                OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%'
+                                OR UPPER(Objeto_del_Compromiso) LIKE '%TRANSPO%'";
             
             $stmtConsumo = $this->conexion->prepare($queryConsumo);
             $stmtConsumo->execute();

@@ -16,7 +16,7 @@ class graficas_general_sennova extends Conexion{
     // Solo dependencias permitidas
     private $dependencias_permitidas = ['62', '66', '69', '70'];
 
-    // Diccionario de dependencias solo con las permitidas
+    // Diccionario de dependencias solo con las permitidas en la vista SENNOVA
     private $dependencias = [
         '62' => 'WORLDSKILLS',
         '66' => 'Semilleros de Investigación',
@@ -316,7 +316,7 @@ class graficas_general_sennova extends Conexion{
         $dependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT SUM(Valor_Actual) as valor_actual, SUM(Saldo_por_Comprometer) as saldo_por_comprometer
                 FROM cdp
-                WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%')
+                WHERE (UPPER(Objeto) LIKE '%VIATICOS%' OR UPPER(Objeto) LIKE '%VIATI%' OR UPPER(Objeto) LIKE '%TRANSPO%')
                   AND (";
         $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
         $sql .= ")";
@@ -338,7 +338,7 @@ class graficas_general_sennova extends Conexion{
         $dependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT SUM(Valor_Neto) as valor_op
                 FROM op
-                WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')
+                WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%' OR UPPER(Objeto_del_Compromiso) LIKE '%TRANSPO%')
                   AND (";
         $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
         $sql .= ")";
