@@ -132,6 +132,9 @@ class planeacion extends Conexion {
                      OR UPPER(op.Objeto_del_Compromiso) LIKE '%TRANSPO%'";
         
         $params = [];
+        
+        // Log de debug
+        error_log("obtenerOP - Filtros recibidos: " . json_encode($filtros));
 
         // Filtro por número de documento
         if (!empty($filtros['numeroDocumento'])) {
@@ -159,14 +162,24 @@ class planeacion extends Conexion {
 
         // Filtro por rango de fechas
         if (!empty($filtros['fechaInicio']) && !empty($filtros['fechaFin'])) {
-            $query .= " AND op.Fecha_de_Registro BETWEEN :fechaInicio AND :fechaFin";
+            $query .= " AND DATE(op.Fecha_de_Registro) BETWEEN :fechaInicio AND :fechaFin";
             $params[':fechaInicio'] = $filtros['fechaInicio'];
+            $params[':fechaFin'] = $filtros['fechaFin'];
+        } elseif (!empty($filtros['fechaInicio'])) {
+            $query .= " AND DATE(op.Fecha_de_Registro) >= :fechaInicio";
+            $params[':fechaInicio'] = $filtros['fechaInicio'];
+        } elseif (!empty($filtros['fechaFin'])) {
+            $query .= " AND DATE(op.Fecha_de_Registro) <= :fechaFin";
             $params[':fechaFin'] = $filtros['fechaFin'];
         }
 
         $query .= " ORDER BY op.Fecha_de_Registro DESC LIMIT :limit OFFSET :offset";
         $params[':limit'] = (int)$limit;
         $params[':offset'] = (int)$offset;
+
+        // Log de la consulta final
+        error_log("Query final: " . $query);
+        error_log("Parámetros: " . json_encode($params));
 
         $stmt = $this->conexion->prepare($query);
         
@@ -176,7 +189,11 @@ class planeacion extends Conexion {
         }
 
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        error_log("Registros encontrados en obtenerOP: " . count($resultado));
+        
+        return $resultado;
     }
 }
 ?>
