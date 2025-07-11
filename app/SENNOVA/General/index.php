@@ -2,11 +2,12 @@
 session_start();
 ob_start();
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
+
+if (!isset($_SESSION['id_rol'])) {
+    header("Location: includes/session/login.php");
+    exit;
+}
 
 requireRole(['4', '5', '6']);
 ?>
@@ -25,19 +26,11 @@ requireRole(['4', '5', '6']);
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- <link rel="stylesheet" href="assets/css/presupuesto/index_presupuesto.css"> -->
-    <!-- inicio vista viaticosGravias.php -->
-
-    <!-- fin vista viaticosGravias.php -->
-
-<!-- fin vista IndicadoresViaticos.php -->
-
-    <!-- Estilos personalizados -->
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/grafica.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
 </head>
-<body class="bg-gray-50 min-h-screen relative">
+<body class="bg-gray-50 min-h-screen relative" style="--nav-height: 70px;scrollbar-width: none;">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
 
     <!-- Botón para mostrar/ocultar sidebar: SIEMPRE visible, fuera del sidebar -->

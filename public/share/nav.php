@@ -36,9 +36,11 @@ if (isset($_SESSION['numero_documento'])) {
 <html lang="es" style="--nav-height: 70px;scrollbar-width: none; /* Oculta la barra en Firefox */-ms-overflow-style: none;">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#2c3e50">
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/nav.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>Viaticos</title>
 </head>
 <body>
@@ -56,49 +58,68 @@ if (isset($_SESSION['numero_documento'])) {
                 </div>
             </div>
         </div>
-    </div>
-    <div class="navbar">
-        <!-- Contenedor de los h2 alineados a la derecha -->
-        <div class="navbar-right">
+    </div>    <div class="navbar" style="z-index: 999999;">
+        <!-- Información del usuario a la izquierda -->
+        <div class="navbar-left">
+            <!-- Botón de sesión prioritario en móvil -->
+            <div class="session-button-mobile">                <?php if(isset($_SESSION['id_rol'])):?>
+                    <a href="<?php echo BASE_URL; ?>includes/session/salir.php" class="boton_ir mobile-session">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Salir</span>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="boton_ir mobile-session">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Entrar</span>
+                    </a>
+                <?php endif; ?>
+            </div>
+            
+            <!-- Información del usuario -->
             <?php if (isset($_SESSION['id_rol']) && $nombreUser !== null): ?>
                 <h2 class="indicadorRol">
-                    <?php 
-                        switch ($_SESSION['id_rol']) {
-                            case '2':
-                                echo "Gestor ";
-                                break;
-                            case '3':
-                                echo "Presupuesto ";
-                                break;
-                            case '1':
-                                echo "Admin ";
-                                break;
-                            case '4':
-                                echo "SENNOVA ";
-                                break;
-                            case '5':
-                                echo "Tecnoparque ";
-                                break;
-                            case '6':
-                                echo "Tecnoacademia ";
-                                break;
-                            default:
-                                echo "";
-                        }
-                        echo ' ' . htmlspecialchars($nombreUser);
-                    ?>
+                    <span class="rol-text">
+                        <?php 
+                            switch ($_SESSION['id_rol']) {
+                                case '1':
+                                    echo "Admin";
+                                    break;
+                                case '2':
+                                    echo "Gestor";
+                                    break;
+                                case '3':
+                                    echo "Presupuesto";
+                                    break;
+                                case '4':
+                                    echo "SENNOVA";
+                                    break;
+                                case '5':
+                                    echo "Tecnoparque";
+                                    break;
+                                case '6':
+                                    echo "Tecnoacademia";
+                                    break;
+                                case '7':
+                                    echo "Acceso";
+                                    break;
+                                default:
+                                    echo "";
+                            }
+                        ?>
+                    </span>
+                    <span class="nombre-text">
+                        <?php echo htmlspecialchars($nombreUser); ?>
+                    </span>
                 </h2>
             <?php endif; ?>
-        </div>
-    
-        <?php
-            // Definir la ruta actual una sola vez y en minúsculas
-            $currentPath = strtolower(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
-        ?>
-
-        <div class="navbar-left">
+        </div>        <!-- Navegación central -->
+        <div class="navbar-center">
             <nav class="menu">
                 <ul class="menu-principal" id="menu-principal">
+                <?php
+                    // Definir la ruta actual una sola vez y en minúsculas
+                    $currentPath = strtolower(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+                ?>
                 <!-- ----- inicio para rolres 1,2 y 3--------- -->
                     <?php if (isset($_SESSION['id_rol']) && in_array($_SESSION['id_rol'], ['1', '2', '3'])): ?>
                         <li>
@@ -112,6 +133,16 @@ if (isset($_SESSION['numero_documento'])) {
                         <!-- ----- fin para rolres 1,2 y 3--------- -->
                         
                         <!-- ----- inicio para rol 4--------- -->
+                        <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '7'): ?>
+                            <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
+                            <li>
+                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
+                                    Solicitud Rol
+                                </a>
+                            </li>
+                        <!-- Puedes agregar más opciones aquí para el rol 4 -->
+                        <?php endif; ?>
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '4'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
                             <li>
@@ -191,6 +222,14 @@ if (isset($_SESSION['numero_documento'])) {
                             <a href="<?php echo BASE_URL; ?>app/admin/index.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/admin/index.php') ? 'activeURL' : ''; ?>">Panel de control</a>
                         </li>
+                        <li>
+                            <?php
+                            $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+                            ?>
+                            
+                            <a href="<?php echo BASE_URL; ?>app/admin/solicitudes/index.php" 
+                            class="<?php echo ($currentPath === '/viaticosApp/app/admin/solicitudes') ? 'activeURL' : ''; ?>">Solicitudes de cambio de rol</a>
+                        </li>
                 <!-- ----- fin para rol 1--------- -->
                 <!-- ----- inicio para rol 2--------- -->
                     <?php elseif (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '2'): ?>
@@ -204,23 +243,35 @@ if (isset($_SESSION['numero_documento'])) {
                                Gestor
                             </a>
                         </li>
-                <!-- ----- fin para rol 2--------- -->
-                    <?php endif; ?>
-
+                <!-- ----- fin para rol 2--------- -->                    <?php endif; ?>
+                  <!-- ----- Enlace de perfil para todos los usuarios logueados--------- -->
+                <!-- <?php //if (isset($_SESSION['numero_documento'])): ?>
+                    <li>
+                        <a href="<?php //echo BASE_URL; ?>public/share/cuenta.php" 
+                           class="<?php //echo ($currentPath === '/viaticosapp/public/share/cuenta.php') ? 'activeURL' : ''; ?>">
+                           <i class="fas fa-user-circle" style="margin-right: 8px;"></i>Mi Perfil
+                        </a>
+                    </li>
+                <?php //endif; ?> -->
+                <!-- ----- fin enlace de perfil--------- -->
+                
                 </ul>
             </nav>
-    
-            <div class="actions">
+        </div>        <!-- Acciones a la derecha -->
+        <div class="navbar-right">
+            <!-- Botón hamburguesa - solo visible en móvil -->
+            <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menú de navegación">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+              <!-- Botón de sesión para desktop -->
+            <div class="session-button-desktop">
                 <?php if(isset($_SESSION['id_rol'])):?>
-                    <a href="<?php echo BASE_URL; ?>includes/session/salir.php" class="boton_ir" onclick="return salir()">Cerrar sesion</a>
+                    <a href="<?php echo BASE_URL; ?>includes/session/salir.php" class="boton_ir">Cerrar sesión</a>
                 <?php else: ?>
                     <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="boton_ir">Iniciar sesión</a>
                 <?php endif; ?>
-                <button class="menu-toggle" id="menu-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </div>
     </div>
@@ -257,12 +308,19 @@ function salir() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    const logoutButton = document.querySelector('a[href*="salir.php"]');
-    if (logoutButton) {
-        logoutButton.onclick = function(e) {
-            e.preventDefault();
-            salir();
-        };
-    }
+    // Buscar todos los enlaces de cerrar sesión
+    const logoutButtons = document.querySelectorAll('a[href*="salir.php"]');
+    
+    logoutButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); // Prevenir navegación inmediata
+            salir().then(confirmed => {
+                // Solo navegar si el usuario confirmó
+                if (confirmed) {
+                    window.location.href = this.href;
+                }
+            });
+        });
+    });
 });
 </script>

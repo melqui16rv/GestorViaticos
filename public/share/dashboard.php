@@ -24,7 +24,7 @@ if (!isset($_SESSION['id_rol'])) {
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/grafica.css">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
 </head>
-<body class="bg-gray-50 min-h-screen relative">
+<body class="bg-gray-50 min-h-screen relative" style="--nav-height: 70px;scrollbar-width: none;">
     <?php require_once $_SERVER['DOCUMENT_ROOT'] . '/public/share/nav.php'; ?>
 
     <!-- Botón para mostrar/ocultar sidebar: SIEMPRE visible, fuera del sidebar -->

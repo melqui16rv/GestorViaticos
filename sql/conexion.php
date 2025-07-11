@@ -1,15 +1,17 @@
 <?php
+// Mostrar errores generados por alguna acción
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 class Conexion {
     private $host = 'localhost';
-    private $dbname = 'appscide_appviaticos';  
-    private $user = 'appscide_Administrador';    
-    private $password = 'E8oUxamqQTwtM8MrKf#LrqtxJ3p'; 
+    private $dbname = 'union_prueba';  
+    private $user = 'root';    
+    private $password = ''; 
     private $port = 3306;
     private $charset = 'utf8mb4';
     private $conexion;
+    // @Kiara03#
 
     public function __construct() {
         try {

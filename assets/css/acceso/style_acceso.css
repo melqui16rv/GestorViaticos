@@ -1,0 +1,562 @@
+.indicadores {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+.indicador {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.chart-container {
+    margin: 20px 0;
+    height: 400px;
+    overflow: hidden;
+}
+.chart-container canvas {
+    height: 100% !important;
+    width: 100% !important;
+}
+#formVisitasApreUnique,
+.formulario-visitasapre {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#formVisitasApreUnique .form-group,
+.formulario-visitasapre .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+#formVisitasApreUnique .form-group label,
+.formulario-visitasapre .form-group label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #374151;
+}
+.input-form {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid rgb(143, 176, 247);
+    border-radius: 8px;
+    background: #f8fafc;
+    color: #22223b;
+    font-size: 1rem;
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+.input-form:focus {
+    outline: none;
+    border-color:rgb(29, 216, 151);
+    background: #fff;
+}
+.input-form::placeholder {
+    color: #888 !important;
+    font-style: italic;
+    opacity: 1;
+}
+.input-form.input-form-filled {
+    color: #22223b !important;
+    font-style: normal !important;
+    background: #fff;
+}
+#formVisitasApreUnique .form-buttons,
+.formulario-visitasapre .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+#formVisitasApreUnique .btn,
+.formulario-visitasapre .btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
+#formVisitasApreUnique .btn-primary,
+.formulario-visitasapre .btn-primary {
+    background-color: #007bff;
+    color: white;
+    border: none;
+}
+#formVisitasApreUnique .btn-primary:hover,
+.formulario-visitasapre .btn-primary:hover {
+    background-color: #0056b3;
+}
+#formVisitasApreUnique .btn-secondary,
+.formulario-visitasapre .btn-secondary {
+    background-color: #e9ecef;
+    color: #212529;
+    border: none;
+}
+#formVisitasApreUnique .btn-secondary:hover,
+.formulario-visitasapre .btn-secondary:hover {
+    background-color: #d0d3d6;
+}
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+.btn-edit {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+.btn-edit:hover {
+    background-color: #218838;
+}
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+}
+.tabla thead th {
+    background-color: #ffffff;
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+.tabla tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+.tabla tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.tabla tbody tr:hover {
+    background-color: #f0f0f0;
+}
+/* Estilos adaptados para el botón "Agregar Visita" */
+.actualizar-tabla-link {
+    text-decoration: none;
+    display: inline-block; /* Asegura que el enlace solo ocupe el tamaño del contenido */
+}
+.actualizar-tabla-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(90deg, #34d399 0%, #60a5fa 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.08rem;
+    padding: 0.65rem 1.4rem;
+    border: none;
+    border-radius: 0.7rem;
+    box-shadow: 0 2px 8px rgba(52,211,153,0.08), 0 1.5px 6px rgba(96,165,250,0.08);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+    outline: none;
+}
+.actualizar-tabla-btn:hover, .actualizar-tabla-btn:focus {
+    background: linear-gradient(90deg, #60a5fa 0%, #34d399 100%);
+    box-shadow: 0 4px 16px rgba(52,211,153,0.13), 0 3px 12px rgba(96,165,250,0.13);
+    transform: translateY(-2px) scale(1.03);
+}
+.icon-refresh {
+    width: 1.3em;
+    height: 1.3em;
+    stroke-width: 2.2;
+}
+/* Adaptabilidad para pantallas pequeñas */
+@media (max-width: 768px) {
+    #formVisitasApreUnique,
+    .formulario-visitasapre {
+        padding: 15px;
+        width: 90%;
+    }
+
+    #formVisitasApreUnique .form-group,
+    .formulario-visitasapre .form-group {
+        margin-bottom: 10px;
+    }
+
+    #formVisitasApreUnique .form-buttons,
+    .formulario-visitasapre .form-buttons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    #formVisitasApreUnique .btn,
+    .formulario-visitasapre .btn {
+        width: 100%;
+    }
+}
+/* Formulario */
+#formVisitasApreUnique,
+.formulario-visitasapre {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+#formVisitasApreUnique .form-group label,
+.formulario-visitasapre .form-group label {
+    font-weight: bold;
+    color: #1e293b;
+}
+
+#formVisitasApreUnique .form-buttons,
+.formulario-visitasapre .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
+#formVisitasApreUnique .btn-primary,
+.formulario-visitasapre .btn-primary {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#formVisitasApreUnique .btn-primary:hover,
+.formulario-visitasapre .btn-primary:hover {
+    background: #1e40af;
+}
+#formVisitasApreUnique .btn-secondary,
+.formulario-visitasapre .btn-secondary {
+    background: #e2e8f0;
+    color: #1e293b;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#formVisitasApreUnique .btn-secondary:hover,
+.formulario-visitasapre .btn-secondary:hover {
+    background: #cbd5e1;
+}
+
+/* Tabla */
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+.tabla th,
+.tabla td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+}
+.tabla th {
+    background: #2563eb;
+    color: #fff;
+    font-weight: bold;
+}
+.tabla tr:hover {
+    background: #f1f5f9;
+}
+/* Indicadores con colores personalizados */
+.indicadores {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+.indicador {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+/* Asignar colores distintos a cada indicador */
+.indicador:nth-child(1) { background-color: #fde2e2; }
+.indicador:nth-child(2) { background-color: #e2f0cb; }
+.indicador:nth-child(3) { background-color: #c9e4f5; }
+.indicador:nth-child(4) { background-color: #fce1a8; }
+
+.table-container {
+    max-height: 400px;
+    overflow-y: auto;
+    margin-top: 20px;
+    position: relative;
+}
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.table-container thead tr {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 10;
+}
+.table-container thead th {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 2px solid #ddd;
+}
+.table-container tbody td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* Nuevos estilos para tabla con encabezados fijos y scroll en el cuerpo */
+.tabla-outer {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.tabla-outer > table.tabla {
+    table-layout: fixed;
+    width: 100%;
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+.tabla-outer > table.tabla thead th:first-child {
+    border-top-left-radius: 12px;
+}
+
+.tabla-outer > table.tabla thead th:last-child {
+    border-top-right-radius: 12px;
+}
+
+.tabla-scroll {
+    max-height: 400px;
+    overflow-y: auto;
+    width: 100%;
+}
+
+.tabla-scroll table.tabla {
+    border-top: none;
+}
+
+.tabla-scroll tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+.tabla-scroll tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+/* Estilos para los botones de acción */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-icon {
+    width: 32px;
+    height: 32px;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.btn-icon:hover {
+    transform: translateY(-2px);
+}
+
+.btn-icon.edit {
+    background-color: #3b82f6;
+    color: white;
+}
+
+.btn-icon.edit:hover {
+    background-color: #2563eb;
+}
+
+.btn-icon.delete {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-icon.delete:hover {
+    background-color: #dc2626;
+}
+
+/* Ajustes para la tabla */
+.tabla th {
+    background: #2563eb;
+    color: #617992;
+    padding: 1rem;
+    font-weight: 600;
+}
+
+.tabla td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+}
+
+.tabla tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+.tabla tbody tr {
+    transition: background-color 0.2s;
+}
+
+/* Ajuste del scroll */
+.tabla-scroll::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tabla-scroll::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+.tabla-scroll::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Estilos para los filtros */
+.filtros-container {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 1.5rem 0;
+    align-items: flex-end;
+}
+
+.filtro-grupo {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.filtro-grupo label {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.95rem;
+}
+
+.filtro-select {
+    appearance: none;
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 0.75rem 2rem 0.75rem 1rem;
+    font-size: 0.95rem;
+    color: #334155;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+}
+
+.filtro-select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.filtro-select:hover {
+    border-color: #94a3b8;
+}
+
+.filtro-select option {
+    padding: 0.5rem;
+}
+
+.filtro-select optgroup {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.btn-limpiar {
+    background: linear-gradient(to right, #64748b, #475569);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.btn-limpiar:hover {
+    background: linear-gradient(to right, #475569, #334155);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-limpiar i {
+    font-size: 1rem;
+}
+
+/* Responsive design para los filtros */
+@media (max-width: 768px) {
+    .filtros-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    .filtro-grupo {
+        width: 100%;
+    }
+
+    .btn-limpiar {
+        width: 100%;
+        justify-content: center;
+        margin-top: 0.5rem;
+    }
+}
+
+/* Estilo para las opciones agrupadas */
+.filtro-select optgroup {
+    background-color: #f1f5f9;
+    font-weight: 600;
+}
+
+.filtro-select option {
+    background-color: #ffffff;
+    padding: 0.5rem;
+}

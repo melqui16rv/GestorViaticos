@@ -95,41 +95,39 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                                 <label for="mes">Mes</label>
                                 <select id="mes" name="mes" class="filtro-dinamico">
                                     <option value="">Todos los meses</option>
-                                    <option value="1" <?php echo ($mes=='1') ? 'selected' : ''; ?>>Enero</option>
-                                    <option value="2" <?php echo ($mes=='2') ? 'selected' : ''; ?>>Febrero</option>
-                                    <option value="3" <?php echo ($mes=='3') ? 'selected' : ''; ?>>Marzo</option>
-                                    <option value="4" <?php echo ($mes=='4') ? 'selected' : ''; ?>>Abril</option>
-                                    <option value="5" <?php echo ($mes=='5') ? 'selected' : ''; ?>>Mayo</option>
-                                    <option value="6" <?php echo ($mes=='6') ? 'selected' : ''; ?>>Junio</option>
-                                    <option value="7" <?php echo ($mes=='7') ? 'selected' : ''; ?>>Julio</option>
-                                    <option value="8" <?php echo ($mes=='8') ? 'selected' : ''; ?>>Agosto</option>
-                                    <option value="9" <?php echo ($mes=='9') ? 'selected' : ''; ?>>Septiembre</option>
-                                    <option value="10" <?php echo ($mes=='10') ? 'selected' : ''; ?>>Octubre</option>
-                                    <option value="11" <?php echo ($mes=='11') ? 'selected' : ''; ?>>Noviembre</option>
-                                    <option value="12" <?php echo ($mes=='12') ? 'selected' : ''; ?>>Diciembre</option>
+                                    <option value="1">Enero</option>
+                                    <option value="2">Febrero</option>
+                                    <option value="3">Marzo</option>
+                                    <option value="4">Abril</option>
+                                    <option value="5">Mayo</option>
+                                    <option value="6">Junio</option>
+                                    <option value="7">Julio</option>
+                                    <option value="8">Agosto</option>
+                                    <option value="9">Septiembre</option>
+                                    <option value="10">Octubre</option>
+                                    <option value="11">Noviembre</option>
+                                    <option value="12">Diciembre</option>
                                 </select>
                             </div>
 
                             <div class="filtro-grupo">
                                 <label for="fechaInicio">Fecha Inicio</label>
-                                <input type="date" id="fechaInicio" name="fechaInicio" 
-                                       value="<?php echo htmlspecialchars($fechaInicio); ?>" class="filtro-dinamico">
+                                <input type="date" id="fechaInicio" name="fechaInicio" class="filtro-dinamico">
                             </div>
 
                             <div class="filtro-grupo">
                                 <label for="fechaFin">Fecha Fin</label>
-                                <input type="date" id="fechaFin" name="fechaFin" 
-                                       value="<?php echo htmlspecialchars($fechaFin); ?>" class="filtro-dinamico">
+                                <input type="date" id="fechaFin" name="fechaFin" class="filtro-dinamico">
                             </div>
 
                             <div class="filtro-grupo">
                                 <label for="registrosPorPagina">N° Registros</label>
                                 <select id="registrosPorPagina" name="registrosPorPagina" class="filtro-dinamico">
-                                    <option value="10" <?php echo ($registrosPorPagina=='10') ? 'selected' : ''; ?>>10</option>
-                                    <option value="20" <?php echo ($registrosPorPagina=='20') ? 'selected' : ''; ?>>20</option>
-                                    <option value="40" <?php echo ($registrosPorPagina=='40') ? 'selected' : ''; ?>>40</option>
-                                    <option value="60" <?php echo ($registrosPorPagina=='60') ? 'selected' : ''; ?>>60</option>
-                                    <option value="todos" <?php echo ($registrosPorPagina=='todos') ? 'selected' : ''; ?>>Todos</option>
+                                    <option value="10">10</option>
+                                    <option value="20">20</option>
+                                    <option value="40">40</option>
+                                    <option value="60">60</option>
+                                    <option value="todos">Todos</option>
                                 </select>
                             </div>
                             <div class="filtro-botones">
@@ -317,15 +315,12 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 limit: limit
             };
 
-            console.log('Realizando búsqueda con filtros:', filtros);
-
             $.ajax({
                 url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
                 success: function(response) {
-                    console.log('Respuesta de búsqueda:', response);
                     $("#tablaOP tbody").empty();
                     if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
@@ -341,8 +336,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                     }
                 },
                 error: function(xhr, status, error){
-                    console.error("Error en búsqueda:", error);
-                    console.error("Respuesta del servidor:", xhr.responseText);
+                    console.error("Error:", error);
                     alert("Error al realizar la búsqueda.");
                 }
             });
@@ -354,7 +348,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
             e.preventDefault();
             offset += limit;
             const filtros = {
-                action: 'cargarMas',
+                action: 'buscarOP',
                 numeroDocumento: $("#numeroDocumento").val(),
                 estado: $("#estado").val(),
                 beneficiario: $("#beneficiario").val(),
@@ -365,15 +359,12 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                 limit: limit
             };
 
-            console.log('Cargando más registros con filtros:', filtros);
-
             $.ajax({
                 url: './control/ajaxGestor.php',
                 method: 'GET',
                 data: filtros,
                 dataType: 'json',
                 success: function(response) {
-                    console.log('Respuesta cargar más:', response);
                     if(Array.isArray(response) && response.length > 0) {
                         updateTableWithData(response);
                     } else {
@@ -382,8 +373,7 @@ $initialData = $miClaseG->obtenerOP($filtrosIniciales, $limit, 0);
                     }
                 },
                 error: function(xhr, status, error){
-                    console.error("Error al cargar más:", error);
-                    console.error("Respuesta del servidor:", xhr.responseText);
+                    console.error("Error:", error);
                     alert("Error al cargar más registros.");
                 }
             });

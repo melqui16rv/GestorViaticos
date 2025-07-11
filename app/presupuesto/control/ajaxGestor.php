@@ -21,19 +21,11 @@ try {
             'fechaFin' => $_GET['fechaFin'] ?? ''
         ];
         
-        // Debug: registrar los filtros recibidos
-        error_log("Filtros recibidos: " . json_encode($filtros));
-        error_log("Action: " . $action);
-        
         $limit = isset($_GET['limit']) ? max(1, intval($_GET['limit'])) : 10;
         $offset = isset($_GET['offset']) ? max(0, intval($_GET['offset'])) : 0;
         
-        error_log("Limit: $limit, Offset: $offset");
-        
         $resultado = $gestor->obtenerOP($filtros, $limit, $offset);
-        error_log("Registros encontrados: " . count($resultado));
-        
-        echo json_encode($resultado);
+        echo json_encode($resultado); // Enviar solo los datos sin estructura adicional
     } elseif ($action === 'cargarMasCDP') {
         $numeroDocumento = $_GET['numeroDocumento'] ?? '';
         $fuente = $_GET['fuente'] ?? 'Todos';

@@ -1,0 +1,389 @@
+/**
+ * Compatibilidad y Estilos Adicionales
+ * Para el Sistema de Presupuesto Modernizado
+ */
+
+/* =============================
+   COMPATIBILIDAD CON ESTILOS EXISTENTES
+   ============================= */
+
+/* Asegurar que las clases antiguas no interfieran */
+.contenedor,
+.contenido,
+.contenedorStandar,
+.contenedorStandar2,
+.filtrosContenedor,
+.contenderDeTabla,
+.contendor_tabla,
+.contenedorGrafiaca {
+  all: unset;
+}
+
+/* =============================
+   MEJORAS DE ACCESIBILIDAD
+   ============================= */
+
+/* Focus visible mejorado */
+*:focus-visible {
+  outline: 2px solid var(--primary-500);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Reducir movimiento para usuarios que lo prefieran */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .loading-spinner .spinner {
+    animation: none;
+    border: 4px solid var(--primary-500);
+  }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: high) {
+  :root {
+    --gray-200: #000000;
+    --gray-300: #000000;
+    --primary-500: #0000ff;
+    --primary-600: #0000cc;
+  }
+  
+  .data-table th,
+  .data-table td {
+    border: 2px solid #000000;
+  }
+}
+
+/* =============================
+   UTILIDADES RESPONSIVAS ADICIONALES
+   ============================= */
+
+/* Scrollbar personalizado */
+.table-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+  background: var(--gray-100);
+  border-radius: var(--radius-full);
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: var(--radius-full);
+  transition: background-color 0.2s ease;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+}
+
+/* Indicadores de scroll en tabla */
+.table-wrapper.scrolled-left::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to right, rgba(0,0,0,0.1), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.table-wrapper.scrolled-right::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(to left, rgba(0,0,0,0.1), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* =============================
+   ANIMACIONES ADICIONALES
+   ============================= */
+
+/* Animación para filas de tabla */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.table-row {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Hover effects mejorados */
+.btn-action {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-action::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.btn-action:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+/* =============================
+   MEJORAS PARA DISPOSITIVOS PEQUEÑOS
+   ============================= */
+
+@media (max-width: 640px) {
+  /* Stack de información más compacto */
+  .stacked-info {
+    font-size: 0.8rem;
+  }
+  
+  /* Botones más grandes para touch */
+  .btn-action {
+    width: 44px;
+    height: 44px;
+  }
+  
+  /* Inputs más grandes */
+  .filter-input,
+  .filter-select {
+    min-height: 44px;
+  }
+  
+  /* Header más compacto */
+  .page-header {
+    padding: var(--spacing-4);
+  }
+  
+  .title-main {
+    font-size: 1.75rem;
+  }
+  
+  /* Tabla horizontal scroll mejorado */
+  .table-wrapper {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Cards de estadísticas apiladas */
+  .header-stats {
+    width: 100%;
+  }
+  
+  .stat-card {
+    flex: 1;
+    min-width: auto;
+  }
+}
+
+/* =============================
+   MEJORAS PARA TABLETS
+   ============================= */
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .filters-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .main-container {
+    padding: var(--spacing-4);
+  }
+  
+  .data-table {
+    font-size: 0.85rem;
+  }
+}
+
+/* =============================
+   ESTADO DE CARGA MEJORADO
+   ============================= */
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.loading-overlay .spinner {
+  width: 32px;
+  height: 32px;
+}
+
+/* Skeleton loading para tabla */
+.skeleton-row {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* =============================
+   NOTIFICACIONES Y ALERTAS
+   ============================= */
+
+.alert {
+  padding: var(--spacing-4);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-4);
+  border-left: 4px solid;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-3);
+}
+
+.alert-success {
+  background: var(--secondary-50);
+  border-color: var(--secondary-500);
+  color: var(--secondary-800);
+}
+
+.alert-warning {
+  background: #fef3c7;
+  border-color: var(--warning);
+  color: #92400e;
+}
+
+.alert-error {
+  background: #fee2e2;
+  border-color: var(--error);
+  color: #991b1b;
+}
+
+.alert-info {
+  background: #dbeafe;
+  border-color: var(--info);
+  color: #1e40af;
+}
+
+/* =============================
+   UTILIDADES FINALES
+   ============================= */
+
+/* Texto truncado */
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Espaciado vertical */
+.space-y-2 > * + * {
+  margin-top: var(--spacing-2);
+}
+
+.space-y-4 > * + * {
+  margin-top: var(--spacing-4);
+}
+
+/* Visibilidad responsiva */
+.hidden-mobile {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .hidden-mobile {
+    display: none;
+  }
+}
+
+.hidden-desktop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .hidden-desktop {
+    display: block;
+  }
+}
+
+/* Estado disabled */
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+/* =============================
+   PRINT STYLES ADICIONALES
+   ============================= */
+
+@media print {
+  /* Ocultar elementos innecesarios */
+  .btn-toggle-filters,
+  .filters-actions,
+  .table-actions,
+  .loading-spinner,
+  .toast-message {
+    display: none !important;
+  }
+  
+  /* Mejorar legibilidad */
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .data-table {
+    page-break-inside: avoid;
+  }
+  
+  .data-table th {
+    background: #f5f5f5 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  /* Información de página */
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+  
+  /* Evitar quiebres de página en elementos importantes */
+  .page-header,
+  .table-header,
+  .dashboard-header {
+    page-break-after: avoid;
+  }
+}

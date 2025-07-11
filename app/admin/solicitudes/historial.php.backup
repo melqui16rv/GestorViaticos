@@ -1,0 +1,767 @@
+<?php
+session_start();
+ob_start();
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/metodos_solicitud.php';
+
+requireRole(['7', '1']);
+
+$miClase = new solicitudRol();
+$usuario = null;
+if (isset($_SESSION['numero_documento'])) {
+    $usuario = $miClase->obtenerDatosUsuarioLogueado($_SESSION['numero_documento']);
+    if ($usuario && is_array($usuario)) {
+        $usuario = $usuario[0];
+    }
+}
+
+// Verificar que el usuario sea administrador (temporalmente comentado para debug)
+if ($usuario && !$miClase->esAdministrador($usuario['numero_documento'])) {
+    error_log("Usuario no es administrador: " . $usuario['numero_documento']);
+    header('Location: ' . BASE_URL . 'includes/session/unauthorized.php');
+    exit;
+}
+
+// Si no hay usuario logueado, simular uno para propósitos de debug (REMOVER EN PRODUCCIÓN)
+if (!$usuario) {
+    error_log("No hay usuario logueado, usando datos de prueba");
+    // Comentar estas líneas en producción:
+    $_SESSION['numero_documento'] = '1073672380'; // Usuario admin de prueba
+    $usuario = $miClase->obtenerDatosUsuarioLogueado($_SESSION['numero_documento']);
+    if ($usuario && is_array($usuario)) {
+        $usuario = $usuario[0];
+    }
+}
+
+// Obtener todas las solicitudes
+$todasSolicitudes = $miClase->obtenerTodasSolicitudes();
+$resumenSolicitudes = $miClase->obtenerResumenSolicitudes();
+$estadisticas = $miClase->obtenerEstadisticasSolicitudes();
+
+// Debug: verificar qué datos se están obteniendo
+error_log("Solicitudes obtenidas: " . count($todasSolicitudes));
+error_log("Resumen solicitudes: " . print_r($resumenSolicitudes, true));
+error_log("Estadísticas: " . count($estadisticas));
+?>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Historial de Solicitudes - Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/dashboard_content.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        .filter-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .stat-card {
+            background: #fff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .table-container {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .data-table th {
+            background: #1f2937;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        .data-table tr:hover {
+            background: #f9fafb;
+        }
+        .chart-container {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            height: 350px; /* Altura fija para las gráficas */
+        }
+        .chart-wrapper {
+            position: relative;
+            height: 280px; /* Altura fija para el contenedor del canvas */
+            width: 100%;
+        }
+        .chart-wrapper canvas {
+            max-height: 280px !important;
+            max-width: 100% !important;
+        }
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .badge-enviada {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        .badge-aceptada {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        .badge-rechazada {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        .export-btn {
+            background: #059669;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .export-btn:hover {
+            background: #047857;
+        }
+    </style>
+</head>
+    <div class="dashboard-container dashboard-background bg-white rounded-lg p-6 shadow-lg">
+        
+        <main class="main-content">
+
+            <!-- Estadísticas Resumen -->
+            <div class="stats-grid">
+                <?php 
+                $totales = ['enviada' => 0, 'aceptada' => 0, 'rechazada' => 0];
+                foreach ($resumenSolicitudes as $resumen) {
+                    $totales[$resumen['estado']] = $resumen['total'];
+                }
+                $totalGeneral = array_sum($totales);
+                ?>
+                <div class="stat-card">
+                    <div class="text-3xl font-bold text-blue-600 mb-2"><?php echo $totalGeneral; ?></div>
+                    <div class="text-gray-600">Total de Solicitudes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-3xl font-bold text-yellow-600 mb-2"><?php echo $totales['enviada']; ?></div>
+                    <div class="text-gray-600">Pendientes</div>
+                    <div class="text-sm text-gray-500">
+                        <?php echo $totalGeneral > 0 ? round(($totales['enviada'] / $totalGeneral) * 100, 1) : 0; ?>%
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-3xl font-bold text-green-600 mb-2"><?php echo $totales['aceptada']; ?></div>
+                    <div class="text-gray-600">Aceptadas</div>
+                    <div class="text-sm text-gray-500">
+                        <?php echo $totalGeneral > 0 ? round(($totales['aceptada'] / $totalGeneral) * 100, 1) : 0; ?>%
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="text-3xl font-bold text-red-600 mb-2"><?php echo $totales['rechazada']; ?></div>
+                    <div class="text-gray-600">Rechazadas</div>
+                    <div class="text-sm text-gray-500">
+                        <?php echo $totalGeneral > 0 ? round(($totales['rechazada'] / $totalGeneral) * 100, 1) : 0; ?>%
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gráficas -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                <div class="chart-container">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Distribución por Estado</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="chartEstados"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Solicitudes por Fecha</h3>
+                    <div class="chart-wrapper">
+                        <canvas id="chartTiempo"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros Avanzados -->
+            <div class="filter-card">
+                <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                    <i class="fas fa-filter mr-2"></i>Filtros Avanzados
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Estado:</label>
+                        <select id="filtro-estado" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                            <option value="">Todos los estados</option>
+                            <option value="enviada">Pendientes</option>
+                            <option value="aceptada">Aceptadas</option>
+                            <option value="rechazada">Rechazadas</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Fecha Inicio:</label>
+                        <input type="date" id="filtro-fecha-inicio" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Fecha Fin:</label>
+                        <input type="date" id="filtro-fecha-fin" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Buscar Usuario:</label>
+                        <input type="text" id="filtro-usuario" placeholder="Nombre o documento" class="w-full p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500">
+                    </div>
+                    <div class="flex flex-col justify-end space-y-2">
+                        <button id="btn-filtrar" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-search mr-1"></i>Filtrar
+                        </button>
+                        <button id="btn-limpiar" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-eraser mr-1"></i>Limpiar
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla de Resultados -->
+            <div class="filter-card">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-semibold text-gray-800">
+                        <i class="fas fa-table mr-2"></i>Historial de Solicitudes
+                        <span id="contador-resultados" class="text-sm text-gray-500 ml-2"></span>
+                    </h3>
+                    <div class="flex space-x-2">
+                        <button onclick="exportarCSV()" class="export-btn">
+                            <i class="fas fa-file-csv mr-1"></i>Exportar CSV
+                        </button>
+                        <button onclick="imprimirTabla()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                            <i class="fas fa-print mr-1"></i>Imprimir
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="data-table" id="tabla-historial">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <button onclick="ordenarTabla(0)" class="flex items-center">
+                                        Usuario <i class="fas fa-sort ml-1"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button onclick="ordenarTabla(1)" class="flex items-center">
+                                        Documento <i class="fas fa-sort ml-1"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button onclick="ordenarTabla(2)" class="flex items-center">
+                                        Rol Solicitado <i class="fas fa-sort ml-1"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button onclick="ordenarTabla(3)" class="flex items-center">
+                                        Fecha Solicitud <i class="fas fa-sort ml-1"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button onclick="ordenarTabla(4)" class="flex items-center">
+                                        Estado <i class="fas fa-sort ml-1"></i>
+                                    </button>
+                                </th>
+                                <th>
+                                    <button onclick="ordenarTabla(5)" class="flex items-center">
+                                        Fecha Respuesta <i class="fas fa-sort ml-1"></i>
+                                    </button>
+                                </th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-body">
+                            <!-- Se llena dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginación -->
+                <div id="paginacion" class="flex justify-center items-center mt-6 space-x-2">
+                    <!-- Se genera dinámicamente -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+                // Datos PHP pasados a JavaScript
+        let datosOriginales = <?php echo json_encode($todasSolicitudes); ?>;
+        let datosFiltrados = [];
+        let paginaActual = 1;
+        let filasPorPagina = 10;
+        let ordenActual = { columna: -1, direccion: 'asc' };
+
+        // Cargar datos iniciales
+        document.addEventListener('DOMContentLoaded', function() {
+            cargarDatos();
+            crearGraficas();
+        });
+
+        // Cargar todos los datos
+        function cargarDatos() {
+            console.log('Cargando datos desde PHP...');
+            console.log('Datos disponibles:', datosOriginales);
+            console.log('Número de solicitudes:', datosOriginales.length);
+            
+            if (datosOriginales && datosOriginales.length > 0) {
+                datosFiltrados = [...datosOriginales];
+                console.log('Datos cargados exitosamente:', datosOriginales.length, 'solicitudes');
+                console.log('Ejemplo de primera solicitud:', datosOriginales[0]);
+                actualizarTabla();
+            } else {
+                console.error('No hay datos disponibles');
+                alert('No hay solicitudes para mostrar');
+            }
+        }
+
+        // Aplicar filtros
+        function aplicarFiltros() {
+            const estado = document.getElementById('filtro-estado').value;
+            const fechaInicio = document.getElementById('filtro-fecha-inicio').value;
+            const fechaFin = document.getElementById('filtro-fecha-fin').value;
+            const usuario = document.getElementById('filtro-usuario').value.toLowerCase();
+
+            datosFiltrados = datosOriginales.filter(solicitud => {
+                let cumpleFiltro = true;
+
+                if (estado && solicitud.estado !== estado) {
+                    cumpleFiltro = false;
+                }
+
+                if (fechaInicio && new Date(solicitud.fecha_solicitud) < new Date(fechaInicio)) {
+                    cumpleFiltro = false;
+                }
+
+                if (fechaFin && new Date(solicitud.fecha_solicitud) > new Date(fechaFin + ' 23:59:59')) {
+                    cumpleFiltro = false;
+                }
+
+                if (usuario && !solicitud.nombre_completo.toLowerCase().includes(usuario) && !solicitud.numero_documento.includes(usuario)) {
+                    cumpleFiltro = false;
+                }
+
+                return cumpleFiltro;
+            });
+
+            paginaActual = 1;
+            actualizarTabla();
+        }
+
+        // Actualizar tabla
+        function actualizarTabla() {
+            console.log('Actualizando tabla...');
+            console.log('Datos filtrados:', datosFiltrados.length, 'elementos');
+            console.log('Página actual:', paginaActual, 'Filas por página:', filasPorPagina);
+            
+            const tbody = document.getElementById('tabla-body');
+            const inicio = (paginaActual - 1) * filasPorPagina;
+            const fin = inicio + filasPorPagina;
+            const datosPagina = datosFiltrados.slice(inicio, fin);
+
+            console.log('Datos para esta página:', datosPagina.length, 'elementos');
+            console.log('Rango:', inicio, 'a', fin);
+
+            tbody.innerHTML = '';
+
+            datosPagina.forEach(solicitud => {
+                console.log('Procesando solicitud:', solicitud);
+                const estadoBadge = getEstadoBadge(solicitud.estado);
+                const fechaRespuesta = solicitud.fecha_respuesta ? 
+                    new Date(solicitud.fecha_respuesta).toLocaleDateString('es-ES') : '-';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td class="font-medium text-gray-900">${solicitud.nombre_completo}</td>
+                        <td class="text-gray-700">${solicitud.numero_documento}</td>
+                        <td class="text-gray-700">${solicitud.rol_nombre || solicitud.id_rol_solicitado}</td>
+                        <td class="text-gray-700">${new Date(solicitud.fecha_solicitud).toLocaleDateString('es-ES')}</td>
+                        <td>${estadoBadge}</td>
+                        <td class="text-gray-700">${fechaRespuesta}</td>
+                        <td>
+                            <button onclick="verDetalleSolicitud(${solicitud.id_solicitud})" 
+                                    class="text-blue-600 hover:text-blue-800 transition-colors">
+                                <i class="fas fa-eye"></i> Ver Detalle
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            console.log('Tabla actualizada');
+            actualizarContador();
+            actualizarPaginacion();
+        }
+
+        // Actualizar contador
+        function actualizarContador() {
+            const contador = document.getElementById('contador-resultados');
+            contador.textContent = `(${datosFiltrados.length} resultados)`;
+        }
+
+        // Actualizar paginación
+        function actualizarPaginacion() {
+            const totalPaginas = Math.ceil(datosFiltrados.length / filasPorPagina);
+            const paginacion = document.getElementById('paginacion');
+            
+            if (totalPaginas <= 1) {
+                paginacion.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+
+            // Botón anterior
+            if (paginaActual > 1) {
+                html += `<button onclick="cambiarPagina(${paginaActual - 1})" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    <i class="fas fa-chevron-left"></i>
+                </button>`;
+            }
+
+            // Números de página
+            for (let i = Math.max(1, paginaActual - 2); i <= Math.min(totalPaginas, paginaActual + 2); i++) {
+                const isActive = i === paginaActual;
+                html += `<button onclick="cambiarPagina(${i})" class="px-3 py-2 ${isActive ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-700'} rounded hover:bg-blue-500 hover:text-white">
+                    ${i}
+                </button>`;
+            }
+
+            // Botón siguiente
+            if (paginaActual < totalPaginas) {
+                html += `<button onclick="cambiarPagina(${paginaActual + 1})" class="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    <i class="fas fa-chevron-right"></i>
+                </button>`;
+            }
+
+            paginacion.innerHTML = html;
+        }
+
+        // Cambiar página
+        function cambiarPagina(pagina) {
+            paginaActual = pagina;
+            actualizarTabla();
+        }
+
+        // Ordenar tabla
+        function ordenarTabla(columna) {
+            const direccion = (ordenActual.columna === columna && ordenActual.direccion === 'asc') ? 'desc' : 'asc';
+            
+            datosFiltrados.sort((a, b) => {
+                let valorA, valorB;
+                
+                switch(columna) {
+                    case 0: // Usuario
+                        valorA = a.nombre_completo;
+                        valorB = b.nombre_completo;
+                        break;
+                    case 1: // Documento
+                        valorA = a.numero_documento;
+                        valorB = b.numero_documento;
+                        break;
+                    case 2: // Rol
+                        valorA = a.rol_nombre || a.id_rol_solicitado;
+                        valorB = b.rol_nombre || b.id_rol_solicitado;
+                        break;
+                    case 3: // Fecha Solicitud
+                        valorA = new Date(a.fecha_solicitud);
+                        valorB = new Date(b.fecha_solicitud);
+                        break;
+                    case 4: // Estado
+                        valorA = a.estado;
+                        valorB = b.estado;
+                        break;
+                    case 5: // Fecha Respuesta
+                        valorA = a.fecha_respuesta ? new Date(a.fecha_respuesta) : new Date(0);
+                        valorB = b.fecha_respuesta ? new Date(b.fecha_respuesta) : new Date(0);
+                        break;
+                }
+
+                if (valorA < valorB) return direccion === 'asc' ? -1 : 1;
+                if (valorA > valorB) return direccion === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            ordenActual = { columna, direccion };
+            actualizarTabla();
+        }
+
+        // Event listeners
+        document.getElementById('btn-filtrar').addEventListener('click', aplicarFiltros);
+        document.getElementById('btn-limpiar').addEventListener('click', function() {
+            document.getElementById('filtro-estado').value = '';
+            document.getElementById('filtro-fecha-inicio').value = '';
+            document.getElementById('filtro-fecha-fin').value = '';
+            document.getElementById('filtro-usuario').value = '';
+            datosFiltrados = [...datosOriginales];
+            paginaActual = 1;
+            actualizarTabla();
+        });
+
+        // Funciones auxiliares
+        function getEstadoBadge(estado) {
+            switch(estado) {
+                case 'enviada':
+                    return '<span class="badge badge-enviada">Pendiente</span>';
+                case 'aceptada':
+                    return '<span class="badge badge-aceptada">Aceptada</span>';
+                case 'rechazada':
+                    return '<span class="badge badge-rechazada">Rechazada</span>';
+                default:
+                    return '<span class="badge">' + estado + '</span>';
+            }
+        }
+
+        function verDetalleSolicitud(idSolicitud) {
+            fetch('control/ajax_solicitud.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=obtener_solicitud_detalle&id_solicitud=${idSolicitud}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.data) {
+                    const solicitud = data.data;
+                    let detalleHtml = `
+                        <div class="text-left space-y-3">
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p><strong>Usuario:</strong> ${solicitud.nombre_completo}</p>
+                                    <p><strong>Documento:</strong> ${solicitud.numero_documento}</p>
+                                    <p><strong>Email:</strong> ${solicitud.email_usuario}</p>
+                                    <p><strong>Teléfono:</strong> ${solicitud.telefono || 'No disponible'}</p>
+                                </div>
+                                <div>
+                                    <p><strong>Rol Solicitado:</strong> ${solicitud.rol_nombre || solicitud.id_rol_solicitado}</p>
+                                    <p><strong>Estado:</strong> ${solicitud.estado}</p>
+                                    <p><strong>Fecha Solicitud:</strong> ${new Date(solicitud.fecha_solicitud).toLocaleString()}</p>
+                                    ${solicitud.fecha_respuesta ? `<p><strong>Fecha Respuesta:</strong> ${new Date(solicitud.fecha_respuesta).toLocaleString()}</p>` : ''}
+                                </div>
+                            </div>
+                            <div>
+                                <p><strong>Motivo/Justificación:</strong></p>
+                                <div class="bg-gray-100 p-3 rounded mt-1 max-h-32 overflow-y-auto">${solicitud.motivo.replace(/\n/g, '<br>')}</div>
+                            </div>
+                            ${solicitud.observaciones_admin ? `
+                                <div>
+                                    <p><strong>Observaciones del Administrador:</strong></p>
+                                    <div class="bg-blue-50 p-3 rounded mt-1">${solicitud.observaciones_admin.replace(/\n/g, '<br>')}</div>
+                                </div>
+                            ` : ''}
+                            ${solicitud.admin_nombre ? `<p><strong>Atendido por:</strong> ${solicitud.admin_nombre}</p>` : ''}
+                        </div>
+                    `;
+                    
+                    Swal.fire({
+                        title: 'Detalle Completo de Solicitud',
+                        html: detalleHtml,
+                        width: 700,
+                        confirmButtonText: 'Cerrar'
+                    });
+                } else {
+                    Swal.fire('Error', 'No se pudo obtener el detalle de la solicitud', 'error');
+                }
+            })
+            .catch(error => {
+                Swal.fire('Error', 'No se pudo cargar el detalle', 'error');
+            });
+        }
+
+        // Exportar a CSV
+        function exportarCSV() {
+            const headers = ['Usuario', 'Documento', 'Email', 'Rol Solicitado', 'Estado', 'Fecha Solicitud', 'Fecha Respuesta', 'Motivo'];
+            const csvContent = [
+                headers.join(','),
+                ...datosFiltrados.map(row => [
+                    `"${row.nombre_completo}"`,
+                    row.numero_documento,
+                    `"${row.email_usuario}"`,
+                    `"${row.rol_nombre || row.id_rol_solicitado}"`,
+                    row.estado,
+                    new Date(row.fecha_solicitud).toLocaleDateString(),
+                    row.fecha_respuesta ? new Date(row.fecha_respuesta).toLocaleDateString() : '',
+                    `"${row.motivo.replace(/"/g, '""')}"`
+                ].join(','))
+            ].join('\n');
+
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            link.setAttribute('href', url);
+            link.setAttribute('download', `solicitudes_${new Date().toISOString().split('T')[0]}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Imprimir tabla
+        function imprimirTabla() {
+            const contenido = document.getElementById('tabla-historial').outerHTML;
+            const ventana = window.open('', '_blank');
+            ventana.document.write(`
+                <html>
+                    <head>
+                        <title>Historial de Solicitudes</title>
+                        <style>
+                            body { font-family: Arial, sans-serif; margin: 20px; }
+                            table { width: 100%; border-collapse: collapse; }
+                            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                            th { background-color: #f2f2f2; }
+                            .badge { padding: 2px 6px; border-radius: 3px; font-size: 12px; }
+                            .badge-enviada { background: #fef3c7; color: #92400e; }
+                            .badge-aceptada { background: #d1fae5; color: #065f46; }
+                            .badge-rechazada { background: #fee2e2; color: #991b1b; }
+                        </style>
+                    </head>
+                    <body>
+                        <h1>Historial de Solicitudes de Rol</h1>
+                        <p>Fecha de generación: ${new Date().toLocaleString()}</p>
+                        ${contenido}
+                    </body>
+                </html>
+            `);
+            ventana.document.close();
+            ventana.print();
+        }
+
+        // Crear gráficas
+        function crearGraficas() {
+            // Gráfica de estados
+            const ctxEstados = document.getElementById('chartEstados').getContext('2d');
+            const chartEstados = new Chart(ctxEstados, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Pendientes', 'Aceptadas', 'Rechazadas'],
+                    datasets: [{
+                        data: [<?php echo $totales['enviada']; ?>, <?php echo $totales['aceptada']; ?>, <?php echo $totales['rechazada']; ?>],
+                        backgroundColor: ['#f59e0b', '#10b981', '#ef4444'],
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Gráfica de tiempo (últimos 30 días)
+            const fechaHoy = new Date();
+            const hace30Dias = new Date();
+            hace30Dias.setDate(fechaHoy.getDate() - 30);
+            
+            const ctxTiempo = document.getElementById('chartTiempo').getContext('2d');
+            
+            // Procesar datos para gráfica de tiempo
+            const estadisticasPorFecha = {};
+            <?php foreach ($estadisticas as $stat): ?>
+                const fecha = '<?php echo $stat['fecha']; ?>';
+                if (!estadisticasPorFecha[fecha]) {
+                    estadisticasPorFecha[fecha] = { enviada: 0, aceptada: 0, rechazada: 0 };
+                }
+                estadisticasPorFecha[fecha]['<?php echo $stat['estado']; ?>'] = <?php echo $stat['total']; ?>;
+            <?php endforeach; ?>
+
+            const fechas = Object.keys(estadisticasPorFecha).sort().slice(-15); // Últimas 15 fechas
+            const dataEnviadas = fechas.map(f => estadisticasPorFecha[f]?.enviada || 0);
+            const dataAceptadas = fechas.map(f => estadisticasPorFecha[f]?.aceptada || 0);
+            const dataRechazadas = fechas.map(f => estadisticasPorFecha[f]?.rechazada || 0);
+
+            const chartTiempo = new Chart(ctxTiempo, {
+                type: 'line',
+                data: {
+                    labels: fechas.map(f => new Date(f).toLocaleDateString()),
+                    datasets: [
+                        {
+                            label: 'Pendientes',
+                            data: dataEnviadas,
+                            borderColor: '#f59e0b',
+                            backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Aceptadas',
+                            data: dataAceptadas,
+                            borderColor: '#10b981',
+                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Rechazadas',
+                            data: dataRechazadas,
+                            borderColor: '#ef4444',
+                            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                            tension: 0.4
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                stepSize: 1
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
