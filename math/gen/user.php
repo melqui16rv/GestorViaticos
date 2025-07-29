@@ -132,28 +132,29 @@ class user extends Conexion{
             </script>";
         }
     }
-
-
-    public function iniciarSesion($num_doc, $password) {
-        // Modificamos la consulta para obtener el usuario por número de documento
-        $sql = "SELECT * FROM usuario WHERE numero_documento = :nro_doc";
+    public function iniciarSesion($email_or_doc, $password) {
+        // Modificamos la consulta para obtener el usuario por email O número de documento
+        $sql = "SELECT * FROM usuario WHERE email = :email_or_doc OR numero_documento = :email_or_doc";
         $consult = $this->conexion->prepare($sql);
-        $consult->bindParam(':nro_doc', $num_doc, PDO::PARAM_STR);
+        $consult->bindParam(':email_or_doc', $email_or_doc, PDO::PARAM_STR);
         $consult->execute();
         
         $result = $consult->fetch(PDO::FETCH_ASSOC);
         
         if ($result) {
             $contraseñaAlmacenada = $result['contraseña'];
-            // Intentamos verificar la contraseña con bcrypt
+            // Intentamos verificar la contraseña with bcrypt
             if (password_verify($password, $contraseñaAlmacenada)) {
-                // Contraseña correcta con bcrypt
+                // Contraseña correcta with bcrypt
                 $_SESSION['numero_documento'] = $result['numero_documento'];
                 $rol = $result['id_rol'];
                 $_SESSION['id_rol'] = $rol;
                 
                 // Redireccionar según el rol
                 switch ($rol) {
+                    case '7':
+                        header('Location: ' . BASE_URL . 'app/acceso/index.php');
+                        break;
                     case '6':
                         header('Location: ' . BASE_URL . 'app/SENNOVA/General/index.php');
                         break;
@@ -173,7 +174,7 @@ class user extends Conexion{
                         header('Location: ' . BASE_URL . 'app/admin/index.php');
                         break;
                     default:
-                        echo "<div class='alerta text-center'>Rol no válido.</div>";
+                        echo "<div class='alerta text-center'></div>";
                 }
                 return true;
             } else {
@@ -214,7 +215,6 @@ class user extends Conexion{
                 }
             }
         } else {
-            echo "<div class='alerta text-center'>Usuario no encontrado.</div>";
             return false;
         }
     }
@@ -383,4 +383,166 @@ class user extends Conexion{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    /**
+     * Método para registrar usuario desde Laravel con sincronización automática
+     * Este método se puede usar cuando Laravel crea un usuario y necesita sincronizarse
+     */
+    public function sincronizarDesdeUsers($user_id, $name, $email, $password) {
+        try {
+            // Verificar si ya existe en la tabla usuario
+            $sqlVerificar = "SELECT COUNT(*) FROM usuario WHERE numero_documento = :id OR email = :email";
+            $consultVerificar = $this->conexion->prepare($sqlVerificar);
+            $consultVerificar->bindValue(":id", $user_id);
+            $consultVerificar->bindValue(":email", $email);
+            $consultVerificar->execute();
+            $existe = $consultVerificar->fetchColumn();
+            
+            if ($existe > 0) {
+                return ["success" => false, "message" => "Usuario ya existe en el sistema de viáticos"];
+            }
+            
+            // Insertar usuario en la tabla usuario con rol por defecto
+            $sql = "INSERT INTO usuario (numero_documento, tipo_doc, nombre_completo, contraseña, email, telefono, id_rol)
+                    VALUES (:num, :tipo, :nom, :pass, :email, :tel, :id)";
+            $consult = $this->conexion->prepare($sql);
+            $consult->bindValue(":num", $user_id);
+            $consult->bindValue(":tipo", 'CC'); // Tipo de documento por defecto
+            $consult->bindValue(":nom", $name);
+            $consult->bindValue(":pass", $password); // Ya viene hasheado desde Laravel
+            $consult->bindValue(":email", $email);
+            $consult->bindValue(":tel", 'Sin teléfono'); // Teléfono por defecto
+            $consult->bindValue(":id", '7'); // Rol por defecto (usuario estándar)
+            
+            $resultado = $consult->execute();
+            
+            if ($resultado) {
+                return ["success" => true, "message" => "Usuario sincronizado correctamente desde Laravel"];
+            } else {
+                return ["success" => false, "message" => "Error al sincronizar usuario"];
+            }
+            
+        } catch (PDOException $e) {
+            return ["success" => false, "message" => "Error de base de datos: " . $e->getMessage()];
+        }
+    }
+
+    /**
+     * Método para verificar si un usuario puede acceder al sistema de viáticos
+     * Útil para validar acceso desde Laravel
+     */
+    public function verificarAccesoViaticos($email_or_doc) {
+        try {
+            $sql = "SELECT numero_documento, nombre_completo, email, id_rol FROM usuario 
+                    WHERE email = :email_or_doc OR numero_documento = :email_or_doc";
+            $consult = $this->conexion->prepare($sql);
+            $consult->bindParam(':email_or_doc', $email_or_doc, PDO::PARAM_STR);
+            $consult->execute();
+            
+            $result = $consult->fetch(PDO::FETCH_ASSOC);
+            
+            if ($result) {
+                return [
+                    "success" => true, 
+                    "user" => $result,
+                    "message" => "Usuario tiene acceso al sistema de viáticos"
+                ];
+            } else {
+                return [
+                    "success" => false, 
+                    "message" => "Usuario no encontrado en el sistema de viáticos"
+                ];
+            }
+            
+        } catch (PDOException $e) {
+            return ["success" => false, "message" => "Error: " . $e->getMessage()];
+        }
+    }    public function actualizarPerfilUsuario($numero_documento_actual, $nuevo_numero_documento, $tipo_doc, $telefono) {
+        try {
+            // Verificar si el nuevo número de documento ya existe en otro usuario
+            if ($numero_documento_actual !== $nuevo_numero_documento) {
+                $sqlVerificar = "SELECT COUNT(*) FROM usuario WHERE numero_documento = :nuevo_num AND numero_documento != :actual_num";
+                $consultVerificar = $this->conexion->prepare($sqlVerificar);
+                $consultVerificar->bindValue(":nuevo_num", $nuevo_numero_documento);
+                $consultVerificar->bindValue(":actual_num", $numero_documento_actual);
+                $consultVerificar->execute();
+                $existe = $consultVerificar->fetchColumn();
+                
+                if ($existe > 0) {
+                    return [
+                        "success" => false, 
+                        "message" => "El número de documento ya está registrado para otro usuario."
+                    ];
+                }
+            }
+            
+            // Actualizar usuario con información simplificada (sin FK constraints)
+            $sql = "UPDATE usuario SET numero_documento = :nuevo_num, tipo_doc = :tipo, telefono = :tel WHERE numero_documento = :actual_num";
+            $consult = $this->conexion->prepare($sql);
+            $consult->bindValue(":nuevo_num", $nuevo_numero_documento);
+            $consult->bindValue(":tipo", $tipo_doc);
+            $consult->bindValue(":tel", $telefono);
+            $consult->bindValue(":actual_num", $numero_documento_actual);
+            
+            $resultado = $consult->execute();
+              if ($resultado) {
+                // Actualizar también las referencias en otras tablas para mantener consistencia
+                // (Ahora sin restricciones FK, no causará errores)
+                if ($numero_documento_actual !== $nuevo_numero_documento) {
+                    // *** SINCRONIZACIÓN CON TABLA USERS - SOLUCIÓN DEL PROBLEMA ***
+                    // Solo sincronizar si ambos números son numéricos
+                    if (preg_match('/^[0-9]+$/', $numero_documento_actual) && preg_match('/^[0-9]+$/', $nuevo_numero_documento)) {
+                        // Eliminar registro antiguo de users
+                        $sqlDeleteUsers = "DELETE FROM users WHERE id = :actual_num";
+                        $consultDeleteUsers = $this->conexion->prepare($sqlDeleteUsers);
+                        $consultDeleteUsers->bindValue(":actual_num", $numero_documento_actual);
+                        $consultDeleteUsers->execute();
+                        
+                        // Crear nuevo registro en users
+                        $sqlInsertUsers = "INSERT IGNORE INTO users (id, type, name, email, password, active, created_at, updated_at) 
+                                         SELECT :nuevo_num, 'user', nombre_completo, CONCAT(:nuevo_num, '@sync.local'), 
+                                                COALESCE(contraseña, 'temp_password'), 1, NOW(), NOW() 
+                                         FROM usuario WHERE numero_documento = :nuevo_num";
+                        $consultInsertUsers = $this->conexion->prepare($sqlInsertUsers);
+                        $consultInsertUsers->bindValue(":nuevo_num", $nuevo_numero_documento);
+                        $consultInsertUsers->execute();
+                    }
+                    
+                    // Actualizar referencias en solicitudes_rol
+                    $sqlSolicitudes = "UPDATE solicitudes_rol SET numero_documento = :nuevo_num WHERE numero_documento = :actual_num";
+                    $consultSolicitudes = $this->conexion->prepare($sqlSolicitudes);
+                    $consultSolicitudes->bindValue(":nuevo_num", $nuevo_numero_documento);
+                    $consultSolicitudes->bindValue(":actual_num", $numero_documento_actual);
+                    $consultSolicitudes->execute();
+                      // Actualizar admin_respuesta en solicitudes_rol
+                    $sqlAdmin = "UPDATE solicitudes_rol SET admin_respuesta = :nuevo_num WHERE admin_respuesta = :actual_num";
+                    $consultAdmin = $this->conexion->prepare($sqlAdmin);
+                    $consultAdmin->bindValue(":nuevo_num", $nuevo_numero_documento);
+                    $consultAdmin->bindValue(":actual_num", $numero_documento_actual);
+                    $consultAdmin->execute();
+                    
+                    // Actualizar la sesión si el número de documento cambió
+                    $_SESSION['numero_documento'] = $nuevo_numero_documento;
+                }
+                
+                return [
+                    "success" => true, 
+                    "message" => "Perfil actualizado correctamente.",
+                    "nuevo_numero_documento" => $nuevo_numero_documento
+                ];
+            } else {
+                return [
+                    "success" => false, 
+                    "message" => "Error al actualizar el perfil."
+                ];
+            }
+            
+        } catch (PDOException $e) {
+            return [
+                "success" => false, 
+                "message" => "Error en la base de datos: " . $e->getMessage()
+            ];
+        }
+    }
+
+    // ...existing code...
 }

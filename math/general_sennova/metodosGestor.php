@@ -138,9 +138,7 @@ class sennova_general_presuspuestal extends Conexion {
                   op.Objeto_del_Compromiso,
                   op.Dependencia
                   FROM op 
-                  WHERE UPPER(op.Objeto_del_Compromiso) LIKE '%VIATICOS%'
-                     OR UPPER(op.Objeto_del_Compromiso) LIKE '%VIATI%'
-                     OR UPPER(op.Objeto_del_Compromiso) LIKE '%TRANSPO%'";
+                  WHERE op.Objeto_del_Compromiso LIKE '%VIATICOS%'";
 
         $params = [];
 

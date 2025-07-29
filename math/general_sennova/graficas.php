@@ -16,7 +16,7 @@ class graficas_general_sennova extends Conexion{
     // Solo dependencias permitidas
     private $dependencias_permitidas = ['62', '66', '69', '70'];
 
-    // Diccionario de dependencias solo con las permitidas en la vista SENNOVA
+    // Diccionario de dependencias solo con las permitidas
     private $dependencias = [
         '62' => 'WORLDSKILLS',
         '66' => 'Semilleros de Investigación',
@@ -338,7 +338,7 @@ class graficas_general_sennova extends Conexion{
         $dependencias = $this->getFiltroDependenciaPorRol();
         $sql = "SELECT SUM(Valor_Neto) as valor_op
                 FROM op
-                WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%' OR UPPER(Objeto_del_Compromiso) LIKE '%TRANSPO%')
+                WHERE (UPPER(Objeto_del_Compromiso) LIKE '%VIATICOS%' OR UPPER(Objeto_del_Compromiso) LIKE '%VIATI%')
                   AND (";
         $sql .= implode(' OR ', array_map(function($d) { return "Dependencia LIKE ?"; }, $dependencias));
         $sql .= ")";

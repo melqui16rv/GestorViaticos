@@ -1,6 +1,6 @@
 <?php
 // Incluir config.php antes de cualquier otro código
-require_once '/home/appscide/public_html/conf/config.php';
+require_once '/Users/melquiromero/Documents/GitHub/viaticosApp/conf/auth.php';
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();

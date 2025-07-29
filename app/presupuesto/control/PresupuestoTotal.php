@@ -66,124 +66,84 @@ class PresupuestoTotal extends Conexion {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráfica de Presupuesto</title>
+    <title>Gráfica de Presupuesto Compacta</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/presupuesto/presupuestoTotal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-  <div class="contenedorPresupuestoTotal">
-    <div class="graficaContenedor">
-      <canvas id="presupuestoChart"></canvas>
-    </div>
-
+  <div class="contenedorPresupuestoTotal dashboard-mini">
     <?php
     $presupuesto = new PresupuestoTotal();
     $datos = $presupuesto->obtenerDatosPresupuesto();
     ?>
 
-    <div class="resultados-container">
-      <div class="resultado-item valor-total">
-        <div class="resultado-titulo">Valor Total</div>
-        <div class="resultado-valor">$<?php echo $datos['valor_actual']; ?>
-          <span class="resultado-porcentaje">100%</span>
+    <!-- Compact Stats Display -->
+    <div class="compact-stats">
+      <div class="stat-compact disponible">
+        <div class="stat-icon">
+          <i class="fas fa-money-bill-wave"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-label">Disponible</div>
+          <div class="stat-value">$<?php echo $datos['saldo_disponible']; ?></div>
+          <div class="stat-percent"><?php echo $datos['porcentaje_disponible']; ?>%</div>
         </div>
       </div>
-        
-      <div class="resultado-item saldo-disponible">
-        <div class="resultado-titulo">Saldo Disponible</div>
-        <div class="resultado-valor">
-          $<?php echo $datos['saldo_disponible']; ?>
-          <span class="resultado-porcentaje"><?php echo $datos['porcentaje_disponible']; ?>%</span>
+      
+      <div class="stat-compact consumido">
+        <div class="stat-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <div class="stat-content">
+          <div class="stat-label">Consumido</div>
+          <div class="stat-value">$<?php echo $datos['consumo_cdp']; ?></div>
+          <div class="stat-percent"><?php echo $datos['porcentaje_consumido']; ?>%</div>
         </div>
       </div>
-        
-      <div class="resultado-item consumo-cdp">
-        <div class="resultado-titulo">Consumo CDP</div>
-        <div class="resultado-valor">
-          $<?php echo $datos['consumo_cdp']; ?>
-          <span class="resultado-porcentaje"><?php echo $datos['porcentaje_consumido']; ?>%</span>
+    </div>    <!-- Mini Progress Bar -->
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Distribución del Presupuesto</span>
+        <button class="expand-chart-btn" onclick="expandChartCompact()">
+          <i class="fas fa-expand-alt"></i>
+        </button>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill consumido" style="width: <?php echo $datos['porcentaje_consumido']; ?>%"></div>
+        <div class="progress-fill disponible" style="width: <?php echo $datos['porcentaje_disponible']; ?>%"></div>
+      </div>
+      <div class="progress-legend">
+        <div class="legend-item">
+          <span class="legend-color consumido"></span>
+          <span>Consumido <?php echo $datos['porcentaje_consumido']; ?>%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-color disponible"></span>
+          <span>Disponible <?php echo $datos['porcentaje_disponible']; ?>%</span>
         </div>
       </div>
     </div>
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      Chart.register(ChartDataLabels);
-      const ctx = document.getElementById('presupuestoChart').getContext('2d');
-      
-      new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: ['Presupuesto Consumido', 'Presupuesto Disponible'],
-          datasets: [{
-            data: [
-              <?php echo $datos['porcentaje_consumido']; ?>,
-              <?php echo $datos['porcentaje_disponible']; ?>
-            ],
-            backgroundColor: [
-              'rgba(255, 99, 132, 0.8)',   // Verde para disponible
-              'rgba(54, 162, 235, 0.8)'
-            ],
-            borderColor: [
-              'rgba(255, 99, 132, 0.8)', 
-              'rgba(54, 162, 235, 0.8)'
-            ],
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          animation: {
-            duration: 1000,
-            easing: 'easeOutQuart'
-          },
-          plugins: {
-            datalabels: {
-              color: '#fff',
-              font: {
-                weight: 'bold',
-                size: 14
-              },
-              formatter: (value, ctx) => {
-                const labels = [
-                  '$ <?php echo $datos['consumo_cdp']; ?>',
-                  '$ <?php echo $datos['saldo_disponible']; ?>'
-                ];
-                return `${value}%`;
-              },
-              textAlign: 'center'
-            },
-            legend: {
-              position: 'top',
-              labels: {
-                font: {
-                  size: 13
-                },
-                padding: 15
-              }
-            },
-            title: {
-              display: true,
-              text: 'Distribución del Presupuesto',
-              font: {
-                size: 16,
-                weight: 'bold'
-              },
-              padding: {
-                top: 10,
-                bottom: 15
-              }
-            }
-          },
-          layout: {
-            padding: 10
-          }
-        }
-      });
-    });
+    // Datos del presupuesto para pasar al modal global
+    const presupuestoData = {
+      valor_actual: '<?php echo $datos['valor_actual']; ?>',
+      saldo_disponible: '<?php echo $datos['saldo_disponible']; ?>',
+      consumo_cdp: '<?php echo $datos['consumo_cdp']; ?>',
+      porcentaje_disponible: '<?php echo $datos['porcentaje_disponible']; ?>',
+      porcentaje_consumido: '<?php echo $datos['porcentaje_consumido']; ?>'
+    };
+
+    // Función para expandir usando el modal global
+    function expandChartCompact() {
+      if (typeof window.expandChartGlobal === 'function') {
+        window.expandChartGlobal(presupuestoData);
+      } else {
+        console.error('Función expandChartGlobal no encontrada');
+      }
+    }
   </script>
 </body>
 </html>
