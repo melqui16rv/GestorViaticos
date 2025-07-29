@@ -1,5 +1,5 @@
 <?php
-$_SERVER['DOCUMENT_ROOT'] = '/Users/melquiromero/Documents/GitHub/viaticosApp';
+$_SERVER['DOCUMENT_ROOT'] = '/home/appscide/public_html/viaticosApp';
 
 define('BASE_URL', '/'); // Ajusta según sea necesario
 
