@@ -1,8 +1,6 @@
 <?php
 $_SERVER['DOCUMENT_ROOT'] = '/home/appscide/public_html/viaticosApp';
 
-define('BASE_URL', '/'); // Ajusta según sea necesario
-
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/auth.php';
 
 ini_set('display_errors', 1);
