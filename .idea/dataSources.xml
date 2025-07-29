@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="appscide_appviaticos@appscide.com" uuid="a1ae3e80-8a4e-4aa2-bfb2-e6458274e992">
-      <driver-ref>mysql.8</driver-ref>
+    <data-source source="LOCAL" name="appscide_cfpi@appscide.com" uuid="a1ae3e80-8a4e-4aa2-bfb2-e6458274e992">
+      <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://appscide.com:3306/appscide_appviaticos</jdbc-url>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://appscide.com:3306/appscide_cfpi</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="appscide_cfpi@appscide.com [2]" uuid="874c4c0b-a0de-4358-bb3f-9b011a25f2be">
+      <driver-ref>mariadb</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mariadb://appscide.com:3306/appscide_cfpi</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
