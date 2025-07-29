@@ -299,7 +299,7 @@ if (isset($_POST['Validar'])) {
                     <span class="input-icon-right"><i class="fa-solid fa-eye password-toggle" id="login-togglePassword"></i></span>
                 </div>
                 <input type="submit" value="Ingresar" name="Validar" class="login-boton">
-                <a href="http://127.0.0.1:8000/register" class="login-boton-secundario">
+                <a href="https://appscide.com/GestorCuenta/public/register" class="login-boton-secundario">
                     Registrarse  <i class="fa-solid fa-arrow-right"></i>
                 </a>
             </form>
