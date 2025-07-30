@@ -5,7 +5,7 @@ error_reporting(E_ALL);
 
 ob_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once 'BASE_PATH' . '/math/gen/user.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
 
 
 if (isset($_GET['num_doc'])) {
