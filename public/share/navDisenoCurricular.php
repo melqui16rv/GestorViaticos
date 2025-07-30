@@ -1433,7 +1433,7 @@ body::-webkit-scrollbar {
                     $currentPath = strtolower(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
                 ?>
                 <!-- ----- inicio para rolres 1,2 y 3--------- -->
-                    <?php if (isset($_SESSION['id_rol']) && in_array($_SESSION['id_rol'], ['3'])): ?>
+                    <?php if (isset($_SESSION['id_rol']) && in_array($_SESSION['id_rol'], ['9'])): ?>
                         <li>
                             <?php
                                 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
