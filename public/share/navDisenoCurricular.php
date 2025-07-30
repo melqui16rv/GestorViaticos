@@ -4,8 +4,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 ob_start();
-require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
+require_once 'BASE_PATH' . '/conf/config.php';
+require_once 'BASE_PATH' . '/math/gen/user.php';
 
 
 if (isset($_GET['num_doc'])) {
@@ -38,8 +38,8 @@ if (isset($_SESSION['numero_documento'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#2c3e50">
-    <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
-    <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/nav.css">
+    <link rel="icon" href="<?php echo BASE_PATH; ?>assets/img/public/logosena.png">
+    <link rel="stylesheet" href="<?php echo BASE_PATH; ?>assets/css/share/nav.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>Viaticos</title>
 </head>
@@ -63,12 +63,12 @@ if (isset($_SESSION['numero_documento'])) {
         <div class="navbar-left">
             <!-- Botón de sesión prioritario en móvil -->
             <div class="session-button-mobile">                <?php if(isset($_SESSION['id_rol'])):?>
-                    <a href="<?php echo BASE_URL; ?>includes/session/salir.php" class="boton_ir mobile-session">
+                    <a href="<?php echo BASE_PATH; ?>includes/session/salir.php" class="boton_ir mobile-session">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Salir</span>
                     </a>
                 <?php else: ?>
-                    <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="boton_ir mobile-session">
+                    <a href="<?php echo BASE_PATH; ?>includes/session/login.php" class="boton_ir mobile-session">
                         <i class="fas fa-sign-in-alt"></i>
                         <span>Entrar</span>
                     </a>
@@ -126,7 +126,7 @@ if (isset($_SESSION['numero_documento'])) {
                             <?php
                                 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
                                 ?>
-                            <a href="<?php echo BASE_URL; ?>public/share/dashboard.php" 
+                            <a href="<?php echo BASE_PATH; ?>public/share/dashboard.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/public/share/dashboard.php') ? 'activeURL' : ''; ?>">Panel Datos</a>
                         </li>
                         <?php endif; ?>
@@ -136,7 +136,7 @@ if (isset($_SESSION['numero_documento'])) {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '7'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                <a href="<?php echo BASE_PATH; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
                                     Solicitud Rol
                                 </a>
@@ -146,13 +146,13 @@ if (isset($_SESSION['numero_documento'])) {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '4'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                <a href="<?php echo BASE_PATH; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
                                     Presupuesto - SENNOVA
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
+                                <a href="<?php echo BASE_PATH; ?>app/SENNOVA/Tecnoparque/metas/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
                                     Metas - Tecnoparque
                                 </a>
@@ -165,13 +165,13 @@ if (isset($_SESSION['numero_documento'])) {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '5'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 5 (Tecnoparque) -->
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                <a href="<?php echo BASE_PATH; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
                                     Presupuesto
                                 </a>
                             </li>
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/Tecnoparque/metas/index.php"
+                                <a href="<?php echo BASE_PATH; ?>app/SENNOVA/Tecnoparque/metas/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/tecnoparque/metas/index.php') ? 'activeURL' : ''; ?>">
                                     Metas
                                 </a>
@@ -184,7 +184,7 @@ if (isset($_SESSION['numero_documento'])) {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '6'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 6 (Tecnoacademia) -->
                             <li>
-                                <a href="<?php echo BASE_URL; ?>app/SENNOVA/General/index.php"
+                                <a href="<?php echo BASE_PATH; ?>app/SENNOVA/General/index.php"
                                     class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
                                     Presupuesto
                                 </a>
@@ -199,7 +199,7 @@ if (isset($_SESSION['numero_documento'])) {
                             $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             ?>
                             
-                            <a href="<?php echo BASE_URL; ?>app/presupuesto/index.php" 
+                            <a href="<?php echo BASE_PATH; ?>app/presupuesto/index.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/index.php') ? 'activeURL' : ''; ?>">Registros RP</a>
                             
                         </li>
@@ -208,7 +208,7 @@ if (isset($_SESSION['numero_documento'])) {
                             $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             ?>
                             
-                            <a href="<?php echo BASE_URL; ?>app/presupuesto/historialOP.php" 
+                            <a href="<?php echo BASE_PATH; ?>app/presupuesto/historialOP.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/presupuesto/historialOP.php') ? 'activeURL' : ''; ?>">Registros RP (Viáticos)</a>
                         </li>
                 <!-- ----- fin para rol 3--------- -->
@@ -219,7 +219,7 @@ if (isset($_SESSION['numero_documento'])) {
                             $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             ?>
                             
-                            <a href="<?php echo BASE_URL; ?>app/admin/index.php" 
+                            <a href="<?php echo BASE_PATH; ?>app/admin/index.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/admin/index.php') ? 'activeURL' : ''; ?>">Panel de control</a>
                         </li>
                         <li>
@@ -227,7 +227,7 @@ if (isset($_SESSION['numero_documento'])) {
                             $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             ?>
                             
-                            <a href="<?php echo BASE_URL; ?>app/admin/solicitudes/index.php" 
+                            <a href="<?php echo BASE_PATH; ?>app/admin/solicitudes/index.php" 
                             class="<?php echo ($currentPath === '/viaticosApp/app/admin/solicitudes') ? 'activeURL' : ''; ?>">Solicitudes de cambio de rol</a>
                         </li>
                 <!-- ----- fin para rol 1--------- -->
@@ -238,7 +238,7 @@ if (isset($_SESSION['numero_documento'])) {
                             $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
                             ?>
                             
-                            <a href="<?php echo BASE_URL; ?>app/gestor/index.php" 
+                            <a href="<?php echo BASE_PATH; ?>app/gestor/index.php" 
                                class="<?php echo ($currentPath === '/viaticosApp/app/gestor/index.php') ? 'activeURL' : ''; ?>">
                                Gestor
                             </a>
@@ -247,7 +247,7 @@ if (isset($_SESSION['numero_documento'])) {
                   <!-- ----- Enlace de perfil para todos los usuarios logueados--------- -->
                 <!-- <?php //if (isset($_SESSION['numero_documento'])): ?>
                     <li>
-                        <a href="<?php //echo BASE_URL; ?>public/share/cuenta.php" 
+                        <a href="<?php //echo BASE_PATH; ?>public/share/cuenta.php" 
                            class="<?php //echo ($currentPath === '/viaticosapp/public/share/cuenta.php') ? 'activeURL' : ''; ?>">
                            <i class="fas fa-user-circle" style="margin-right: 8px;"></i>Mi Perfil
                         </a>
@@ -268,14 +268,14 @@ if (isset($_SESSION['numero_documento'])) {
               <!-- Botón de sesión para desktop -->
             <div class="session-button-desktop">
                 <?php if(isset($_SESSION['id_rol'])):?>
-                    <a href="<?php echo BASE_URL; ?>includes/session/salir.php" class="boton_ir">Cerrar sesión</a>
+                    <a href="<?php echo BASE_PATH; ?>includes/session/salir.php" class="boton_ir">Cerrar sesión</a>
                 <?php else: ?>
-                    <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="boton_ir">Iniciar sesión</a>
+                    <a href="<?php echo BASE_PATH; ?>includes/session/login.php" class="boton_ir">Iniciar sesión</a>
                 <?php endif; ?>
             </div>
         </div>
     </div>
-    <script src="<?php echo BASE_URL; ?>assets/js/header.js"></script>
+    <script src="<?php echo BASE_PATH; ?>assets/js/header.js"></script>
 </body>
 </html>
 <script>
@@ -290,7 +290,7 @@ function salir() {
         confirmBtn.onclick = () => {
             modal.classList.remove('active');
             resolve(true);
-            window.location.href = '<?php echo BASE_URL; ?>includes/session/salir.php';
+            window.location.href = '<?php echo BASE_PATH; ?>includes/session/salir.php';
         };
         
         cancelBtn.onclick = () => {
