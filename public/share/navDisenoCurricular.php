@@ -41,7 +41,9 @@ if (isset($_SESSION['numero_documento'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#2c3e50">
     <link rel="icon" href="<?php echo BASE_URL; ?>assets/img/public/logosena.png">
+    <link rel="icon" href="/home/appscide/public_html/viaticosApp/assets/img/public/logosena.png">
     <link rel="stylesheet" href="<?php echo BASE_URL; ?>assets/css/share/nav.css">
+    <link rel="stylesheet" href="/home/appscide/public_html/viaticosApp/assets/css/share/nav.css">
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <title>Viaticos</title>
 </head>
