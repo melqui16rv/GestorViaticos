@@ -1,9 +1,11 @@
 <?php
+// Iniciar buffer de salida ANTES de cualquier include
+ob_start();
+
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-ob_start();
 require_once dirname(__DIR__, 2) . '/conf/config.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/math/gen/user.php';
 

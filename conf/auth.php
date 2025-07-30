@@ -1,6 +1,5 @@
 <?php
-// Incluir config.php antes de cualquier otro códig
-require_once '/home/appscide/public_html/viaticosApp/conf/auth.php';
+// auth.php - Funciones de autenticación
 
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
