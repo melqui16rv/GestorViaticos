@@ -4,7 +4,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 ob_start();
-require_once 'BASE_PATH' . '/conf/config.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/config.php';
 require_once 'BASE_PATH' . '/math/gen/user.php';
 
 
