@@ -113,7 +113,7 @@ class sennova_general_presuspuestal extends Conexion {
     }
 
     public function obtenerOP($filtros = [], $limit = 10, $offset = 0) {
-        if (!isset($_SESSION)) session_start();
+        if (session_status() == PHP_SESSION_NONE) session_start();
         $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;
         // Definir dependencias permitidas según el rol
         if ($rol == '5') {

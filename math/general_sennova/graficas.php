@@ -36,7 +36,7 @@ class graficas_general_sennova extends Conexion{
 
     // Método para obtener el filtro de dependencia según el rol
     private function getFiltroDependenciaPorRol() {
-        if (!isset($_SESSION)) {
+        if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
         $rol = isset($_SESSION['id_rol']) ? $_SESSION['id_rol'] : null;

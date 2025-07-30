@@ -1,10 +1,6 @@
 <?php
 // auth.php - Funciones de autenticación
 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
-
 function isLoggedIn() {
     return isset($_SESSION['id_rol']);
 }
