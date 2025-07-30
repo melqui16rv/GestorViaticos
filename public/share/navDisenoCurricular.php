@@ -1439,7 +1439,7 @@ body::-webkit-scrollbar {
                                 $currentPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);                        
                                 ?>
                             <a href="disenoCurricular/app/forms/index.php" 
-                            class="<?php echo ($currentPath === 'disenoCurricular/app/forms/index.php') ? 'activeURL' : ''; ?>">Diseños Curriculares</a>
+                            class="<?php echo ($currentPath === 'https://appscide.com/disenoCurricular/app/forms/disenoCurricular/app/forms/disenoCurricular/app/forms/disenoCurricular/app/forms/index.php') ? 'activeURL' : ''; ?>">Diseños Curriculares</a>
                         </li>
                         <?php endif; ?>
                         <!-- ----- fin para rolres 1,2 y 3--------- -->
