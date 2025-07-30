@@ -784,7 +784,7 @@ if ($isLoggedIn && ($rol == '1' || $rol == '7')) {
                                     }
                                     
                                     foreach($enlaces as $enlace): ?>
-                                        <a href="<?php echo BASE_URL . $enlace['url']; ?>" 
+                                        <a href="<?php echo $enlace['url']; ?>" 
                                            class="block w-full bg-gradient-to-r <?php echo $enlace['color']; ?> text-white py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                                             <i class="fas <?php echo $enlace['icon']; ?> mr-3"></i>
                                             <?php echo $enlace['text']; ?>
