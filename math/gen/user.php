@@ -152,6 +152,9 @@ class user extends Conexion{
                 
                 // Redireccionar según el rol
                 switch ($rol) {
+                    case '9':
+                        header('Location: https://appscide.com/disenoCurricular/app/forms/index.php');
+                        break;
                     case '7':
                         header('Location: ' . BASE_URL . 'app/acceso/index.php');
                         break;
