@@ -1,7 +1,5 @@
 <?php
-$_SERVER['DOCUMENT_ROOT'] = '/Users/melquiromero/Documents/GitHub/viaticosApp';
-
-define('BASE_URL', '/'); // Ajusta según sea necesario
+$_SERVER['DOCUMENT_ROOT'] = '/home/appscide/public_html/viaticosApp';
 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/conf/auth.php';
 
