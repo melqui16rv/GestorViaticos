@@ -136,9 +136,9 @@ if (isset($_SESSION['numero_documento'])) {
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '7'): ?>
                             <!-- Bloque exclusivo para usuarios con rol 4 (SENNOVA) -->
                             <li>
-                                <a href="/home/appscide/public_html/viaticosApp/app/SENNOVA/General/index.php"
-                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
-                                    Solicitud Rol
+                                <a href="/home/appscide/public_html/disenoCurricular/index.php"
+                                    class="<?php echo ('/home/appscide/public_html/disenoCurricular/index.php') ? 'activeURL' : ''; ?>">
+                                    Diseno Curricular
                                 </a>
                             </li>
                         <!-- Puedes agregar más opciones aquí para el rol 4 -->
@@ -160,6 +160,21 @@ if (isset($_SESSION['numero_documento'])) {
                         <!-- Puedes agregar más opciones aquí para el rol 4 -->
                         <?php endif; ?>
                         <!-- ----- fin para rol 4--------- -->
+                        <!-- ----- inicio para rol 9--------- --------------->
+                        <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '7'): ?>
+                            <!-- Bloque exclusivo para usuarios con rol 9 (SENNOVA) -->
+                            <li>
+                                <a href="/home/appscide/public_html/viaticosApp/app/SENNOVA/General/index.php"
+                                    class="<?php echo ($currentPath === '/viaticosapp/app/sennova/general/index.php') ? 'activeURL' : ''; ?>">
+                                    Solicitud Rol
+                                </a>
+                            </li>
+                        <!-- Puedes agregar más opciones aquí para el rol 4 -->
+                        <?php endif; ?>
+                        <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '4'): ?>
+                        <!-- Puedes agregar más opciones aquí para el rol 4 -->
+                        <?php endif; ?>
+                        <!-- ----- fin para rol 9------------------------ -->
                         <!-- ----- inicio para rol 5--------- -->
                         
                         <?php if (isset($_SESSION['id_rol']) && $_SESSION['id_rol'] == '5'): ?>
