@@ -247,7 +247,7 @@ if (isset($_SESSION['numero_documento'])) {
                   <!-- ----- Enlace de perfil para todos los usuarios logueados--------- -->
                 <!-- <?php //if (isset($_SESSION['numero_documento'])): ?>
                     <li>
-                        <a href="<?/home/appscide/public_html/viaticosApp/public/share/cuenta.php" 
+                  
                            class="<?php //echo ($currentPath === '/viaticosapp/public/share/cuenta.php') ? 'activeURL' : ''; ?>">
                            <i class="fas fa-user-circle" style="margin-right: 8px;"></i>Mi Perfil
                         </a>
