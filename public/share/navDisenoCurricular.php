@@ -1580,7 +1580,7 @@ body::-webkit-scrollbar {
               <!-- Botón de sesión para desktop -->
             <div class="session-button-desktop">
                 <?php if(isset($_SESSION['id_rol'])):?>
-                    <a href="<?php echo BASE_URL; ?>includes/session/salir.php" class="boton_ir">Cerrar sesión</a>
+                    <a href="https://appscide.com/viaticosApp/index.php" class="boton_ir">Inicio</a>
                 <?php else: ?>
                     <a href="<?php echo BASE_URL; ?>includes/session/login.php" class="boton_ir">Iniciar sesión</a>
                 <?php endif; ?>
