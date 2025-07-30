@@ -27,7 +27,8 @@ $rolesInfo = [
     '4' => ['nombre' => 'SENNOVA General', 'color' => '#7c3aed', 'icon' => 'fa-flask'],
     '5' => ['nombre' => 'Tecnoparque', 'color' => '#0891b2', 'icon' => 'fa-cogs'],
     '6' => ['nombre' => 'Tecnoacademia', 'color' => '#be185d', 'icon' => 'fa-graduation-cap'],
-    '7' => ['nombre' => 'Acceso', 'color' => '#374151', 'icon' => 'fa-key']
+    '7' => ['nombre' => 'Acceso', 'color' => '#374151', 'icon' => 'fa-key'],
+    '9' => ['nombre' => 'Gestor Diseño Curricular', 'color' => '#be185d', 'icon' => 'fa-graduation-cap']
 ];
 
 $rolActual = $isLoggedIn ? ($rolesInfo[$rol] ?? ['nombre' => 'Usuario', 'color' => '#6b7280', 'icon' => 'fa-user']) : null;
@@ -773,6 +774,11 @@ if ($isLoggedIn && ($rol == '1' || $rol == '7')) {
                                             $enlaces = [
                                                 ['url' => 'app/acceso/index.php', 'text' => 'Portal Acceso', 'icon' => 'fa-key', 'color' => 'from-gray-500 to-gray-600'],
                                                 ['url' => 'app/acceso/solicitud.php', 'text' => 'Solicitar Rol', 'icon' => 'fa-user-plus', 'color' => 'from-indigo-500 to-indigo-600']
+                                            ];
+                                            break;
+                                        case '9': // Acceso
+                                            $enlaces = [
+                                                ['url' => 'https://appscide.com/disenoCurricular/app/forms/index.php?accion=listar', 'text' => 'Gestionar Diseños', 'icon' => 'fa-user-plus', 'color' => 'from-indigo-500 to-indigo-600']
                                             ];
                                             break;
                                     }
