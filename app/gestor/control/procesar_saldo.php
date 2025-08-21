@@ -28,6 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Instancia de la clase gestor1
     $gestor = new gestor1();
 
+    // Obtener los IDs correspondientes a los códigos CDP y CRP
+    $cdpId = $gestor->obtenerCdpIdPorCodigo($codigoCDP);
+    $rpId = $gestor->obtenerRpIdPorCodigo($codigoCRP);
+
+    if (!$cdpId || !$rpId) {
+        error_log("No se pudieron obtener los IDs: CDP ID: $cdpId, RP ID: $rpId");
+        header("Location: insert_saldo_asiganado.php?estado=error");
+        exit;
+    }
+
     // 2) Insertar el saldo asignado (devuelve el ID recién creado si todo sale bien)
     $nuevoSaldoId = $gestor->insertarSaldoAsignado(
         $nombre,
@@ -36,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $fechaFin,
         $fechaPago,
         $saldoAsignado,
-        $codigoCDP,
-        $codigoCRP
+        $cdpId,
+        $rpId
     );
 
     // Verificar si se insertó correctamente

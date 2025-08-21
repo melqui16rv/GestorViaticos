@@ -15,8 +15,8 @@ class gestor extends Conexion {
                        cdp.Numero_Documento AS Numero_Documento_CDP, 
                        crp.Numero_Documento AS Numero_Documento_CRP
                 FROM saldos_asignados sa
-                INNER JOIN cdp ON sa.CODIGO_CDP = cdp.CODIGO_CDP
-                INNER JOIN crp ON sa.CODIGO_CRP = crp.CODIGO_CRP
+                INNER JOIN cdp ON sa.cdp_id = cdp.cdp_id
+                INNER JOIN crp ON sa.rp_id = crp.rp_id
                 WHERE 1=1";
         $params = [];
     
@@ -59,8 +59,8 @@ class gestor extends Conexion {
                        cdp.Numero_Documento AS Numero_Documento_CDP, 
                        crp.Numero_Documento AS Numero_Documento_CRP
                 FROM saldos_asignados sa
-                INNER JOIN cdp ON sa.CODIGO_CDP = cdp.CODIGO_CDP
-                INNER JOIN crp ON sa.CODIGO_CRP = crp.CODIGO_CRP
+                INNER JOIN cdp ON sa.cdp_id = cdp.cdp_id
+                INNER JOIN crp ON sa.rp_id = crp.rp_id
                 WHERE 1=1";
         $params = [];
 
@@ -123,8 +123,8 @@ class gestor extends Conexion {
                        cdp.Numero_Documento AS Numero_Documento_CDP, 
                        crp.Numero_Documento AS Numero_Documento_CRP
                 FROM saldos_asignados sa
-                INNER JOIN cdp ON sa.CODIGO_CDP = cdp.CODIGO_CDP
-                INNER JOIN crp ON sa.CODIGO_CRP = crp.CODIGO_CRP
+                INNER JOIN cdp ON sa.cdp_id = cdp.cdp_id
+                INNER JOIN crp ON sa.rp_id = crp.rp_id
                 WHERE sa.ID_SALDO = :idSaldo";
         $stmt = $this->conexion->prepare($sql);
         $stmt->bindValue(':idSaldo', $idSaldo, PDO::PARAM_INT);
@@ -162,6 +162,34 @@ class gestor extends Conexion {
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             error_log("Error en obtenerDetalleCRP: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function obtenerDetalleCDPPorId($cdpId, $campos = '*') {
+        $sql = "SELECT $campos FROM cdp WHERE cdp_id = :cdpId";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindValue(':cdpId', $cdpId, PDO::PARAM_STR);
+
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en obtenerDetalleCDPPorId: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function obtenerDetalleCRPPorId($rpId, $campos = '*') {
+        $sql = "SELECT $campos FROM crp WHERE rp_id = :rpId";
+        $stmt = $this->conexion->prepare($sql);
+        $stmt->bindValue(':rpId', $rpId, PDO::PARAM_STR);
+
+        try {
+            $stmt->execute();
+            return $stmt->fetch(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en obtenerDetalleCRPPorId: " . $e->getMessage());
             return null;
         }
     }

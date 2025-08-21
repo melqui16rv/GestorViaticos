@@ -25,8 +25,9 @@ if (!$detalleSaldo) {
     die("No se encontró información para el ID proporcionado.");
 }
 
-$detalleCDP = $miClaseG->obtenerDetalleCDP($detalleSaldo['CODIGO_CDP'], '*');
-$detalleCRP = $miClaseG->obtenerDetalleCRP($detalleSaldo['CODIGO_CRP'], '*');
+// Obtener los detalles de CDP y CRP usando los IDs
+$detalleCDP = $miClaseG->obtenerDetalleCDPPorId($detalleSaldo['cdp_id'], '*');
+$detalleCRP = $miClaseG->obtenerDetalleCRPPorId($detalleSaldo['rp_id'], '*');
 
 // Inicializar la variable $imagenes
 $imagenes = $miClaseG->obtenerImagenesDeSaldo($idSaldo) ?? [];

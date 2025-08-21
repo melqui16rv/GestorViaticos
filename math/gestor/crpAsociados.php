@@ -23,8 +23,8 @@ class gestor1 extends Conexion {
                         FECHA_FIN,
                         FECHA_PAGO,
                         SALDO_ASIGNADO,
-                        CODIGO_CDP,
-                        CODIGO_CRP
+                        cdp_id,
+                        rp_id
                     ) VALUES (
                         :nombre,
                         :documento,
@@ -32,8 +32,8 @@ class gestor1 extends Conexion {
                         :fecha_fin,
                         :fecha_pago,
                         :saldo_asignado,
-                        :codigo_cdp,
-                        :codigo_crp
+                        :cdp_id,
+                        :rp_id
                     )";
 
             $stmt = $this->conexion->prepare($sql);
@@ -44,8 +44,8 @@ class gestor1 extends Conexion {
             $stmt->bindParam(':fecha_fin', $fechaFin);
             $stmt->bindParam(':fecha_pago', $fechaPago);
             $stmt->bindParam(':saldo_asignado', $saldoAsignado);
-            $stmt->bindParam(':codigo_cdp', $codigoCDP);
-            $stmt->bindParam(':codigo_crp', $codigoCRP);
+            $stmt->bindParam(':cdp_id', $codigoCDP);
+            $stmt->bindParam(':rp_id', $codigoCRP);
 
             if ($stmt->execute()) {
                 // Retornar el ID autogenerado
@@ -122,6 +122,38 @@ class gestor1 extends Conexion {
         } catch (PDOException $e) {
             error_log("Error en obtenerCRPsPorCDP para CDP '$codigoCDP': " . $e->getMessage());
             return [];
+        }
+    }
+
+    public function obtenerCdpIdPorCodigo($codigoCDP) {
+        try {
+            $sql = "SELECT cdp_id FROM cdp WHERE CODIGO_CDP = :codigo_cdp LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':codigo_cdp', $codigoCDP, \PDO::PARAM_STR);
+            $stmt->execute();
+            
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $result ? $result['cdp_id'] : null;
+            
+        } catch (PDOException $e) {
+            error_log("Error en obtenerCdpIdPorCodigo: " . $e->getMessage());
+            return null;
+        }
+    }
+
+    public function obtenerRpIdPorCodigo($codigoCRP) {
+        try {
+            $sql = "SELECT rp_id FROM crp WHERE CODIGO_CRP = :codigo_crp LIMIT 1";
+            $stmt = $this->conexion->prepare($sql);
+            $stmt->bindParam(':codigo_crp', $codigoCRP, \PDO::PARAM_STR);
+            $stmt->execute();
+            
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return $result ? $result['rp_id'] : null;
+            
+        } catch (PDOException $e) {
+            error_log("Error en obtenerRpIdPorCodigo: " . $e->getMessage());
+            return null;
         }
     }
 }
